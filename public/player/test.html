@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Plugin Test</title>
+    
+    <!-- Nuevo Skin CSS - Flow -->
+    <link href="skins/flow/videojs.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+        }
+        .test-container {
+            margin: 20px 0;
+        }
+        .video-wrapper {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nuevo Plugin Test Sayfası</h1>
+    
+    <div class="test-container">
+        <h2>Test Video Player</h2>
+        <div class="video-wrapper">
+            <video
+                id="test-player"
+                class="video-js"
+                controls
+                preload="auto"
+                playsinline
+                width="960"
+                height="540">
+                <!-- HLS Stream Test -->
+                <source src="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" type="application/x-mpegURL" />
+                <!-- Alternatif: Normal MP4 -->
+                <!-- <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" /> -->
+                <p class="vjs-no-js">
+                    Video oynatmak için JavaScript'i etkinleştirmeniz gerekir.
+                    <a href="https://videojs.com/html5-video-support/" target="_blank">Video.js desteği</a>.
+                </p>
+            </video>
+        </div>
+    </div>
+
+    <!-- Video.js Core + Nuevo Plugin (Birleşik) -->
+    <script src="nsvideo.min.js"></script>
+    
+    <!-- Türkçe Dil Dosyası -->
+    <script src="lang/tr.js"></script>
+    
+    <script>
+        // Player'ı başlat (Dokümantasyona göre)
+        var player = videojs('test-player', {
+            language: 'tr'  // Türkçe dil ayarı
+        });
+        
+        // Player hazır olduğunda Nuevo plugin'i başlat
+        player.ready(function() {
+            console.log('=== Nuevo Plugin Test ===');
+            console.log('Video.js version:', videojs.VERSION);
+            console.log('Player initialized:', player);
+            
+            // Nuevo plugin ayarları
+            if (typeof player.nuevo === 'function') {
+                player.nuevo({
+                    // Skin seçimi - Flow
+                    skin: 'flow',
+                    
+                    // Settings menü ayarları
+                    settingsButton: true,
+                    shareMenu: true,
+                    rateMenu: true,
+                    zoomMenu: true,
+                    sleepTimerMenu: true,
+                    relatedMenu: false,
+                    
+                    // Control bar ayarları
+                    tooltips: true,
+                    contextMenu: true,  // Sağ tık menüsü aktif
+                    contextLink: true,  // Context menu'de link gösterimi
+                    contextUrl: 'https://animemodu.com',  // Context menu link URL
+                    contextText: 'animemodu',  // Context menu link metni
+                    pipButton: true,
+                    fullscreenButton: true,
+                    ccButton: true,
+                    buttonRewind: true,
+                    buttonForward: false,
+                    
+                    // Diğer ayarlar
+                    hdicon: true,
+                    chapterMarkers: true,
+                    resume: false,
+                    touchControls: true,
+                    touchRewindForward: true
+                });
+            } else {
+                console.error('Nuevo plugin yüklenemedi!');
+            }
+        });
+        
+        // Nuevo plugin event'leri
+        player.on('nuevoReady', function() {
+            console.log('Nuevo plugin hazır!');
+        });
+        
+        // Resolution change event
+        player.on('resolutionchange', function(event, data) {
+            console.log('Çözünürlük değişti:', data.res);
+        });
+        
+        // Hata kontrolü
+        player.on('error', function() {
+            console.error('Video hatası:', player.error());
+        });
+    </script>
+</body>
+</html>
+

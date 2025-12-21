@@ -1,0 +1,25 @@
+export const videoPlayerConfig = {
+    skin: 'flow',
+    settingsButton: true,
+    shareMenu: true,
+    rateMenu: true,
+    zoomMenu: true,
+    sleepTimerMenu: true,
+    relatedMenu: false,
+    tooltips: true,
+    contextMenu: true,
+    contextLink: true,
+    contextUrl: 'https://animemodu.com',
+    contextText: 'animemodu',
+    pipButton: true,
+    fullscreenButton: true,
+    ccButton: true,
+    buttonRewind: true,
+    buttonForward: false,
+    hdicon: true,
+    chapterMarkers: true,
+    resume: false,
+    touchControls: true,
+    touchRewindForward: true
+};
+
