@@ -53,7 +53,7 @@ export default function ReplyItem({ reply, parentId, animeId, episodeId, onReply
                             {reply.author}
                         </Link>
                         {reply.role === "Admin" && (
-                            <Badge variant="blue" className="px-2 py-0.5 font-bold rounded-full text-[10px] flex items-center gap-1">
+                            <Badge variant="blue" className="px-2 py-0.5 font-bold rounded-full text-xs flex items-center gap-1">
                                 <ShieldCheck className="w-3 h-3" />
                                 Yönetici
                             </Badge>

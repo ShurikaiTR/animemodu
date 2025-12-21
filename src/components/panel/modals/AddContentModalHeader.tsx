@@ -59,7 +59,7 @@ export function AddContentModalHeader({ item }: AddContentModalHeaderProps) {
           <div className="flex items-center gap-3 text-sm text-gray-300 mt-1">
             <span
               className={cn(
-                "px-2 py-0.5 rounded text-[10px] font-bold border uppercase tracking-wide",
+                "px-2 py-0.5 rounded text-xs font-bold border uppercase tracking-wide",
                 item.media_type === "movie"
                   ? "bg-purple-500/10 text-purple-300 border-purple-500/20"
                   : "bg-blue-500/10 text-blue-300 border-blue-500/20"

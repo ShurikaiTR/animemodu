@@ -119,7 +119,7 @@ export default function ReportModal({ isOpen, onClose, animeTitle, episodeTitle,
                                 placeholder="Detaylar..."
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
-                                className="min-h-[100px] resize-none"
+                                className="min-h-24 resize-none"
                             />
                         </div>
 

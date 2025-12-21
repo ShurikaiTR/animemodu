@@ -35,13 +35,13 @@ export default function EpisodeCard({ episode, structureType, animeSlug, isCurre
                     </div>
                 )}
                 {isCurrent && (
-                    <div className="absolute inset-0 bg-primary/20 flex items-center justify-center backdrop-blur-[1px]">
-                        <div className="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-lg animate-pulse">
+                    <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                        <div className="bg-primary text-white text-xs font-bold px-2 py-0.5 rounded shadow-lg animate-pulse">
                             OYNATILIYOR
                         </div>
                     </div>
                 )}
-                <div className="absolute bottom-1 right-1 bg-black/60 px-1 py-0.5 rounded text-[9px] font-mono text-white/80">
+                <div className="absolute bottom-1 right-1 bg-black/60 px-1 py-0.5 rounded text-xs font-mono text-white/80">
                     {episode.runtime ? `${episode.runtime}dk` : "24dk"}
                 </div>
             </div>
@@ -49,7 +49,7 @@ export default function EpisodeCard({ episode, structureType, animeSlug, isCurre
             <div className="flex-1 min-w-0 flex flex-col justify-center">
                 <div className="flex items-center gap-2 mb-0.5">
                     <span className={cn(
-                        "text-[10px] font-bold uppercase tracking-wider",
+                        "text-xs font-bold uppercase tracking-wider",
                         isCurrent ? "text-primary" : "text-white/40 group-hover:text-primary transition-colors"
                     )}>
                         {structureType === "seasonal" ? `${episode.season_number}x${episode.episode_number}` : `Bölüm ${episode.episode_number}`}
@@ -61,7 +61,7 @@ export default function EpisodeCard({ episode, structureType, animeSlug, isCurre
                 )}>
                     {episode.title || `${episode.episode_number}. Bölüm`}
                 </h4>
-                <p className="text-white/40 text-[10px] line-clamp-1 mt-0.5">
+                <p className="text-white/40 text-xs line-clamp-1 mt-0.5">
                     {episode.overview || "Özet yok."}
                 </p>
             </div>

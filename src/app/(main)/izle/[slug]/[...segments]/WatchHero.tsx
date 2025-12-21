@@ -11,7 +11,7 @@ export default function WatchHero({ backdrop }: WatchHeroProps) {
     const imageUrl = getImageUrl(backdrop, "original");
 
     return (
-        <div className="absolute top-0 left-0 right-0 h-[60vh] max-h-[600px] w-full z-0 pointer-events-none">
+        <div className="absolute top-0 left-0 right-0 h-[60vh] max-h-[37.5rem] w-full z-0 pointer-events-none">
             <Image
                 src={imageUrl}
                 alt="Background"

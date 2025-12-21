@@ -82,7 +82,7 @@ export function ReportsTable({ items }: ReportsTableProps) {
                             <th className="h-12 px-4 text-left align-middle font-medium text-white/50">Açıklama</th>
                             <th className="h-12 px-4 text-left align-middle font-medium text-white/50">Kullanıcı</th>
                             <th className="h-12 px-4 text-left align-middle font-medium text-white/50">Tarih</th>
-                            <th className="h-12 px-4 text-left align-middle font-medium text-white/50 w-[120px]">İşlemler</th>
+                            <th className="h-12 px-4 text-left align-middle font-medium text-white/50 w-32">İşlemler</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,7 +103,7 @@ export function ReportsTable({ items }: ReportsTableProps) {
                                             {item.anime?.poster ? (
                                                 <div className="w-8 h-12 relative rounded overflow-hidden flex-shrink-0">
                                                     <Image
-                                                        src={getImageUrl(item.anime.poster, "w92")}
+                                                        src={getImageUrl(item.anime.poster, "w200")}
                                                         alt={item.anime_title}
                                                         fill
                                                         className="object-cover"
@@ -111,7 +111,7 @@ export function ReportsTable({ items }: ReportsTableProps) {
                                                 </div>
                                             ) : null}
                                             <div className="flex flex-col min-w-0">
-                                                <span className="text-sm font-medium text-white truncate max-w-[200px]" title={item.anime_title}>
+                                                <span className="text-sm font-medium text-white truncate max-w-52" title={item.anime_title}>
                                                     {item.anime_title}
                                                 </span>
                                                 {(item.season_number || item.episode_number) && (
@@ -127,7 +127,7 @@ export function ReportsTable({ items }: ReportsTableProps) {
                                         <span className="text-sm text-white/90">{getReasonLabel(item.reason)}</span>
                                     </td>
                                     <td className="p-4 align-middle">
-                                        <p className="text-sm text-white/70 max-w-[250px] truncate" title={item.description || ""}>
+                                        <p className="text-sm text-white/70 max-w-64 truncate" title={item.description || ""}>
                                             {item.description || "-"}
                                         </p>
                                     </td>
@@ -138,7 +138,7 @@ export function ReportsTable({ items }: ReportsTableProps) {
                                                     {item.user.avatar_url ? (
                                                         <Image src={item.user.avatar_url} alt={item.user.username} fill className="object-cover" />
                                                     ) : (
-                                                        <div className="w-full h-full flex items-center justify-center text-[10px] text-white/50">
+                                                        <div className="w-full h-full flex items-center justify-center text-xs text-white/50">
                                                             {item.user.username[0].toUpperCase()}
                                                         </div>
                                                     )}

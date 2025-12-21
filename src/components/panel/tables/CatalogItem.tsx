@@ -26,7 +26,7 @@ export function CatalogItem({ item, onEdit, onDelete, onToggleFeatured, onUpdate
             "group relative bg-bg-secondary/30 backdrop-blur-sm border rounded-xl p-4 flex gap-5 transition-all duration-200",
             item.is_featured ? "border-primary/40 bg-primary/5 hover:border-primary/60" : "border-white/5 hover:border-white/10 hover:bg-white/[0.03]"
         )}>
-            <div className="relative w-[80px] h-[120px] shrink-0 rounded-lg overflow-hidden shadow-lg bg-black/50 border border-white/5">
+            <div className="relative w-20 h-32 shrink-0 rounded-lg overflow-hidden shadow-lg bg-black/50 border border-white/5">
                 {item.poster_path ? (
                     <Image
                         src={getImageUrl(item.poster_path, "w200")}
@@ -41,7 +41,7 @@ export function CatalogItem({ item, onEdit, onDelete, onToggleFeatured, onUpdate
                     </div>
                 )}
                 {item.is_featured && (
-                    <div className="absolute top-1 right-1 bg-primary text-white text-[8px] font-bold px-1.5 py-0.5 rounded shadow-lg backdrop-blur-md flex items-center gap-0.5">
+                    <div className="absolute top-1 right-1 bg-primary text-white text-xs font-bold px-1.5 py-0.5 rounded shadow-lg backdrop-blur-md flex items-center gap-0.5">
                         <Sparkles className="w-2 h-2 fill-current" />
                         ÖNE ÇIKAN
                     </div>
@@ -80,7 +80,7 @@ export function CatalogItem({ item, onEdit, onDelete, onToggleFeatured, onUpdate
                             </Badge>
                         ))}
                         {item.genres.length > 3 && (
-                            <span className="text-[10px] text-text-main/40 px-1.5 py-0.5">+</span>
+                            <span className="text-xs text-text-main/40 px-1.5 py-0.5">+</span>
                         )}
                     </div>
                 ) : (

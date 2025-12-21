@@ -25,7 +25,7 @@ export default function CalendarLoading() {
               className="flex flex-col md:flex-row items-center gap-6 bg-bg-secondary/30 border border-white/5 rounded-2xl p-4 md:p-6"
             >
               <Skeleton className="w-full md:w-24 h-16 md:h-24 rounded-xl flex-shrink-0" />
-              <Skeleton className="w-full md:w-[150px] aspect-video md:aspect-[16/9] rounded-xl flex-shrink-0" />
+              <Skeleton className="w-full md:w-40 aspect-video md:aspect-[16/9] rounded-xl flex-shrink-0" />
               <div className="flex-1 w-full md:w-auto space-y-3">
                 <Skeleton className="h-4 w-20" />
                 <Skeleton className="h-7 w-48" />

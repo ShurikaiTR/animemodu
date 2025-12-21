@@ -55,7 +55,7 @@ function TabButton({ isActive, onClick, label, count }: TabButtonProps) {
             <h4 className="text-white font-normal text-xl md:text-2xl leading-none">
                 {label}
             </h4>
-            <span className="flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-md bg-primary text-xs text-white/80 font-normal">
+            <span className="flex items-center justify-center min-w-5 h-5 px-1.5 rounded-md bg-primary text-xs text-white/80 font-normal">
                 {count}
             </span>
         </button>

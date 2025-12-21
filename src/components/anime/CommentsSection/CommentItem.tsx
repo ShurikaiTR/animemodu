@@ -63,7 +63,7 @@ export default function CommentItem({ comment, showSpoiler, onToggleSpoiler, ani
     const handlePin = async () => {
         const supabase = createClient();
         const newPinned = !isPinned;
-        const { error } = await supabase.from("comments").update({ is_pinned: newPinned }).eq("id", comment.id);
+        const { error } = await supabase.from("comments").update({ is_pinned: newPinned } as never).eq("id", comment.id);
         if (error) return toast.error("Sabitleme işlemi başarısız");
         setIsPinned(newPinned);
         toast.success(newPinned ? "Yorum sabitlendi" : "Sabitleme kaldırıldı");
@@ -132,7 +132,7 @@ export default function CommentItem({ comment, showSpoiler, onToggleSpoiler, ani
                 </div>
 
                 {showReplyInput && (
-                    <div className="relative mt-4 ml-[52px]">
+                    <div className="relative mt-4 ml-14">
                         <div className="absolute -left-4 -top-4 w-4 h-8 border-l-2 border-b-2 border-primary/20 rounded-bl-lg" />
                         <CommentInput activeTab="comments" animeId={animeId} episodeId={episodeId} parentId={comment.id} onCommentAdded={() => { setShowReplyInput(false); onReplyAdded(); }} />
                     </div>

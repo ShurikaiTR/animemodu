@@ -22,7 +22,7 @@ export default function GenreSection({ genres, currentGenres, onGenreToggle, onC
                 {currentGenres.length > 0 && (
                     <button
                         onClick={onClearGenres}
-                        className="text-[10px] text-primary hover:underline"
+                        className="text-xs text-primary hover:underline"
                     >
                         Temizle
                     </button>

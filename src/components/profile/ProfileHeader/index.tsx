@@ -42,10 +42,10 @@ export default async function ProfileHeader({ user, isOwnProfile = true }: Profi
                 </div>
 
                 {/* Profile Info */}
-                <div className="relative px-4 sm:px-6 md:px-10 pb-6 sm:pb-8 pt-[60px] sm:pt-16 md:pt-4 bg-bg-secondary/50">
+                <div className="relative px-4 sm:px-6 md:px-10 pb-6 sm:pb-8 pt-16 sm:pt-16 md:pt-4 bg-bg-secondary/50">
                     {/* Avatar */}
                     <div className="absolute -top-12 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-6 md:left-10 sm:-top-16 md:-top-20 z-10">
-                        <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full sm:rounded-2xl md:rounded-[32px] overflow-hidden border-4 border-primary bg-bg-secondary shadow-2xl ring-4 ring-black/20">
+                        <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full sm:rounded-2xl md:rounded-3xl overflow-hidden border-4 border-primary bg-bg-secondary shadow-2xl ring-4 ring-black/20">
                             <Image
                                 src={avatarSrc}
                                 alt={user.username || "Kullanıcı"}
@@ -75,7 +75,7 @@ export default async function ProfileHeader({ user, isOwnProfile = true }: Profi
                                         </span>
                                     )}
                                     {user.role === "admin" && (
-                                        <Badge variant="blue" className="px-2 sm:px-3 py-0.5 sm:py-1 font-medium rounded-full text-[10px] sm:text-xs flex items-center gap-1 sm:gap-1.5 backdrop-blur-md bg-blue-500/10 border-blue-500/20 text-blue-400">
+                                        <Badge variant="blue" className="px-2 sm:px-3 py-0.5 sm:py-1 font-medium rounded-full text-xs flex items-center gap-1 sm:gap-1.5 backdrop-blur-md bg-blue-500/10 border-blue-500/20 text-blue-400">
                                             <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                                             Yönetici
                                         </Badge>
@@ -85,7 +85,7 @@ export default async function ProfileHeader({ user, isOwnProfile = true }: Profi
                                 <ProfileStats followers={user.followers || "0"} following={user.following || "0"} />
 
                                 {user.bio && (
-                                    <p className="text-text-main/70 text-sm sm:text-[15px] leading-relaxed max-w-2xl px-2 sm:px-0">
+                                    <p className="text-text-main/70 text-sm sm:text-base leading-relaxed max-w-2xl px-2 sm:px-0">
                                         {user.bio}
                                     </p>
                                 )}

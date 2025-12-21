@@ -19,7 +19,7 @@ export default function CommentHeader({ username, author, role, timeAgo, likes }
         <div className="flex items-center gap-2 mb-1.5">
             <Link href={`/profil/${username}`} className={cn("font-semibold text-sm hover:underline", role === "Admin" ? "text-primary" : "text-white/90")}>{author}</Link>
             {role === "Admin" && (
-                <Badge variant="blue" className="px-2 py-0.5 font-bold rounded-full text-[10px] flex items-center gap-1">
+                <Badge variant="blue" className="px-2 py-0.5 font-bold rounded-full text-xs flex items-center gap-1">
                     <ShieldCheck className="w-3 h-3" />
                     Yönetici
                 </Badge>

@@ -25,7 +25,7 @@ function SubmitButton() {
         <Button
             type="submit"
             disabled={pending}
-            className="h-10 bg-primary hover:bg-primary/90 text-white min-w-[140px] rounded-lg font-bold text-sm shadow-lg shadow-primary/20"
+            className="h-10 bg-primary hover:bg-primary/90 text-white min-w-36 rounded-lg font-bold text-sm shadow-lg shadow-primary/20"
         >
             {pending ? (
                 <>
@@ -85,14 +85,14 @@ export function AddContentModal({ isOpen, onClose, item }: AddContentModalProps)
                                         <Layers className="w-5 h-5" />
                                         <div className="text-center">
                                             <div className="font-bold text-sm">Sezonlu</div>
-                                            <div className="text-[10px] opacity-60">S1, S2...</div>
+                                            <div className="text-xs opacity-60">S1, S2...</div>
                                         </div>
                                     </button>
                                     <button type="button" onClick={() => setStructureType("absolute")} className={cn("flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-200", structureType === "absolute" ? "bg-primary/10 border-primary text-primary" : "bg-white/5 border-white/5 text-gray-400 hover:bg-white/10")}>
                                         <List className="w-5 h-5" />
                                         <div className="text-center">
                                             <div className="font-bold text-sm">Tek Liste</div>
-                                            <div className="text-[10px] opacity-60">EP1 - ∞</div>
+                                            <div className="text-xs opacity-60">EP1 - ∞</div>
                                         </div>
                                     </button>
                                 </div>

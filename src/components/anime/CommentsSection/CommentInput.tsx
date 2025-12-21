@@ -44,7 +44,7 @@ export default function CommentInput({ activeTab, animeId, episodeId, parentId, 
 
             if (data) {
                 setHasExistingReview(true);
-                setExistingReviewId(data.id);
+                setExistingReviewId((data as { id: number } | null)?.id ?? null);
             } else {
                 setHasExistingReview(false);
                 setExistingReviewId(null);
@@ -74,11 +74,28 @@ export default function CommentInput({ activeTab, animeId, episodeId, parentId, 
         setIsSubmitting(true);
 
         try {
-            const payload = activeTab === "comments"
-                ? { anime_id: animeId, user_id: user.id, content: content.trim(), is_spoiler: isSpoiler, episode_id: episodeId || null, parent_id: parentId || null }
-                : { anime_id: animeId, user_id: user.id, content: content.trim(), is_spoiler: isSpoiler, rating, title: title.trim() || null };
-
-            const { error } = await supabase.from(activeTab).insert(payload);
+            let error;
+            if (activeTab === "comments") {
+                const result = await supabase.from("comments").insert({
+                    anime_id: animeId,
+                    user_id: user.id,
+                    content: content.trim(),
+                    is_spoiler: isSpoiler,
+                    episode_id: episodeId || null,
+                    parent_id: parentId || null
+                } as never);
+                error = result.error;
+            } else {
+                const result = await supabase.from("reviews").insert({
+                    anime_id: animeId,
+                    user_id: user.id,
+                    content: content.trim(),
+                    is_spoiler: isSpoiler,
+                    rating,
+                    title: title.trim() || null
+                } as never);
+                error = result.error;
+            }
             if (error) {
                 if (error.code === "23505") {
                     toast.error("Bu anime için zaten bir inceleme yazmışsınız");
@@ -124,7 +141,7 @@ export default function CommentInput({ activeTab, animeId, episodeId, parentId, 
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         placeholder={parentId ? "Yanıtını yaz..." : (activeTab === "reviews" ? "Bu yapım hakkındaki düşüncelerini paylaş..." : "Düşüncelerini paylaş...")}
-                        className="w-full bg-transparent border-none text-white placeholder:text-white/30 resize-none text-sm leading-relaxed p-4 focus-visible:ring-0 focus-visible:ring-offset-0 min-h-[100px]"
+                        className="w-full bg-transparent border-none text-white placeholder:text-white/30 resize-none text-sm leading-relaxed p-4 focus-visible:ring-0 focus-visible:ring-offset-0 min-h-24"
                     />
 
                     <CommentInputFooter

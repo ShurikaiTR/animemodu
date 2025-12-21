@@ -48,7 +48,7 @@ export default function EpisodeCard({
                 </div>
 
                 <div className="absolute top-2 right-2 z-10">
-                    <span className="px-2 py-1 bg-black/60 backdrop-blur-md rounded-lg text-[10px] font-bold text-white/90 border border-white/10 flex items-center gap-1 shadow-lg">
+                    <span className="px-2 py-1 bg-black/60 backdrop-blur-md rounded-lg text-xs font-bold text-white/90 border border-white/10 flex items-center gap-1 shadow-lg">
                         {timeAgo}
                     </span>
                 </div>

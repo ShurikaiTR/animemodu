@@ -30,7 +30,7 @@ export function SearchResultItem({ item, onClick }: SearchResultItemProps) {
             onClick={() => onClick(item)}
             className="group relative bg-bg-secondary/30 backdrop-blur-sm border border-white/5 rounded-xl p-4 flex gap-5 cursor-pointer hover:border-white/10 hover:bg-white/[0.03] transition-all duration-200"
         >
-            <div className="relative w-[80px] h-[120px] shrink-0 rounded-lg overflow-hidden shadow-lg bg-black/50 border border-white/5">
+            <div className="relative w-20 h-32 shrink-0 rounded-lg overflow-hidden shadow-lg bg-black/50 border border-white/5">
                 {item.poster_path ? (
                     <Image
                         src={`https://image.tmdb.org/t/p/w200${item.poster_path}`}
@@ -52,7 +52,7 @@ export function SearchResultItem({ item, onClick }: SearchResultItemProps) {
                         {item.title || item.name}
                     </h3>
                     <span className={cn(
-                        "px-2 py-0.5 rounded text-[10px] font-bold border uppercase tracking-wide whitespace-nowrap",
+                        "px-2 py-0.5 rounded text-xs font-bold border uppercase tracking-wide whitespace-nowrap",
                         item.media_type === "movie"
                             ? "bg-purple-500/10 text-purple-400 border-purple-500/20"
                             : "bg-blue-500/10 text-blue-400 border-blue-500/20"

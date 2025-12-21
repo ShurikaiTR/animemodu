@@ -26,13 +26,13 @@ export default function SearchResults({ results, isLoading, query, onResultClick
     if (!query || query.length < 2) return null;
 
     return (
-        <div className="absolute top-full left-0 right-0 xl:right-auto mt-2 w-full xl:w-[350px] bg-bg-secondary/95 backdrop-blur-md rounded-xl border border-white/10 shadow-2xl overflow-hidden z-[100]">
+        <div className="absolute top-full left-0 right-0 xl:right-auto mt-2 w-full xl:w-96 bg-bg-secondary/95 backdrop-blur-md rounded-xl border border-white/10 shadow-2xl overflow-hidden z-[100]">
             {isLoading ? (
                 <div className="p-4 text-center">
                     <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
                 </div>
             ) : results.length > 0 ? (
-                <div className="max-h-[400px] overflow-y-auto">
+                <div className="max-h-96 overflow-y-auto">
                     {results.map((item) => (
                         <Link
                             key={item.id}

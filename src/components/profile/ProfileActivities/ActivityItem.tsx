@@ -49,7 +49,7 @@ export default function ActivityItem({ activity, index }: ActivityItemProps) {
             className="relative pl-6 pb-6 last:pb-0 border-l border-white/10 last:border-0 ml-2 animate-fade-in-left"
             style={{ animationDelay: `${index * 100}ms` }}
         >
-            <div className="absolute -left-[5px] top-0 w-2.5 h-2.5 rounded-full bg-white/20 ring-4 ring-bg-secondary" />
+            <div className="absolute -left-1 top-0 w-2.5 h-2.5 rounded-full bg-white/20 ring-4 ring-bg-secondary" />
 
             <div className="flex gap-4">
                 {activity.target.image && (

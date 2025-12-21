@@ -28,7 +28,7 @@ export default function DaySelector({ selectedDay, onDayChange }: DaySelectorPro
                             key={day.id}
                             onClick={() => onDayChange(day.id)}
                             className={cn(
-                                "flex flex-col items-center justify-center py-3 px-6 md:px-0 rounded-xl transition-all duration-300 min-w-[100px] md:min-w-0 md:w-full relative overflow-hidden group",
+                                "flex flex-col items-center justify-center py-3 px-6 md:px-0 rounded-xl transition-all duration-300 min-w-24 md:min-w-0 md:w-full relative overflow-hidden group",
                                 isSelected
                                     ? "bg-primary text-white shadow-lg shadow-primary/20"
                                     : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white"

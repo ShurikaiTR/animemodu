@@ -73,7 +73,7 @@ export default function GeneralTab({ user }: GeneralTabProps) {
                 <Label className="text-text-main/50">Biyografi</Label>
                 <textarea
                     name="bio"
-                    className="w-full min-h-[120px] bg-bg-secondary border border-white/10 rounded-xl p-4 text-sm text-text-main placeholder:text-text-main/50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ring-offset-bg-main transition-all resize-none font-rubik"
+                    className="w-full min-h-32 bg-bg-secondary border border-white/10 rounded-xl p-4 text-sm text-text-main placeholder:text-text-main/50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ring-offset-bg-main transition-all resize-none font-rubik"
                     placeholder="Kendinden bahset..."
                     defaultValue={user.bio || ""}
                 />

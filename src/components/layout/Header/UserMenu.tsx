@@ -73,7 +73,7 @@ export default function UserMenu({ user, signOut }: UserMenuProps) {
                         )}
                     </div>
                     <div className="hidden sm:flex flex-col items-start text-left">
-                        <span className="text-sm font-medium text-white max-w-[120px] truncate group-hover:text-primary transition-colors">
+                        <span className="text-sm font-medium text-white max-w-32 truncate group-hover:text-primary transition-colors">
                             {displayUsername}
                         </span>
                     </div>

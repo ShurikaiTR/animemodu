@@ -33,7 +33,7 @@ export default function ImagesTab({ avatarPreview, bannerPreview, onAvatarChange
                             )}
                             <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-full">
                                 <ImageIcon className="w-6 h-6 text-white mb-1" />
-                                <span className="text-[10px] text-white/70 uppercase font-bold">Değiştir</span>
+                                <span className="text-xs text-white/70 uppercase font-bold">Değiştir</span>
                             </div>
                         </div>
                         <input

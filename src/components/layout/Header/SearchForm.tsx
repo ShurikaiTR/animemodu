@@ -85,7 +85,7 @@ export default function SearchForm({ isOpen, setIsOpen, query, setQuery, onSubmi
                 ref={formRef}
                 onSubmit={onSubmit}
                 className={cn(
-                    "xl:relative xl:opacity-100 xl:pointer-events-auto xl:w-[250px] xl:top-auto xl:left-auto xl:right-auto xl:bottom-auto",
+                    "xl:relative xl:opacity-100 xl:pointer-events-auto xl:w-64 xl:top-auto xl:left-auto xl:right-auto xl:bottom-auto",
                     "absolute left-0 right-0 top-auto",
                     "h-20 xl:h-auto",
                     "bg-bg-main xl:bg-transparent",
@@ -93,7 +93,7 @@ export default function SearchForm({ isOpen, setIsOpen, query, setQuery, onSubmi
                     "px-4 xl:px-0",
                     "pointer-events-none xl:pointer-events-auto",
                     "transition-all duration-500 z-50",
-                    isOpen ? "bottom-0 pointer-events-auto" : "bottom-[-80px] pointer-events-none"
+                    isOpen ? "bottom-0 pointer-events-auto" : "-bottom-20 pointer-events-none"
                 )}
             >
                 <div className="relative w-full xl:w-full">
@@ -110,7 +110,7 @@ export default function SearchForm({ isOpen, setIsOpen, query, setQuery, onSubmi
                             "h-10 rounded-2xl bg-bg-secondary border-none pl-5 pr-12",
                             "text-sm text-white placeholder:text-text-main/70",
                             "focus:outline-none focus:ring-0 transition-all duration-300",
-                            "w-[calc(100%-40px)] xl:w-full"
+                            "w-[calc(100%-2.5rem)] xl:w-full"
                         )}
                     />
                     <button
@@ -118,7 +118,7 @@ export default function SearchForm({ isOpen, setIsOpen, query, setQuery, onSubmi
                         className={cn(
                             "absolute top-1/2 -translate-y-1/2 flex items-center justify-center w-5 h-5",
                             "text-primary hover:text-white transition-colors duration-300 z-10",
-                            "right-[52px] xl:right-4"
+                            "right-14 xl:right-4"
                         )}
                         aria-label="Ara"
                     >
@@ -127,7 +127,7 @@ export default function SearchForm({ isOpen, setIsOpen, query, setQuery, onSubmi
                     <button
                         type="button"
                         onClick={() => { setIsOpen(false); setQuery(""); setShowResults(false); }}
-                        className="absolute right-0 xl:hidden top-1/2 -translate-y-1/2 flex items-center justify-center w-[40px] h-full text-primary/70 hover:text-primary transition-opacity duration-300 z-10"
+                        className="absolute right-0 xl:hidden top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-full text-primary/70 hover:text-primary transition-opacity duration-300 z-10"
                         aria-label="Aramayı kapat"
                     >
                         <CloseIcon />

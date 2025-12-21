@@ -80,7 +80,7 @@ export default function EditProfileModal({ user, children }: EditProfileModalPro
             </DialogTrigger>
             <DialogContent
                 showCloseButton={false}
-                className="bg-[#12141a] border-white/10 p-0 overflow-hidden sm:max-w-[900px] h-[600px] flex gap-0 shadow-2xl rounded-3xl border-none"
+                className="bg-[#12141a] border-white/10 p-0 overflow-hidden sm:max-w-5xl h-[min(600px,90vh)] flex gap-0 shadow-2xl rounded-3xl border-none"
             >
                 <DialogTitle className="sr-only">Profili Düzenle</DialogTitle>
 

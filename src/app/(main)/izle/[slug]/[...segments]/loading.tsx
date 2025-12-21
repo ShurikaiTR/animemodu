@@ -27,7 +27,7 @@ export default function Loading() {
     <div className="min-h-screen bg-bg-main relative">
       <Skeleton className="absolute inset-0 w-full h-96" />
       <Container className="relative z-20 pt-28 pb-16">
-        <div className="grid grid-cols-1 xl:grid-cols-[1fr_350px] gap-8 items-start">
+        <div className="grid grid-cols-1 xl:grid-cols-[1fr_22rem] gap-8 items-start">
           <div className="flex flex-col gap-8 min-w-0">
             <VideoSkeleton />
             <div className="space-y-4">

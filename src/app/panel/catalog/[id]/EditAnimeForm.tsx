@@ -17,7 +17,7 @@ import type { AnimeRow } from "@/types/helpers";
 function SaveButton() {
     const { pending } = useFormStatus();
     return (
-        <Button type="submit" disabled={pending} className="bg-primary hover:bg-primary/90 text-white font-bold min-w-[140px] shadow-lg shadow-primary/20">
+        <Button type="submit" disabled={pending} className="bg-primary hover:bg-primary/90 text-white font-bold min-w-36 shadow-lg shadow-primary/20">
             {pending ? (<><Loader2 className="w-4 h-4 mr-2 animate-spin" />Kaydediliyor...</>) : (<><Save className="w-4 h-4 mr-2" />Değişiklikleri Kaydet</>)}
         </Button>
     );

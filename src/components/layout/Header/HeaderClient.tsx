@@ -62,11 +62,9 @@ export default function Header({ siteLogo, siteName }: HeaderProps) {
                 className={cn(
                     "fixed left-0 w-full z-50 transition-all duration-500",
                     (isScrolled || isMobileMenuOpen) ? "bg-bg-main/95 backdrop-blur-sm border-b border-bg-secondary" : "bg-transparent border-b border-transparent",
-                    "xl:top-0"
+                    "xl:top-0",
+                    isMobileMenuOpen ? "top-64" : "top-0"
                 )}
-                style={{
-                    top: isMobileMenuOpen ? '250px' : '0px'
-                }}
             >
                 <Container>
                     <div className="relative overflow-hidden xl:overflow-visible">

@@ -60,7 +60,7 @@ export default function WatchSidebar({
                         </h3>
                         <Badge variant="outline" className="text-xs border-white/10 text-text-main/60">{episodes.length}</Badge>
                     </div>
-                    <div className="overflow-y-auto max-h-[600px] custom-scrollbar p-3">
+                    <div className="overflow-y-auto max-h-[37.5rem] custom-scrollbar p-3">
                         <EpisodeList
                             episodes={episodes}
                             structureType={structureType}

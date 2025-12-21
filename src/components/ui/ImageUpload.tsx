@@ -38,7 +38,7 @@ export function ImageUpload({ value, onChange, label, description, aspectRatio =
     };
 
     const aspectClasses = {
-        square: "aspect-square max-w-[200px]",
+        square: "aspect-square max-w-52",
         video: "aspect-video w-full",
         favicon: "aspect-square w-16 h-16",
     };

@@ -42,13 +42,13 @@ export function InteractionTableRow({ item, onDelete }: InteractionTableRowProps
                     )}
                 </div>
             </td>
-            <td className="p-4 align-middle max-w-[400px]">
+            <td className="p-4 align-middle max-w-md">
                 <div className="space-y-1">
                     <p className={cn("text-sm text-white/90 line-clamp-2", item.is_spoiler && "blur-sm hover:blur-none transition-all duration-300 cursor-pointer")}>
                         {item.content}
                     </p>
                     {item.is_spoiler && (
-                        <span className="text-[10px] text-red-400 font-bold uppercase tracking-wider">Spoiler</span>
+                        <span className="text-xs text-red-400 font-bold uppercase tracking-wider">Spoiler</span>
                     )}
                 </div>
             </td>

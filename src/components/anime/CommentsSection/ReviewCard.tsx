@@ -73,7 +73,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
                             <div className="flex items-center gap-2 mb-1">
                                 <span className={cn("font-semibold text-sm", review.role === "Admin" ? "text-primary" : "text-white/90")}>{review.author}</span>
                                 {review.role === "Admin" && (
-                                    <Badge variant="blue" className="px-2 py-0.5 font-bold rounded-full text-[10px] flex items-center gap-1">
+                                    <Badge variant="blue" className="px-2 py-0.5 font-bold rounded-full text-xs flex items-center gap-1">
                                         <ShieldCheck className="w-3 h-3" />
                                         Yönetici
                                     </Badge>
@@ -92,7 +92,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
 
                     <div className="relative mb-4">
                         <Quote className="absolute left-0 -top-1 w-5 h-5 text-white/10" />
-                        <div className={cn("relative transition-all", !isExpanded && review.content.length > 300 && "max-h-[100px] overflow-hidden")}>
+                        <div className={cn("relative transition-all", !isExpanded && review.content.length > 300 && "max-h-24 overflow-hidden")}>
                             <p className="text-sm leading-relaxed text-white/70 pl-7">{review.content}</p>
                             {!isExpanded && review.content.length > 300 && (
                                 <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-bg-main to-transparent" />

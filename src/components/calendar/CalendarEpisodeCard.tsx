@@ -43,7 +43,7 @@ export default function CalendarEpisodeCard({ episode }: CalendarEpisodeCardProp
                 </span>
             </div>
 
-            <div className="w-full md:w-[150px] aspect-video md:aspect-[16/9] relative rounded-xl overflow-hidden shadow-lg flex-shrink-0">
+            <div className="w-full md:w-40 aspect-video md:aspect-[16/9] relative rounded-xl overflow-hidden shadow-lg flex-shrink-0">
                 <Image
                     src={imageUrl}
                     alt={anime.title}

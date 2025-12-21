@@ -66,7 +66,7 @@ export default function ArchiveSidebar({ genres }: ArchiveSidebarProps) {
                 isMobileOpen ? "opacity-100 visible" : "opacity-0 invisible lg:opacity-100 lg:visible"
             )}>
                 <div className={cn(
-                    "h-full lg:h-auto w-[280px] lg:w-full bg-bg-secondary/90 lg:bg-transparent backdrop-blur-xl lg:backdrop-blur-none border-r lg:border-none border-white/10 p-6 lg:p-0 overflow-y-auto lg:overflow-visible transition-transform duration-300 ease-out",
+                    "h-full lg:h-auto w-72 lg:w-full bg-bg-secondary/90 lg:bg-transparent backdrop-blur-xl lg:backdrop-blur-none border-r lg:border-none border-white/10 p-6 lg:p-0 overflow-y-auto lg:overflow-visible transition-transform duration-300 ease-out",
                     isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
                 )}>
                     <div className="flex items-center justify-between lg:hidden mb-8">

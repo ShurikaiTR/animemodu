@@ -55,7 +55,7 @@ export function UsersTable({ items }: UsersTableProps) {
                                 <th className="h-12 px-4 text-left align-middle font-medium text-white/50">Kullanıcı</th>
                                 <th className="h-12 px-4 text-left align-middle font-medium text-white/50">Rol</th>
                                 <th className="h-12 px-4 text-left align-middle font-medium text-white/50">Kayıt Tarihi</th>
-                                <th className="h-12 px-4 text-left align-middle font-medium text-white/50 w-[50px]"></th>
+                                <th className="h-12 px-4 text-left align-middle font-medium text-white/50 w-12"></th>
                             </tr>
                         </thead>
                         <tbody>

@@ -22,7 +22,7 @@ function ProfileSkeleton() {
                     <div className="relative px-6 md:px-10 pb-8 pt-16 md:pt-4">
                         {/* Avatar Skeleton */}
                         <div className="absolute -top-16 md:-top-20 left-6 md:left-10">
-                            <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl md:rounded-[32px] bg-white/10 border-2 border-primary/20" />
+                            <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl md:rounded-3xl bg-white/10 border-2 border-primary/20" />
                         </div>
 
                         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">

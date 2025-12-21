@@ -60,7 +60,7 @@ export default function WatchClient({ episode, anime, episodes }: WatchClientPro
             <WatchHero backdrop={backdrop} />
 
             <Container className="relative z-20 pt-32 pb-16">
-                <div className="grid grid-cols-1 xl:grid-cols-[1fr_350px] gap-8 items-start">
+                <div className="grid grid-cols-1 xl:grid-cols-[1fr_22rem] gap-8 items-start">
                     <div className="flex flex-col gap-8 min-w-0">
                         <div className="flex flex-col gap-4">
                             <div className="w-full aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/5 ring-1 ring-white/10 relative z-10">

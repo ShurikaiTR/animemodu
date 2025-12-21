@@ -7,7 +7,7 @@ interface SpoilerContentProps {
 
 export default function SpoilerContent({ content, onReveal }: SpoilerContentProps) {
     return (
-        <div className="relative rounded-xl bg-bg-main/60 backdrop-blur-sm border border-primary/10 min-h-[100px] overflow-hidden">
+        <div className="relative rounded-xl bg-bg-main/60 backdrop-blur-sm border border-primary/10 min-h-24 overflow-hidden">
             <p className="text-sm leading-relaxed text-white/70 blur-lg opacity-30 select-none p-4">{content}</p>
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 z-10">
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/20 backdrop-blur-sm">

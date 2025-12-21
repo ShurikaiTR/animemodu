@@ -23,12 +23,12 @@ export function CommentsTable({ items }: CommentsTableProps) {
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="bg-white/5 border-b border-white/5">
-                            <th className="h-12 px-4 text-left align-middle font-medium text-white/50 w-[100px]">Tip</th>
+                            <th className="h-12 px-4 text-left align-middle font-medium text-white/50 w-24">Tip</th>
                             <th className="h-12 px-4 text-left align-middle font-medium text-white/50">İçerik</th>
                             <th className="h-12 px-4 text-left align-middle font-medium text-white/50">Kullanıcı</th>
                             <th className="h-12 px-4 text-left align-middle font-medium text-white/50">İçerik (Anime)</th>
                             <th className="h-12 px-4 text-left align-middle font-medium text-white/50">Tarih</th>
-                            <th className="h-12 px-4 text-left align-middle font-medium text-white/50 w-[50px]"></th>
+                            <th className="h-12 px-4 text-left align-middle font-medium text-white/50 w-12"></th>
                         </tr>
                     </thead>
                     <tbody>
