@@ -84,9 +84,11 @@ const getSiteInfoCached = unstable_cache(
             }
 
             const settings: Record<string, string> = {};
+            type SettingRow = { key: string | null; value: string | null };
             data.forEach((row) => {
-                if (row.key && row.value) {
-                    settings[row.key] = row.value;
+                const typedRow = row as unknown as SettingRow;
+                if (typedRow.key && typedRow.value) {
+                    settings[typedRow.key] = typedRow.value;
                 }
             });
 

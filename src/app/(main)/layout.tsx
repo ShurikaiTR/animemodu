@@ -6,8 +6,6 @@ interface MainLayoutProps {
     children: ReactNode;
 }
 
-import { getSiteInfo } from "@/actions/settings";
-
 export default function MainLayout({ children }: MainLayoutProps) {
     return (
         <>

@@ -2,7 +2,7 @@ import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import { logError } from "@/lib/errors";
 
-const UPLOADS_DIR = join(process.cwd(), "public", "uploads");
+const _UPLOADS_DIR = join(process.cwd(), "public", "uploads");
 
 /**
  * Dosyayı lokal dosya sistemine kaydeder

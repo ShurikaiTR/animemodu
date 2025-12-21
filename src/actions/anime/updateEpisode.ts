@@ -36,7 +36,7 @@ export async function updateEpisode(formData: FormData): Promise<UpdateEpisodeRe
     try {
         const { error } = await supabase
             .from("episodes")
-            .update(data)
+            .update(data as never)
             .eq("id", id);
 
         if (error) {

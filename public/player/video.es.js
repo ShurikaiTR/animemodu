@@ -2177,9 +2177,9 @@ function fixEvent(event) {
     if (event.button !== null && event.button !== undefined) {
       // The following is disabled because it does not pass videojs-standard
       // and... yikes.
-      /* eslint-disable */
+       
       event.button = event.button & 1 ? 0 : event.button & 4 ? 1 : event.button & 2 ? 2 : 0;
-      /* eslint-enable */
+       
     }
   }
   event.fixed_ = true;
@@ -2593,7 +2593,7 @@ const debounce = function (func, wait, immediate, context = window$1) {
     timeout = null;
   };
 
-  /* eslint-disable consistent-this */
+   
   const debounced = function () {
     const self = this;
     const args = arguments;
@@ -2610,7 +2610,7 @@ const debounce = function (func, wait, immediate, context = window$1) {
     context.clearTimeout(timeout);
     timeout = context.setTimeout(later, wait);
   };
-  /* eslint-enable consistent-this */
+   
 
   debounced.cancel = cancel;
   return debounced;
@@ -3542,7 +3542,7 @@ class Component$1 {
   constructor(player, options, ready) {
     // The component might be the player itself and we can't pass `this` to super
     if (!player && this.play) {
-      this.player_ = player = this; // eslint-disable-line
+      this.player_ = player = this;  
     } else {
       this.player_ = player;
     }
@@ -4963,7 +4963,7 @@ class Component$1 {
    */
   setTimeout(fn, timeout) {
     // declare as variables so they are properly available in timeout function
-    // eslint-disable-next-line
+     
     var timeoutId;
     fn = bind_(this, fn);
     this.clearTimersOnDispose_();
@@ -5080,7 +5080,7 @@ class Component$1 {
     this.clearTimersOnDispose_();
 
     // declare as variables so they are properly available in rAF function
-    // eslint-disable-next-line
+     
     var id;
     fn = bind_(this, fn);
     id = window$1.requestAnimationFrame(() => {
@@ -10414,7 +10414,7 @@ class SpatialNavigation extends EventTarget$2 {
    */
   getCurrentComponent(target) {
     this.updateFocusableComponents();
-    // eslint-disable-next-line
+     
     const curComp = target || document.activeElement;
     if (this.focusableComponents.length) {
       for (const i of this.focusableComponents) {
@@ -27865,7 +27865,7 @@ class QualityLevel {
    * @param {Function} representation.enabled   Callback to enable/disable QualityLevel
    */
   constructor(representation) {
-    let level = this; // eslint-disable-line
+    let level = this;  
 
     level.id = representation.id;
     level.label = level.id;
@@ -27922,7 +27922,7 @@ class QualityLevelList extends videojs.EventTarget {
    */
   constructor() {
     super();
-    let list = this; // eslint-disable-line
+    let list = this;  
 
     list.levels_ = [];
     list.selectedIndex_ = -1;
@@ -29647,7 +29647,7 @@ const addLLHLSQueryDirectives = (uri, media) => {
 
       if (nextPart > -1 && nextPart !== parts.length - 1) {
         // add existing parts to our preload hints
-        // eslint-disable-next-line
+         
         parameters._HLS_part = nextPart;
       } // this if statement makes sure that we request the msn
       // of the preload segment if:
@@ -29663,13 +29663,13 @@ const addLLHLSQueryDirectives = (uri, media) => {
         nextMSN--;
       }
     } // add _HLS_msn= in front of any _HLS_part query
-    // eslint-disable-next-line
+     
 
     parameters._HLS_msn = nextMSN;
   }
   if (media.serverControl && media.serverControl.canSkipUntil) {
     // add _HLS_skip= infront of all other queries.
-    // eslint-disable-next-line
+     
     parameters._HLS_skip = media.serverControl.canSkipDateranges ? 'v2' : 'YES';
   }
   if (Object.keys(parameters).length) {
@@ -33997,17 +33997,17 @@ const workerCode$1 = transform(getWorkerString(function () {
     this.parse708captions_ = typeof options.parse708captions === 'boolean' ? options.parse708captions : true;
     this.captionPackets_ = [];
     this.ccStreams_ = [new Cea608Stream(0, 0),
-    // eslint-disable-line no-use-before-define
+     
     new Cea608Stream(0, 1),
-    // eslint-disable-line no-use-before-define
+     
     new Cea608Stream(1, 0),
-    // eslint-disable-line no-use-before-define
-    new Cea608Stream(1, 1) // eslint-disable-line no-use-before-define
+     
+    new Cea608Stream(1, 1)  
     ];
     if (this.parse708captions_) {
       this.cc708Stream_ = new Cea708Stream({
         captionServices: options.captionServices
-      }); // eslint-disable-line no-use-before-define
+      });  
     }
     this.reset(); // forward data and done events from CCs to this CaptionStream
 
@@ -36377,9 +36377,9 @@ const workerCode$1 = transform(getWorkerString(function () {
       }
     };
     parsePat = function (payload, pat) {
-      pat.section_number = payload[7]; // eslint-disable-line camelcase
+      pat.section_number = payload[7];  
 
-      pat.last_section_number = payload[8]; // eslint-disable-line camelcase
+      pat.last_section_number = payload[8];  
       // skip the PSI header and parse the first PMT entry
 
       self.pmtPid = (payload[10] & 0x1F) << 8 | payload[11];
@@ -41194,7 +41194,7 @@ const workerCode$1 = transform(getWorkerString(function () {
                         result.firstKeyFrame = firstKeyFrame;
                         result.firstKeyFrame.type = 'video';
                       } else {
-                        // eslint-disable-next-line
+                         
                         console.warn('Failed to extract PTS/DTS from PES at first keyframe. ' + 'This could be an unusual TS segment, or else mux.js did not ' + 'parse your TS segment correctly. If you know your TS ' + 'segments do contain PTS/DTS on keyframes please file a bug ' + 'report! You can try ffprobe to double check for yourself.');
                       }
                     }
@@ -41955,10 +41955,10 @@ const processTransmux = options => {
       transmuxedData,
       callback: onDone
     });
-    /* eslint-disable no-use-before-define */
+     
 
     dequeue(transmuxer);
-    /* eslint-enable */
+     
   };
   const handleError = () => {
     const error = {
@@ -50290,7 +50290,7 @@ const workerCode = transform(getWorkerString(function () {
     const encrypted = new Uint8Array(data.encrypted.bytes, data.encrypted.byteOffset, data.encrypted.byteLength);
     const key = new Uint32Array(data.key.bytes, data.key.byteOffset, data.key.byteLength / 4);
     const iv = new Uint32Array(data.iv.bytes, data.iv.byteOffset, data.iv.byteLength / 4);
-    /* eslint-disable no-new, handle-callback-err */
+     
 
     new Decrypter(encrypted, key, iv, function (err, bytes) {
       self.postMessage(createTransferableMessage({
@@ -50298,7 +50298,7 @@ const workerCode = transform(getWorkerString(function () {
         decrypted: bytes
       }), [bytes.buffer]);
     });
-    /* eslint-enable */
+     
   };
 }));
 var Decrypter = factory(workerCode);

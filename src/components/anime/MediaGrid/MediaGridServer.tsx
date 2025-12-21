@@ -40,8 +40,6 @@ interface MediaGridServerProps {
     emptyTitle?: string;
     /** Description for empty state */
     emptyDescription?: string;
-    /** Default genre label when genres array is empty */
-    defaultGenre?: string;
     /** Order by field */
     orderBy?: "created_at" | "vote_average";
     /** Order direction */
@@ -55,7 +53,6 @@ export default async function MediaGridServer({
     emptyIcon = "layout-grid",
     emptyTitle = "Henüz İçerik Eklenmemiş",
     emptyDescription = "Şu anda görüntülenecek içerik bulunmuyor. Daha sonra tekrar kontrol et.",
-    defaultGenre = "Anime",
     orderBy = "created_at",
     orderDirection = "desc",
 }: MediaGridServerProps) {

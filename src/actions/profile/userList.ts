@@ -136,5 +136,5 @@ export async function checkWatchStatus(animeId: number) {
         .eq("anime_id", animeId)
         .maybeSingle();
 
-    return { success: true, status: data?.status || null };
+    return { success: true, status: (data as { status: string } | null)?.status || null };
 }

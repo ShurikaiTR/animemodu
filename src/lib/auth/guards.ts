@@ -16,9 +16,9 @@ export type AuthError = {
  */
 export async function requireUser(): Promise<AuthResult | AuthError> {
     const supabase = await createClient();
-    
+
     const { data: { user }, error: authError } = await supabase.auth.getUser();
-    
+
     if (authError || !user) {
         return { success: false, error: "Yetkisiz işlem: Oturum açmanız gerekiyor." };
     }
@@ -31,7 +31,7 @@ export async function requireUser(): Promise<AuthResult | AuthError> {
 
     return {
         userId: user.id,
-        role: profile?.role === "admin" ? "admin" : "user",
+        role: (profile as { role: string } | null)?.role === "admin" ? "admin" : "user",
     };
 }
 
@@ -41,7 +41,7 @@ export async function requireUser(): Promise<AuthResult | AuthError> {
  */
 export async function requireAdmin(): Promise<AuthResult | AuthError> {
     const result = await requireUser();
-    
+
     if (isAuthError(result)) {
         return result;
     }
@@ -66,7 +66,7 @@ export function isAuthError(result: AuthResult | AuthError): result is AuthError
  */
 export async function requireOwnerOrAdmin(resourceOwnerId: string): Promise<AuthResult | AuthError> {
     const result = await requireUser();
-    
+
     if (isAuthError(result)) {
         return result;
     }

@@ -65,7 +65,7 @@ export async function addAnimeToDB(formData: FormData): Promise<AddAnimeResult> 
 
     const { data: insertedAnime, error: animeError } = await supabase
         .from("animes")
-        .insert(animeData)
+        .insert(animeData as never)
         .select()
         .single();
 
@@ -73,7 +73,7 @@ export async function addAnimeToDB(formData: FormData): Promise<AddAnimeResult> 
         return { success: false, error: "Anime eklenirken hata: " + animeError.message };
     }
 
-    const animeId = insertedAnime.id;
+    const animeId = (insertedAnime as { id: number }).id;
 
     if (details && details.videos && details.videos.results) {
         const trailer = details.videos.results.find(
@@ -82,7 +82,7 @@ export async function addAnimeToDB(formData: FormData): Promise<AddAnimeResult> 
         if (trailer && trailer.key) {
             await supabase
                 .from("animes")
-                .update({ trailer_key: trailer.key })
+                .update({ trailer_key: trailer.key } as never)
                 .eq("id", animeId);
         }
     }

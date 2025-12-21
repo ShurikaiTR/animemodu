@@ -18,7 +18,9 @@ export async function fetchReviewsData(animeId: number): Promise<{ reviews: Revi
         return { reviews: [], totalCount: 0 };
     }
 
-    const userIds = Array.from(new Set((reviewsData || []).map(r => r.user_id)));
+    type ReviewDataRow = { user_id: string; id: number; created_at: string; title: string | null; content: string; rating: number | null; likes_count: number; has_spoiler: boolean };
+    type ProfileData = { id: string; username: string | null; avatar_url: string | null; role: string | null };
+    const userIds = Array.from(new Set(((reviewsData || []) as ReviewDataRow[]).map(r => r.user_id)));
     let profilesMap: Record<string, { username: string; avatar_url: string | null; role: string }> = {};
 
     if (userIds.length > 0) {
@@ -28,7 +30,7 @@ export async function fetchReviewsData(animeId: number): Promise<{ reviews: Revi
             .in("id", userIds);
 
         if (profilesData) {
-            profilesData.forEach(p => {
+            (profilesData as ProfileData[]).forEach(p => {
                 profilesMap[p.id] = {
                     username: p.username || "Kullanıcı",
                     avatar_url: p.avatar_url,
@@ -38,7 +40,7 @@ export async function fetchReviewsData(animeId: number): Promise<{ reviews: Revi
         }
     }
 
-    const mappedReviews: Review[] = (reviewsData || []).map((item) => {
+    const mappedReviews: Review[] = ((reviewsData || []) as ReviewDataRow[]).map((item) => {
         const profile = profilesMap[item.user_id];
 
         return {

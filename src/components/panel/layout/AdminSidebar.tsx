@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Film, FileText, Users, MessageSquare, ArrowLeft, LogOut, Plus, Settings, Globe, Flag } from "lucide-react";
+import { LayoutDashboard, Film, FileText, Users, MessageSquare, ArrowLeft, LogOut, Plus, Settings, Flag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAdmin } from "./AdminContext";
 import { SidebarMenu } from "./SidebarMenu";

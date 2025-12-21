@@ -4,7 +4,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Share2, Flag } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface WatchControlsProps {
     prevEpisodeUrl: string | null;

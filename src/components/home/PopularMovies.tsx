@@ -28,7 +28,6 @@ export default async function PopularMovies() {
                         orderDirection="desc"
                         emptyTitle="Henüz Film Eklenmemiş"
                         emptyDescription="Panel → Yeni Ekle'den film ekleyebilirsin."
-                        defaultGenre="Film"
                     />
                 </div>
             </div>

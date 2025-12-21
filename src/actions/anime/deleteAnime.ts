@@ -28,8 +28,8 @@ export async function deleteAnime(id: number): Promise<DeleteAnimeResult> {
         const { data: comments } = await supabase.from("comments").select("id").eq("anime_id", id);
         const { data: reviews } = await supabase.from("reviews").select("id").eq("anime_id", id);
 
-        const commentIds = comments?.map(c => c.id) || [];
-        const reviewIds = reviews?.map(r => r.id) || [];
+        const commentIds = (comments as { id: number }[] | null)?.map(c => c.id) || [];
+        const reviewIds = (reviews as { id: number }[] | null)?.map(r => r.id) || [];
 
         // 3. Delete likes associated with comments and reviews
         if (commentIds.length > 0) {

@@ -20,6 +20,7 @@ export type ProfileRow = ProfilesTable["Row"];
 export type UserAnimeListRow = import("./supabase/tables/user-list").UserAnimeListTable["Row"];
 export type UserFavoritesRow = import("./supabase/tables/favorites").UserFavoritesTable["Row"];
 export type ReportRow = ReportsTable["Row"];
+export type ReportInsert = ReportsTable["Insert"];
 
 export type ReportWithDetails = ReportRow & {
   anime: AnimeRow | null;

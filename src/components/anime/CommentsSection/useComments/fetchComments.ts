@@ -51,7 +51,8 @@ export async function fetchCommentsData(
         return { comments: [], totalCount: 0 };
     }
 
-    const userIds = Array.from(new Set((commentsData || []).map(c => c.user_id)));
+    type CommentDataRow = { user_id: string; id: number; parent_id: number | null; content: string; created_at: string; likes_count: number; has_spoiler: boolean };
+    const userIds = Array.from(new Set((commentsData as CommentDataRow[] || []).map(c => c.user_id)));
     let profilesMap: Record<string, { username: string; avatar_url: string | null; role: string }> = {};
 
     if (userIds.length > 0) {
@@ -71,7 +72,7 @@ export async function fetchCommentsData(
         }
     }
 
-    const commentIds = (commentsData || []).map(c => c.id);
+    const commentIds = ((commentsData || []) as CommentDataRow[]).map(c => c.id);
     const { data: repliesData } = commentIds.length > 0
         ? await supabase
             .from("comments")
@@ -81,7 +82,7 @@ export async function fetchCommentsData(
             .order("created_at", { ascending: true })
         : { data: null };
 
-    const replyUserIds = Array.from(new Set((repliesData || []).map(r => r.user_id)));
+    const replyUserIds = Array.from(new Set(((repliesData || []) as CommentDataRow[]).map(r => r.user_id)));
     if (replyUserIds.length > 0) {
         const { data: replyProfilesData } = await supabase
             .from("profiles")
@@ -100,7 +101,7 @@ export async function fetchCommentsData(
     }
 
     const repliesMap: Record<number, Reply[]> = {};
-    (repliesData || []).forEach((reply) => {
+    ((repliesData || []) as CommentDataRow[]).forEach((reply) => {
         if (!repliesMap[reply.parent_id!]) {
             repliesMap[reply.parent_id!] = [];
         }
@@ -119,7 +120,7 @@ export async function fetchCommentsData(
         });
     });
 
-    const mappedComments: Comment[] = (commentsData || []).map((item) => {
+    const mappedComments: Comment[] = ((commentsData || []) as CommentDataRow[]).map((item) => {
         const profile = profilesMap[item.user_id];
         return {
             id: item.id,

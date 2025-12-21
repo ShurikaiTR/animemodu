@@ -37,7 +37,7 @@ export async function updateAnime(formData: FormData): Promise<UpdateAnimeResult
 
     const { error } = await supabase
         .from("animes")
-        .update(data)
+        .update(data as never)
         .eq("id", id);
 
     if (error) {

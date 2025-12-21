@@ -8,7 +8,6 @@ export default async function AnimesListServer() {
             emptyIcon="layout-grid"
             emptyTitle="Henüz Anime Eklenmemiş"
             emptyDescription="Şu anda görüntülenecek anime bulunmuyor. Daha sonra tekrar kontrol et."
-            defaultGenre="Anime"
         />
     );
 }

@@ -27,7 +27,7 @@ export async function toggleCommentLike(commentId: number, user: User | null): P
     } else {
         const { error } = await supabase
             .from("comment_likes")
-            .insert({ comment_id: commentId, user_id: user.id });
+            .insert({ comment_id: commentId, user_id: user.id } as never);
 
         if (error) return { liked: false, error: error.message };
         return { liked: true, error: null };
@@ -58,7 +58,7 @@ export async function toggleReviewLike(reviewId: number, user: User | null): Pro
     } else {
         const { error } = await supabase
             .from("review_likes")
-            .insert({ review_id: reviewId, user_id: user.id });
+            .insert({ review_id: reviewId, user_id: user.id } as never);
 
         if (error) return { liked: false, error: error.message };
         return { liked: true, error: null };

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Pin } from "lucide-react";
 import { cn, getAvatarUrl } from "@/lib/utils";
 import type { Comment } from "./types";

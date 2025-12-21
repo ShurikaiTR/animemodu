@@ -36,7 +36,7 @@ export default function WatchStatusDropdown({ animeId, initialStatus, variant = 
         const syncStatus = async () => {
             const result = await checkWatchStatus(animeId);
             if (result.success && result.status) {
-                setStatus(result.status);
+                setStatus(result.status as WatchStatus);
             }
         };
 

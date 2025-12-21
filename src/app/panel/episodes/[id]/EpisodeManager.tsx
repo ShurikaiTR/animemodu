@@ -18,7 +18,7 @@ export function EpisodeManager({ animeId }: { animeId: number }) {
     const supabase = createClient();
 
     const fetchEpisodes = async () => {
-        const { data, error } = await supabase
+        const { data, error: _error } = await supabase
             .from("episodes")
             .select("*")
             .eq("anime_id", animeId)

@@ -14,9 +14,10 @@ export default async function SettingsContent() {
         .order("id", { ascending: true });
 
     // Settings'i key-value map'e çevir
+    type SettingData = { key: string; value: string | null };
     const settingsMap: Record<string, string> = {};
     if (!error && data) {
-        data.forEach((setting) => {
+        (data as SettingData[]).forEach((setting) => {
             settingsMap[setting.key] = setting.value || "";
         });
     }

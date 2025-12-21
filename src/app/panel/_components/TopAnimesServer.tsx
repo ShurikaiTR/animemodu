@@ -18,8 +18,9 @@ export default async function TopAnimesServer() {
     .order("vote_average", { ascending: false })
     .limit(5);
 
+  type AnimeData = { id: number; title: string; media_type: string | null; vote_average: number | null };
   const topItems: TopItem[] =
-    topAnimes?.map((a) => ({
+    (topAnimes as AnimeData[] | null)?.map((a) => ({
       id: a.id,
       title: a.title,
       category: a.media_type === "movie" ? "Film" : "Dizi",

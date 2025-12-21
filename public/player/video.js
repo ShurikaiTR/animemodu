@@ -2167,9 +2167,9 @@
       if (event.button !== null && event.button !== undefined) {
         // The following is disabled because it does not pass videojs-standard
         // and... yikes.
-        /* eslint-disable */
+         
         event.button = event.button & 1 ? 0 : event.button & 4 ? 1 : event.button & 2 ? 2 : 0;
-        /* eslint-enable */
+         
       }
     }
     event.fixed_ = true;
@@ -2583,7 +2583,7 @@
       timeout = null;
     };
 
-    /* eslint-disable consistent-this */
+     
     const debounced = function () {
       const self = this;
       const args = arguments;
@@ -2600,7 +2600,7 @@
       context.clearTimeout(timeout);
       timeout = context.setTimeout(later, wait);
     };
-    /* eslint-enable consistent-this */
+     
 
     debounced.cancel = cancel;
     return debounced;
@@ -3532,7 +3532,7 @@
     constructor(player, options, ready) {
       // The component might be the player itself and we can't pass `this` to super
       if (!player && this.play) {
-        this.player_ = player = this; // eslint-disable-line
+        this.player_ = player = this;  
       } else {
         this.player_ = player;
       }
@@ -4953,7 +4953,7 @@
      */
     setTimeout(fn, timeout) {
       // declare as variables so they are properly available in timeout function
-      // eslint-disable-next-line
+       
       var timeoutId;
       fn = bind_(this, fn);
       this.clearTimersOnDispose_();
@@ -5070,7 +5070,7 @@
       this.clearTimersOnDispose_();
 
       // declare as variables so they are properly available in rAF function
-      // eslint-disable-next-line
+       
       var id;
       fn = bind_(this, fn);
       id = window.requestAnimationFrame(() => {
@@ -12742,7 +12742,7 @@
      */
     getCurrentComponent(target) {
       this.updateFocusableComponents();
-      // eslint-disable-next-line
+       
       const curComp = target || document.activeElement;
       if (this.focusableComponents.length) {
         for (const i of this.focusableComponents) {
@@ -30314,7 +30314,7 @@
          * @param {Function} representation.enabled   Callback to enable/disable QualityLevel
          */
         constructor(representation) {
-          let level = this; // eslint-disable-line
+          let level = this;  
 
           level.id = representation.id;
           level.label = level.id;
@@ -30371,7 +30371,7 @@
          */
         constructor() {
           super();
-          let list = this; // eslint-disable-line
+          let list = this;  
 
           list.levels_ = [];
           list.selectedIndex_ = -1;
@@ -31524,10 +31524,10 @@
       this.mainDefinitions = opts.mainDefinitions || {};
       this.params = new URL(opts.uri, 'https://a.com').searchParams;
       this.lastProgramDateTime = null;
-      /* eslint-disable consistent-this */
+       
 
       const self = this;
-      /* eslint-enable consistent-this */
+       
 
       const uris = [];
       let currentUri = {}; // if specified, the active EXT-X-MAP definition
@@ -32563,7 +32563,7 @@
     }
     if (!Array.isArray(bytes) && !isTypedArray(bytes) && !(bytes instanceof ArrayBuffer)) {
       // any non-number or NaN leads to empty uint8array
-      // eslint-disable-next-line
+       
       if (typeof bytes !== 'number' || typeof bytes === 'number' && bytes !== bytes) {
         bytes = 0;
       } else {
@@ -32614,7 +32614,7 @@
       _ref2$le = _ref2.le,
       le = _ref2$le === void 0 ? false : _ref2$le;
 
-    // eslint-disable-next-line
+     
     if (typeof number !== 'bigint' && typeof number !== 'number' || typeof number === 'number' && number !== number) {
       number = 0;
     }
@@ -38271,7 +38271,7 @@
     let presentationTime = periodStart;
     let number = playlist.mediaSequence || 0; // firstOffset is the offset from the end of the sidx box
 
-    let startIndex; // eslint-disable-next-line
+    let startIndex;  
 
     if (typeof sidx.firstOffset === 'bigint') {
       startIndex = window.BigInt(sidxEnd) + sidx.firstOffset;
@@ -38286,7 +38286,7 @@
 
       const duration = reference.subsegmentDuration; // should be an inclusive range
 
-      let endIndex; // eslint-disable-next-line
+      let endIndex;  
 
       if (typeof startIndex === 'bigint') {
         endIndex = startIndex + window.BigInt(size) - window.BigInt(1);
@@ -42671,7 +42671,7 @@
 
         if (nextPart > -1 && nextPart !== parts.length - 1) {
           // add existing parts to our preload hints
-          // eslint-disable-next-line
+           
           parameters._HLS_part = nextPart;
         } // this if statement makes sure that we request the msn
         // of the preload segment if:
@@ -42687,13 +42687,13 @@
           nextMSN--;
         }
       } // add _HLS_msn= in front of any _HLS_part query
-      // eslint-disable-next-line
+       
 
       parameters._HLS_msn = nextMSN;
     }
     if (media.serverControl && media.serverControl.canSkipUntil) {
       // add _HLS_skip= infront of all other queries.
-      // eslint-disable-next-line
+       
       parameters._HLS_skip = media.serverControl.canSkipDateranges ? 'v2' : 'YES';
     }
     if (Object.keys(parameters).length) {
@@ -47068,17 +47068,17 @@
       this.parse708captions_ = typeof options.parse708captions === 'boolean' ? options.parse708captions : true;
       this.captionPackets_ = [];
       this.ccStreams_ = [new Cea608Stream(0, 0),
-      // eslint-disable-line no-use-before-define
+       
       new Cea608Stream(0, 1),
-      // eslint-disable-line no-use-before-define
+       
       new Cea608Stream(1, 0),
-      // eslint-disable-line no-use-before-define
-      new Cea608Stream(1, 1) // eslint-disable-line no-use-before-define
+       
+      new Cea608Stream(1, 1)  
       ];
       if (this.parse708captions_) {
         this.cc708Stream_ = new Cea708Stream({
           captionServices: options.captionServices
-        }); // eslint-disable-line no-use-before-define
+        });  
       }
       this.reset(); // forward data and done events from CCs to this CaptionStream
 
@@ -49448,9 +49448,9 @@
         }
       };
       parsePat = function (payload, pat) {
-        pat.section_number = payload[7]; // eslint-disable-line camelcase
+        pat.section_number = payload[7];  
 
-        pat.last_section_number = payload[8]; // eslint-disable-line camelcase
+        pat.last_section_number = payload[8];  
         // skip the PSI header and parse the first PMT entry
 
         self.pmtPid = (payload[10] & 0x1F) << 8 | payload[11];
@@ -54265,7 +54265,7 @@
                           result.firstKeyFrame = firstKeyFrame;
                           result.firstKeyFrame.type = 'video';
                         } else {
-                          // eslint-disable-next-line
+                           
                           console.warn('Failed to extract PTS/DTS from PES at first keyframe. ' + 'This could be an unusual TS segment, or else mux.js did not ' + 'parse your TS segment correctly. If you know your TS ' + 'segments do contain PTS/DTS on keyframes please file a bug ' + 'report! You can try ffprobe to double check for yourself.');
                         }
                       }
@@ -55026,10 +55026,10 @@
         transmuxedData,
         callback: onDone
       });
-      /* eslint-disable no-use-before-define */
+       
 
       dequeue(transmuxer);
-      /* eslint-enable */
+       
     };
     const handleError = () => {
       const error = {
@@ -63289,7 +63289,7 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
       const encrypted = new Uint8Array(data.encrypted.bytes, data.encrypted.byteOffset, data.encrypted.byteLength);
       const key = new Uint32Array(data.key.bytes, data.key.byteOffset, data.key.byteLength / 4);
       const iv = new Uint32Array(data.iv.bytes, data.iv.byteOffset, data.iv.byteLength / 4);
-      /* eslint-disable no-new, handle-callback-err */
+       
 
       new Decrypter(encrypted, key, iv, function (err, bytes) {
         self.postMessage(createTransferableMessage({
@@ -63297,7 +63297,7 @@ ${segmentInfoString(segmentInfo)}`); // If there's an init segment associated wi
           decrypted: bytes
         }), [bytes.buffer]);
       });
-      /* eslint-enable */
+       
     };
   }));
   var Decrypter = factory(workerCode);

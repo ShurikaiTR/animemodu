@@ -50,7 +50,7 @@ export async function generateMetadata(): Promise<Metadata> {
         follow: true,
       },
     };
-  } catch (e) {
+  } catch {
     return {
       title: "AnimeModu",
       description: "Türkiye'nin en büyük anime izleme platformu.",

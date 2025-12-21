@@ -41,7 +41,21 @@ export default async function CalendarPage() {
         .order("air_date", { ascending: true })
         .limit(50);
 
-    const validEpisodes = episodes?.filter(e => e.air_date) || [];
+    type EpisodeData = {
+        air_date: string | null;
+        id: number;
+        title: string | null;
+        episode_number: number;
+        anime: {
+            id: number;
+            title: string;
+            poster_path: string | null;
+            backdrop_path: string | null;
+            genres: string[] | null | undefined;
+            slug: string;
+        } | null;
+    };
+    const validEpisodes = (episodes as EpisodeData[] | null)?.filter(e => e.air_date) || [];
 
     return (
         <div className="min-h-screen bg-bg-main pb-20 pt-24 md:pt-32">

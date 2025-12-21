@@ -13,12 +13,13 @@ export async function UsersContent() {
 
     const profiles = handleSupabaseError(result, "Kullanıcılar yüklenirken hata oluştu");
 
-    const items: UserItem[] = profiles.map((p) => ({
+    type ProfileData = { id: string; username: string | null; full_name: string | null; avatar_url: string | null; role: string; created_at: string };
+    const items: UserItem[] = (profiles as ProfileData[]).map((p) => ({
         id: p.id,
         username: p.username,
         full_name: p.full_name,
         avatar_url: p.avatar_url,
-        role: p.role,
+        role: p.role as "user" | "admin",
         created_at: p.created_at,
     }));
 

@@ -4,7 +4,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { requireAdmin, isAuthError } from "@/lib/auth/guards";
-import type { ReportInsert, ReportUpdate, ReportWithDetails } from "@/types/helpers";
+import type { ReportInsert, ReportWithDetails } from "@/types/helpers";
 
 interface CreateReportData {
     animeId: number;
@@ -51,7 +51,7 @@ export async function createReport(data: CreateReportData) {
             return { success: false, error: "Anime bulunamadı." };
         }
 
-        const reportPayload: any = { ...reportData, anime_title: anime.title };
+        const reportPayload: any = { ...reportData, anime_title: (anime as { title: string }).title };
 
         const { error } = await supabase.from("reports").insert(reportPayload);
 
@@ -133,14 +133,14 @@ export async function updateReportStatus(id: string, status: 'pending' | 'resolv
         const supabase = await createClient();
         const { error } = await supabase
             .from("reports")
-            .update({ status, updated_at: new Date().toISOString() })
+            .update({ status, updated_at: new Date().toISOString() } as never)
             .eq("id", id);
 
         if (error) throw error;
 
         revalidatePath("/panel/reports");
         return { success: true };
-    } catch (error) {
+    } catch {
         return { success: false, error: "Durum güncellenemedi." };
     }
 }
@@ -157,7 +157,7 @@ export async function deleteReport(id: string) {
 
         revalidatePath("/panel/reports");
         return { success: true };
-    } catch (error) {
+    } catch {
         return { success: false, error: "Silme işlemi başarısız." };
     }
 }

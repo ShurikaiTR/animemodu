@@ -52,7 +52,7 @@ export function useCatalogActions({ onAnimesChange }: UseCatalogActionsOptions) 
 
         onAnimesChange((prev) => prev.map((a) => (a.id === item.id ? { ...a, is_featured: newValue } : a)));
 
-        const { error } = await supabase.from("animes").update({ is_featured: newValue }).eq("id", item.id);
+        const { error } = await supabase.from("animes").update({ is_featured: newValue } as never).eq("id", item.id);
 
         if (error) {
             toast.error("Güncelleme başarısız.");

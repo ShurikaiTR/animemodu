@@ -25,7 +25,7 @@ export async function updateSetting(
         const supabase = await createClient();
         const { error } = await supabase
             .from("site_settings")
-            .update({ value })
+            .update({ value } as never)
             .eq("key", key);
 
         if (error) {
@@ -55,7 +55,7 @@ export async function updateSettings(
     try {
         const supabase = await createClient();
         const updates = Object.entries(settings).map(([key, value]) =>
-            supabase.from("site_settings").update({ value }).eq("key", key)
+            supabase.from("site_settings").update({ value } as never).eq("key", key)
         );
 
         const results = await Promise.all(updates);
@@ -124,7 +124,7 @@ export async function updateSiteInfo(
         }
 
         const updates = Object.entries(settings).map(([key, value]) =>
-            supabase.from("site_settings").update({ value }).eq("key", key)
+            supabase.from("site_settings").update({ value } as never).eq("key", key)
         );
 
         await Promise.all(updates);

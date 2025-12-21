@@ -17,7 +17,7 @@ export default function AuthFormActions({
     authState,
     loading,
     error,
-    onAuth,
+    onAuth: _onAuth,
     onStateChange
 }: AuthFormActionsProps) {
     const config = AUTH_CONFIG[authState];

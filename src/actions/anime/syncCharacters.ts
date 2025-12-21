@@ -33,26 +33,27 @@ export async function syncAnimeCharacters(animeId: number): Promise<SyncCharacte
         return { success: false, error: "Anime bulunamadı." };
     }
 
-    let anilistId = anime.anilist_id;
+    type AnimeData = { id: number; title: string; anilist_id: number | null; original_title: string | null };
+    let anilistId = (anime as AnimeData).anilist_id;
 
     if (!anilistId) {
-        const searchResults = await searchAniList(anime.title);
+        const searchResults = await searchAniList((anime as AnimeData).title);
 
         if (searchResults && searchResults.length > 0) {
             anilistId = searchResults[0].id;
 
             await supabase
                 .from("animes")
-                .update({ anilist_id: anilistId })
+                .update({ anilist_id: anilistId } as never)
                 .eq("id", animeId);
         } else {
-            if (anime.original_title) {
-                const searchResultsOriginal = await searchAniList(anime.original_title);
+            if ((anime as AnimeData).original_title) {
+                const searchResultsOriginal = await searchAniList((anime as AnimeData).original_title!);
                 if (searchResultsOriginal && searchResultsOriginal.length > 0) {
                     anilistId = searchResultsOriginal[0].id;
                     await supabase
                         .from("animes")
-                        .update({ anilist_id: anilistId })
+                        .update({ anilist_id: anilistId } as never)
                         .eq("id", animeId);
                 }
             }
@@ -67,7 +68,7 @@ export async function syncAnimeCharacters(animeId: number): Promise<SyncCharacte
 
     const { error: updateError } = await supabase
         .from("animes")
-        .update({ characters })
+        .update({ characters } as never)
         .eq("id", animeId);
 
     if (updateError) {

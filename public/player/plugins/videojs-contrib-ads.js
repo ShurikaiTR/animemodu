@@ -2659,7 +2659,7 @@
     allowVjsAutoplay: videojs.options.normalizeAutoplay || false
   };
   var contribAdsPlugin = function contribAdsPlugin(options) {
-    var player = this; // eslint-disable-line consistent-this
+    var player = this;  
 
     try{
 		var settings = videojs.obj.merge(defaults, options);

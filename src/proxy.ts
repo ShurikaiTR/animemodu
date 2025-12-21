@@ -24,7 +24,7 @@ export default async function proxy(request: NextRequest) {
       .eq("id", user.id)
       .single();
 
-    if (!profile || profile.role !== "admin") {
+    if (!profile || (profile as { role: string }).role !== "admin") {
       const url = request.nextUrl.clone();
       url.pathname = "/";
       return NextResponse.redirect(url);

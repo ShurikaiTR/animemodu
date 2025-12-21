@@ -49,7 +49,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             .order('updated_at', { ascending: false })
             .limit(1000);
 
-        const animePages: MetadataRoute.Sitemap = (animes || []).map((anime) => ({
+        type AnimeData = { slug: string; updated_at: string | null };
+        const animePages: MetadataRoute.Sitemap = ((animes || []) as AnimeData[]).map((anime) => ({
             url: `${baseUrl}/anime/${anime.slug}`,
             lastModified: anime.updated_at ? new Date(anime.updated_at) : new Date(),
             changeFrequency: 'weekly' as const,

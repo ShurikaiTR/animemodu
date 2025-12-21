@@ -48,7 +48,7 @@ export async function toggleFavorite(animeId: number) {
             .insert({
                 user_id: auth.userId,
                 anime_id: animeId
-            });
+            } as never);
 
         if (error) {
             logError("toggleFavorite.insert", error);

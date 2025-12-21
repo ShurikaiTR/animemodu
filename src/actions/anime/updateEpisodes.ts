@@ -35,7 +35,8 @@ export async function updateEpisodes(animeId: number): Promise<UpdateEpisodesRes
         return { success: false, error: "Anime bulunamadı." };
     }
 
-    if (anime.media_type !== "tv") {
+    type AnimeEpData = { tmdb_id: number; media_type: string | null; structure_type: string | null };
+    if ((anime as AnimeEpData).media_type !== "tv") {
         return { success: false, error: "Bu işlem sadece TV dizileri için geçerlidir." };
     }
 
@@ -45,10 +46,10 @@ export async function updateEpisodes(animeId: number): Promise<UpdateEpisodesRes
         .select("tmdb_id")
         .eq("anime_id", animeId);
 
-    const existingTmdbIds = new Set(existingEpisodes?.map(ep => ep.tmdb_id) || []);
+    const existingTmdbIds = new Set((existingEpisodes as { tmdb_id: number }[] | null)?.map(ep => ep.tmdb_id) || []);
 
     // 4. Fetch details from TMDB
-    const details = await getAnimeDetails(anime.tmdb_id, "tv");
+    const details = await getAnimeDetails((anime as AnimeEpData).tmdb_id, "tv");
     if (!details || !details.number_of_seasons) {
         return { success: false, error: "TMDB'den anime detayları alınamadı." };
     }
@@ -73,7 +74,7 @@ export async function updateEpisodes(animeId: number): Promise<UpdateEpisodesRes
 
     // Get max absolute_episode_number for absolute structure
     let absoluteCounter = 1;
-    if (anime.structure_type === "absolute") {
+    if ((anime as AnimeEpData).structure_type === "absolute") {
         const { data: maxEp } = await supabase
             .from("episodes")
             .select("absolute_episode_number")
@@ -82,13 +83,13 @@ export async function updateEpisodes(animeId: number): Promise<UpdateEpisodesRes
             .limit(1)
             .single();
 
-        if (maxEp?.absolute_episode_number) {
-            absoluteCounter = maxEp.absolute_episode_number + 1;
+        if ((maxEp as { absolute_episode_number: number | null } | null)?.absolute_episode_number) {
+            absoluteCounter = ((maxEp as unknown) as { absolute_episode_number: number }).absolute_episode_number + 1;
         }
     }
 
     for (let i = 1; i <= details.number_of_seasons; i++) {
-        const seasonData = await getSeasonDetails(anime.tmdb_id, i) as TMDBSeriesData | null;
+        const seasonData = await getSeasonDetails((anime as AnimeEpData).tmdb_id, i) as TMDBSeriesData | null;
         if (seasonData && seasonData.episodes) {
             const seasonEpisodes = seasonData.episodes
                 .filter((ep) => {
@@ -114,7 +115,7 @@ export async function updateEpisodes(animeId: number): Promise<UpdateEpisodesRes
                     air_date: ep.air_date || null,
                     season_number: ep.season_number,
                     episode_number: ep.episode_number,
-                    absolute_episode_number: anime.structure_type === "absolute" ? absoluteCounter++ : ep.episode_number,
+                    absolute_episode_number: (anime as AnimeEpData).structure_type === "absolute" ? absoluteCounter++ : ep.episode_number,
                     duration: ep.runtime || null
                 }));
 
@@ -126,7 +127,7 @@ export async function updateEpisodes(animeId: number): Promise<UpdateEpisodesRes
     if (newEpisodesToInsert.length > 0) {
         const { error: epError } = await supabase
             .from("episodes")
-            .insert(newEpisodesToInsert);
+            .insert(newEpisodesToInsert as never);
 
         if (epError) {
             return { success: false, error: "Bölüm ekleme hatası: " + epError.message };

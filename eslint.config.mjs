@@ -12,6 +12,7 @@ export default [
       "build/**",
       "node_modules/**",
       "next-env.d.ts",
+      "public/player/**",
       "FlixTV – Movies & TV Shows, Online cinema HTML Template/**",
     ],
   },

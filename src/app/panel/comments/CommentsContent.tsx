@@ -22,11 +22,15 @@ export async function CommentsContent() {
     const reviews = handleSupabaseError(reviewsResult, "İncelemeler yüklenirken hata oluştu");
     const animeIds = new Set<number>();
     const userIds = new Set<string>();
-    comments.forEach((c) => {
+    type CommentData = { anime_id: number; user_id: string; id: number; content: string; created_at: string; has_spoiler: boolean; likes_count: number };
+    type ReviewData = { anime_id: number; user_id: string; id: number; content: string; created_at: string; has_spoiler: boolean; likes_count: number; rating: number | null };
+    type AnimeData = { id: number; title: string; slug: string };
+    type ProfileData = { id: string; username: string | null; avatar_url: string | null; role: string };
+    (comments as CommentData[]).forEach((c) => {
         animeIds.add(c.anime_id);
         userIds.add(c.user_id);
     });
-    reviews.forEach((r) => {
+    (reviews as ReviewData[]).forEach((r) => {
         animeIds.add(r.anime_id);
         userIds.add(r.user_id);
     });
@@ -46,12 +50,12 @@ export async function CommentsContent() {
     const profiles = handleSupabaseError(profilesResult, "Kullanıcı bilgileri yüklenirken hata oluştu");
 
     const animeMap = new Map<number, { id: number; title: string; slug: string }>();
-    animes.forEach((a) => animeMap.set(a.id, a));
+    (animes as AnimeData[]).forEach((a) => animeMap.set(a.id, a));
 
     const profileMap = new Map<string, { id: string; username: string | null; avatar_url: string | null; role: "user" | "admin" }>();
-    profiles.forEach((p) => profileMap.set(p.id, p));
+    (profiles as ProfileData[]).forEach((p) => profileMap.set(p.id, { ...p, role: p.role as "user" | "admin" }));
 
-    const commentItems: InteractionItem[] = comments.map((c) => {
+    const commentItems: InteractionItem[] = (comments as CommentData[]).map((c) => {
         const profile = profileMap.get(c.user_id);
         const anime = animeMap.get(c.anime_id);
         return {
@@ -78,7 +82,7 @@ export async function CommentsContent() {
         };
     });
 
-    const reviewItems: InteractionItem[] = reviews.map((r) => {
+    const reviewItems: InteractionItem[] = (reviews as ReviewData[]).map((r) => {
         const profile = profileMap.get(r.user_id);
         const anime = animeMap.get(r.anime_id);
         return {

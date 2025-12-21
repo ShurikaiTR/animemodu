@@ -4,8 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { logError } from "@/lib/errors";
 import { requireOwnerOrAdmin, isAuthError } from "@/lib/auth/guards";
-import { profileSchema, type ProfileFormValues } from "@/lib/validations/profile";
-import type { ProfileRow, SocialMediaLinks } from "@/types/helpers";
+import { profileSchema } from "@/lib/validations/profile";
+import type { SocialMediaLinks } from "@/types/helpers";
 
 type ProfileResult =
     | { success: true; data: unknown }

@@ -35,7 +35,7 @@ export async function EpisodesContent({ params }: EpisodesContentProps) {
                     <div>
                         <h2 className="text-3xl font-rubik font-bold text-white mb-2">Bölüm Yönetimi</h2>
                         <p className="text-text-main/60 text-sm">
-                            <span className="text-primary font-medium">{anime.title}</span> için bölümleri yönet.
+                            <span className="text-primary font-medium">{(anime as { title: string; slug: string }).title}</span> için bölümleri yönet.
                         </p>
                     </div>
                 </div>

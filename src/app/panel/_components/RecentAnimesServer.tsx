@@ -18,8 +18,9 @@ export default async function RecentAnimesServer() {
     .order("created_at", { ascending: false })
     .limit(5);
 
+  type AnimeData = { id: number; title: string; media_type: string | null; is_featured: boolean | null };
   const recentItems: TopItem[] =
-    recentAnimes?.map((a) => ({
+    (recentAnimes as AnimeData[] | null)?.map((a) => ({
       id: a.id,
       title: a.title,
       category: a.media_type === "movie" ? "Film" : "Dizi",

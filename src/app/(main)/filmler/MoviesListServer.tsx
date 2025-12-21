@@ -8,7 +8,6 @@ export default async function MoviesListServer() {
             emptyIcon="film"
             emptyTitle="Henüz Film Eklenmemiş"
             emptyDescription="Şu anda görüntülenecek film bulunmuyor. Daha sonra tekrar kontrol et."
-            defaultGenre="Film"
         />
     );
 }

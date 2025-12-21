@@ -1,8 +1,8 @@
 
 "use client";
 
-import { Flag, CheckCircle, XCircle, Trash2, Clock } from "lucide-react";
-import { useState, useTransition } from "react";
+import { Flag, CheckCircle, XCircle, Trash2 } from "lucide-react";
+import { useTransition } from "react";
 import { toast } from "sonner";
 import { formatDistanceToNow } from "date-fns";
 import { tr } from "date-fns/locale";
@@ -10,7 +10,7 @@ import type { ReportWithDetails } from "@/types/helpers";
 import { updateReportStatus, deleteReport } from "@/actions/interactions/report";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+
 import { getImageUrl } from "@/lib/tmdb";
 
 interface ReportsTableProps {
@@ -18,7 +18,7 @@ interface ReportsTableProps {
 }
 
 export function ReportsTable({ items }: ReportsTableProps) {
-    const [isPending, startTransition] = useTransition();
+    const [_isPending, startTransition] = useTransition();
 
     const handleUpdateStatus = (id: string, status: 'resolved' | 'dismissed') => {
         startTransition(async () => {
@@ -100,19 +100,19 @@ export function ReportsTable({ items }: ReportsTableProps) {
                                     </td>
                                     <td className="p-4 align-middle">
                                         <div className="flex items-center gap-3">
-                                            {item.anime?.poster ? (
+                                            {item.anime?.poster_path ? (
                                                 <div className="w-8 h-12 relative rounded overflow-hidden flex-shrink-0">
                                                     <Image
-                                                        src={getImageUrl(item.anime.poster, "w200")}
-                                                        alt={item.anime_title}
+                                                        src={getImageUrl(item.anime.poster_path, "w200")}
+                                                        alt={item.anime?.title || "Anime"}
                                                         fill
                                                         className="object-cover"
                                                     />
                                                 </div>
                                             ) : null}
                                             <div className="flex flex-col min-w-0">
-                                                <span className="text-sm font-medium text-white truncate max-w-52" title={item.anime_title}>
-                                                    {item.anime_title}
+                                                <span className="text-sm font-medium text-white truncate max-w-52" title={item.anime?.title || ""}>
+                                                    {item.anime?.title || "Bilinmiyor"}
                                                 </span>
                                                 {(item.season_number || item.episode_number) && (
                                                     <span className="text-xs text-white/50">
@@ -162,7 +162,7 @@ export function ReportsTable({ items }: ReportsTableProps) {
                                                         size="icon"
                                                         variant="ghost"
                                                         className="h-8 w-8 text-green-500 hover:text-green-400 hover:bg-green-500/10"
-                                                        onClick={() => handleUpdateStatus(item.id, 'resolved')}
+                                                        onClick={() => handleUpdateStatus(String(item.id), 'resolved')}
                                                         title="Çözüldü işaretle"
                                                     >
                                                         <CheckCircle className="w-4 h-4" />
@@ -171,7 +171,7 @@ export function ReportsTable({ items }: ReportsTableProps) {
                                                         size="icon"
                                                         variant="ghost"
                                                         className="h-8 w-8 text-red-500 hover:text-red-400 hover:bg-red-500/10"
-                                                        onClick={() => handleUpdateStatus(item.id, 'dismissed')}
+                                                        onClick={() => handleUpdateStatus(String(item.id), 'dismissed')}
                                                         title="Reddet"
                                                     >
                                                         <XCircle className="w-4 h-4" />
@@ -182,7 +182,7 @@ export function ReportsTable({ items }: ReportsTableProps) {
                                                 size="icon"
                                                 variant="ghost"
                                                 className="h-8 w-8 text-white/40 hover:text-red-500 hover:bg-white/5"
-                                                onClick={() => handleDelete(item.id)}
+                                                onClick={() => handleDelete(String(item.id))}
                                                 title="Sil"
                                             >
                                                 <Trash2 className="w-4 h-4" />
