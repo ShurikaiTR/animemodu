@@ -59,7 +59,7 @@ export function CastSkeleton() {
       <Skeleton className="h-8 w-24" />
       <div className="flex gap-4 overflow-hidden">
         {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="flex-shrink-0 w-20 space-y-2">
+          <div key={i} className="shrink-0 w-20 space-y-2">
             <Skeleton className="w-20 h-20 rounded-full" />
             <Skeleton className="h-3 w-full" />
             <Skeleton className="h-2 w-2/3 mx-auto" />
@@ -78,7 +78,7 @@ export function CommentsSkeleton() {
         {Array.from({ length: 3 }).map((_, i) => (
           <div key={i} className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
             <div className="flex gap-3">
-              <Skeleton className="w-10 h-10 rounded-full flex-shrink-0" />
+              <Skeleton className="w-10 h-10 rounded-full shrink-0" />
               <div className="flex-1 space-y-2">
                 <Skeleton className="h-4 w-32" />
                 <Skeleton className="h-3 w-full" />

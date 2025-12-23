@@ -103,7 +103,7 @@ export default function WatchClient({ episode, anime, episodes }: WatchClientPro
                             id: ep.id.toString(),
                             episode_number: ep.episode_number,
                             season_number: ep.season_number,
-                            title: ep.title || `${ep.season_number}. Sezon ${ep.episode_number}. Bölüm`,
+                            title: `${ep.season_number}. Sezon ${ep.episode_number}. Bölüm`,
                             overview: ep.overview || "",
                             still_path: ep.still_path,
                             air_date: ep.air_date || "",

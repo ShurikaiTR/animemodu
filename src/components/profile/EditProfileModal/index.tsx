@@ -80,7 +80,7 @@ export default function EditProfileModal({ user, children }: EditProfileModalPro
             </DialogTrigger>
             <DialogContent
                 showCloseButton={false}
-                className="bg-[#12141a] border-white/10 p-0 overflow-hidden sm:max-w-5xl h-[min(600px,90vh)] flex gap-0 shadow-2xl rounded-3xl border-none"
+                className="bg-bg-dark border-white/10 p-0 overflow-hidden sm:max-w-5xl h-[min(600px,90vh)] flex gap-0 shadow-2xl rounded-3xl border-none"
             >
                 <DialogTitle className="sr-only">Profili Düzenle</DialogTitle>
 
@@ -97,7 +97,7 @@ export default function EditProfileModal({ user, children }: EditProfileModalPro
                     onTabChange={setActiveTab}
                 />
 
-                <form action={handleSave} className="flex-1 flex flex-col min-w-0 bg-[#12141a]">
+                <form action={handleSave} className="flex-1 flex flex-col min-w-0 bg-bg-dark">
                     <div className="flex-1 overflow-y-auto p-8 no-scrollbar">
                         <AnimatePresence mode="wait">
                             <motion.div

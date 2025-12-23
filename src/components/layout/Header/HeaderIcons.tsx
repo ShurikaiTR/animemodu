@@ -18,9 +18,9 @@ export const ArrowDownIcon = () => (
 
 export const LiveIcon = () => (
     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="ml-1 mt-0.5">
-        <circle cx="6" cy="4" r="4" fill="#EB5757" fillOpacity="0.5" />
+        <circle cx="6" cy="4" r="4" fill="var(--color-danger-accent)" fillOpacity="0.5" />
         <g filter="url(#filter0_d)">
-            <circle cx="6" cy="4" r="2" fill="#EB5757" />
+            <circle cx="6" cy="4" r="2" fill="var(--color-danger-accent)" />
         </g>
         <defs>
             <filter id="filter0_d" x="0" y="0" width="12" height="12" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">

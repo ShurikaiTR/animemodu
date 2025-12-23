@@ -7,7 +7,6 @@ import { getImageUrl } from "@/lib/tmdb";
 
 interface CalendarEpisode {
     id: number;
-    title: string | null;
     episode_number: number;
     air_date: string | null;
     anime: {
@@ -36,14 +35,14 @@ export default function CalendarEpisodeCard({ episode }: CalendarEpisodeCardProp
 
     return (
         <div className="group relative flex flex-col md:flex-row items-center gap-6 bg-bg-secondary/30 border border-white/5 rounded-2xl p-4 md:p-6 hover:bg-white/5 transition-all duration-300 hover:border-white/10">
-            <div className="flex-shrink-0 flex flex-col items-center justify-center w-full md:w-24 h-16 md:h-24 bg-white/5 rounded-xl border border-white/5">
+            <div className="shrink-0 flex flex-col items-center justify-center w-full md:w-24 h-16 md:h-24 bg-white/5 rounded-xl border border-white/5">
                 <Clock className="w-5 h-5 text-primary mb-1" />
                 <span className="text-xl font-bold text-white font-rubik tracking-wide">
                     {isMidnight ? "??" : timeStr}
                 </span>
             </div>
 
-            <div className="w-full md:w-40 aspect-video md:aspect-[16/9] relative rounded-xl overflow-hidden shadow-lg flex-shrink-0">
+            <div className="w-full md:w-40 aspect-video md:aspect-[16/9] relative rounded-xl overflow-hidden shadow-lg shrink-0">
                 <Image
                     src={imageUrl}
                     alt={anime.title}
@@ -68,7 +67,7 @@ export default function CalendarEpisodeCard({ episode }: CalendarEpisodeCardProp
                 </p>
             </div>
 
-            <div className="flex-shrink-0 w-full md:w-auto mt-4 md:mt-0 flex gap-3 justify-center md:justify-end">
+            <div className="shrink-0 w-full md:w-auto mt-4 md:mt-0 flex gap-3 justify-center md:justify-end">
                 <Button variant="glass" size="icon" className="h-12 w-12 rounded-xl text-yellow-400 hover:text-white">
                     <Bell className="w-5 h-5" />
                 </Button>

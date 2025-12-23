@@ -4,8 +4,11 @@ export interface ReportsTable {
     Row: {
         id: number;
         anime_id: number;
+        anime_title: string;
         episode_id: number | null;
-        user_id: string;
+        episode_number: number | null;
+        season_number: number | null;
+        user_id: string | null;
         reason: string;
         description: string | null;
         status: "pending" | "resolved" | "dismissed";
@@ -15,8 +18,11 @@ export interface ReportsTable {
     Insert: {
         id?: number;
         anime_id: number;
+        anime_title: string;
         episode_id?: number | null;
-        user_id: string;
+        episode_number?: number | null;
+        season_number?: number | null;
+        user_id?: string | null;
         reason: string;
         description?: string | null;
         status?: "pending" | "resolved" | "dismissed";

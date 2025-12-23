@@ -25,7 +25,6 @@ create table if not exists episodes (
   id bigint primary key generated always as identity,
   anime_id bigint references animes(id) on delete cascade not null,
   tmdb_id integer,
-  title text,
   overview text,
   still_path text,
   vote_average numeric,

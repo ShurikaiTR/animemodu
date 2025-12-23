@@ -92,15 +92,15 @@ export default function Error({
 
                         <div className="pt-8 border-t border-white/5 flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-3 text-xs font-mono text-text-main/60">
                             <div className="flex items-center gap-2 whitespace-nowrap">
-                                <ShieldAlert className="w-4 h-4 text-primary animate-pulse flex-shrink-0" />
+                                <ShieldAlert className="w-4 h-4 text-primary animate-pulse shrink-0" />
                                 <span>GÜVENLİK: İHLAL</span>
                             </div>
                             <div className="flex items-center gap-2 whitespace-nowrap">
-                                <Activity className="w-4 h-4 text-primary flex-shrink-0" />
+                                <Activity className="w-4 h-4 text-primary shrink-0" />
                                 <span>ÇEKİRDEK: DENGESİZ</span>
                             </div>
                             <div className="flex items-center gap-2 whitespace-nowrap">
-                                <div className="w-2 h-2 rounded-full bg-primary animate-ping flex-shrink-0" />
+                                <div className="w-2 h-2 rounded-full bg-primary animate-ping shrink-0" />
                                 <span>BAĞLANTI: KOPTU</span>
                             </div>
                         </div>

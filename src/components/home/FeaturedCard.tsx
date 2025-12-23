@@ -41,7 +41,7 @@ export default function FeaturedCard({ anime }: FeaturedCardProps) {
                         priority
                     />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0f1115] via-[#0f1115]/50 to-transparent z-10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-gradient-dark via-gradient-dark/50 to-transparent z-10" />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-transparent z-10" />
             </Link>
 

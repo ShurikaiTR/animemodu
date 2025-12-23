@@ -3,7 +3,7 @@ import { EpisodesContent } from "./EpisodesContent";
 import EpisodesLoading from "./loading";
 
 interface PageProps {
-    params: Promise<{ id: string }>;
+    params: Promise<{ slug: string }>;
 }
 
 export default function AnimeEpisodesPage({ params }: PageProps) {

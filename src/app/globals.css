@@ -3,8 +3,14 @@
 :root {
   --bg-main: #131720;
   --bg-secondary: #151f30;
+  --bg-dark: #12141a;
+  --bg-dropdown: #1a1f2e;
+  --bg-video: #0a0a0a;
+  --gradient-dark: #0f1115;
   --color-primary: #2f80ed;
   --color-primary-hover: #4a9af5;
+  --color-danger: #ef4444;
+  --color-danger-accent: #EB5757;
   --text-main: #e0e0e0;
   --text-heading: #ffffff;
 
@@ -13,6 +19,10 @@
 
   --color-accent-orange: #ea580c;
   --color-accent-green: #16a34a;
+
+  /* Social Media Brand Colors */
+  --color-twitter: #1DA1F2;
+  --color-instagram: #E1306C;
 
   --shadow-primary-glow: 0 0 50px rgba(47, 128, 237, 0.4);
   --shadow-primary-glow-lg: 0 0 80px rgba(47, 128, 237, 0.5);
@@ -25,7 +35,13 @@
 @theme {
   --color-bg-main: var(--bg-main);
   --color-bg-secondary: var(--bg-secondary);
+  --color-bg-dark: var(--bg-dark);
+  --color-bg-dropdown: var(--bg-dropdown);
+  --color-bg-video: var(--bg-video);
+  --color-gradient-dark: var(--gradient-dark);
   --color-primary: var(--color-primary);
+  --color-danger: var(--color-danger);
+  --color-danger-accent: var(--color-danger-accent);
   --color-text-main: var(--text-main);
   --color-text-heading: var(--text-heading);
 
@@ -34,6 +50,10 @@
 
   --color-accent-orange: var(--color-accent-orange);
   --color-accent-green: var(--color-accent-green);
+
+  /* Social Media Brand Colors */
+  --color-twitter: var(--color-twitter);
+  --color-instagram: var(--color-instagram);
 }
 
 body {
@@ -94,6 +114,7 @@ h6 {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -110,6 +131,7 @@ h6 {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -126,6 +148,7 @@ h6 {
     opacity: 0;
     transform: translateX(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);

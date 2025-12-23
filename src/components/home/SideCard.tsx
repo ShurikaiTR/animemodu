@@ -21,7 +21,7 @@ export default function SideCard({ title, image, episode, tag, priority = false 
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 priority={priority}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0f1115] via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-gradient-dark via-transparent to-transparent" />
 
             <div className="absolute top-4 left-4 z-10">
                 <span className="bg-white/10 backdrop-blur-md text-white text-xs font-bold px-2 py-1 rounded-lg border border-white/10 flex items-center gap-1">

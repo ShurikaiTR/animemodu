@@ -51,6 +51,10 @@ export default function LatestEpisodes({ episodes }: { episodes: EpisodeItem[] }
 
                         const imagePath = ep.still_path || ep.anime.poster_path;
 
+                        // Absolute modda: episode_number = absolute, season = 1
+                        const watchEpNum = isSeasonal ? ep.episode_number : (ep.absolute_episode_number || ep.episode_number);
+                        const watchSeasonNum = isSeasonal ? ep.season_number : 1;
+
                         return (
                             <EpisodeCard
                                 key={ep.id}
@@ -58,7 +62,7 @@ export default function LatestEpisodes({ episodes }: { episodes: EpisodeItem[] }
                                 episodeNumber={epNumberText}
                                 image={getImageUrl(imagePath, "w500")}
                                 timeAgo={getTimeAgo(ep.created_at)}
-                                href={getWatchUrl(ep.anime.slug, ep.episode_number, ep.season_number, ep.anime.structure_type)}
+                                href={getWatchUrl(ep.anime.slug, watchEpNum, watchSeasonNum, ep.anime.structure_type)}
                             />
                         );
                     })}

@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { createClient } from "@/lib/supabase/client";
-import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import ExistingReviewMessage from "./ExistingReviewMessage";
 import ReviewFormHeader from "./ReviewFormHeader";
 import LoginPrompt from "./LoginPrompt";
 import CommentInputFooter from "./CommentInputFooter";
+import { submitComment, submitReview } from "./submitHelpers";
 
 interface CommentInputProps {
     activeTab: "comments" | "reviews";
@@ -55,11 +55,7 @@ export default function CommentInput({ activeTab, animeId, episodeId, parentId, 
     const handleDeleteReview = async () => {
         if (!existingReviewId) return;
         const { error } = await supabase.from("reviews").delete().eq("id", existingReviewId);
-        if (error) {
-            toast.error("Silme işlemi başarısız");
-            return;
-        }
-        toast.success("İnceleme silindi");
+        if (error) return;
         setHasExistingReview(false);
         setExistingReviewId(null);
         onCommentAdded();
@@ -68,50 +64,29 @@ export default function CommentInput({ activeTab, animeId, episodeId, parentId, 
     if (!user) return <LoginPrompt compact={!!parentId} />;
 
     const handleSubmit = async () => {
-        if (!content.trim()) return toast.error("Lütfen bir şeyler yazın");
-        if (activeTab === "reviews" && rating === 0) return toast.error("Lütfen bir puan verin");
+        if (!content.trim()) return;
+        if (activeTab === "reviews" && rating === 0) return;
         setIsSubmitting(true);
 
         try {
-            let error;
+            let success = false;
             if (activeTab === "comments") {
-                const result = await supabase.from("comments").insert({
-                    anime_id: animeId,
-                    user_id: user.id,
-                    content: content.trim(),
-                    is_spoiler: isSpoiler,
-                    episode_id: episodeId || null,
-                    parent_id: parentId || null
-                } as never);
-                error = result.error;
+                success = await submitComment({
+                    supabase, animeId, userId: user.id, content, isSpoiler, episodeId, parentId
+                });
             } else {
-                const result = await supabase.from("reviews").insert({
-                    anime_id: animeId,
-                    user_id: user.id,
-                    content: content.trim(),
-                    is_spoiler: isSpoiler,
-                    rating,
-                    title: title.trim() || null
-                } as never);
-                error = result.error;
-            }
-            if (error) {
-                if (error.code === "23505") {
-                    toast.error("Bu anime için zaten bir inceleme yazmışsınız");
-                    return;
-                }
-                throw new Error(error.message);
+                success = await submitReview({
+                    supabase, animeId, userId: user.id, content, isSpoiler, rating, title
+                });
             }
 
-            toast.success(activeTab === "comments" ? "Yorum gönderildi" : "İnceleme paylaşıldı");
-            setContent("");
-            setTitle("");
-            setRating(0);
-            setIsSpoiler(false);
-            onCommentAdded();
-        } catch (err) {
-            const message = err instanceof Error ? err.message : "Bir hata oluştu";
-            toast.error(message);
+            if (success) {
+                setContent("");
+                setTitle("");
+                setRating(0);
+                setIsSpoiler(false);
+                onCommentAdded();
+            }
         } finally {
             setIsSubmitting(false);
         }

@@ -10,4 +10,5 @@ export interface EditFormData {
   structure_type: "seasonal" | "absolute";
   is_featured: boolean;
   trailer_key: string;
+  genres: string[];
 }

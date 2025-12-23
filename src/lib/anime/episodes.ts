@@ -10,7 +10,6 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 export interface EpisodeInsertData {
   anime_id: number;
   tmdb_id: number;
-  title: string | null;
   overview: string | null;
   still_path: string | null;
   vote_average: number | null;
@@ -24,7 +23,6 @@ export interface EpisodeInsertData {
 export function mapEpisodeRowToEpisode(ep: EpisodeRow): Episode {
   return {
     id: ep.id,
-    title: ep.title,
     overview: ep.overview,
     still_path: ep.still_path,
     video_url: ep.video_url,
@@ -84,19 +82,25 @@ export async function insertEpisodesFromTMDB(
         episodeDate.setHours(0, 0, 0, 0);
         return episodeDate <= today;
       })
-      .map((ep) => ({
-        anime_id: animeId,
-        tmdb_id: ep.id,
-        title: ep.name || null,
-        overview: ep.overview || null,
-        still_path: ep.still_path || null,
-        vote_average: ep.vote_average || null,
-        air_date: ep.air_date || null,
-        season_number: ep.season_number,
-        episode_number: ep.episode_number,
-        absolute_episode_number: structureType === "absolute" ? absoluteCounter++ : ep.episode_number,
-        duration: ep.runtime || null
-      }));
+      .map((ep) => {
+        const isAbsolute = structureType === "absolute";
+        const absoluteNum = isAbsolute ? absoluteCounter++ : null;
+
+        return {
+          anime_id: animeId,
+          tmdb_id: ep.id,
+          overview: ep.overview || null,
+          still_path: ep.still_path || null,
+          vote_average: ep.vote_average || null,
+          air_date: ep.air_date || null,
+          // Absolute modda: season_number = 1, episode_number = absolute numara
+          // Seasonal modda: TMDB'den gelen değerler
+          season_number: isAbsolute ? 1 : ep.season_number,
+          episode_number: isAbsolute ? absoluteNum! : ep.episode_number,
+          absolute_episode_number: absoluteNum ?? ep.episode_number,
+          duration: ep.runtime || null
+        };
+      });
 
     allEpisodes.push(...seasonEpisodes);
   }

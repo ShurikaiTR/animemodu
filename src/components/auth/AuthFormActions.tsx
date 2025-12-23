@@ -69,7 +69,7 @@ export default function AuthFormActions({
                     <span className="w-full border-t border-white/10" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-[#12141a] px-2 text-white/40">veya</span>
+                    <span className="bg-bg-dark px-2 text-white/40">veya</span>
                 </div>
             </div>
 

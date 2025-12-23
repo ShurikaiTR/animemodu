@@ -1,63 +1,106 @@
+-- =====================================================
+-- REPORTS TABLE
+-- Video/içerik hata bildirimleri için
+-- =====================================================
 
--- Reports Table
-create table public.reports (
-    id uuid not null default gen_random_uuid(),
-    user_id uuid references public.profiles(id) on delete set null,
-    anime_id bigint not null references public.animes(id) on delete cascade,
-    anime_title text not null, -- Store title for easier display if anime is deleted (though cascade handles deletion, having title is useful for quick access) -> Actually foreign key exists, we can join. But let's just use anime_id. Wait, `ReportModal` has `animeTitle` prop.
-    -- Let's stick to normalized data: anime_id.
-    episode_number int,
-    season_number int, -- Nullable for standard anime? Or 1 default.
-    episode_title text, -- Optional, for context if needed.
+create table if not exists public.reports (
+    id bigint primary key generated always as identity,
     
+    -- İlişkili anime ve bölüm bilgileri
+    anime_id bigint not null references public.animes(id) on delete cascade,
+    anime_title text not null,  -- Denormalized, anime silinse bile görüntüleme için
+    episode_id bigint references public.episodes(id) on delete set null,
+    season_number integer,
+    episode_number integer,
+    
+    -- Bildirim detayları
     reason text not null check (reason in ('playback', 'audio', 'subtitle', 'wrong')),
     description text,
     status text not null default 'pending' check (status in ('pending', 'resolved', 'dismissed')),
     
-    created_at timestamptz not null default now(),
-    updated_at timestamptz not null default now(),
+    -- Kullanıcı (anonim bildirimlere izin ver)
+    user_id uuid references auth.users(id) on delete set null,
     
-    constraint reports_pkey primary key (id)
+    -- Timestamps
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+    updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
--- RLS Policies
+-- =====================================================
+-- ROW LEVEL SECURITY
+-- =====================================================
+
 alter table public.reports enable row level security;
 
--- Admins can view and update all reports
-create policy "Admins can view all reports"
-    on public.reports for select
-    using ( public.is_admin() );
-
-create policy "Admins can update reports"
-    on public.reports for update
-    using ( public.is_admin() );
-
-create policy "Admins can delete reports"
-    on public.reports for delete
-    using ( public.is_admin() );
-
--- Users can insert reports (Authenticated or Anonymous? Let's allow Authenticated for now. Anonymous requires public insert)
--- "public.is_admin()" check or "auth.uid() is not null"?
--- Let's allow any authenticated user to insert.
-create policy "Users can create reports"
-    on public.reports for insert
-    with check ( auth.role() = 'authenticated' );
-
--- If we want anonymous reports, we'd need public insert. Let's start with authenticated.
--- Actually, user might not be logged in while watching? 
--- The user request implies `user_id` is nullable. 
--- Let's allow public insert for now but `user_id` will be null if not logged in.
+-- Herkes rapor oluşturabilir (giriş yapmış veya anonim)
 create policy "Anyone can create reports"
     on public.reports for insert
-    with check ( true ); 
+    with check (true);
 
--- Indexes
-create index reports_anime_id_idx on public.reports(anime_id);
-create index reports_status_idx on public.reports(status);
-create index reports_created_at_idx on public.reports(created_at desc);
+-- Sadece adminler raporları görebilir
+create policy "Only admins can view reports"
+    on public.reports for select
+    using (
+        exists (
+            select 1 from public.profiles
+            where profiles.id = auth.uid()
+            and profiles.role = 'admin'
+        )
+    );
 
--- Trigger for updated_at
-create trigger handle_reports_updated_at
+-- Sadece adminler raporları güncelleyebilir
+create policy "Only admins can update reports"
+    on public.reports for update
+    using (
+        exists (
+            select 1 from public.profiles
+            where profiles.id = auth.uid()
+            and profiles.role = 'admin'
+        )
+    );
+
+-- Sadece adminler raporları silebilir
+create policy "Only admins can delete reports"
+    on public.reports for delete
+    using (
+        exists (
+            select 1 from public.profiles
+            where profiles.id = auth.uid()
+            and profiles.role = 'admin'
+        )
+    );
+
+-- =====================================================
+-- INDEXES
+-- =====================================================
+
+create index if not exists idx_reports_anime_id on public.reports(anime_id);
+create index if not exists idx_reports_status on public.reports(status);
+create index if not exists idx_reports_created_at on public.reports(created_at desc);
+create index if not exists idx_reports_user_id on public.reports(user_id);
+
+-- =====================================================
+-- TRIGGERS
+-- =====================================================
+
+-- Updated at trigger
+create or replace function public.handle_reports_updated_at()
+returns trigger as $$
+begin
+    new.updated_at = timezone('utc'::text, now());
+    return new;
+end;
+$$ language plpgsql;
+
+drop trigger if exists set_reports_updated_at on public.reports;
+create trigger set_reports_updated_at
     before update on public.reports
     for each row
-    execute function public.handle_updated_at();
+    execute function public.handle_reports_updated_at();
+
+-- =====================================================
+-- COMMENTS
+-- =====================================================
+comment on table public.reports is 'Video/içerik hata bildirimleri';
+comment on column public.reports.reason is 'playback: video açılmıyor, audio: ses sorunu, subtitle: altyazı hatalı, wrong: yanlış bölüm';
+comment on column public.reports.status is 'pending: beklemede, resolved: çözüldü, dismissed: reddedildi';

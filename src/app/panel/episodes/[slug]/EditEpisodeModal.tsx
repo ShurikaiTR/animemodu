@@ -53,15 +53,6 @@ export function EditEpisodeModal({ episode, isOpen, onClose, onUpdate }: EditEpi
                 <form action={handleSubmit} className="space-y-4 py-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <Label htmlFor="title">Bölüm Başlığı</Label>
-                            <Input
-                                id="title"
-                                name="title"
-                                defaultValue={episode.title || ""}
-                                className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50"
-                            />
-                        </div>
-                        <div className="space-y-2">
                             <Label htmlFor="air_date">Yayın Tarihi</Label>
                             <Input
                                 id="air_date"

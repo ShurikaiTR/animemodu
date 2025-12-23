@@ -40,7 +40,7 @@ export default function SearchResults({ results, isLoading, query, onResultClick
                             onClick={onResultClick}
                             className="flex items-center gap-3 p-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0"
                         >
-                            <div className="relative w-12 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-white/5">
+                            <div className="relative w-12 h-16 rounded-lg overflow-hidden shrink-0 bg-white/5">
                                 {item.poster_path ? (
                                     <Image
                                         src={`https://image.tmdb.org/t/p/w92${item.poster_path}`}

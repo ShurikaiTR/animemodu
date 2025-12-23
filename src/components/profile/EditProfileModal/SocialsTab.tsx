@@ -14,16 +14,16 @@ export default function SocialsTab({ user }: SocialsTabProps) {
         <div className="space-y-6">
             <div className="space-y-2">
                 <Label className="text-text-main/50">Twitter / X</Label>
-                <div className="relative group focus-within:text-[#1DA1F2] transition-colors">
-                    <Twitter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-main/30 group-focus-within:text-[#1DA1F2] transition-colors" />
-                    <Input defaultValue={user.socials?.twitter} className="pl-10 focus:border-[#1DA1F2]/50" placeholder="https://twitter.com/..." />
+                <div className="relative group focus-within:text-twitter transition-colors">
+                    <Twitter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-main/30 group-focus-within:text-twitter transition-colors" />
+                    <Input defaultValue={user.socials?.twitter} className="pl-10 focus:border-twitter/50" placeholder="https://twitter.com/..." />
                 </div>
             </div>
             <div className="space-y-2">
                 <Label className="text-text-main/50">Instagram</Label>
-                <div className="relative group focus-within:text-[#E1306C] transition-colors">
-                    <Instagram className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-main/30 group-focus-within:text-[#E1306C] transition-colors" />
-                    <Input defaultValue={user.socials?.instagram} className="pl-10 focus:border-[#E1306C]/50" placeholder="https://instagram.com/..." />
+                <div className="relative group focus-within:text-instagram transition-colors">
+                    <Instagram className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-main/30 group-focus-within:text-instagram transition-colors" />
+                    <Input defaultValue={user.socials?.instagram} className="pl-10 focus:border-instagram/50" placeholder="https://instagram.com/..." />
                 </div>
             </div>
             <div className="space-y-2">

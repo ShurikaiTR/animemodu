@@ -5,7 +5,6 @@
  */
 export interface Episode {
     id: number;
-    title: string | null;
     overview: string | null;
     still_path: string | null;
     video_url: string | null;
@@ -26,7 +25,7 @@ export interface EpisodeListItem {
     id: number | string;
     episode_number: number;
     season_number: number;
-    title: string;
+    absolute_episode_number?: number | null;
     overview: string | null;
     still_path: string | null;
     air_date: string | null;
@@ -40,7 +39,6 @@ export interface EpisodeListItem {
  */
 export interface EpisodeManagement {
     id: number;
-    title: string | null;
     overview: string | null;
     vote_average: number | null;
     air_date: string | null;

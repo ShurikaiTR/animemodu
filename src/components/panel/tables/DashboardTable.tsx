@@ -28,7 +28,7 @@ export function DashboardTable({ title, icon: Icon, items, showRating = false }:
             <RefreshCw className="w-4 h-4" />
           </button>
           <Link
-            href="/panel/catalog"
+            href="/panel/series"
             className="text-xs font-bold text-primary hover:text-primary/80 uppercase tracking-widest border border-primary/20 px-3 py-1.5 rounded-lg hover:bg-primary/10 transition-colors"
           >
             Tümünü Gör

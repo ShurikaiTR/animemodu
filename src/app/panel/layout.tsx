@@ -6,12 +6,12 @@ import AdminHeader from "@/components/panel/layout/AdminHeader";
 import { AdminProvider } from "@/components/panel/layout/AdminContext";
 
 interface AdminLayoutProps {
-  children: ReactNode;
+    children: ReactNode;
 }
 
 function AdminSidebarFallback() {
     return (
-        <aside className="fixed top-0 left-0 bottom-0 z-[101] w-72 bg-bg-main border-r border-primary/10 flex flex-col -translate-x-full lg:translate-x-0">
+        <aside className="fixed top-0 left-0 z-[101] w-72 h-screen bg-bg-main border-r border-primary/10 flex flex-col -translate-x-full lg:translate-x-0">
             <div className="h-20 flex items-center px-8 border-b border-primary/10 bg-bg-main">
                 <div className="h-9 w-32 bg-white/5 animate-pulse rounded" />
             </div>
@@ -52,15 +52,18 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 <Suspense fallback={<AdminHeaderFallback />}>
                     <AdminHeader />
                 </Suspense>
-                <Suspense fallback={<AdminSidebarFallback />}>
-                    <AdminSidebar />
-                </Suspense>
 
-                <main className="lg:pl-72 pt-20 lg:pt-0 min-h-screen transition-all duration-500">
-                    <div className="p-5 lg:p-8">
-                        {children}
-                    </div>
-                </main>
+                <div className="flex">
+                    <Suspense fallback={<AdminSidebarFallback />}>
+                        <AdminSidebar />
+                    </Suspense>
+
+                    <main className="flex-1 pt-20 lg:pt-0 min-h-screen transition-all duration-500">
+                        <div className="p-5 lg:p-8">
+                            {children}
+                        </div>
+                    </main>
+                </div>
             </div>
         </AdminProvider>
     );

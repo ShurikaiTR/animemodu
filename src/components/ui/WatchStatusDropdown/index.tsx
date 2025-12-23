@@ -102,7 +102,7 @@ export default function WatchStatusDropdown({ animeId, initialStatus, variant = 
             <DropdownMenuContent
                 align={variant === "featured" ? "center" : "start"}
                 side={variant === "card" ? "top" : "bottom"}
-                className="w-56 bg-[#1a1f2e]/95 backdrop-blur-xl border-white/10 text-white p-2 shadow-2xl rounded-xl animate-in fade-in zoom-in-95 duration-200 z-[60]"
+                className="w-56 bg-bg-dropdown/95 backdrop-blur-xl border-white/10 text-white p-2 shadow-2xl rounded-xl animate-in fade-in zoom-in-95 duration-200 z-[60]"
                 onClick={(e) => e.stopPropagation()}
             >
                 <DropdownMenuLabel className="text-xs font-normal text-white/50 mb-2 px-2 uppercase tracking-wider">

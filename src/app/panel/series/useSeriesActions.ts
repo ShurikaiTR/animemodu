@@ -11,11 +11,11 @@ import type { Database } from "@/types/supabase";
 
 type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];
 
-interface UseCatalogActionsOptions {
+interface UseSeriesActionsOptions {
     onAnimesChange: React.Dispatch<React.SetStateAction<AnimeRow[]>>;
 }
 
-export function useCatalogActions({ onAnimesChange }: UseCatalogActionsOptions) {
+export function useSeriesActions({ onAnimesChange }: UseSeriesActionsOptions) {
     const [updatingAnimeId, setUpdatingAnimeId] = useState<number | null>(null);
     const [deleteAnimeId, setDeleteAnimeId] = useState<number | null>(null);
     const [isPending, startTransition] = useTransition();
@@ -44,7 +44,7 @@ export function useCatalogActions({ onAnimesChange }: UseCatalogActionsOptions) 
     };
 
     const handleEdit = (item: AnimeRow) => {
-        router.push(`/panel/catalog/${item.id}`);
+        router.push(`/panel/series/${item.slug}`);
     };
 
     const handleToggleFeatured = async (item: AnimeRow) => {

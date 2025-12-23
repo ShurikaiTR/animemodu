@@ -80,7 +80,7 @@ export default function UserMenu({ user, signOut }: UserMenuProps) {
                     <ChevronDown className="w-4 h-4 text-white/50 group-hover:text-primary transition-colors duration-300 ml-1 group-data-[state=open]:rotate-180" />
                 </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-64 bg-[#1a1f2e]/95 backdrop-blur-xl border-white/10 text-white p-2 shadow-2xl rounded-xl mt-2 animate-in fade-in zoom-in-95 duration-200">
+            <DropdownMenuContent align="end" className="w-64 bg-bg-dropdown/95 backdrop-blur-xl border-white/10 text-white p-2 shadow-2xl rounded-xl mt-2 animate-in fade-in zoom-in-95 duration-200">
                 <DropdownMenuLabel className="font-normal p-0 mb-2">
                     <div className="flex flex-col space-y-1 bg-white/5 p-3 rounded-lg border border-white/5">
                         <p className="text-sm font-medium leading-none text-white">Hesabım</p>

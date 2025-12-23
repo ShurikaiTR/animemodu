@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Film, FileText, Users, MessageSquare, ArrowLeft, LogOut, Plus, Settings, Flag } from "lucide-react";
+import { LayoutDashboard, Film, FileText, Users, MessageSquare, ArrowLeft, LogOut, Plus, Settings, Flag, Tags, Tv, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAdmin } from "./AdminContext";
 import { SidebarMenu } from "./SidebarMenu";
@@ -21,29 +21,33 @@ type MenuItem = {
 
 const MENU_ITEMS: MenuItem[] = [
     { title: "Gösterge Paneli", icon: LayoutDashboard, href: "/panel" },
+
+    { title: "İçerik Yönetimi", isHeader: true },
     {
         title: "Animeler",
-        icon: Film,
+        icon: Tv,
         items: [
-            { title: "Anime Listesi", href: "/panel/catalog", icon: Film },
-            { title: "Anime Ekle", href: "/panel/add", icon: Plus },
+            { title: "Anime Listesi", href: "/panel/series", icon: Tv },
+            { title: "Bölümler", href: "/panel/episodes", icon: Layers },
         ]
     },
-    { title: "Sayfalar", icon: FileText, href: "/panel/pages" },
-    { title: "Kullanıcılar", icon: Users, href: "/panel/users" },
+    { title: "Filmler", icon: Film, href: "/panel/movies" },
+    { title: "Türler", icon: Tags, href: "/panel/genres" },
 
     { title: "Topluluk", isHeader: true },
+    { title: "Kullanıcılar", icon: Users, href: "/panel/users" },
     { title: "Yorumlar", icon: MessageSquare, href: "/panel/comments" },
     { title: "Bildirimler", icon: Flag, href: "/panel/reports" },
 
     { title: "Site Yönetimi", isHeader: true },
+    { title: "Sayfalar", icon: FileText, href: "/panel/pages" },
     { title: "Ayarlar", icon: Settings, href: "/panel/settings" },
     { title: "Siteye Dön", icon: ArrowLeft, href: "/" },
 ];
 
 export default function AdminSidebar() {
     const { isSidebarOpen, closeSidebar } = useAdmin();
-    const [expandedMenu, setExpandedMenu] = useState<string | null>("Animeler");
+    const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
 
     return (
         <>
@@ -57,8 +61,9 @@ export default function AdminSidebar() {
 
             <aside
                 className={cn(
-                    "fixed top-0 left-0 bottom-0 z-[101] w-72 bg-bg-main border-r border-primary/10 flex flex-col transition-transform duration-300 lg:translate-x-0",
-                    isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+                    "sticky top-0 left-0 z-[101] w-72 h-fit bg-bg-main border-r border-primary/10 flex flex-col shrink-0 transition-transform duration-300 lg:translate-x-0",
+                    "hidden lg:flex",
+                    isSidebarOpen ? "!flex fixed inset-0 h-screen" : ""
                 )}
             >
                 <div className="h-20 flex items-center px-8 border-b border-primary/10 bg-bg-main">
@@ -92,7 +97,7 @@ export default function AdminSidebar() {
                     </Button>
                 </div>
 
-                <nav className="flex-1 overflow-y-auto py-8">
+                <nav className="py-8">
                     <SidebarMenu items={MENU_ITEMS} expandedMenu={expandedMenu} setExpandedMenu={setExpandedMenu} />
                 </nav>
 

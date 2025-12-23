@@ -6,7 +6,7 @@ export default function ArchiveLoading() {
     <div className="pt-36 pb-16 min-h-screen bg-bg-main">
       <Container>
         <div className="flex flex-col lg:flex-row gap-0 lg:gap-10 items-start">
-          <div className="w-full lg:w-64 flex-shrink-0 lg:sticky lg:top-24">
+          <div className="w-full lg:w-64 shrink-0 lg:sticky lg:top-24">
             <div className="space-y-6">
               <Skeleton className="h-10 w-full rounded-xl" />
               <Skeleton className="h-32 w-full rounded-xl" />

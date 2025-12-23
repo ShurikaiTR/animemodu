@@ -1,20 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { CatalogItem } from "@/components/panel/tables/CatalogItem";
+import { SeriesTable } from "@/components/panel/tables/SeriesTable";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, Plus } from "lucide-react";
 import Link from "next/link";
 import type { AnimeRow } from "../types";
 import { DeleteAnimeConfirmationModal } from "@/components/panel/tables/CatalogItem/DeleteAnimeConfirmationModal";
-import { useCatalogActions } from "./useCatalogActions";
+import { useSeriesActions } from "./useSeriesActions";
 
-interface CatalogClientProps {
+interface SeriesClientProps {
     initialAnimes: AnimeRow[];
 }
 
-export default function CatalogClient({ initialAnimes }: CatalogClientProps) {
+export default function SeriesClient({ initialAnimes }: SeriesClientProps) {
     const [animes, setAnimes] = useState<AnimeRow[]>(initialAnimes);
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -27,7 +27,7 @@ export default function CatalogClient({ initialAnimes }: CatalogClientProps) {
         handleEdit,
         handleToggleFeatured,
         handleUpdateEpisodes,
-    } = useCatalogActions({ onAnimesChange: setAnimes });
+    } = useSeriesActions({ onAnimesChange: setAnimes });
 
     const filteredAnimes = animes.filter(
         (anime) =>
@@ -65,19 +65,16 @@ export default function CatalogClient({ initialAnimes }: CatalogClientProps) {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            <div className="mt-6">
                 {filteredAnimes.length > 0 ? (
-                    filteredAnimes.map((anime) => (
-                        <CatalogItem
-                            key={anime.id}
-                            item={anime}
-                            onDelete={() => setDeleteAnimeId(anime.id)}
-                            onEdit={handleEdit}
-                            onToggleFeatured={handleToggleFeatured}
-                            onUpdateEpisodes={handleUpdateEpisodes}
-                            isUpdatingEpisodes={updatingAnimeId === anime.id}
-                        />
-                    ))
+                    <SeriesTable
+                        items={filteredAnimes}
+                        onEdit={handleEdit}
+                        onDelete={(id) => setDeleteAnimeId(id)}
+                        onToggleFeatured={handleToggleFeatured}
+                        onUpdateEpisodes={handleUpdateEpisodes}
+                        updatingAnimeId={updatingAnimeId}
+                    />
                 ) : (
                     <div className="col-span-full py-24 flex flex-col items-center justify-center text-text-main/20 border border-dashed border-white/5 rounded-2xl bg-bg-secondary/10">
                         <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">

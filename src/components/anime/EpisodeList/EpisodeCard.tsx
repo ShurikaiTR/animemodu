@@ -16,15 +16,19 @@ interface EpisodeCardProps {
 }
 
 export default function EpisodeCard({ episode, structureType, animeSlug, isCurrent }: EpisodeCardProps) {
-    const watchUrl = getWatchUrl(animeSlug, episode.episode_number, episode.season_number, structureType);
+    // Absolute modda: episode_number yerine absolute_episode_number kullan
+    const isAbsolute = structureType === "absolute";
+    const epNum = isAbsolute ? (episode.absolute_episode_number || episode.episode_number) : episode.episode_number;
+    const seasonNum = isAbsolute ? 1 : episode.season_number;
+    const watchUrl = getWatchUrl(animeSlug, epNum, seasonNum, structureType);
 
     const Content = () => (
         <>
-            <div className="relative w-28 aspect-video flex-shrink-0 rounded-lg overflow-hidden bg-black/50">
+            <div className="relative w-28 aspect-video shrink-0 rounded-lg overflow-hidden bg-black/50">
                 {episode.still_path ? (
                     <Image
                         src={episode.still_path.startsWith("http") ? episode.still_path : `https://image.tmdb.org/t/p/w300${episode.still_path}`}
-                        alt={episode.title}
+                        alt={`Bölüm ${episode.episode_number}`}
                         fill
                         sizes="(max-width: 768px) 100vw, 300px"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -52,14 +56,14 @@ export default function EpisodeCard({ episode, structureType, animeSlug, isCurre
                         "text-xs font-bold uppercase tracking-wider",
                         isCurrent ? "text-primary" : "text-white/40 group-hover:text-primary transition-colors"
                     )}>
-                        {structureType === "seasonal" ? `${episode.season_number}x${episode.episode_number}` : `Bölüm ${episode.episode_number}`}
+                        {structureType === "seasonal" ? `${episode.season_number}x${episode.episode_number}` : `Bölüm ${epNum}`}
                     </span>
                 </div>
                 <h4 className={cn(
                     "font-bold text-sm line-clamp-1 transition-colors",
                     isCurrent ? "text-primary" : "text-white group-hover:text-white"
                 )}>
-                    {episode.title || `${episode.episode_number}. Bölüm`}
+                    {`${episode.episode_number}. Bölüm`}
                 </h4>
                 <p className="text-white/40 text-xs line-clamp-1 mt-0.5">
                     {episode.overview || "Özet yok."}

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Save, Loader2, Film } from "lucide-react";
+import { ArrowLeft, Save, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { EditSidebar } from "./EditSidebar";
@@ -23,11 +23,12 @@ function SaveButton() {
     );
 }
 
-export function EditAnimeForm({ id }: { id: string }) {
+export function EditAnimeForm({ slug }: { slug: string }) {
     const router = useRouter();
     const supabase = createClient();
 
     const [isLoading, setIsLoading] = useState(true);
+    const [animeId, setAnimeId] = useState<number | null>(null);
     const [formData, setFormData] = useState<EditFormData>({
         title: "",
         original_title: "",
@@ -39,7 +40,8 @@ export function EditAnimeForm({ id }: { id: string }) {
         release_date: "",
         structure_type: "seasonal",
         is_featured: false,
-        trailer_key: ""
+        trailer_key: "",
+        genres: []
     });
 
     useEffect(() => {
@@ -47,17 +49,18 @@ export function EditAnimeForm({ id }: { id: string }) {
             const { data, error } = await supabase
                 .from("animes")
                 .select("*")
-                .eq("id", Number(id))
+                .eq("slug", slug)
                 .single();
 
             if (error) {
                 toast.error("İçerik bulunamadı veya bir hata oluştu.");
-                router.push("/panel/catalog");
+                router.push("/panel/series");
                 return;
             }
 
             if (data) {
                 const anime = data as AnimeRow;
+                setAnimeId(anime.id);
                 setFormData({
                     title: anime.title || "",
                     original_title: anime.original_title || "",
@@ -70,16 +73,18 @@ export function EditAnimeForm({ id }: { id: string }) {
                     structure_type: anime.structure_type || "seasonal",
                     is_featured: anime.is_featured || false,
                     trailer_key: (anime as AnimeRow).trailer_key || "",
+                    genres: anime.genres || [],
                 });
             }
             setIsLoading(false);
         };
 
         fetchData();
-    }, [id, router, supabase]);
+    }, [slug, router, supabase]);
 
     const handleSubmit = async (formDataSubmit: FormData) => {
-        formDataSubmit.set("id", id);
+        if (!animeId) return;
+        formDataSubmit.set("id", animeId.toString());
         formDataSubmit.set("title", formData.title);
         formDataSubmit.set("original_title", formData.original_title);
         formDataSubmit.set("slug", formData.slug);
@@ -91,10 +96,11 @@ export function EditAnimeForm({ id }: { id: string }) {
         formDataSubmit.set("structure_type", formData.structure_type);
         formDataSubmit.set("is_featured", formData.is_featured.toString());
         formDataSubmit.set("trailer_key", formData.trailer_key);
+        formDataSubmit.set("genres", JSON.stringify(formData.genres));
         const result = await updateAnime(formDataSubmit);
         if (result.success) {
             toast.success("Değişiklikler başarıyla kaydedildi!");
-            router.push("/panel/catalog");
+            router.push("/panel/series");
         } else {
             toast.error("Güncelleme başarısız: " + (result.error || "Bilinmeyen hata"));
         }
@@ -106,34 +112,25 @@ export function EditAnimeForm({ id }: { id: string }) {
     return (
         <div className="space-y-6 animate-in fade-in duration-500 pb-20 max-w-5xl mx-auto">
             <div className="flex flex-col gap-6 pb-6 border-b border-white/5">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <Link href="/panel/catalog">
-                            <Button variant="ghost" size="icon" className="h-10 w-10 text-text-main hover:text-white hover:bg-white/5">
-                                <ArrowLeft className="w-5 h-5" />
-                            </Button>
-                        </Link>
-                        <div>
-                            <h2 className="text-3xl font-rubik font-bold text-white mb-2">İçerik Düzenle</h2>
-                            <p className="text-text-main/60 text-sm">
-                                <span className="text-primary font-medium">{formData.title}</span> içeriğini düzenliyorsunuz.
-                            </p>
-                        </div>
-                    </div>
-                    <Link href={`/panel/episodes/${id}`}>
-                        <Button variant="outline" className="border-primary/20 bg-primary/10 text-primary hover:bg-primary hover:text-white gap-2">
-                            <Film className="w-4 h-4" />
-                            Bölümleri Yönet
+                <div className="flex items-center gap-4">
+                    <Link href="/panel/series">
+                        <Button variant="ghost" size="icon" className="h-10 w-10 text-text-main hover:text-white hover:bg-white/5">
+                            <ArrowLeft className="w-5 h-5" />
                         </Button>
                     </Link>
+                    <div>
+                        <h2 className="text-3xl font-rubik font-bold text-white mb-2">İçerik Düzenle</h2>
+                        <p className="text-text-main/60 text-sm">
+                            <span className="text-primary font-medium">{formData.title}</span> içeriğini düzenliyorsunuz.
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <form action={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <EditSidebar formData={formData} setFormData={setFormData} />
                 <EditFormFields formData={formData} setFormData={setFormData} />
-                <div className="lg:col-span-2 flex items-center justify-end gap-3 pt-6 border-t border-white/5">
-                    <Link href="/panel/catalog"><Button type="button" variant="ghost" className="text-text-main hover:text-white hover:bg-white/5">İptal</Button></Link>
+                <div className="lg:col-span-2 flex items-center justify-end pt-6 border-t border-white/5">
                     <SaveButton />
                 </div>
             </form>

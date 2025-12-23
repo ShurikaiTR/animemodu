@@ -54,6 +54,13 @@ export const updateAnimeSchema = z.object({
     structure_type: structureTypeSchema.optional().nullable(),
     is_featured: z.string().transform(val => val === "true").optional(),
     trailer_key: z.string().max(100).optional().nullable(),
+    genres: z.string().transform(val => {
+        try {
+            return JSON.parse(val) as string[];
+        } catch {
+            return [];
+        }
+    }).optional(),
 });
 
 export type UpdateAnimeInput = z.infer<typeof updateAnimeSchema>;
@@ -61,7 +68,6 @@ export type UpdateAnimeInput = z.infer<typeof updateAnimeSchema>;
 // Update Episode schema
 export const updateEpisodeSchema = z.object({
     id: z.coerce.number().positive("Geçerli bir bölüm ID gerekli"),
-    title: z.string().max(500).optional().nullable(),
     overview: z.string().max(5000).optional().nullable(),
     vote_average: z.coerce.number().min(0).max(10).optional().nullable(),
     duration: z.coerce.number().min(0).optional().nullable(),
@@ -77,17 +83,33 @@ export type UpdateEpisodeInput = z.infer<typeof updateEpisodeSchema>;
 // Anime ID schema (for delete, syncCharacters, updateEpisodes)
 export const animeIdSchema = z.coerce.number().positive("Geçerli bir anime ID gerekli");
 
+// Genre validation schemas
+export const genreNameSchema = z.string()
+    .min(1, "Tür adı boş olamaz")
+    .max(50, "Tür adı çok uzun")
+    .trim();
+
+export const renameGenreSchema = z.object({
+    oldName: genreNameSchema,
+    newName: genreNameSchema,
+}).refine(data => data.oldName !== data.newName, {
+    message: "Yeni tür adı eskisiyle aynı olamaz",
+    path: ["newName"],
+});
+
+export type RenameGenreInput = z.infer<typeof renameGenreSchema>;
+
 // Helper to parse FormData with a schema
 export function parseFormData<T extends z.ZodSchema>(
     formData: FormData,
     schema: T
 ): ReturnType<T["safeParse"]> {
     const data: Record<string, unknown> = {};
-    
+
     formData.forEach((value, key) => {
         data[key] = value;
     });
-    
+
     return schema.safeParse(data) as ReturnType<T["safeParse"]>;
 }
 
@@ -99,4 +121,3 @@ export function formatZodError(error: z.ZodError): string {
     });
     return messages.join(", ");
 }
-

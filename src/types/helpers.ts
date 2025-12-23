@@ -23,7 +23,7 @@ export type ReportRow = ReportsTable["Row"];
 export type ReportInsert = ReportsTable["Insert"];
 
 export type ReportWithDetails = ReportRow & {
-  anime: AnimeRow | null;
+  anime: { id: number; title: string; slug: string; poster_path: string | null } | null;
   user: { username: string; avatar_url: string | null } | null;
 };
 

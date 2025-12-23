@@ -3,7 +3,6 @@ export interface EpisodesTable {
         id: number
         anime_id: number
         tmdb_id: number | null
-        title: string | null
         overview: string | null
         still_path: string | null
         vote_average: number | null
@@ -19,7 +18,6 @@ export interface EpisodesTable {
         id?: number
         anime_id: number
         tmdb_id?: number | null
-        title?: string | null
         overview?: string | null
         still_path?: string | null
         vote_average?: number | null
@@ -35,7 +33,6 @@ export interface EpisodesTable {
         id?: number
         anime_id?: number
         tmdb_id?: number | null
-        title?: string | null
         overview?: string | null
         still_path?: string | null
         vote_average?: number | null

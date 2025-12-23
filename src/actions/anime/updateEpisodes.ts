@@ -61,7 +61,6 @@ export async function updateEpisodes(animeId: number): Promise<UpdateEpisodesRes
     let newEpisodesToInsert: Array<{
         anime_id: number;
         tmdb_id: number;
-        title: string | null;
         overview: string | null;
         still_path: string | null;
         vote_average: number | null;
@@ -105,19 +104,25 @@ export async function updateEpisodes(animeId: number): Promise<UpdateEpisodesRes
                     // Only add episodes that aired today or in the past
                     return episodeDate <= today;
                 })
-                .map((ep) => ({
-                    anime_id: animeId,
-                    tmdb_id: ep.id,
-                    title: ep.name || null,
-                    overview: ep.overview || null,
-                    still_path: ep.still_path || null,
-                    vote_average: ep.vote_average || null,
-                    air_date: ep.air_date || null,
-                    season_number: ep.season_number,
-                    episode_number: ep.episode_number,
-                    absolute_episode_number: (anime as AnimeEpData).structure_type === "absolute" ? absoluteCounter++ : ep.episode_number,
-                    duration: ep.runtime || null
-                }));
+                .map((ep) => {
+                    const isAbsolute = (anime as AnimeEpData).structure_type === "absolute";
+                    const absoluteNum = isAbsolute ? absoluteCounter++ : null;
+
+                    return {
+                        anime_id: animeId,
+                        tmdb_id: ep.id,
+                        overview: ep.overview || null,
+                        still_path: ep.still_path || null,
+                        vote_average: ep.vote_average || null,
+                        air_date: ep.air_date || null,
+                        // Absolute modda: season_number = 1, episode_number = absolute numara
+                        // Seasonal modda: TMDB'den gelen değerler
+                        season_number: isAbsolute ? 1 : ep.season_number,
+                        episode_number: isAbsolute ? absoluteNum! : ep.episode_number,
+                        absolute_episode_number: absoluteNum ?? ep.episode_number,
+                        duration: ep.runtime || null
+                    };
+                });
 
             newEpisodesToInsert = [...newEpisodesToInsert, ...seasonEpisodes];
         }

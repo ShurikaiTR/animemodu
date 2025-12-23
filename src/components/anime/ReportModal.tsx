@@ -76,7 +76,7 @@ export default function ReportModal({ isOpen, onClose, animeTitle, episodeTitle,
             onClick={onClose}
         >
             <div
-                className="bg-[#12141a] w-full max-w-md rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative animate-in zoom-in-95 duration-300 cursor-auto"
+                className="bg-bg-dark w-full max-w-md rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative animate-in zoom-in-95 duration-300 cursor-auto"
                 onClick={(e) => e.stopPropagation()}
             >
                 <button

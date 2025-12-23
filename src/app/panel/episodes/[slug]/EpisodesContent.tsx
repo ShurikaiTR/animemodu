@@ -6,28 +6,30 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
 interface EpisodesContentProps {
-    params: Promise<{ id: string }>;
+    params: Promise<{ slug: string }>;
 }
 
 export async function EpisodesContent({ params }: EpisodesContentProps) {
-    const { id } = await params;
+    const { slug } = await params;
     const supabase = await createClient();
 
-    const { data: anime, error } = await supabase
+    const { data, error } = await supabase
         .from("animes")
-        .select("title, slug")
-        .eq("id", Number(id))
+        .select("id, title, slug")
+        .eq("slug", slug)
         .single();
 
+    const anime = data as { id: number; title: string; slug: string } | null;
+
     if (error || !anime) {
-        redirect("/panel/catalog");
+        redirect("/panel/series");
     }
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500 pb-20 max-w-5xl mx-auto">
             <div className="flex flex-col gap-6 pb-6 border-b border-white/5">
                 <div className="flex items-center gap-4">
-                    <Link href={`/panel/catalog/${id}`}>
+                    <Link href={`/panel/series/${anime.slug}`}>
                         <Button variant="ghost" size="icon" className="h-10 w-10 text-text-main hover:text-white hover:bg-white/5">
                             <ArrowLeft className="w-5 h-5" />
                         </Button>
@@ -35,13 +37,13 @@ export async function EpisodesContent({ params }: EpisodesContentProps) {
                     <div>
                         <h2 className="text-3xl font-rubik font-bold text-white mb-2">Bölüm Yönetimi</h2>
                         <p className="text-text-main/60 text-sm">
-                            <span className="text-primary font-medium">{(anime as { title: string; slug: string }).title}</span> için bölümleri yönet.
+                            <span className="text-primary font-medium">{anime.title}</span> için bölümleri yönet.
                         </p>
                     </div>
                 </div>
             </div>
 
-            <EpisodeManager animeId={Number(id)} />
+            <EpisodeManager animeId={anime.id} />
         </div>
     );
 }

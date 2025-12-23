@@ -1,21 +1,22 @@
 import { createClient } from "@/lib/supabase/server";
-import CatalogClient from "./CatalogClient";
+import MoviesClient from "./MoviesClient";
 import type { AnimeRow } from "../types";
 
 export const metadata = {
-    title: "Katalog - Admin Panel",
-    description: "İçerik kataloğunu yönetin",
+    title: "Filmler - Admin Panel",
+    description: "Film kataloğunu yönetin",
 };
 
-export default async function CatalogPage() {
+export default async function MoviesPage() {
     const supabase = await createClient();
 
     const { data } = await supabase
         .from("animes")
         .select("*")
+        .eq("media_type", "movie")
         .order("created_at", { ascending: false });
 
-    const animes: AnimeRow[] = data || [];
+    const movies: AnimeRow[] = data || [];
 
-    return <CatalogClient initialAnimes={animes} />;
+    return <MoviesClient initialMovies={movies} />;
 }

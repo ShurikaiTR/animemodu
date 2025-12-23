@@ -98,8 +98,8 @@ export function EpisodeManager({ animeId }: { animeId: number }) {
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2 mb-1">
                                                 <span className="text-primary font-mono text-sm font-bold">#{ep.episode_number}</span>
-                                                <h4 className="text-white font-medium truncate text-sm" title={ep.title || ""}>
-                                                    {ep.title || `Bölüm ${ep.episode_number}`}
+                                                <h4 className="text-white font-medium truncate text-sm">
+                                                    Bölüm {ep.episode_number}
                                                 </h4>
                                             </div>
                                             <div className="flex items-center gap-3 text-xs text-white/40">

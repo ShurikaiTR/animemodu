@@ -76,7 +76,7 @@ export default async function ArchivePage({ searchParams }: { searchParams: Prom
             <Container>
                 <div className="flex flex-col lg:flex-row gap-0 lg:gap-10 items-start">
 
-                    <div className="w-full lg:w-64 flex-shrink-0 lg:sticky lg:top-24">
+                    <div className="w-full lg:w-64 shrink-0 lg:sticky lg:top-24">
                         <Suspense fallback={<div>Yükleniyor...</div>}>
                             <ArchiveSidebar genres={availableGenres} />
                         </Suspense>

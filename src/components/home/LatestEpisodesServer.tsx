@@ -40,11 +40,13 @@ export default async function LatestEpisodesServer() {
   cacheTag("latest-episodes");
 
   const supabase = createPublicClient();
-  
+
   const { data: latestEpisodes } = await supabase
     .from("episodes")
     .select("id, episode_number, season_number, absolute_episode_number, still_path, created_at, anime:animes(title, slug, poster_path, structure_type)")
     .order("created_at", { ascending: false })
+    .order("season_number", { ascending: false })
+    .order("episode_number", { ascending: false })
     .limit(12);
 
   // Transform and filter episodes with valid anime data

@@ -109,7 +109,7 @@ export default function AuthForm({ authState, onStateChange, onClose }: AuthForm
                 e.preventDefault();
                 handleAuth();
             }}
-            className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center relative bg-[#12141a]"
+            className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center relative bg-bg-dark"
         >
             <div className="mb-8">
                 <h2 className="text-2xl font-bold text-white mb-2 font-rubik">

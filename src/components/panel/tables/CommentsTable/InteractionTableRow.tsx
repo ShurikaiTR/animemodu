@@ -98,7 +98,7 @@ export function InteractionTableRow({ item, onDelete }: InteractionTableRowProps
                             <MoreHorizontal className="w-4 h-4" />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-40 bg-[#1a1c2e] border-white/10 text-white">
+                    <DropdownMenuContent align="end" className="w-40 bg-bg-dropdown border-white/10 text-white">
                         <DropdownMenuItem className="focus:bg-white/10 cursor-pointer">
                             <Eye className="w-4 h-4 mr-2" /> Görüntüle
                         </DropdownMenuItem>

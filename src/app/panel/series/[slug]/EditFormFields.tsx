@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { GenresField } from "./GenresField";
 import type { EditFormData } from "./types";
 
 interface EditFormFieldsProps {
@@ -16,7 +17,7 @@ export function EditFormFields({ formData, setFormData }: EditFormFieldsProps) {
           <Input
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus-visible:ring-0"
+            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus:border-primary focus-visible:ring-0"
           />
         </div>
         <div className="space-y-2">
@@ -24,7 +25,7 @@ export function EditFormFields({ formData, setFormData }: EditFormFieldsProps) {
           <Input
             value={formData.original_title}
             onChange={(e) => setFormData({ ...formData, original_title: e.target.value })}
-            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus-visible:ring-0"
+            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus:border-primary focus-visible:ring-0"
           />
         </div>
       </div>
@@ -34,7 +35,7 @@ export function EditFormFields({ formData, setFormData }: EditFormFieldsProps) {
         <Input
           value={formData.slug}
           onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-          className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus-visible:ring-0 font-mono text-sm"
+          className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus:border-primary focus-visible:ring-0 font-mono text-sm"
         />
         <p className="text-xs text-text-main/40">Benzersiz olmalıdır. Boşluk yerine tire (-) kullanın.</p>
       </div>
@@ -45,9 +46,14 @@ export function EditFormFields({ formData, setFormData }: EditFormFieldsProps) {
           value={formData.overview}
           onChange={(e) => setFormData({ ...formData, overview: e.target.value })}
           rows={5}
-          className="w-full rounded-xl bg-bg-secondary/30 border border-white/5 p-3 text-sm text-white focus:bg-bg-secondary/50 focus-visible:ring-0 outline-none resize-none placeholder:text-text-main/30"
+          className="w-full rounded-xl bg-bg-secondary/30 border border-white/5 p-3 text-sm text-white focus:bg-bg-secondary/50 focus:border-primary focus-visible:ring-0 outline-none resize-none placeholder:text-text-main/30"
         />
       </div>
+
+      <GenresField
+        genres={formData.genres}
+        onChange={(genres) => setFormData({ ...formData, genres })}
+      />
 
       <div className="space-y-4">
         <div className="space-y-2">
@@ -56,7 +62,7 @@ export function EditFormFields({ formData, setFormData }: EditFormFieldsProps) {
             value={formData.poster_path}
             onChange={(e) => setFormData({ ...formData, poster_path: e.target.value })}
             placeholder="/path/to/image.jpg veya https://example.com/image.jpg"
-            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus-visible:ring-0 font-mono text-xs"
+            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus:border-primary focus-visible:ring-0 font-mono text-xs"
           />
           <p className="text-xs text-text-main/40">TMDB yolu (/...) veya direkt resim linki (https://...) yapıştırabilirsiniz.</p>
         </div>
@@ -66,7 +72,7 @@ export function EditFormFields({ formData, setFormData }: EditFormFieldsProps) {
             value={formData.backdrop_path}
             onChange={(e) => setFormData({ ...formData, backdrop_path: e.target.value })}
             placeholder="/path/to/image.jpg veya https://example.com/image.jpg"
-            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus-visible:ring-0 font-mono text-xs"
+            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus:border-primary focus-visible:ring-0 font-mono text-xs"
           />
         </div>
         <div className="space-y-2">
@@ -75,7 +81,7 @@ export function EditFormFields({ formData, setFormData }: EditFormFieldsProps) {
             value={formData.trailer_key}
             onChange={(e) => setFormData({ ...formData, trailer_key: e.target.value })}
             placeholder="dQw4w9WgXcQ"
-            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus-visible:ring-0 font-mono text-xs"
+            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus:border-primary focus-visible:ring-0 font-mono text-xs"
           />
           <p className="text-xs text-text-main/40">YouTube video ID'si (örn: dQw4w9WgXcQ). YouTube URL'sinden son kısım.</p>
         </div>
@@ -91,7 +97,7 @@ export function EditFormFields({ formData, setFormData }: EditFormFieldsProps) {
             max="10"
             value={formData.vote_average}
             onChange={(e) => setFormData({ ...formData, vote_average: parseFloat(e.target.value) })}
-            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus-visible:ring-0"
+            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus:border-primary focus-visible:ring-0"
           />
         </div>
         <div className="space-y-2">
@@ -100,30 +106,8 @@ export function EditFormFields({ formData, setFormData }: EditFormFieldsProps) {
             type="date"
             value={formData.release_date}
             onChange={(e) => setFormData({ ...formData, release_date: e.target.value })}
-            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus-visible:ring-0"
+            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus:border-primary focus-visible:ring-0"
           />
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-text-main/80">Yapı Türü</label>
-        <div className="flex gap-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setFormData({ ...formData, structure_type: "seasonal" })}
-            className={`flex-1 border-white/5 hover:bg-white/5 hover:text-white ${formData.structure_type === "seasonal" ? "bg-primary/20 text-primary border-primary/20" : "bg-bg-secondary/30 text-text-main"}`}
-          >
-            Sezonluk Dizi
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setFormData({ ...formData, structure_type: "absolute" })}
-            className={`flex-1 border-white/5 hover:bg-white/5 hover:text-white ${formData.structure_type === "absolute" ? "bg-primary/20 text-primary border-primary/20" : "bg-bg-secondary/30 text-text-main"}`}
-          >
-            Mutlak (Tek Sezon/Film)
-          </Button>
         </div>
       </div>
     </div>
