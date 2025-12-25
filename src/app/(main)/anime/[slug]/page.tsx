@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import { getImageUrl } from "@/lib/tmdb";
 import AnimeHeroServer from "./AnimeHeroServer";
 import EpisodesListServer from "./EpisodesListServer";
 import CastSectionServer from "./CastSectionServer";
-import CommentsSection from "@/components/anime/CommentsSection";
 import Container from "@/components/ui/container";
 import { HeroSkeleton, EpisodesSkeleton, CastSkeleton } from "./loading";
 import { getAnimeBySlug, getAnimeBySlugOrNotFound, getStructureType } from "@/lib/anime/queries";
+
+const CommentsSection = dynamic(
+  () => import("@/components/anime/CommentsSection"),
+  { loading: () => <div className="animate-pulse h-64 bg-white/5 rounded-xl" /> }
+);
 
 interface PageProps {
   params: Promise<{ slug: string }>;

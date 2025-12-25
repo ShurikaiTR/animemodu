@@ -22,8 +22,8 @@ export async function CommentsContent() {
     const reviews = handleSupabaseError(reviewsResult, "İncelemeler yüklenirken hata oluştu");
     const animeIds = new Set<number>();
     const userIds = new Set<string>();
-    type CommentData = { anime_id: number; user_id: string; id: number; content: string; created_at: string; has_spoiler: boolean; likes_count: number };
-    type ReviewData = { anime_id: number; user_id: string; id: number; content: string; created_at: string; has_spoiler: boolean; likes_count: number; rating: number | null };
+    type CommentData = { anime_id: number; user_id: string; id: number; content: string; created_at: string; is_spoiler: boolean; like_count: number };
+    type ReviewData = { anime_id: number; user_id: string; id: number; content: string; created_at: string; is_spoiler: boolean; helpful_count: number; rating: number | null };
     type AnimeData = { id: number; title: string; slug: string };
     type ProfileData = { id: string; username: string | null; avatar_url: string | null; role: string };
     (comments as CommentData[]).forEach((c) => {
@@ -77,8 +77,8 @@ export async function CommentsContent() {
                 }
                 : null,
             created_at: c.created_at,
-            is_spoiler: c.has_spoiler,
-            likes_count: c.likes_count,
+            is_spoiler: c.is_spoiler,
+            likes_count: c.like_count,
         };
     });
 
@@ -104,9 +104,9 @@ export async function CommentsContent() {
                 }
                 : null,
             created_at: r.created_at,
-            is_spoiler: r.has_spoiler,
+            is_spoiler: r.is_spoiler,
             rating: r.rating,
-            likes_count: r.likes_count,
+            likes_count: r.helpful_count,
         };
     });
 

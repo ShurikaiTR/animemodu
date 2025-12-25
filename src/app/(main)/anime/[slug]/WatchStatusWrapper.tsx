@@ -30,3 +30,5 @@ export default function WatchStatusWrapper({ animeId, initialStatus }: WatchStat
 
 
 
+
+

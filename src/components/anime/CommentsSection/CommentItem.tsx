@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { Pin } from "lucide-react";
 import { cn, getAvatarUrl } from "@/lib/utils";
@@ -9,11 +9,9 @@ import CommentInput from "./CommentInput";
 import RepliesList from "./RepliesList";
 import SpoilerContent from "./SpoilerContent";
 import { useAuth } from "@/contexts/AuthContext";
-import { createClient } from "@/lib/supabase/client";
-import { toast } from "sonner";
-import { toggleCommentLike, checkUserLikedComment } from "./likesService";
 import CommentActions from "./CommentActions";
 import CommentHeader from "./CommentHeader";
+import { useCommentActions } from "./useCommentActions";
 
 interface CommentItemProps {
     comment: Comment;
@@ -27,46 +25,15 @@ interface CommentItemProps {
 export default function CommentItem({ comment, showSpoiler, onToggleSpoiler, animeId, episodeId, onReplyAdded }: CommentItemProps) {
     const { user, profile } = useAuth();
     const [showReplyInput, setShowReplyInput] = useState(false);
-    const [liked, setLiked] = useState(false);
-    const [likeCount, setLikeCount] = useState(comment.likes || 0);
-    const [isLiking, setIsLiking] = useState(false);
-    const [isPinned, setIsPinned] = useState(comment.isPinned);
     const isSpoilerVisible = showSpoiler[comment.id] || !comment.isSpoiler;
     const isAdmin = profile?.role === "admin";
 
-    useEffect(() => {
-        if (user) {
-            checkUserLikedComment(comment.id, user.id).then(setLiked);
-        }
-    }, [user, comment.id]);
-
-    const handleLike = async () => {
-        if (!user) {
-            toast.error("Beğenmek için giriş yapmalısınız");
-            return;
-        }
-        if (isLiking) return;
-
-        setIsLiking(true);
-        const { liked: newLiked, error } = await toggleCommentLike(comment.id, user);
-        setIsLiking(false);
-
-        if (error) {
-            toast.error(error);
-            return;
-        }
-
-        setLiked(newLiked);
-        setLikeCount(prev => newLiked ? prev + 1 : prev - 1);
-    };
-    const handlePin = async () => {
-        const supabase = createClient();
-        const newPinned = !isPinned;
-        const { error } = await supabase.from("comments").update({ is_pinned: newPinned } as never).eq("id", comment.id);
-        if (error) return toast.error("Sabitleme işlemi başarısız");
-        setIsPinned(newPinned);
-        toast.success(newPinned ? "Yorum sabitlendi" : "Sabitleme kaldırıldı");
-    };
+    const { liked, likeCount, isLiking, isPinned, handleLike, handlePin } = useCommentActions({
+        commentId: comment.id,
+        initialLikes: comment.likes || 0,
+        initialPinned: comment.isPinned,
+        user
+    });
 
     return (
         <div className="relative">

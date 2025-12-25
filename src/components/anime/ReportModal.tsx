@@ -1,15 +1,13 @@
-
 "use client";
 
-import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useModalMount } from "@/hooks/useModalMount";
-import { createReport } from "@/actions/interactions/report";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner";
-import { Loader2, MonitorPlay, MessageSquare, AlertTriangle, Flag, X, Send } from "lucide-react";
+import { Loader2, X, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { REPORT_REASONS } from "./ReportReasons";
+import { useReportModal } from "./useReportModal";
 
 interface ReportModalProps {
     isOpen: boolean;
@@ -21,54 +19,18 @@ interface ReportModalProps {
     episodeNumber?: number;
 }
 
-const REPORT_REASONS = [
-    { id: "playback", label: "Video Açılmıyor", icon: MonitorPlay },
-    { id: "audio", label: "Ses Sorunu", icon: MessageSquare },
-    { id: "subtitle", label: "Altyazı Hatalı", icon: AlertTriangle },
-    { id: "wrong", label: "Yanlış Bölüm", icon: Flag },
-];
-
 export default function ReportModal({ isOpen, onClose, animeTitle, episodeTitle, animeId, seasonNumber, episodeNumber }: ReportModalProps) {
-    const [selectedReason, setSelectedReason] = useState<string | null>(null);
-    const [description, setDescription] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const mounted = useModalMount();
-
-    useEffect(() => {
-        if (!isOpen) {
-            setSelectedReason(null);
-            setDescription("");
-        }
-    }, [isOpen]);
+    const {
+        selectedReason,
+        setSelectedReason,
+        description,
+        setDescription,
+        isSubmitting,
+        handleSubmit
+    } = useReportModal({ isOpen, animeId, seasonNumber, episodeNumber, onClose });
 
     if (!isOpen || !mounted) return null;
-
-    const handleSubmit = async () => {
-        if (!selectedReason) {
-            toast.error("Lütfen bir hata nedeni seçin.");
-            return;
-        }
-
-        setIsSubmitting(true);
-
-        const result = await createReport({
-            animeId,
-            seasonNumber,
-            episodeNumber,
-            reason: selectedReason,
-            description
-        });
-
-        if (!result.success) {
-            toast.error(result.error || "Bir hata oluştu.");
-            setIsSubmitting(false);
-            return;
-        }
-
-        toast.success("Hata bildirimi alındı. Teşekkürler!");
-        setIsSubmitting(false);
-        onClose();
-    };
 
     return createPortal(
         <div

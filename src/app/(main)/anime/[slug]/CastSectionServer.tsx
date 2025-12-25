@@ -11,7 +11,7 @@ export default async function CastSectionServer({ slug }: CastSectionServerProps
   const dbAnime = await getAnimeBySlugOrNotFound(slug, "characters");
 
   const characters = parseCharacters(dbAnime.characters ?? null);
-  const displayCast: CastMember[] = characters.slice(0, 10).map((c: Character) => ({
+  const displayCast: CastMember[] = characters.map((c: Character) => ({
     id: c.id,
     name: c.name.full,
     character: c.role === "MAIN" ? "Ana Karakter" : c.role === "SUPPORTING" ? "Yan Karakter" : "Karakter",

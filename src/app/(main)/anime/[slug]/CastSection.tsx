@@ -44,12 +44,13 @@ export default function CastSection({ cast }: CastSectionProps) {
         ref={castListRef}
         className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 custom-scrollbar snap-x scroll-smooth"
       >
-        {cast.map(c => (
+        {cast.map((c, index) => (
           <div key={c.id} className="min-w-32 md:min-w-40 snap-center">
             <CharacterCard
               name={c.name}
               character={c.character}
               image={c.profile_path}
+              priority={index < 4}
             />
           </div>
         ))}

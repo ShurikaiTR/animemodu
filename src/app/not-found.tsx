@@ -1,99 +1,52 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import { Home, Wand2, Skull, AlertTriangle } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { BackButton } from "@/components/ui/BackButton";
 
 export default function NotFound() {
-  return (
-    <div className="relative min-h-screen w-full flex items-center justify-center bg-bg-main overflow-hidden p-4">
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-bg-main" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-bg-secondary via-bg-main to-black opacity-80" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,white/5_1px,transparent_1px),linear-gradient(to_bottom,white/5_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,black_70%,transparent_100%)]" />
-        <div className="absolute top-20 left-20 w-32 h-32 bg-primary/20 rounded-full blur-2xl animate-pulse" />
-        <div className="absolute bottom-20 right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-pulse delay-1000" />
-      </div>
+    return (
+        <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-bg-main font-rubik text-text-main">
+            {/* Grid Pattern Background */}
+            <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+            <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_800px_at_50%_200px,#1a1f2e,transparent)]" />
 
-      <div className="relative z-10 container mx-auto max-w-6xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div className="relative order-1 lg:order-2 flex justify-center lg:justify-start">
-            <div className="relative w-72 h-72 sm:w-96 sm:h-96 animate-in fade-in zoom-in duration-1000 slide-in-from-right-10">
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-primary/20 rounded-full blur-3xl animate-pulse" />
-              <Image
-                src="/img/404-wizard.svg"
-                alt="Failed Spell Wizard"
-                fill
-                sizes="(max-width: 640px) 288px, 384px"
-                className="object-contain drop-shadow-[var(--shadow-primary-glow)] hover:scale-105 transition-transform duration-500"
-                priority
-              />
-              <div className="absolute -left-4 top-20 bg-black/40 backdrop-blur-md border border-primary/30 p-4 rounded-xl animate-bounce shadow-lg hidden sm:block">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-                  <span className="text-xs text-primary font-mono">GRIMOIRE UYARISI</span>
+            {/* Content */}
+            <div className="relative z-10 flex max-w-lg flex-col items-center justify-center px-4 text-center">
+
+
+                <div className="relative mb-2">
+                    <h1 className="text-[150px] sm:text-[220px] font-extrabold text-text-heading tracking-tighter font-manrope leading-none">
+                        404
+                    </h1>
+                    {/* SVG overlay positioned over the 0 */}
+                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-40 sm:h-52 sm:w-52 z-10">
+                        <Image
+                            src="/img/Adsız tasarım.svg"
+                            alt="Luffy"
+                            fill
+                            className="object-contain"
+                        />
+                    </div>
                 </div>
-                <p className="text-white font-bold text-sm">SAYFA KÜL OLDU</p>
-              </div>
-            </div>
-          </div>
 
-          <div className="order-2 lg:order-1 text-center lg:text-left space-y-8 animate-in fade-in slide-in-from-left-10 duration-1000 delay-200">
-            <div className="relative inline-block">
-              <h1 className="text-8xl sm:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400 font-rubik leading-none select-none">
-                404
-              </h1>
-              <div className="absolute -top-1 -left-1 w-full h-full text-8xl sm:text-9xl font-black text-white/10 font-rubik leading-none select-none animate-pulse blur-sm">
-                404
-              </div>
-            </div>
+                <h2 className="mb-6 text-2xl font-bold text-text-heading sm:text-3xl">
+                    Ups, sanırım kaybolduk...
+                </h2>
 
-            <div className="space-y-4">
-              <h2 className="text-3xl sm:text-5xl font-bold text-white font-rubik leading-tight">
-                Büyü Ters Tepti!
-              </h2>
-              <p className="text-text-main text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                Sanırım ışınlanma büyüsünü yanlış telaffuz ettin. &quot;Ana Sayfa&quot; yerine &quot;Hiçlik&quot; dedin ve kendini veritabanının karanlık tarafında buldun. Bir dahaki sefere büyü kitabını daha dikkatli oku!
-              </p>
-            </div>
+                <p className="mb-8 max-w-md text-base text-gray-400 font-inter leading-relaxed">
+                    Aradığın sayfayı bulamadık. Belki de yayından kaldırıldı veya hiç var olmadı.
+                    Hadi seni tanıdık bir yere geri götürelim.
+                </p>
 
-            <div className="flex flex-col sm:flex-row items-center lg:items-start gap-4 pt-4">
-              <Button asChild className="w-full sm:w-auto">
-                <Link href="/">
-                  <span className="mr-2 relative z-10">Güvenli Bölgeye Işınlan</span>
-                  <Home className="w-5 h-5 relative z-10" />
-                </Link>
-              </Button>
-
-              <BackButton />
+                <Button asChild size="lg" className="group h-12 rounded-xl text-sm hover:-translate-y-0.5 hover:shadow-[0_0_20px_-5px_rgba(47,128,237,0.5)] active:translate-y-0 active:shadow-none">
+                    <Link href="/">
+                        <ArrowLeft className="mr-2 transition-transform duration-300 group-hover:-translate-x-1" />
+                        Eve Dön
+                    </Link>
+                </Button>
             </div>
-
-            <div className="pt-8 border-t border-white/5 flex items-center justify-center lg:justify-start gap-6 text-xs sm:text-sm font-mono text-text-main/60">
-              <div className="flex items-center gap-2">
-                <Wand2 className="w-4 h-4 text-primary animate-pulse" />
-                <span>MANA: TÜKENDİ</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-yellow-500" />
-                <span>BÜYÜ: HATALI</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Skull className="w-4 h-4 text-red-500" />
-                <span>KONUM: ARAF</span>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
-
-
-
-
-
-
-
-
-

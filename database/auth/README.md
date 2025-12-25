@@ -62,3 +62,5 @@ Yeni bir kullanıcı kaydolduğunda otomatik olarak `profiles` tablosunda bir ka
 
 
 
+
+

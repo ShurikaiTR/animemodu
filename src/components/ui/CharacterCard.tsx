@@ -7,9 +7,10 @@ interface CharacterCardProps {
     character: string;
     image: string | null;
     className?: string;
+    priority?: boolean;
 }
 
-export default function CharacterCard({ name, character, image, className }: CharacterCardProps) {
+export default function CharacterCard({ name, character, image, className, priority = false }: CharacterCardProps) {
     return (
         <div className={cn("group relative w-full aspect-[2/3] rounded-2xl overflow-hidden cursor-pointer border border-white/5 bg-bg-secondary", className)}>
 
@@ -26,6 +27,7 @@ export default function CharacterCard({ name, character, image, className }: Cha
                 fill
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 16vw"
+                priority={priority}
             />
 
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />

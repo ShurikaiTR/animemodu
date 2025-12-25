@@ -91,3 +91,5 @@ Tüm client'lar `@/types/supabase.ts` dosyasındaki type tanımlarını kullanı
 
 
 
+
+

@@ -30,6 +30,14 @@
   --shadow-primary-glow-md: 0 0 16px rgba(47, 128, 237, 0.25);
   --shadow-primary-glow-xl: 0 0 20px rgba(47, 128, 237, 0.3);
   --shadow-card: 0 4px 24px -8px rgba(0, 0, 0, 0.2);
+
+  /* 404 Page Colors */
+  --color-404-sky-start: #5C9FCB;
+  --color-404-sky-end: #E4ECF9;
+  --color-404-text-dark: #2C2A48;
+  --color-404-text-subtitle: #6E6E6E;
+  --color-404-button-bg: #FAFAFA;
+  --color-404-button-text: #2C2A49;
 }
 
 @theme {
@@ -54,6 +62,14 @@
   /* Social Media Brand Colors */
   --color-twitter: var(--color-twitter);
   --color-instagram: var(--color-instagram);
+
+  /* 404 Page Colors */
+  --color-404-sky-start: var(--color-404-sky-start);
+  --color-404-sky-end: var(--color-404-sky-end);
+  --color-404-text-dark: var(--color-404-text-dark);
+  --color-404-text-subtitle: var(--color-404-text-subtitle);
+  --color-404-button-bg: var(--color-404-button-bg);
+  --color-404-button-text: var(--color-404-button-text);
 }
 
 body {
@@ -158,6 +174,40 @@ h6 {
 .animate-fade-in-left {
   opacity: 0;
   animation: fade-in-left 0.4s ease-out forwards;
+}
+
+/* Cloud Slide Animation */
+@keyframes slide-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-slide-left {
+  animation: slide-left 60s linear infinite;
+}
+
+/* 404 Page Animations */
+@keyframes bounce-slow {
+
+  0%,
+  100% {
+    transform: translateY(-5%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s infinite;
 }
 
 /* Custom Scrollbar - Tema Uyumlu */

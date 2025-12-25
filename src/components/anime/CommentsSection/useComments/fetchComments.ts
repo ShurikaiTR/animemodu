@@ -23,6 +23,7 @@ export async function fetchCommentsData(
         .select("*")
         .eq("anime_id", animeId)
         .is("parent_id", null)
+        .order("is_pinned", { ascending: false })
         .order("created_at", { ascending: false });
 
     let countQuery = supabase
@@ -51,7 +52,7 @@ export async function fetchCommentsData(
         return { comments: [], totalCount: 0 };
     }
 
-    type CommentDataRow = { user_id: string; id: number; parent_id: number | null; content: string; created_at: string; likes_count: number; has_spoiler: boolean };
+    type CommentDataRow = { user_id: string; id: number; parent_id: number | null; content: string; created_at: string; like_count: number; is_spoiler: boolean; is_pinned: boolean };
     const userIds = Array.from(new Set((commentsData as CommentDataRow[] || []).map(c => c.user_id)));
     let profilesMap: Record<string, { username: string; avatar_url: string | null; role: string }> = {};
 
@@ -115,8 +116,8 @@ export async function fetchCommentsData(
             avatarColor: "from-primary to-blue-600",
             timeAgo: formatDistanceToNow(new Date(reply.created_at), { addSuffix: true, locale: tr }),
             content: reply.content,
-            likes: reply.likes_count || 0,
-            isSpoiler: reply.has_spoiler || false,
+            likes: reply.like_count || 0,
+            isSpoiler: reply.is_spoiler || false,
         });
     });
 
@@ -131,9 +132,9 @@ export async function fetchCommentsData(
             avatarColor: "from-primary to-blue-600",
             timeAgo: formatDistanceToNow(new Date(item.created_at), { addSuffix: true, locale: tr }),
             content: item.content,
-            likes: item.likes_count || 0,
-            isPinned: false,
-            isSpoiler: item.has_spoiler || false,
+            likes: item.like_count || 0,
+            isPinned: item.is_pinned || false,
+            isSpoiler: item.is_spoiler || false,
             replies: repliesMap[item.id] || []
         };
     });

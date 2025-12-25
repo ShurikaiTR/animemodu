@@ -13,7 +13,7 @@ export async function toggleCommentLike(commentId: number, user: User | null): P
         .select("id")
         .eq("comment_id", commentId)
         .eq("user_id", user.id)
-        .single();
+        .maybeSingle();
 
     if (existingLike) {
         const { error } = await supabase
@@ -44,7 +44,7 @@ export async function toggleReviewLike(reviewId: number, user: User | null): Pro
         .select("id")
         .eq("review_id", reviewId)
         .eq("user_id", user.id)
-        .single();
+        .maybeSingle();
 
     if (existingLike) {
         const { error } = await supabase
@@ -71,7 +71,7 @@ export async function checkUserLikedComment(commentId: number, userId: string): 
         .select("id")
         .eq("comment_id", commentId)
         .eq("user_id", userId)
-        .single();
+        .maybeSingle();
 
     return !!data;
 }
@@ -82,7 +82,7 @@ export async function checkUserLikedReview(reviewId: number, userId: string): Pr
         .select("id")
         .eq("review_id", reviewId)
         .eq("user_id", userId)
-        .single();
+        .maybeSingle();
 
     return !!data;
 }
