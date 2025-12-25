@@ -33,7 +33,7 @@ export async function getProfile(userId: string): Promise<GetProfileResult> {
     const profile = rawProfile as unknown as ProfileRow;
 
     if (!profile.avatar_url || profile.avatar_url === "") {
-        profile.avatar_url = "/default-avatar.png";
+        profile.avatar_url = "/default-avatar.webp";
     }
 
     return { data: profile };

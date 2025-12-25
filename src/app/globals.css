@@ -25,19 +25,17 @@
   --color-instagram: #E1306C;
 
   --shadow-primary-glow: 0 0 50px rgba(47, 128, 237, 0.4);
-  --shadow-primary-glow-lg: 0 0 80px rgba(47, 128, 237, 0.5);
   --shadow-primary-glow-sm: 0 0 8px rgba(47, 128, 237, 0.5);
   --shadow-primary-glow-md: 0 0 16px rgba(47, 128, 237, 0.25);
   --shadow-primary-glow-xl: 0 0 20px rgba(47, 128, 237, 0.3);
   --shadow-card: 0 4px 24px -8px rgba(0, 0, 0, 0.2);
 
-  /* 404 Page Colors */
-  --color-404-sky-start: #5C9FCB;
-  --color-404-sky-end: #E4ECF9;
-  --color-404-text-dark: #2C2A48;
-  --color-404-text-subtitle: #6E6E6E;
-  --color-404-button-bg: #FAFAFA;
-  --color-404-button-text: #2C2A49;
+  /* Grid Pattern Colors */
+  --color-grid-line: #80808012;
+  --color-grid-radial: #1a1f2e;
+
+  /* Error Page Colors */
+  --color-error-glow: #f97316;
 }
 
 @theme {
@@ -63,13 +61,12 @@
   --color-twitter: var(--color-twitter);
   --color-instagram: var(--color-instagram);
 
-  /* 404 Page Colors */
-  --color-404-sky-start: var(--color-404-sky-start);
-  --color-404-sky-end: var(--color-404-sky-end);
-  --color-404-text-dark: var(--color-404-text-dark);
-  --color-404-text-subtitle: var(--color-404-text-subtitle);
-  --color-404-button-bg: var(--color-404-button-bg);
-  --color-404-button-text: var(--color-404-button-text);
+  /* Grid Pattern Colors */
+  --color-grid-line: var(--color-grid-line);
+  --color-grid-radial: var(--color-grid-radial);
+
+  /* Error Page Colors */
+  --color-error-glow: var(--color-error-glow);
 }
 
 body {

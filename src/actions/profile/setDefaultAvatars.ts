@@ -47,7 +47,7 @@ export async function setDefaultAvatarsForAllUsers(): Promise<SetAvatarsResult> 
 
     const { error: updateError } = await (supabase
         .from("profiles") as ReturnType<typeof supabase.from>)
-        .update({ avatar_url: "/default-avatar.png" } as Record<string, unknown>)
+        .update({ avatar_url: "/default-avatar.webp" } as Record<string, unknown>)
         .in(
             "id",
             profilesToUpdate.map((p) => p.id)

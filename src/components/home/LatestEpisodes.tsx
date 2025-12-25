@@ -1,5 +1,6 @@
 "use client";
 
+import Container from "@/components/ui/container";
 import EpisodeCard from "@/components/ui/EpisodeCard";
 import { getImageUrl } from "@/lib/tmdb";
 import { getWatchUrl } from "@/lib/utils";
@@ -34,8 +35,8 @@ export default function LatestEpisodes({ episodes }: { episodes: EpisodeItem[] }
     if (!episodes || episodes.length === 0) return null;
 
     return (
-        <section className="pb-10 pt-4">
-            <div className="container mx-auto px-4 sm:px-8">
+        <section className="pb-10 pt-4 first:pt-28">
+            <Container>
                 <div className="flex items-center justify-between mb-8">
                     <h2 className="text-2xl sm:text-3xl font-bold font-rubik text-white drop-shadow-md border-l-4 border-primary pl-4">
                         Son Eklenen Bölümler
@@ -67,7 +68,7 @@ export default function LatestEpisodes({ episodes }: { episodes: EpisodeItem[] }
                         );
                     })}
                 </div>
-            </div>
+            </Container>
         </section>
     );
 }

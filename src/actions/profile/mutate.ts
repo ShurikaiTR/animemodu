@@ -59,7 +59,7 @@ export async function createOrUpdateProfile(userId: string, data?: unknown): Pro
             id: userId,
             username: validatedData.username || null,
             full_name: validatedData.full_name || null,
-            avatar_url: validatedData.avatar_url || "/default-avatar.png",
+            avatar_url: validatedData.avatar_url || "/default-avatar.webp",
             banner_url: validatedData.banner_url || null,
             bio: validatedData.bio || null,
             location: validatedData.location || null,
@@ -97,12 +97,12 @@ export async function createOrUpdateProfile(userId: string, data?: unknown): Pro
     if (validatedData.age !== undefined) updateData.age = validatedData.age;
 
     if (updateData.avatar_url === null || updateData.avatar_url === "") {
-        updateData.avatar_url = "/default-avatar.png";
+        updateData.avatar_url = "/default-avatar.webp";
     }
 
     if (!existingProfile.avatar_url || existingProfile.avatar_url === "") {
         if (!updateData.avatar_url) {
-            updateData.avatar_url = "/default-avatar.png";
+            updateData.avatar_url = "/default-avatar.webp";
         }
     }
 

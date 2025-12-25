@@ -77,11 +77,11 @@ export function EpisodesTableRow({ item }: EpisodesTableRowProps) {
 
             {/* Actions */}
             <td className="p-4 align-middle text-right">
-                <Link href={`/panel/episodes/${item.animes?.slug}`}>
+                <Link href={`/panel/episodes/${item.animes?.slug}/${item.id}`}>
                     <Button
                         size="icon"
                         variant="ghost"
-                        title="Bölümleri Düzenle"
+                        title="Bölümü Düzenle"
                         className="h-8 w-8 text-white/40 hover:text-white hover:bg-white/5 transition-colors"
                     >
                         <Edit className="w-4 h-4" />

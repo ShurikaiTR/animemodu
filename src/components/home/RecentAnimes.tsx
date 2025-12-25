@@ -1,3 +1,4 @@
+import Container from "@/components/ui/container";
 import { MediaGridServer } from "@/components/anime/MediaGrid";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -5,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 export default async function RecentAnimes() {
     return (
         <section className="pb-20 pt-16">
-            <div className="container mx-auto px-4 sm:px-8">
+            <Container>
                 <div className="flex items-center justify-between mb-12">
                     <h2 className="text-2xl sm:text-3xl font-bold font-rubik text-white drop-shadow-md border-l-4 border-primary pl-4">
                         AnimeModu&apos;nda Yeni
@@ -28,7 +29,7 @@ export default async function RecentAnimes() {
                         emptyDescription="Panel → Yeni Ekle'den içerik ekleyebilirsin."
                     />
                 </div>
-            </div>
+            </Container>
         </section>
     );
 }

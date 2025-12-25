@@ -98,7 +98,7 @@ export const PAGINATION = {
 export const UI = {
     TRUNCATE_DESCRIPTION_LENGTH: 150,
     MAX_CHARACTERS_DISPLAY: 8,
-    DEFAULT_AVATAR: "/default-avatar.png",
+    DEFAULT_AVATAR: "/default-avatar.webp",
     PLACEHOLDER_IMAGE: "/img/placeholder.jpg",
 } as const;
 

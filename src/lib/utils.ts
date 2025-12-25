@@ -9,7 +9,7 @@ export function getAvatarUrl(avatarUrl?: string | null): string {
   if (avatarUrl && avatarUrl.trim() !== "") {
     return avatarUrl;
   }
-  return "/default-avatar.png";
+  return "/default-avatar.webp";
 }
 
 export function getWatchUrl(

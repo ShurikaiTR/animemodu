@@ -4,7 +4,7 @@ create table if not exists profiles (
     id uuid primary key references auth.users(id) on delete cascade,
     username text unique,
     full_name text,
-    avatar_url text default '/default-avatar.png',
+    avatar_url text default '/default-avatar.webp',
     banner_url text,
     bio text,
     location text,
@@ -16,10 +16,10 @@ create table if not exists profiles (
 );
 
 alter table profiles 
-add column if not exists avatar_url text default '/default-avatar.png';
+add column if not exists avatar_url text default '/default-avatar.webp';
 
 alter table profiles 
-add column if not exists avatar_url text default '/default-avatar.png';
+add column if not exists avatar_url text default '/default-avatar.webp';
 
 alter table profiles 
 add column if not exists updated_at timestamp with time zone default timezone('utc'::text, now());
@@ -28,7 +28,7 @@ alter table profiles
 add column if not exists role text default 'user' check (role in ('user', 'admin'));
 
 update profiles 
-set avatar_url = '/default-avatar.png' 
+set avatar_url = '/default-avatar.webp' 
 where avatar_url is null or avatar_url = '';
 
 update profiles 
@@ -75,7 +75,7 @@ begin
         new.id,
         coalesce(new.raw_user_meta_data->>'username', split_part(new.email, '@', 1)),
         coalesce(new.raw_user_meta_data->>'full_name', ''),
-        '/default-avatar.png',
+        '/default-avatar.webp',
         'user',
         timezone('utc'::text, now()),
         timezone('utc'::text, now())
