@@ -66,10 +66,16 @@ export async function updateEpisodes(animeId: number): Promise<UpdateEpisodesRes
 
     let newEpisodesToInsert: EpisodeInsertData[] = [];
 
-    for (let i = 1; i <= details.number_of_seasons; i++) {
-        const seasonData = await getSeasonDetails((anime as AnimeEpData).tmdb_id, i) as TMDBSeriesData | null;
+    // Parallel fetch all seasons for better performance
+    const seasonPromises = Array.from(
+        { length: details.number_of_seasons },
+        (_, i) => getSeasonDetails((anime as AnimeEpData).tmdb_id, i + 1)
+    );
+    const allSeasons = await Promise.all(seasonPromises);
+
+    for (const seasonData of allSeasons) {
         if (seasonData) {
-            const mapped = mapTMDBEpisodesToDB(seasonData, {
+            const mapped = mapTMDBEpisodesToDB(seasonData as TMDBSeriesData, {
                 animeId,
                 isAbsolute,
                 existingTmdbIds,

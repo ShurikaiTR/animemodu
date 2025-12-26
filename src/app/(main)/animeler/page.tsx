@@ -1,48 +1,20 @@
-import { Suspense } from "react";
 import { LayoutGrid } from "lucide-react";
-import Container from "@/components/ui/container";
+import MediaListPage from "@/components/layout/MediaListPage";
 import AnimesListServer from "./AnimesListServer";
-import MovieCardSkeleton from "@/components/ui/MovieCard/skeleton";
 
 export const metadata = {
     title: "Animeler - AnimeModu",
     description: "En yeni ve popüler animeleri keşfet.",
 };
 
-function AnimesGridSkeleton() {
-    return (
-        <>
-            {Array.from({ length: 12 }).map((_, i) => (
-                <MovieCardSkeleton key={i} />
-            ))}
-        </>
-    );
-}
-
 export default function AnimesPage() {
     return (
-        <div className="min-h-screen pt-24 pb-20">
-            <Container>
-                {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-                    <div>
-                        <h1 className="text-3xl md:text-4xl font-bold text-white font-rubik flex items-center gap-3 mb-2">
-                            <LayoutGrid className="w-8 h-8 text-primary" />
-                            Animeler
-                        </h1>
-                        <p className="text-white/60 text-lg">
-                            En sevilen anime serilerini keşfet ve izle.
-                        </p>
-                    </div>
-                </div>
-
-                {/* Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 sm:gap-8">
-                    <Suspense fallback={<AnimesGridSkeleton />}>
-                        <AnimesListServer />
-                    </Suspense>
-                </div>
-            </Container>
-        </div>
+        <MediaListPage
+            title="Animeler"
+            description="En sevilen anime serilerini keşfet ve izle."
+            icon={LayoutGrid}
+        >
+            <AnimesListServer />
+        </MediaListPage>
     );
 }

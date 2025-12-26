@@ -35,6 +35,20 @@ create policy "Review likes are viewable by everyone" on review_likes for select
 create policy "Users can insert their own review likes" on review_likes for insert with check (auth.uid() = user_id);
 create policy "Users can delete their own review likes" on review_likes for delete using (auth.uid() = user_id);
 
+-- =====================================================
+-- INDEXES
+-- =====================================================
+
+create index if not exists idx_comment_likes_comment_id on comment_likes(comment_id);
+create index if not exists idx_comment_likes_user_id on comment_likes(user_id);
+
+create index if not exists idx_review_likes_review_id on review_likes(review_id);
+create index if not exists idx_review_likes_user_id on review_likes(user_id);
+
+-- =====================================================
+-- TRIGGERS
+-- =====================================================
+
 -- Like count update fonksiyonları
 create or replace function update_comment_like_count()
 returns trigger as $$

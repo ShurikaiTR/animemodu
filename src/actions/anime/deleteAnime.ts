@@ -24,27 +24,29 @@ export async function deleteAnime(id: number): Promise<DeleteAnimeResult> {
     const supabase = await createClient();
 
     try {
-        // 2. Get associated comments and reviews to delete their likes first
-        const { data: comments } = await supabase.from("comments").select("id").eq("anime_id", id);
-        const { data: reviews } = await supabase.from("reviews").select("id").eq("anime_id", id);
+        // 1. Parallel fetch comments and reviews to get their IDs for likes deletion
+        const [{ data: comments }, { data: reviews }] = await Promise.all([
+            supabase.from("comments").select("id").eq("anime_id", id),
+            supabase.from("reviews").select("id").eq("anime_id", id)
+        ]);
 
         const commentIds = (comments as { id: number }[] | null)?.map(c => c.id) || [];
         const reviewIds = (reviews as { id: number }[] | null)?.map(r => r.id) || [];
 
-        // 3. Delete likes associated with comments and reviews
-        if (commentIds.length > 0) {
-            await supabase.from("comment_likes").delete().in("comment_id", commentIds);
-        }
-        if (reviewIds.length > 0) {
-            await supabase.from("review_likes").delete().in("review_id", reviewIds);
-        }
+        // 2. Parallel delete likes (must happen before comments/reviews due to FK)
+        await Promise.all([
+            commentIds.length > 0 ? supabase.from("comment_likes").delete().in("comment_id", commentIds) : Promise.resolve(),
+            reviewIds.length > 0 ? supabase.from("review_likes").delete().in("review_id", reviewIds) : Promise.resolve()
+        ]);
 
-        // 4. Delete comments, reviews and episodes
-        await supabase.from("comments").delete().eq("anime_id", id);
-        await supabase.from("reviews").delete().eq("anime_id", id);
-        await supabase.from("episodes").delete().eq("anime_id", id);
+        // 3. Parallel delete comments, reviews and episodes (CASCADE handles rest, but explicit is safer)
+        await Promise.all([
+            supabase.from("comments").delete().eq("anime_id", id),
+            supabase.from("reviews").delete().eq("anime_id", id),
+            supabase.from("episodes").delete().eq("anime_id", id)
+        ]);
 
-        // 5. Finally delete the anime
+        // 4. Finally delete the anime
         const { data: deletedAnime, error } = await supabase.from("animes").delete().eq("id", id).select();
 
         if (error) throw error;

@@ -13,9 +13,9 @@ CREATE TABLE IF NOT EXISTS public.user_anime_list (
 -- RLS Policies
 ALTER TABLE public.user_anime_list ENABLE ROW LEVEL SECURITY;
 
--- Select: Users can view their own list
-CREATE POLICY "Users can view their own list" ON public.user_anime_list
-    FOR SELECT USING (auth.uid() = user_id);
+-- Select: Everyone can view anime lists (for public profiles)
+CREATE POLICY "Everyone can view anime lists" ON public.user_anime_list
+    FOR SELECT USING (true);
 
 -- Insert: Users can add to their own list
 CREATE POLICY "Users can add to their own list" ON public.user_anime_list

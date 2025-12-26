@@ -18,6 +18,8 @@ interface ReportPayload extends ReportInsert {
 }
 
 const VALID_REASONS: ReportReason[] = ['playback', 'audio', 'subtitle', 'wrong'];
+const RATE_LIMIT_WINDOW_HOURS = 1;
+const RATE_LIMIT_MAX_REPORTS = 3;
 
 function isValidReason(reason: string): reason is ReportReason {
     return VALID_REASONS.includes(reason as ReportReason);
@@ -30,6 +32,39 @@ export async function createReport(data: CreateReportData) {
 
         if (!isValidReason(data.reason)) {
             return { success: false, error: "Geçersiz hata nedeni." };
+        }
+
+        // Rate limiting: Check reports in last hour
+        const oneHourAgo = new Date(Date.now() - RATE_LIMIT_WINDOW_HOURS * 60 * 60 * 1000).toISOString();
+
+        let rateLimitQuery = supabase
+            .from("reports")
+            .select("id", { count: "exact", head: true })
+            .gte("created_at", oneHourAgo);
+
+        if (user) {
+            // Logged-in user: limit by user_id
+            rateLimitQuery = rateLimitQuery.eq("user_id", user.id);
+        } else {
+            // Anonymous: limit by anime_id + episode to prevent spam on same content
+            rateLimitQuery = rateLimitQuery
+                .is("user_id", null)
+                .eq("anime_id", data.animeId);
+
+            if (data.episodeNumber) {
+                rateLimitQuery = rateLimitQuery.eq("episode_number", data.episodeNumber);
+            }
+        }
+
+        const { count: recentReports } = await rateLimitQuery;
+
+        if ((recentReports || 0) >= RATE_LIMIT_MAX_REPORTS) {
+            return {
+                success: false,
+                error: user
+                    ? "Çok fazla bildirim gönderdiniz. Lütfen 1 saat sonra tekrar deneyin."
+                    : "Bu içerik için çok fazla anonim bildirim gönderilmiş. Lütfen giriş yapın veya daha sonra tekrar deneyin."
+            };
         }
 
         // Fetch anime title for normalized data

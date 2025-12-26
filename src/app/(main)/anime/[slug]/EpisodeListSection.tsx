@@ -1,9 +1,10 @@
 "use client";
 
 import { useRef } from "react";
-import { MonitorPlay, ChevronLeft, ChevronRight } from "lucide-react";
+import { MonitorPlay } from "lucide-react";
 import { cn, getWatchUrl } from "@/lib/utils";
 import EpisodeCard from "@/components/ui/EpisodeCard";
+import ScrollButton from "@/components/ui/ScrollButton";
 import { getImageUrl } from "@/lib/tmdb";
 import type { Episode, AnimeDetailData } from "./types";
 
@@ -25,6 +26,11 @@ export default function EpisodeListSection({
   onSeasonChange,
 }: EpisodeListSectionProps) {
   const episodeListRef = useRef<HTMLDivElement>(null);
+
+  const scrollBy = (direction: "left" | "right") => {
+    const amount = direction === "left" ? -80 * 4 : 80 * 4;
+    episodeListRef.current?.scrollBy({ left: amount, behavior: "smooth" });
+  };
 
   return (
     <div className="mb-12 relative group/list">
@@ -55,20 +61,8 @@ export default function EpisodeListSection({
           )}
 
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => episodeListRef.current?.scrollBy({ left: -80 * 4, behavior: "smooth" })}
-              className="w-10 h-10 rounded-full bg-bg-secondary border border-white/5 flex items-center justify-center text-white hover:bg-primary hover:text-white transition-all active:scale-95"
-              aria-label="Önceki"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => episodeListRef.current?.scrollBy({ left: 80 * 4, behavior: "smooth" })}
-              className="w-10 h-10 rounded-full bg-bg-secondary border border-white/5 flex items-center justify-center text-white hover:bg-primary hover:text-white transition-all active:scale-95"
-              aria-label="Sonraki"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+            <ScrollButton direction="left" onClick={() => scrollBy("left")} />
+            <ScrollButton direction="right" onClick={() => scrollBy("right")} />
           </div>
         </div>
       </div>

@@ -56,3 +56,18 @@ create policy "Admins can delete any review" on reviews for delete using (
         and profiles.role = 'admin'
     )
 );
+
+-- =====================================================
+-- INDEXES
+-- =====================================================
+
+create index if not exists idx_comments_anime_id on comments(anime_id);
+create index if not exists idx_comments_episode_id on comments(episode_id);
+create index if not exists idx_comments_user_id on comments(user_id);
+create index if not exists idx_comments_parent_id on comments(parent_id);
+create index if not exists idx_comments_created_at on comments(created_at desc);
+
+create index if not exists idx_reviews_anime_id on reviews(anime_id);
+create index if not exists idx_reviews_user_id on reviews(user_id);
+create index if not exists idx_reviews_rating on reviews(rating desc);
+create index if not exists idx_reviews_created_at on reviews(created_at desc);

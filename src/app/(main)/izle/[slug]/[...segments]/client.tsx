@@ -33,11 +33,6 @@ export default function WatchClient({ episode, anime, episodes }: WatchClientPro
     const backdrop = episode.still_path || anime.backdrop_path || "";
 
     const currentIndex = episodes.findIndex(e => e.id === episode.id);
-    const _prevEpisode = Math.max(0, currentIndex - 1) !== currentIndex ? episodes[Math.max(0, currentIndex - 1)] : null;
-    const _nextEpisode = Math.min(episodes.length - 1, currentIndex + 1) !== currentIndex ? episodes[Math.min(episodes.length - 1, currentIndex + 1)] : null;
-
-    // Use absolute indexing checks since array is sorted, or rely on index math if sorted.
-    // Better logic: currentIndex > 0 is prev, currentIndex < length-1 is next
     const hasPrev = currentIndex > 0;
     const hasNext = currentIndex < episodes.length - 1;
 

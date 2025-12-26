@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import { Users, ChevronLeft, ChevronRight } from "lucide-react";
+import { Users } from "lucide-react";
 import CharacterCard from "@/components/ui/CharacterCard";
+import ScrollButton from "@/components/ui/ScrollButton";
 import type { CastMember } from "./types";
 
 interface CastSectionProps {
@@ -11,6 +12,11 @@ interface CastSectionProps {
 
 export default function CastSection({ cast }: CastSectionProps) {
   const castListRef = useRef<HTMLDivElement>(null);
+
+  const scrollBy = (direction: "left" | "right") => {
+    const amount = direction === "left" ? -80 * 4 : 80 * 4;
+    castListRef.current?.scrollBy({ left: amount, behavior: "smooth" });
+  };
 
   if (cast.length === 0) return null;
 
@@ -23,20 +29,8 @@ export default function CastSection({ cast }: CastSectionProps) {
         </h3>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={() => castListRef.current?.scrollBy({ left: -80 * 4, behavior: "smooth" })}
-            className="w-10 h-10 rounded-full bg-bg-secondary border border-white/5 flex items-center justify-center text-white hover:bg-primary hover:text-white transition-all active:scale-95"
-            aria-label="Önceki"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={() => castListRef.current?.scrollBy({ left: 80 * 4, behavior: "smooth" })}
-            className="w-10 h-10 rounded-full bg-bg-secondary border border-white/5 flex items-center justify-center text-white hover:bg-primary hover:text-white transition-all active:scale-95"
-            aria-label="Sonraki"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+          <ScrollButton direction="left" onClick={() => scrollBy("left")} />
+          <ScrollButton direction="right" onClick={() => scrollBy("right")} />
         </div>
       </div>
 

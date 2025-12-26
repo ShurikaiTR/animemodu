@@ -115,6 +115,24 @@ create policy "Only admins can delete episodes"
     )
   );
 
+-- =====================================================
+-- INDEXES
+-- =====================================================
+
+create index if not exists idx_animes_slug on animes(slug);
+create index if not exists idx_animes_tmdb_id on animes(tmdb_id);
+create index if not exists idx_animes_media_type on animes(media_type);
+create index if not exists idx_animes_release_date on animes(release_date desc);
+create index if not exists idx_animes_is_featured on animes(is_featured) where is_featured = true;
+
+create index if not exists idx_episodes_anime_id on episodes(anime_id);
+create index if not exists idx_episodes_season_episode on episodes(anime_id, season_number, episode_number);
+create index if not exists idx_episodes_air_date on episodes(air_date desc);
+
+-- =====================================================
+-- TRIGGERS
+-- =====================================================
+
 -- Updated at trigger fonksiyonu
 create or replace function public.handle_anime_updated_at()
 returns trigger as $$

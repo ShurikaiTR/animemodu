@@ -12,8 +12,8 @@ import { getStatusBadge, getReasonLabel, getAnimeTitle } from "./ReportsTableHel
 
 interface ReportTableRowProps {
     item: ReportWithDetails;
-    onUpdateStatus: (id: string, status: 'resolved' | 'dismissed') => void;
-    onDelete: (id: string) => void;
+    onUpdateStatus: (id: number, status: 'resolved' | 'dismissed') => void;
+    onDelete: (id: number) => void;
 }
 
 export function ReportTableRow({ item, onUpdateStatus, onDelete }: ReportTableRowProps) {
@@ -84,7 +84,7 @@ export function ReportTableRow({ item, onUpdateStatus, onDelete }: ReportTableRo
                                 size="icon"
                                 variant="ghost"
                                 className="h-8 w-8 text-green-500 hover:text-green-400 hover:bg-green-500/10"
-                                onClick={() => onUpdateStatus(String(item.id), 'resolved')}
+                                onClick={() => onUpdateStatus(item.id, 'resolved')}
                                 title="Çözüldü işaretle"
                             >
                                 <CheckCircle className="w-4 h-4" />
@@ -93,7 +93,7 @@ export function ReportTableRow({ item, onUpdateStatus, onDelete }: ReportTableRo
                                 size="icon"
                                 variant="ghost"
                                 className="h-8 w-8 text-red-500 hover:text-red-400 hover:bg-red-500/10"
-                                onClick={() => onUpdateStatus(String(item.id), 'dismissed')}
+                                onClick={() => onUpdateStatus(item.id, 'dismissed')}
                                 title="Reddet"
                             >
                                 <XCircle className="w-4 h-4" />
@@ -104,7 +104,7 @@ export function ReportTableRow({ item, onUpdateStatus, onDelete }: ReportTableRo
                         size="icon"
                         variant="ghost"
                         className="h-8 w-8 text-white/40 hover:text-red-500 hover:bg-white/5"
-                        onClick={() => onDelete(String(item.id))}
+                        onClick={() => onDelete(item.id)}
                         title="Sil"
                     >
                         <Trash2 className="w-4 h-4" />

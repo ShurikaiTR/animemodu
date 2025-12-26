@@ -15,7 +15,7 @@ interface ReportsTableProps {
 export function ReportsTable({ items }: ReportsTableProps) {
     const [_isPending, startTransition] = useTransition();
 
-    const handleUpdateStatus = (id: string, status: 'resolved' | 'dismissed') => {
+    const handleUpdateStatus = (id: number, status: 'resolved' | 'dismissed') => {
         startTransition(async () => {
             const result = await updateReportStatus(id, status);
             if (result.success) {
@@ -26,7 +26,7 @@ export function ReportsTable({ items }: ReportsTableProps) {
         });
     };
 
-    const handleDelete = (id: string) => {
+    const handleDelete = (id: number) => {
         if (!confirm("Bu bildirimi silmek istediğinize emin misiniz?")) return;
 
         startTransition(async () => {

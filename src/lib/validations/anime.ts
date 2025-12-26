@@ -121,3 +121,14 @@ export function formatZodError(error: z.ZodError): string {
     });
     return messages.join(", ");
 }
+
+// Report validation schemas
+export const reportStatusSchema = z.enum(["pending", "resolved", "dismissed"]);
+export const reportIdSchema = z.coerce.number().positive("Geçerli bir rapor ID gerekli");
+
+export const updateReportStatusSchema = z.object({
+    id: reportIdSchema,
+    status: reportStatusSchema,
+});
+
+export type UpdateReportStatusInput = z.infer<typeof updateReportStatusSchema>;

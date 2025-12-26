@@ -5,5 +5,3 @@ export { getProfile } from "./fetch";
 
 // Re-export mutation operations
 export { createOrUpdateProfile } from "./mutate";
-export { setDefaultAvatarsForAllUsers } from "./setDefaultAvatars";
-
