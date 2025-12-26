@@ -10,7 +10,7 @@ export interface InteractionItem {
         role?: "user" | "admin";
     } | null;
     anime: {
-        id: number;
+        id: string;
         title: string;
         slug: string;
     } | null;

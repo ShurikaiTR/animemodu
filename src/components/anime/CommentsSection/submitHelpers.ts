@@ -3,7 +3,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 
 interface SubmitCommentData {
     supabase: SupabaseClient;
-    animeId: number;
+    animeId: string;
     userId: string;
     content: string;
     isSpoiler: boolean;
@@ -13,7 +13,7 @@ interface SubmitCommentData {
 
 interface SubmitReviewData {
     supabase: SupabaseClient;
-    animeId: number;
+    animeId: string;
     userId: string;
     content: string;
     isSpoiler: boolean;

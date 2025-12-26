@@ -17,7 +17,7 @@ import ReportModal from "@/components/anime/ReportModal";
 interface WatchClientProps {
     episode: Episode;
     anime: {
-        id: number;
+        id: string;
         title: string;
         slug: string;
         backdrop_path: string | null;

@@ -20,11 +20,11 @@ export async function CommentsContent() {
 
     const comments = handleSupabaseError(commentsResult, "Yorumlar yüklenirken hata oluştu");
     const reviews = handleSupabaseError(reviewsResult, "İncelemeler yüklenirken hata oluştu");
-    const animeIds = new Set<number>();
+    const animeIds = new Set<string>();
     const userIds = new Set<string>();
-    type CommentData = { anime_id: number; user_id: string; id: number; content: string; created_at: string; is_spoiler: boolean; like_count: number };
-    type ReviewData = { anime_id: number; user_id: string; id: number; content: string; created_at: string; is_spoiler: boolean; helpful_count: number; rating: number | null };
-    type AnimeData = { id: number; title: string; slug: string };
+    type CommentData = { anime_id: string; user_id: string; id: number; content: string; created_at: string; is_spoiler: boolean; like_count: number };
+    type ReviewData = { anime_id: string; user_id: string; id: number; content: string; created_at: string; is_spoiler: boolean; helpful_count: number; rating: number | null };
+    type AnimeData = { id: string; title: string; slug: string };
     type ProfileData = { id: string; username: string | null; avatar_url: string | null; role: string };
     (comments as CommentData[]).forEach((c) => {
         animeIds.add(c.anime_id);
@@ -49,7 +49,7 @@ export async function CommentsContent() {
     const animes = handleSupabaseError(animesResult, "Anime bilgileri yüklenirken hata oluştu");
     const profiles = handleSupabaseError(profilesResult, "Kullanıcı bilgileri yüklenirken hata oluştu");
 
-    const animeMap = new Map<number, { id: number; title: string; slug: string }>();
+    const animeMap = new Map<string, { id: string; title: string; slug: string }>();
     (animes as AnimeData[]).forEach((a) => animeMap.set(a.id, a));
 
     const profileMap = new Map<string, { id: string; username: string | null; avatar_url: string | null; role: "user" | "admin" }>();

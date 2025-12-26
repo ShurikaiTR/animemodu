@@ -11,12 +11,12 @@ import { mapTMDBEpisodesToDB, type EpisodeInsertData } from "./episodeHelpers";
 type UpdateEpisodesResult = { success: true; addedCount: number } | { success: false; error: string };
 type AnimeEpData = { tmdb_id: number; media_type: string | null; structure_type: string | null };
 
-export async function updateEpisodes(animeId: number): Promise<UpdateEpisodesResult> {
+export async function updateEpisodes(animeId: string): Promise<UpdateEpisodesResult> {
     const auth = await requireAdmin();
     if (isAuthError(auth)) return auth;
 
     const validation = animeIdSchema.safeParse(animeId);
-    if (!validation.success) return { success: false, error: "Geçersiz anime ID" };
+    if (!validation.success) return { success: false, error: "Geçersiz anime UUID" };
 
     const supabase = await createClient();
 

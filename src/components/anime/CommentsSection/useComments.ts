@@ -12,7 +12,7 @@ interface UseCommentsReturn {
     fetchCounts: () => Promise<{ comments: number; reviews: number }>;
 }
 
-export function useComments(animeId: number, episodeId: number | undefined, activeTab: "comments" | "reviews"): UseCommentsReturn {
+export function useComments(animeId: string, episodeId: number | undefined, activeTab: "comments" | "reviews"): UseCommentsReturn {
     const fetchComments = useCallback(async () => {
         if (activeTab === "comments") {
             const { comments, totalCount } = await fetchCommentsData(animeId, episodeId);

@@ -10,9 +10,9 @@ type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];
 interface SeriesTableRowActionsProps {
     item: AnimeRow;
     onEdit: (item: AnimeRow) => void;
-    onDelete: (id: number) => void;
+    onDelete: (id: string) => void;
     onToggleFeatured: (item: AnimeRow) => void;
-    onUpdateEpisodes?: (id: number) => void;
+    onUpdateEpisodes?: (id: string) => void;
     isUpdatingEpisodes?: boolean;
 }
 

@@ -10,7 +10,7 @@ import type { FavoriteItem, UserFavoritesWithAnime } from "@/types/helpers";
 /**
  * Toggles favorite status for an anime (independent from watchlist)
  */
-export async function toggleFavorite(animeId: number) {
+export async function toggleFavorite(animeId: string) {
     const auth = await requireUser();
     if (isAuthError(auth)) {
         return { success: false, error: auth.error };
@@ -63,7 +63,7 @@ export async function toggleFavorite(animeId: number) {
 /**
  * Check if an anime is in user's favorites
  */
-export async function checkFavorite(animeId: number) {
+export async function checkFavorite(animeId: string) {
     const auth = await requireUser();
     if (isAuthError(auth)) {
         return { success: false, isFavorite: false };

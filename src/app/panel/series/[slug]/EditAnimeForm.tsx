@@ -28,7 +28,7 @@ export function EditAnimeForm({ slug }: { slug: string }) {
     const supabase = createClient();
 
     const [isLoading, setIsLoading] = useState(true);
-    const [animeId, setAnimeId] = useState<number | null>(null);
+    const [animeId, setAnimeId] = useState<string | null>(null);
     const [formData, setFormData] = useState<EditFormData>({
         title: "",
         original_title: "",

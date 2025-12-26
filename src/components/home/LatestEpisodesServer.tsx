@@ -4,7 +4,7 @@ import LatestEpisodes from "./LatestEpisodes";
 
 /** Episode item structure expected by LatestEpisodes component */
 interface EpisodeItem {
-  id: number;
+  id: string;
   episode_number: number;
   season_number: number;
   absolute_episode_number: number | null;
@@ -20,7 +20,7 @@ interface EpisodeItem {
 
 /** Raw episode data from Supabase with relation alias */
 interface EpisodeWithAnime {
-  id: number;
+  id: string;
   episode_number: number;
   season_number: number;
   absolute_episode_number: number | null;

@@ -14,7 +14,7 @@ interface ReportModalProps {
     onClose: () => void;
     animeTitle: string;
     episodeTitle: string;
-    animeId: number;
+    animeId: string;
     seasonNumber?: number;
     episodeNumber?: number;
 }

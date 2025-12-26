@@ -10,7 +10,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useEffect } from "react";
 
 interface FavoriteButtonProps {
-    animeId: number;
+    animeId: string;
     initialFavorite?: boolean;
     variant?: "featured" | "card";
 }

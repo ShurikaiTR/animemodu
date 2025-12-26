@@ -4,7 +4,7 @@ import { tr } from "date-fns/locale";
 import type { Review } from "../types";
 import { logError } from "@/lib/errors";
 
-export async function fetchReviewsData(animeId: number): Promise<{ reviews: Review[]; totalCount: number }> {
+export async function fetchReviewsData(animeId: string): Promise<{ reviews: Review[]; totalCount: number }> {
     const supabase = createClient();
 
     const { data: reviewsData, error: reviewsError, count } = await supabase

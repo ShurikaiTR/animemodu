@@ -17,7 +17,7 @@ const ICON_MAP = {
 
 /** Supabase query sonucu için interface */
 interface MediaGridItem {
-    id: number;
+    id: string;
     title: string;
     release_date: string | null;
     genres: string[] | null;

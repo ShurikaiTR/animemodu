@@ -8,7 +8,7 @@ import FavoriteButton from "@/components/ui/FavoriteButton";
 
 interface FeaturedCardProps {
     anime: {
-        id: number;
+        id: string;
         title: string;
         overview: string | null;
         poster_path: string | null;

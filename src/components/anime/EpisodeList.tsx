@@ -10,7 +10,7 @@ import type { EpisodeListItem } from "@/types/domain/anime";
 interface EpisodeListProps {
     episodes: EpisodeListItem[];
     structureType: "seasonal" | "absolute";
-    animeId: number;
+    animeId: string;
     animeSlug: string;
     layoutMode?: "grid" | "list";
     currentEpisodeId?: number | string;

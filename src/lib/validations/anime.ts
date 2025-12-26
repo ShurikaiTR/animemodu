@@ -42,7 +42,7 @@ export type AddAnimeInput = z.infer<typeof addAnimeSchema>;
 
 // Update Anime schema
 export const updateAnimeSchema = z.object({
-    id: z.coerce.number().positive("Geçerli bir ID gerekli"),
+    id: z.string().uuid("Geçerli bir anime UUID gerekli"),
     title: z.string().min(1).max(200).optional().nullable(),
     original_title: z.string().max(200).optional().nullable(),
     slug: z.string().min(1).max(200).optional().nullable(),
@@ -80,8 +80,8 @@ export const updateEpisodeSchema = z.object({
 
 export type UpdateEpisodeInput = z.infer<typeof updateEpisodeSchema>;
 
-// Anime ID schema (for delete, syncCharacters, updateEpisodes)
-export const animeIdSchema = z.coerce.number().positive("Geçerli bir anime ID gerekli");
+// Anime ID schema (for delete, syncCharacters, updateEpisodes) - UUID format
+export const animeIdSchema = z.string().uuid("Geçerli bir anime UUID gerekli");
 
 // Genre validation schemas
 export const genreNameSchema = z.string()

@@ -1,5 +1,5 @@
 create table if not exists animes (
-  id bigint primary key generated always as identity,
+  id uuid primary key default gen_random_uuid(),
   tmdb_id integer unique not null,
   anilist_id integer,
   title text not null,
@@ -23,7 +23,7 @@ create table if not exists animes (
 
 create table if not exists episodes (
   id bigint primary key generated always as identity,
-  anime_id bigint references animes(id) on delete cascade not null,
+  anime_id uuid references animes(id) on delete cascade not null,
   tmdb_id integer,
   overview text,
   still_path text,

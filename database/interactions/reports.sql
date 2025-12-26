@@ -7,7 +7,7 @@ create table if not exists public.reports (
     id bigint primary key generated always as identity,
     
     -- İlişkili anime ve bölüm bilgileri
-    anime_id bigint not null references public.animes(id) on delete cascade,
+    anime_id uuid not null references public.animes(id) on delete cascade,
     anime_title text not null,  -- Denormalized, anime silinse bile görüntüleme için
     episode_id bigint references public.episodes(id) on delete set null,
     season_number integer,

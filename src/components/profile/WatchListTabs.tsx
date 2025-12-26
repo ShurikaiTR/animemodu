@@ -29,7 +29,7 @@ export default function WatchListTabs({ initialItems, favorites: initialFavorite
     const [activeTab, setActiveTab] = useState("all");
     const [_isPending, startTransition] = useTransition();
 
-    const handleRemove = (animeId: number) => {
+    const handleRemove = (animeId: string) => {
         if (activeTab === "favorites") {
             // Remove from favorites
             setFavorites(prev => prev.filter(item => item.anime.id !== animeId));

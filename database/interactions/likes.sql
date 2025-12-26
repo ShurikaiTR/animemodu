@@ -28,12 +28,30 @@ alter table review_likes enable row level security;
 -- Comment likes policies
 create policy "Comment likes are viewable by everyone" on comment_likes for select using (true);
 create policy "Users can insert their own comment likes" on comment_likes for insert with check ((select auth.uid()) = user_id);
-create policy "Users can delete their own comment likes" on comment_likes for delete using ((select auth.uid()) = user_id);
+
+-- Combined DELETE policy: user owns the like OR user is admin
+create policy "Users or admins can delete comment likes" on comment_likes for delete using (
+    (select auth.uid()) = user_id
+    OR exists (
+        select 1 from profiles
+        where profiles.id = (select auth.uid())
+        and profiles.role = 'admin'
+    )
+);
 
 -- Review likes policies
 create policy "Review likes are viewable by everyone" on review_likes for select using (true);
 create policy "Users can insert their own review likes" on review_likes for insert with check ((select auth.uid()) = user_id);
-create policy "Users can delete their own review likes" on review_likes for delete using ((select auth.uid()) = user_id);
+
+-- Combined DELETE policy: user owns the like OR user is admin
+create policy "Users or admins can delete review likes" on review_likes for delete using (
+    (select auth.uid()) = user_id
+    OR exists (
+        select 1 from profiles
+        where profiles.id = (select auth.uid())
+        and profiles.role = 'admin'
+    )
+);
 
 -- =====================================================
 -- INDEXES

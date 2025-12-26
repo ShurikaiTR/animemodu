@@ -13,7 +13,7 @@ import { submitComment, submitReview } from "./submitHelpers";
 
 interface CommentInputProps {
     activeTab: "comments" | "reviews";
-    animeId: number;
+    animeId: string;
     episodeId?: number;
     parentId?: number;
     onCommentAdded: () => void;

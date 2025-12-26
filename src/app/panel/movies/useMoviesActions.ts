@@ -15,7 +15,7 @@ interface UseMoviesActionsOptions {
 }
 
 export function useMoviesActions({ onMoviesChange }: UseMoviesActionsOptions) {
-    const [deleteMovieId, setDeleteMovieId] = useState<number | null>(null);
+    const [deleteMovieId, setDeleteMovieId] = useState<string | null>(null);
     const [isPending, startTransition] = useTransition();
     const supabase = createClient();
     const router = useRouter();

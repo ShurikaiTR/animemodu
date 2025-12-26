@@ -6,7 +6,7 @@ import { getImageUrl } from "@/lib/tmdb";
 import { getWatchUrl } from "@/lib/utils";
 
 interface EpisodeItem {
-    id: number;
+    id: string;
     episode_number: number;
     season_number: number;
     absolute_episode_number: number | null;

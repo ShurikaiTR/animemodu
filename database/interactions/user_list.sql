@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS public.user_anime_list (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-    anime_id BIGINT NOT NULL REFERENCES public.animes(id) ON DELETE CASCADE,
+    anime_id UUID NOT NULL REFERENCES public.animes(id) ON DELETE CASCADE,
     status TEXT NOT NULL CHECK (status IN ('watching', 'completed', 'plan_to_watch', 'on_hold', 'dropped')),
     score INTEGER CHECK (score >= 0 AND score <= 10),
     created_at TIMESTAMPTZ DEFAULT now(),

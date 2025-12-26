@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 interface UseReportModalProps {
     isOpen: boolean;
-    animeId: number;
+    animeId: string;
     seasonNumber?: number;
     episodeNumber?: number;
     onClose: () => void;

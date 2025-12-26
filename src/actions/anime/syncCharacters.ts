@@ -8,7 +8,7 @@ import { animeIdSchema } from "@/lib/validations/anime";
 
 type SyncCharactersResult = { success: true; count: number } | { success: false; error: string };
 
-export async function syncAnimeCharacters(animeId: number): Promise<SyncCharactersResult> {
+export async function syncAnimeCharacters(animeId: string): Promise<SyncCharactersResult> {
     // Auth check
     const auth = await requireAdmin();
     if (isAuthError(auth)) {

@@ -16,8 +16,8 @@ interface UseSeriesActionsOptions {
 }
 
 export function useSeriesActions({ onAnimesChange }: UseSeriesActionsOptions) {
-    const [updatingAnimeId, setUpdatingAnimeId] = useState<number | null>(null);
-    const [deleteAnimeId, setDeleteAnimeId] = useState<number | null>(null);
+    const [updatingAnimeId, setUpdatingAnimeId] = useState<string | null>(null);
+    const [deleteAnimeId, setDeleteAnimeId] = useState<string | null>(null);
     const [isPending, startTransition] = useTransition();
     const supabase = createClient();
     const router = useRouter();
@@ -62,7 +62,7 @@ export function useSeriesActions({ onAnimesChange }: UseSeriesActionsOptions) {
         }
     };
 
-    const handleUpdateEpisodes = async (animeId: number) => {
+    const handleUpdateEpisodes = async (animeId: string) => {
         setUpdatingAnimeId(animeId);
 
         try {

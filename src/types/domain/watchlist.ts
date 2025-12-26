@@ -17,7 +17,7 @@ export interface SocialMediaLinks {
  * Watch list item'daki anime bilgileri
  */
 export interface WatchListAnime {
-    id: number;
+    id: string;
     title: string;
     slug: string;
     poster_path: string | null;
@@ -30,7 +30,7 @@ export interface WatchListAnime {
  * Frontend'de kullanılan mapped anime bilgileri
  */
 export interface WatchListAnimeMapped {
-    id: number;
+    id: string;
     title: string;
     slug: string;
     poster_url: string | null;
@@ -45,7 +45,7 @@ export interface WatchListAnimeMapped {
 export interface WatchListItemRaw {
     id: string;
     user_id: string;
-    anime_id: number;
+    anime_id: string;
     status: WatchStatus;
     score: number | null;
     created_at: string;
@@ -59,7 +59,7 @@ export interface WatchListItemRaw {
 export interface FavoriteItem {
     id: string; // favorite record id
     user_id: string;
-    anime_id: number;
+    anime_id: string;
     created_at: string;
     anime: WatchListAnimeMapped;
 }
@@ -69,7 +69,7 @@ export interface FavoriteItem {
  */
 export interface UserFavoritesWithAnime {
     id: string;
-    anime_id: number;
+    anime_id: string;
     created_at: string;
     anime: WatchListAnime;
 }
@@ -80,7 +80,7 @@ export interface UserFavoritesWithAnime {
 export interface WatchListItem {
     id: string;
     user_id: string;
-    anime_id: number;
+    anime_id: string;
     status: WatchStatus;
     score: number | null;
     created_at: string;

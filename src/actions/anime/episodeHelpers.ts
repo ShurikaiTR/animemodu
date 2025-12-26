@@ -1,7 +1,7 @@
 import type { TMDBSeriesData } from "@/types/helpers";
 
 export interface EpisodeInsertData {
-    anime_id: number;
+    anime_id: string;
     tmdb_id: number;
     overview: string | null;
     still_path: string | null;
@@ -14,7 +14,7 @@ export interface EpisodeInsertData {
 }
 
 interface MapEpisodesOptions {
-    animeId: number;
+    animeId: string;
     isAbsolute: boolean;
     existingTmdbIds: Set<number>;
     today: Date;

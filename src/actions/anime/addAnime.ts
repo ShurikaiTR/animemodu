@@ -9,7 +9,7 @@ import { revalidateAnimeData } from "@/lib/cache/revalidate";
 import { insertEpisodesFromTMDB } from "@/lib/anime/episodes";
 
 
-type AddAnimeResult = { success: true; animeId: number } | { success: false; error: string };
+type AddAnimeResult = { success: true; animeId: string } | { success: false; error: string };
 
 export async function addAnimeToDB(formData: FormData): Promise<AddAnimeResult> {
     // Auth check
@@ -73,7 +73,7 @@ export async function addAnimeToDB(formData: FormData): Promise<AddAnimeResult> 
         return { success: false, error: "Anime eklenirken hata: " + animeError.message };
     }
 
-    const animeId = (insertedAnime as { id: number }).id;
+    const animeId = (insertedAnime as { id: string }).id;
 
     if (details && details.videos && details.videos.results) {
         const trailer = details.videos.results.find(

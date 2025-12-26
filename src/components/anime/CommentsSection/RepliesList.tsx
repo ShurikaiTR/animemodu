@@ -6,7 +6,7 @@ import type { Reply } from "./types";
 interface RepliesListProps {
     replies: Reply[];
     parentId: number;
-    animeId: number;
+    animeId: string;
     episodeId?: number;
     onReplyAdded: () => void;
 }

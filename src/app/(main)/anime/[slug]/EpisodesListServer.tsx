@@ -7,7 +7,7 @@ import { filterAiredEpisodes, mapEpisodeRowsToEpisodes, orderEpisodesBySeasonAnd
 
 interface EpisodesListServerProps {
   slug: string;
-  animeId: number;
+  animeId: string;
   structureType: "seasonal" | "absolute";
 }
 

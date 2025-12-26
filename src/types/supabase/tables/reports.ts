@@ -3,7 +3,7 @@
 export interface ReportsTable {
     Row: {
         id: number;
-        anime_id: number;
+        anime_id: string;
         anime_title: string;
         episode_id: number | null;
         episode_number: number | null;
@@ -17,7 +17,7 @@ export interface ReportsTable {
     };
     Insert: {
         id?: number;
-        anime_id: number;
+        anime_id: string;
         anime_title: string;
         episode_id?: number | null;
         episode_number?: number | null;
@@ -31,7 +31,7 @@ export interface ReportsTable {
     };
     Update: {
         id?: number;
-        anime_id?: number;
+        anime_id?: string;
         episode_id?: number | null;
         user_id?: string;
         reason?: string;

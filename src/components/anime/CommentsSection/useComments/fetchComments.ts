@@ -13,7 +13,7 @@ interface ProfileData {
 }
 
 export async function fetchCommentsData(
-    animeId: number,
+    animeId: string,
     episodeId: number | undefined
 ): Promise<{ comments: Comment[]; totalCount: number }> {
     const supabase = createClient();

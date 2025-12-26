@@ -15,7 +15,7 @@ interface WatchSidebarProps {
     currentEpisodeNumber: number;
     currentSeasonNumber: number;
     structureType: "seasonal" | "absolute";
-    animeId: string | number;
+    animeId: string;
 }
 
 
@@ -64,7 +64,7 @@ export default function WatchSidebar({
                         <EpisodeList
                             episodes={episodes}
                             structureType={structureType}
-                            animeId={typeof animeId === 'string' ? parseInt(animeId) : (animeId || 0)}
+                            animeId={animeId}
                             animeSlug={animeSlug}
                             layoutMode="list"
                             currentEpisodeId={currentEpisodeId}

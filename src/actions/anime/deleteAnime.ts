@@ -8,7 +8,7 @@ import { animeIdSchema } from "@/lib/validations/anime";
 
 type DeleteAnimeResult = { success: true } | { success: false; error: string };
 
-export async function deleteAnime(id: number): Promise<DeleteAnimeResult> {
+export async function deleteAnime(id: string): Promise<DeleteAnimeResult> {
     // Auth check
     const auth = await requireAdmin();
     if (isAuthError(auth)) {
@@ -18,7 +18,7 @@ export async function deleteAnime(id: number): Promise<DeleteAnimeResult> {
     // Validation
     const validation = animeIdSchema.safeParse(id);
     if (!validation.success) {
-        return { success: false, error: "Geçersiz anime ID" };
+        return { success: false, error: "Geçersiz anime UUID" };
     }
 
     const supabase = await createClient();

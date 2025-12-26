@@ -38,7 +38,7 @@ export interface VideoResult {
  * Full anime detail data combining database and API data
  */
 export interface AnimeDetailData {
-    id: number;
+    id: string;
     name?: string;
     title: string;
     overview: string | null;
@@ -76,7 +76,7 @@ export interface AnimeDetailClientProps {
  * Database anime row with typed characters
  */
 export interface DatabaseAnime {
-    id: number;
+    id: string;
     tmdb_id: number;
     title: string;
     overview: string | null;

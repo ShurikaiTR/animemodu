@@ -17,7 +17,7 @@ interface CommentItemProps {
     comment: Comment;
     showSpoiler: Record<number, boolean>;
     onToggleSpoiler: (id: number) => void;
-    animeId: number;
+    animeId: string;
     episodeId?: number;
     onReplyAdded: () => void;
 }

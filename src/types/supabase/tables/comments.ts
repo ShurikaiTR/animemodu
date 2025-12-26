@@ -2,7 +2,7 @@ export interface CommentsTable {
     Row: {
         id: number
         user_id: string
-        anime_id: number
+        anime_id: string
         episode_id: number | null
         parent_id: number | null
         content: string
@@ -15,7 +15,7 @@ export interface CommentsTable {
     Insert: {
         id?: number
         user_id: string
-        anime_id: number
+        anime_id: string
         episode_id?: number | null
         parent_id?: number | null
         content: string
@@ -28,7 +28,7 @@ export interface CommentsTable {
     Update: {
         id?: number
         user_id?: string
-        anime_id?: number
+        anime_id?: string
         episode_id?: number | null
         parent_id?: number | null
         content?: string

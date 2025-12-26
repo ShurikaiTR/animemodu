@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { ReportInsert } from "@/types/helpers";
 
 interface CreateReportData {
-    animeId: number;
+    animeId: string;
     episodeNumber?: number;
     seasonNumber?: number;
     reason: string;

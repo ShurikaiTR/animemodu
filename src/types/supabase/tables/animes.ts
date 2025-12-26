@@ -2,7 +2,7 @@ import type { CharacterJson } from "./characters";
 
 export interface AnimesTable {
     Row: {
-        id: number
+        id: string
         tmdb_id: number
         title: string
         original_title: string | null
@@ -22,7 +22,7 @@ export interface AnimesTable {
         created_at: string
     }
     Insert: {
-        id?: number
+        id?: string
         tmdb_id: number
         title: string
         original_title?: string | null
@@ -42,7 +42,7 @@ export interface AnimesTable {
         created_at?: string
     }
     Update: {
-        id?: number
+        id?: string
         tmdb_id?: number
         title?: string
         original_title?: string | null

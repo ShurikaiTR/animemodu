@@ -7,7 +7,7 @@ import type { WatchStatus } from "../WatchStatusDropdown/config";
 import { RatingBadge } from "./RatingBadge";
 
 interface MovieCardProps {
-    id?: number;
+    id?: string;
     title: string;
     year: number;
     genres?: string[] | null;

@@ -13,7 +13,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import type { Comment, Review } from "./types";
 
 interface CommentsSectionProps {
-    animeId: number;
+    animeId: string;
     episodeId?: number;
 }
 

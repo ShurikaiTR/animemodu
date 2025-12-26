@@ -46,6 +46,6 @@ export interface EpisodeManagement {
     still_path: string | null;
     season_number: number;
     episode_number: number;
-    anime_id: number;
+    anime_id: string;
     video_url: string | null;
 }

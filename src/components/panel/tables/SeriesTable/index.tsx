@@ -9,10 +9,10 @@ type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];
 interface SeriesTableProps {
     items: AnimeRow[];
     onEdit: (item: AnimeRow) => void;
-    onDelete: (id: number) => void;
+    onDelete: (id: string) => void;
     onToggleFeatured: (item: AnimeRow) => void;
-    onUpdateEpisodes: (id: number) => void;
-    updatingAnimeId: number | null;
+    onUpdateEpisodes: (id: string) => void;
+    updatingAnimeId: string | null;
 }
 
 export function SeriesTable({

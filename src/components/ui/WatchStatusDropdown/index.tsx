@@ -18,7 +18,7 @@ import { useAuthModal } from "@/contexts/AuthModalContext";
 import { StatusItem, RemoveItem } from "./items";
 
 interface WatchStatusDropdownProps {
-    animeId?: number;
+    animeId?: string;
     initialStatus?: WatchStatus | null; // Allow explicit null
     variant?: "hero" | "card" | "featured";
 }

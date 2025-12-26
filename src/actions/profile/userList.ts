@@ -75,7 +75,7 @@ export async function getUserWatchList(userId: string): Promise<WatchListResult>
 /**
  * Updates or creates a watch status for an anime
  */
-export async function updateWatchStatus(animeId: number, status: WatchStatus | null) {
+export async function updateWatchStatus(animeId: string, status: WatchStatus | null) {
     const auth = await requireUser();
     if (isAuthError(auth)) {
         return { success: false, error: auth.error };
@@ -121,7 +121,7 @@ export async function updateWatchStatus(animeId: number, status: WatchStatus | n
 /**
  * Check the watch status of an anime for the current user
  */
-export async function checkWatchStatus(animeId: number) {
+export async function checkWatchStatus(animeId: string) {
     const auth = await requireUser();
     if (isAuthError(auth)) {
         return { success: false, status: null };

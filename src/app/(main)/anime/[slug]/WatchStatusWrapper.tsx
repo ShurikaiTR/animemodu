@@ -5,7 +5,7 @@ import WatchStatusDropdown from "@/components/ui/WatchStatusDropdown";
 import type { WatchStatus } from "@/components/ui/WatchStatusDropdown/config";
 
 interface WatchStatusWrapperProps {
-  animeId?: number;
+  animeId?: string;
   initialStatus?: WatchStatus | null;
 }
 

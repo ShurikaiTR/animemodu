@@ -8,7 +8,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
  * Episode insert data type for database operations
  */
 export interface EpisodeInsertData {
-  anime_id: number;
+  anime_id: string;
   tmdb_id: number;
   overview: string | null;
   still_path: string | null;
@@ -61,7 +61,7 @@ export function orderEpisodesBySeasonAndNumber<T extends { order: (column: strin
 export async function insertEpisodesFromTMDB(
   supabase: SupabaseClient,
   tmdbId: number,
-  animeId: number,
+  animeId: string,
   numberOfSeasons: number,
   structureType: "seasonal" | "absolute"
 ): Promise<{ insertedCount: number }> {
