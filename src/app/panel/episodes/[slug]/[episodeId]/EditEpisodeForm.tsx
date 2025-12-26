@@ -17,7 +17,7 @@ interface EditEpisodeFormProps {
     animeSlug: string;
 }
 
-export function EditEpisodeForm({ episode, animeSlug }: EditEpisodeFormProps) {
+export function EditEpisodeForm({ episode, animeSlug: _animeSlug }: EditEpisodeFormProps) {
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
 

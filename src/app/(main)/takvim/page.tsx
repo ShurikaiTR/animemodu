@@ -47,7 +47,7 @@ export default async function CalendarPage() {
         title: string | null;
         episode_number: number;
         anime: {
-            id: number;
+            id: string;
             title: string;
             poster_path: string | null;
             backdrop_path: string | null;

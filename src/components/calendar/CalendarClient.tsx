@@ -21,7 +21,7 @@ interface CalendarEpisode {
     episode_number: number;
     air_date: string | null;
     anime: {
-        id: number;
+        id: string;
         title: string;
         poster_path: string | null;
         backdrop_path: string | null;

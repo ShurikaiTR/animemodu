@@ -26,7 +26,7 @@ export async function GenresContent() {
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count);
 
-    const totalAnimes = animes?.length || 0;
+
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
