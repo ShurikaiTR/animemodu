@@ -49,7 +49,7 @@ export default function WatchClient({ episode, anime, episodes }: WatchClientPro
     };
 
     return (
-        <div className="min-h-screen bg-bg-main relative">
+        <div className="min-h-screen bg-bg-main relative -mt-36 pt-36">
 
             <WatchHero backdrop={backdrop} />
 

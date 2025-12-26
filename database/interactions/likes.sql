@@ -27,13 +27,13 @@ alter table review_likes enable row level security;
 
 -- Comment likes policies
 create policy "Comment likes are viewable by everyone" on comment_likes for select using (true);
-create policy "Users can insert their own comment likes" on comment_likes for insert with check (auth.uid() = user_id);
-create policy "Users can delete their own comment likes" on comment_likes for delete using (auth.uid() = user_id);
+create policy "Users can insert their own comment likes" on comment_likes for insert with check ((select auth.uid()) = user_id);
+create policy "Users can delete their own comment likes" on comment_likes for delete using ((select auth.uid()) = user_id);
 
 -- Review likes policies
 create policy "Review likes are viewable by everyone" on review_likes for select using (true);
-create policy "Users can insert their own review likes" on review_likes for insert with check (auth.uid() = user_id);
-create policy "Users can delete their own review likes" on review_likes for delete using (auth.uid() = user_id);
+create policy "Users can insert their own review likes" on review_likes for insert with check ((select auth.uid()) = user_id);
+create policy "Users can delete their own review likes" on review_likes for delete using ((select auth.uid()) = user_id);
 
 -- =====================================================
 -- INDEXES
@@ -60,7 +60,8 @@ begin
   end if;
   return null;
 end;
-$$ language plpgsql;
+$$ language plpgsql
+set search_path = public;
 
 create or replace function update_review_helpful_count()
 returns trigger as $$
@@ -72,7 +73,8 @@ begin
   end if;
   return null;
 end;
-$$ language plpgsql;
+$$ language plpgsql
+set search_path = public;
 
 -- Triggerlar
 drop trigger if exists comment_like_count_trigger on comment_likes;

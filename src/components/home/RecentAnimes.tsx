@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 export default async function RecentAnimes() {
     return (
-        <section className="pb-20 pt-16">
+        <section className="pb-20">
             <Container>
                 <div className="flex items-center justify-between mb-12">
                     <h2 className="text-2xl sm:text-3xl font-bold font-rubik text-white drop-shadow-md border-l-4 border-primary pl-4">

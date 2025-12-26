@@ -55,7 +55,7 @@ create policy "Only admins can insert animes"
   with check (
     exists (
       select 1 from profiles
-      where profiles.id = auth.uid()
+      where profiles.id = (select auth.uid())
       and profiles.role = 'admin'
     )
   );
@@ -66,7 +66,7 @@ create policy "Only admins can update animes"
   using (
     exists (
       select 1 from profiles
-      where profiles.id = auth.uid()
+      where profiles.id = (select auth.uid())
       and profiles.role = 'admin'
     )
   );
@@ -77,7 +77,7 @@ create policy "Only admins can delete animes"
   using (
     exists (
       select 1 from profiles
-      where profiles.id = auth.uid()
+      where profiles.id = (select auth.uid())
       and profiles.role = 'admin'
     )
   );
@@ -88,7 +88,7 @@ create policy "Only admins can insert episodes"
   with check (
     exists (
       select 1 from profiles
-      where profiles.id = auth.uid()
+      where profiles.id = (select auth.uid())
       and profiles.role = 'admin'
     )
   );
@@ -99,7 +99,7 @@ create policy "Only admins can update episodes"
   using (
     exists (
       select 1 from profiles
-      where profiles.id = auth.uid()
+      where profiles.id = (select auth.uid())
       and profiles.role = 'admin'
     )
   );
@@ -110,7 +110,7 @@ create policy "Only admins can delete episodes"
   using (
     exists (
       select 1 from profiles
-      where profiles.id = auth.uid()
+      where profiles.id = (select auth.uid())
       and profiles.role = 'admin'
     )
   );
@@ -140,7 +140,8 @@ begin
     new.updated_at = timezone('utc'::text, now());
     return new;
 end;
-$$ language plpgsql;
+$$ language plpgsql
+set search_path = public;
 
 -- Animes tablosu için updated_at trigger
 drop trigger if exists set_animes_updated_at on animes;

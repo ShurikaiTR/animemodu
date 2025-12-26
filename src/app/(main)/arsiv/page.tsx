@@ -72,7 +72,7 @@ export default async function ArchivePage({ searchParams }: { searchParams: Prom
     })).sort((a, b) => a.label.localeCompare(b.label));
 
     return (
-        <div className="pt-36 pb-16 min-h-screen bg-bg-main">
+        <div className="pb-16 min-h-screen bg-bg-main">
             <Container>
                 <div className="flex flex-col lg:flex-row gap-0 lg:gap-10 items-start">
 

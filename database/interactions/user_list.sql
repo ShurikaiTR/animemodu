@@ -19,15 +19,15 @@ CREATE POLICY "Everyone can view anime lists" ON public.user_anime_list
 
 -- Insert: Users can add to their own list
 CREATE POLICY "Users can add to their own list" ON public.user_anime_list
-    FOR INSERT WITH CHECK (auth.uid() = user_id);
+    FOR INSERT WITH CHECK ((select auth.uid()) = user_id);
 
 -- Update: Users can update their own list
 CREATE POLICY "Users can update their own list" ON public.user_anime_list
-    FOR UPDATE USING (auth.uid() = user_id);
+    FOR UPDATE USING ((select auth.uid()) = user_id);
 
 -- Delete: Users can delete from their own list
 CREATE POLICY "Users can delete from their own list" ON public.user_anime_list
-    FOR DELETE USING (auth.uid() = user_id);
+    FOR DELETE USING ((select auth.uid()) = user_id);
 
 -- Indices
 CREATE INDEX idx_user_anime_list_user_id ON public.user_anime_list(user_id);
@@ -41,7 +41,8 @@ BEGIN
     NEW.updated_at = now();
     RETURN NEW;
 END;
-$$ language 'plpgsql';
+$$ language 'plpgsql'
+set search_path = public;
 
 CREATE TRIGGER update_user_anime_list_updated_at
     BEFORE UPDATE ON public.user_anime_list

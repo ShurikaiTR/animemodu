@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ArchiveLoading() {
   return (
-    <div className="pt-36 pb-16 min-h-screen bg-bg-main">
+    <div className="pb-16 min-h-screen bg-bg-main">
       <Container>
         <div className="flex flex-col lg:flex-row gap-0 lg:gap-10 items-start">
           <div className="w-full lg:w-64 shrink-0 lg:sticky lg:top-24">

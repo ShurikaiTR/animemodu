@@ -27,7 +27,7 @@ CREATE POLICY "Only admins can update site settings"
     USING (
         EXISTS (
             SELECT 1 FROM profiles
-            WHERE profiles.id = auth.uid()
+            WHERE profiles.id = (select auth.uid())
             AND profiles.role = 'admin'
         )
     );
@@ -38,7 +38,7 @@ CREATE POLICY "Only admins can insert site settings"
     WITH CHECK (
         EXISTS (
             SELECT 1 FROM profiles
-            WHERE profiles.id = auth.uid()
+            WHERE profiles.id = (select auth.uid())
             AND profiles.role = 'admin'
         )
     );
@@ -49,7 +49,7 @@ CREATE POLICY "Only admins can delete site settings"
     USING (
         EXISTS (
             SELECT 1 FROM profiles
-            WHERE profiles.id = auth.uid()
+            WHERE profiles.id = (select auth.uid())
             AND profiles.role = 'admin'
         )
     );
@@ -61,7 +61,8 @@ BEGIN
     NEW.updated_at = NOW();
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql
+SET search_path = public;
 
 CREATE TRIGGER site_settings_updated_at
     BEFORE UPDATE ON site_settings

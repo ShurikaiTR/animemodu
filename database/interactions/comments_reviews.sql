@@ -31,20 +31,20 @@ alter table reviews enable row level security;
 alter table comments enable row level security;
 
 create policy "Reviews are viewable by everyone" on reviews for select using (true);
-create policy "Users can insert their own reviews" on reviews for insert with check (auth.uid() = user_id);
-create policy "Users can update their own reviews" on reviews for update using (auth.uid() = user_id);
-create policy "Users can delete their own reviews" on reviews for delete using (auth.uid() = user_id);
+create policy "Users can insert their own reviews" on reviews for insert with check ((select auth.uid()) = user_id);
+create policy "Users can update their own reviews" on reviews for update using ((select auth.uid()) = user_id);
+create policy "Users can delete their own reviews" on reviews for delete using ((select auth.uid()) = user_id);
 
 create policy "Comments are viewable by everyone" on comments for select using (true);
-create policy "Users can insert their own comments" on comments for insert with check (auth.uid() = user_id);
-create policy "Users can update their own comments" on comments for update using (auth.uid() = user_id);
-create policy "Users can delete their own comments" on comments for delete using (auth.uid() = user_id);
+create policy "Users can insert their own comments" on comments for insert with check ((select auth.uid()) = user_id);
+create policy "Users can update their own comments" on comments for update using ((select auth.uid()) = user_id);
+create policy "Users can delete their own comments" on comments for delete using ((select auth.uid()) = user_id);
 
 -- Admin moderation policies
 create policy "Admins can delete any comment" on comments for delete using (
     exists (
         select 1 from profiles
-        where profiles.id = auth.uid()
+        where profiles.id = (select auth.uid())
         and profiles.role = 'admin'
     )
 );
@@ -52,7 +52,7 @@ create policy "Admins can delete any comment" on comments for delete using (
 create policy "Admins can delete any review" on reviews for delete using (
     exists (
         select 1 from profiles
-        where profiles.id = auth.uid()
+        where profiles.id = (select auth.uid())
         and profiles.role = 'admin'
     )
 );

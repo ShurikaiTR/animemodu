@@ -43,7 +43,7 @@ create policy "Only admins can view reports"
     using (
         exists (
             select 1 from public.profiles
-            where profiles.id = auth.uid()
+            where profiles.id = (select auth.uid())
             and profiles.role = 'admin'
         )
     );
@@ -54,7 +54,7 @@ create policy "Only admins can update reports"
     using (
         exists (
             select 1 from public.profiles
-            where profiles.id = auth.uid()
+            where profiles.id = (select auth.uid())
             and profiles.role = 'admin'
         )
     );
@@ -65,7 +65,7 @@ create policy "Only admins can delete reports"
     using (
         exists (
             select 1 from public.profiles
-            where profiles.id = auth.uid()
+            where profiles.id = (select auth.uid())
             and profiles.role = 'admin'
         )
     );
@@ -90,7 +90,8 @@ begin
     new.updated_at = timezone('utc'::text, now());
     return new;
 end;
-$$ language plpgsql;
+$$ language plpgsql
+set search_path = public;
 
 drop trigger if exists set_reports_updated_at on public.reports;
 create trigger set_reports_updated_at

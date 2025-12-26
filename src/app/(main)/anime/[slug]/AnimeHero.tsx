@@ -16,7 +16,7 @@ interface AnimeHeroProps {
 
 export default function AnimeHero({ anime, trailer, initialFavorite, initialWatchStatus }: AnimeHeroProps) {
   return (
-    <section className="section section--head section--head-fixed section--gradient section--details-bg relative overflow-hidden pb-16 pt-32 bg-bg-main">
+    <section className="section section--head section--head-fixed section--gradient section--details-bg relative overflow-hidden pb-16 pt-32 -mt-36 bg-bg-main">
       <div className="absolute top-0 left-0 right-0 h-96 w-full z-0">
         <Image
           src={getImageUrl(anime.backdrop_path || anime.poster_path, "original")}

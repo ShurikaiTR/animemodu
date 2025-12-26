@@ -58,7 +58,7 @@ export default async function CalendarPage() {
     const validEpisodes = (episodes as EpisodeData[] | null)?.filter(e => e.air_date) || [];
 
     return (
-        <div className="min-h-screen bg-bg-main pb-20 pt-24 md:pt-32">
+        <div className="min-h-screen bg-bg-main pb-20">
             <Container>
                 <div className="mb-12">
                     <h1 className="text-4xl md:text-5xl font-bold font-rubik text-white mb-4 flex items-center gap-3">

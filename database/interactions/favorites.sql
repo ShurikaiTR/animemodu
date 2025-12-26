@@ -19,11 +19,11 @@ CREATE POLICY "Everyone can view favorites" ON public.user_favorites
 
 -- Insert: Users can add to their own favorites
 CREATE POLICY "Users can add to their own favorites" ON public.user_favorites
-    FOR INSERT WITH CHECK (auth.uid() = user_id);
+    FOR INSERT WITH CHECK ((select auth.uid()) = user_id);
 
 -- Delete: Users can delete from their own favorites
 CREATE POLICY "Users can delete from their own favorites" ON public.user_favorites
-    FOR DELETE USING (auth.uid() = user_id);
+    FOR DELETE USING ((select auth.uid()) = user_id);
 
 -- Indices
 CREATE INDEX idx_user_favorites_user_id ON public.user_favorites(user_id);

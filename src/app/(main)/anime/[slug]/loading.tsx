@@ -3,7 +3,7 @@ import Container from "@/components/ui/container";
 
 export function HeroSkeleton() {
   return (
-    <section className="section section--head section--head-fixed section--gradient section--details-bg relative overflow-hidden pb-16 pt-32 bg-bg-main">
+    <section className="section section--head section--head-fixed section--gradient section--details-bg relative overflow-hidden pb-16 pt-32 -mt-36 bg-bg-main">
       <div className="absolute top-0 left-0 right-0 h-96 w-full z-0">
         <Skeleton className="absolute inset-0 w-full h-full" />
         <div className="absolute inset-0 bg-gradient-to-b from-bg-main/30 via-bg-main/80 to-bg-main z-10" />
@@ -96,7 +96,7 @@ export default function Loading() {
   return (
     <>
       <HeroSkeleton />
-      <section className="section section--head section--head-fixed section--gradient section--details-bg relative overflow-hidden pb-16 pt-32 bg-bg-main">
+      <section className="section section--head section--head-fixed section--gradient section--details-bg relative overflow-hidden pb-16 bg-bg-main">
         <Container>
           <div className="flex flex-col xl:flex-row xl:items-start gap-8">
             <div className="flex-1 min-w-0 space-y-12">

@@ -4,7 +4,7 @@ import MovieCardSkeleton from "@/components/ui/MovieCard/skeleton";
 
 export default function AnimelerLoading() {
     return (
-        <div className="min-h-screen pt-24 pb-20">
+        <div className="min-h-screen pb-20">
             <Container>
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">

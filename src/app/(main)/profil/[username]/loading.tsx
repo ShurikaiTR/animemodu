@@ -3,7 +3,7 @@ import Container from "@/components/ui/container";
 export default function Loading() {
     return (
         <div className="bg-bg-main min-h-screen">
-            <Container className="pt-28 lg:pt-32">
+            <Container>
                 <div className="relative rounded-3xl overflow-hidden bg-bg-secondary border border-white/5 shadow-2xl animate-pulse">
                     {/* Banner Skeleton */}
                     <div className="relative h-48 md:h-64 lg:h-72 w-full bg-white/5" />

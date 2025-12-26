@@ -27,7 +27,7 @@ export default async function ProfileHeader({ user, isOwnProfile = true }: Profi
     const avatarSrc = getAvatarUrl(user.avatar_url || user.avatar);
 
     return (
-        <Container className="pt-24 sm:pt-28 lg:pt-32 px-4 sm:px-6 mb-8">
+        <Container className="px-4 sm:px-6 mb-8">
             <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-bg-secondary border border-white/5 shadow-2xl">
                 {/* Banner */}
                 <div className="relative h-32 sm:h-48 md:h-64 lg:h-72 w-full">

@@ -45,9 +45,11 @@ drop policy if exists "Public profiles are viewable by everyone." on profiles;
 drop policy if exists "Users can update own profile." on profiles;
 drop policy if exists "Users can delete own profile." on profiles;
 
-create policy "Users can view own profile."
-    on profiles for select
-    using ( auth.uid() = id );
+-- "Users can view own profile" is redundant because "Public profiles are viewable by everyone" covers it for SELECT.
+-- Removed:
+-- create policy "Users can view own profile."
+--     on profiles for select
+--     using ( auth.uid() = id );
 
 create policy "Public profiles are viewable by everyone."
     on profiles for select
@@ -55,11 +57,11 @@ create policy "Public profiles are viewable by everyone."
 
 create policy "Users can update own profile."
     on profiles for update
-    using ( auth.uid() = id );
+    using ( (select auth.uid()) = id );
 
 create policy "Users can delete own profile."
     on profiles for delete
-    using ( auth.uid() = id );
+    using ( (select auth.uid()) = id );
 
 drop trigger if exists on_auth_user_created on auth.users;
 drop function if exists public.handle_new_user();
@@ -79,7 +81,8 @@ begin
     );
     return new;
 end;
-$$ language plpgsql security definer;
+$$ language plpgsql security definer 
+set search_path = public;
 
 create or replace function public.handle_updated_at()
 returns trigger as $$
@@ -87,7 +90,8 @@ begin
     new.updated_at = timezone('utc'::text, now());
     return new;
 end;
-$$ language plpgsql;
+$$ language plpgsql
+set search_path = public;
 
 drop trigger if exists set_updated_at on profiles;
 create trigger set_updated_at
