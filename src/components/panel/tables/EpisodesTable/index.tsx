@@ -5,9 +5,10 @@ import { EpisodesTableRow, type EpisodeWithAnime } from "./EpisodesTableRow";
 
 interface EpisodesTableProps {
     items: EpisodeWithAnime[];
+    onDelete: (id: string) => void;
 }
 
-export function EpisodesTable({ items }: EpisodesTableProps) {
+export function EpisodesTable({ items, onDelete }: EpisodesTableProps) {
     return (
         <div className="bg-bg-secondary/30 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden shadow-xl">
             <div className="overflow-x-auto">
@@ -17,7 +18,7 @@ export function EpisodesTable({ items }: EpisodesTableProps) {
                             <th className="h-12 px-4 text-left align-middle font-medium text-white/50 w-[30%]">Anime</th>
                             <th className="h-12 px-4 text-left align-middle font-medium text-white/50">Bölüm Bilgisi</th>
                             <th className="h-12 px-4 text-left align-middle font-medium text-white/50">Yayın Tarihi</th>
-                            <th className="h-12 px-4 text-right align-middle font-medium text-white/50 w-20"></th>
+                            <th className="h-12 px-4 text-right align-middle font-medium text-white/50 w-24"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,6 +36,7 @@ export function EpisodesTable({ items }: EpisodesTableProps) {
                                 <EpisodesTableRow
                                     key={item.id}
                                     item={item}
+                                    onDelete={onDelete}
                                 />
                             ))
                         )}

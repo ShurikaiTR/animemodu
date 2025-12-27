@@ -12,8 +12,8 @@ import { getStatusBadge, getReasonLabel, getAnimeTitle } from "./ReportsTableHel
 
 interface ReportTableRowProps {
     item: ReportWithDetails;
-    onUpdateStatus: (id: number, status: 'resolved' | 'dismissed') => void;
-    onDelete: (id: number) => void;
+    onUpdateStatus: (id: string, status: 'resolved' | 'dismissed') => void;
+    onDelete: (id: string) => void;
 }
 
 export function ReportTableRow({ item, onUpdateStatus, onDelete }: ReportTableRowProps) {

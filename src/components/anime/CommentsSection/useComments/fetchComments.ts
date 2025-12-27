@@ -14,7 +14,7 @@ interface ProfileData {
 
 export async function fetchCommentsData(
     animeId: string,
-    episodeId: number | undefined
+    episodeId: string | undefined
 ): Promise<{ comments: Comment[]; totalCount: number }> {
     const supabase = createClient();
 
@@ -52,7 +52,7 @@ export async function fetchCommentsData(
         return { comments: [], totalCount: 0 };
     }
 
-    type CommentDataRow = { user_id: string; id: number; parent_id: number | null; content: string; created_at: string; like_count: number; is_spoiler: boolean; is_pinned: boolean };
+    type CommentDataRow = { user_id: string; id: string; parent_id: string | null; content: string; created_at: string; like_count: number; is_spoiler: boolean; is_pinned: boolean };
     const userIds = Array.from(new Set((commentsData as CommentDataRow[] || []).map(c => c.user_id)));
     let profilesMap: Record<string, { username: string; avatar_url: string | null; role: string }> = {};
 
@@ -101,7 +101,7 @@ export async function fetchCommentsData(
         }
     }
 
-    const repliesMap: Record<number, Reply[]> = {};
+    const repliesMap: Record<string, Reply[]> = {};
     ((repliesData || []) as CommentDataRow[]).forEach((reply) => {
         if (!repliesMap[reply.parent_id!]) {
             repliesMap[reply.parent_id!] = [];

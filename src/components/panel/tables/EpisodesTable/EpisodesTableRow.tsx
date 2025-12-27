@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getImageUrl } from "@/lib/tmdb";
-import { Calendar, PlayCircle, Edit } from "lucide-react";
+import { Calendar, PlayCircle, Edit2, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Database } from "@/types/supabase";
 
@@ -17,9 +17,10 @@ export interface EpisodeWithAnime extends EpisodeRow {
 
 interface EpisodesTableRowProps {
     item: EpisodeWithAnime;
+    onDelete: (id: string) => void;
 }
 
-export function EpisodesTableRow({ item }: EpisodesTableRowProps) {
+export function EpisodesTableRow({ item, onDelete }: EpisodesTableRowProps) {
     const isAbsolute = item.animes?.structure_type === "absolute";
 
     return (
@@ -75,18 +76,28 @@ export function EpisodesTableRow({ item }: EpisodesTableRowProps) {
                 </div>
             </td>
 
-            {/* Actions */}
             <td className="p-4 align-middle text-right">
-                <Link href={`/panel/episodes/${item.animes?.slug}/${item.id}`}>
+                <div className="flex items-center justify-end gap-1">
+                    <Link href={`/panel/episodes/${item.animes?.slug}/${item.id}`}>
+                        <Button
+                            size="icon"
+                            variant="ghost"
+                            title="Bölümü Düzenle"
+                            className="h-8 w-8 text-white/40 transition-colors hover:bg-white/5 hover:text-primary"
+                        >
+                            <Edit2 className="w-4 h-4" />
+                        </Button>
+                    </Link>
                     <Button
                         size="icon"
                         variant="ghost"
-                        title="Bölümü Düzenle"
-                        className="h-8 w-8 text-white/40 hover:text-white hover:bg-white/5 transition-colors"
+                        onClick={() => onDelete(item.id)}
+                        title="Bölümü Sil"
+                        className="h-8 w-8 text-white/40 transition-colors hover:bg-white/5 hover:text-red-500"
                     >
-                        <Edit className="w-4 h-4" />
+                        <Trash2 className="w-4 h-4" />
                     </Button>
-                </Link>
+                </div>
             </td>
         </tr>
     );

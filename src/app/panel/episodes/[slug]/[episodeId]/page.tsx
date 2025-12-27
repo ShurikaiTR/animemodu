@@ -8,7 +8,7 @@ interface PageProps {
 }
 
 interface AnimeInfo {
-    id: number;
+    id: string;
     title: string;
     slug: string;
 }

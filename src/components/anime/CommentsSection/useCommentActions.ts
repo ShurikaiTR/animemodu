@@ -7,7 +7,7 @@ import { toggleCommentLike, checkUserLikedComment } from "./likesService";
 import type { User } from "@supabase/supabase-js";
 
 interface UseCommentActionsProps {
-    commentId: number;
+    commentId: string;
     initialLikes: number;
     initialPinned: boolean;
     user: User | null;

@@ -2,7 +2,7 @@
 -- Genel site ayarlarını saklar
 
 CREATE TABLE IF NOT EXISTS site_settings (
-    id SERIAL PRIMARY KEY,
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     key VARCHAR(100) UNIQUE NOT NULL,
     value TEXT,
     type VARCHAR(50) DEFAULT 'text',

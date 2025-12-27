@@ -15,10 +15,10 @@ import { useCommentActions } from "./useCommentActions";
 
 interface CommentItemProps {
     comment: Comment;
-    showSpoiler: Record<number, boolean>;
-    onToggleSpoiler: (id: number) => void;
+    showSpoiler: Record<string, boolean>;
+    onToggleSpoiler: (id: string) => void;
     animeId: string;
-    episodeId?: number;
+    episodeId?: string;
     onReplyAdded: () => void;
 }
 

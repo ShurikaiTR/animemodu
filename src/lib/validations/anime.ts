@@ -67,7 +67,7 @@ export type UpdateAnimeInput = z.infer<typeof updateAnimeSchema>;
 
 // Update Episode schema
 export const updateEpisodeSchema = z.object({
-    id: z.coerce.number().positive("Geçerli bir bölüm ID gerekli"),
+    id: z.string().uuid("Geçerli bir bölüm UUID gerekli"),
     overview: z.string().max(5000).optional().nullable(),
     vote_average: z.coerce.number().min(0).max(10).optional().nullable(),
     duration: z.coerce.number().min(0).optional().nullable(),
@@ -124,7 +124,7 @@ export function formatZodError(error: z.ZodError): string {
 
 // Report validation schemas
 export const reportStatusSchema = z.enum(["pending", "resolved", "dismissed"]);
-export const reportIdSchema = z.coerce.number().positive("Geçerli bir rapor ID gerekli");
+export const reportIdSchema = z.string().uuid("Geçerli bir rapor UUID gerekli");
 
 export const updateReportStatusSchema = z.object({
     id: reportIdSchema,

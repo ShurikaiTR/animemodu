@@ -59,7 +59,7 @@ export function SeriesTableRowActions({
                 variant="ghost"
                 onClick={() => onEdit(item)}
                 title="Düzenle"
-                className="h-8 w-8 text-white/40 hover:text-white hover:bg-white/5 transition-colors"
+                className="h-8 w-8 text-white/40 hover:text-primary hover:bg-white/5 transition-colors"
             >
                 <Edit2 className="w-4 h-4" />
             </Button>

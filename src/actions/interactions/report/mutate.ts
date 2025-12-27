@@ -7,7 +7,7 @@ import { reportIdSchema, reportStatusSchema, formatZodError } from "@/lib/valida
 
 type ReportStatus = 'pending' | 'resolved' | 'dismissed';
 
-export async function updateReportStatus(id: number, status: ReportStatus) {
+export async function updateReportStatus(id: string, status: ReportStatus) {
     const auth = await requireAdmin();
     if (isAuthError(auth)) return auth;
 
@@ -36,7 +36,7 @@ export async function updateReportStatus(id: number, status: ReportStatus) {
     return { success: true };
 }
 
-export async function deleteReport(id: number) {
+export async function deleteReport(id: string) {
     const auth = await requireAdmin();
     if (isAuthError(auth)) return auth;
 

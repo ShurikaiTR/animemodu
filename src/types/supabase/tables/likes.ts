@@ -1,20 +1,20 @@
 export interface CommentLikesTable {
     Row: {
-        id: number
+        id: string
         user_id: string
-        comment_id: number
+        comment_id: string
         created_at: string
     }
     Insert: {
-        id?: number
+        id?: string
         user_id: string
-        comment_id: number
+        comment_id: string
         created_at?: string
     }
     Update: {
-        id?: number
+        id?: string
         user_id?: string
-        comment_id?: number
+        comment_id?: string
         created_at?: string
     }
     Relationships: [
@@ -37,21 +37,21 @@ export interface CommentLikesTable {
 
 export interface ReviewLikesTable {
     Row: {
-        id: number
+        id: string
         user_id: string
-        review_id: number
+        review_id: string
         created_at: string
     }
     Insert: {
-        id?: number
+        id?: string
         user_id: string
-        review_id: number
+        review_id: string
         created_at?: string
     }
     Update: {
-        id?: number
+        id?: string
         user_id?: string
-        review_id?: number
+        review_id?: string
         created_at?: string
     }
     Relationships: [

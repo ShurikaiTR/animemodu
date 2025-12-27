@@ -7,8 +7,8 @@ interface SubmitCommentData {
     userId: string;
     content: string;
     isSpoiler: boolean;
-    episodeId?: number;
-    parentId?: number;
+    episodeId?: string;
+    parentId?: string;
 }
 
 interface SubmitReviewData {

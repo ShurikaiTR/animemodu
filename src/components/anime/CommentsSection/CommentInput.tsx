@@ -14,8 +14,8 @@ import { submitComment, submitReview } from "./submitHelpers";
 interface CommentInputProps {
     activeTab: "comments" | "reviews";
     animeId: string;
-    episodeId?: number;
-    parentId?: number;
+    episodeId?: string;
+    parentId?: string;
     onCommentAdded: () => void;
 }
 
@@ -28,7 +28,7 @@ export default function CommentInput({ activeTab, animeId, episodeId, parentId, 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSpoiler, setIsSpoiler] = useState(false);
     const [hasExistingReview, setHasExistingReview] = useState(false);
-    const [existingReviewId, setExistingReviewId] = useState<number | null>(null);
+    const [existingReviewId, setExistingReviewId] = useState<string | null>(null);
     const supabase = createClient();
 
     useEffect(() => {
@@ -43,7 +43,7 @@ export default function CommentInput({ activeTab, animeId, episodeId, parentId, 
 
             if (data) {
                 setHasExistingReview(true);
-                setExistingReviewId((data as { id: number } | null)?.id ?? null);
+                setExistingReviewId((data as { id: string } | null)?.id ?? null);
             } else {
                 setHasExistingReview(false);
                 setExistingReviewId(null);

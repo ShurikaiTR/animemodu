@@ -22,8 +22,8 @@ export function EditEpisodeForm({ episode, animeSlug: _animeSlug }: EditEpisodeF
     const router = useRouter();
 
     const handleSubmit = async (formData: FormData) => {
-        formData.set("id", episode.id.toString());
-        formData.set("anime_id", episode.anime_id.toString());
+        formData.set("id", episode.id);
+        formData.set("anime_id", episode.anime_id);
 
         startTransition(async () => {
             const result = await updateEpisode(formData);

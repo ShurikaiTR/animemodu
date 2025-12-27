@@ -3,7 +3,7 @@ import type { User } from "@supabase/supabase-js";
 
 const supabase = createClient();
 
-export async function toggleCommentLike(commentId: number, user: User | null): Promise<{ liked: boolean; error: string | null }> {
+export async function toggleCommentLike(commentId: string, user: User | null): Promise<{ liked: boolean; error: string | null }> {
     if (!user) {
         return { liked: false, error: "Beğenmek için giriş yapmalısınız" };
     }
@@ -34,7 +34,7 @@ export async function toggleCommentLike(commentId: number, user: User | null): P
     }
 }
 
-export async function toggleReviewLike(reviewId: number, user: User | null): Promise<{ liked: boolean; error: string | null }> {
+export async function toggleReviewLike(reviewId: string, user: User | null): Promise<{ liked: boolean; error: string | null }> {
     if (!user) {
         return { liked: false, error: "Beğenmek için giriş yapmalısınız" };
     }
@@ -65,7 +65,7 @@ export async function toggleReviewLike(reviewId: number, user: User | null): Pro
     }
 }
 
-export async function checkUserLikedComment(commentId: number, userId: string): Promise<boolean> {
+export async function checkUserLikedComment(commentId: string, userId: string): Promise<boolean> {
     const { data } = await supabase
         .from("comment_likes")
         .select("id")
@@ -76,7 +76,7 @@ export async function checkUserLikedComment(commentId: number, userId: string): 
     return !!data;
 }
 
-export async function checkUserLikedReview(reviewId: number, userId: string): Promise<boolean> {
+export async function checkUserLikedReview(reviewId: string, userId: string): Promise<boolean> {
     const { data } = await supabase
         .from("review_likes")
         .select("id")

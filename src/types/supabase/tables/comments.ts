@@ -1,10 +1,10 @@
 export interface CommentsTable {
     Row: {
-        id: number
+        id: string
         user_id: string
         anime_id: string
-        episode_id: number | null
-        parent_id: number | null
+        episode_id: string | null
+        parent_id: string | null
         content: string
         is_spoiler: boolean
         is_pinned: boolean
@@ -13,11 +13,11 @@ export interface CommentsTable {
         updated_at: string
     }
     Insert: {
-        id?: number
+        id?: string
         user_id: string
         anime_id: string
-        episode_id?: number | null
-        parent_id?: number | null
+        episode_id?: string | null
+        parent_id?: string | null
         content: string
         is_spoiler?: boolean
         is_pinned?: boolean
@@ -26,11 +26,11 @@ export interface CommentsTable {
         updated_at?: string
     }
     Update: {
-        id?: number
+        id?: string
         user_id?: string
         anime_id?: string
-        episode_id?: number | null
-        parent_id?: number | null
+        episode_id?: string | null
+        parent_id?: string | null
         content?: string
         is_spoiler?: boolean
         is_pinned?: boolean

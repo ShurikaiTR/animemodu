@@ -14,13 +14,13 @@ import type { Comment, Review } from "./types";
 
 interface CommentsSectionProps {
     animeId: string;
-    episodeId?: number;
+    episodeId?: string;
 }
 
 export default function CommentsSection({ animeId, episodeId }: CommentsSectionProps) {
     const { user } = useAuth();
     const [activeTab, setActiveTab] = useState<"comments" | "reviews">("comments");
-    const [showSpoiler, setShowSpoiler] = useState<Record<number, boolean>>({});
+    const [showSpoiler, setShowSpoiler] = useState<Record<string, boolean>>({});
     const [comments, setComments] = useState<Comment[]>([]);
     const [reviews, setReviews] = useState<Review[]>([]);
     const [counts, setCounts] = useState({ comments: 0, reviews: 0 });
@@ -81,7 +81,7 @@ export default function CommentsSection({ animeId, episodeId }: CommentsSectionP
                                     key={comment.id}
                                     comment={comment}
                                     showSpoiler={showSpoiler}
-                                    onToggleSpoiler={(id) => setShowSpoiler(prev => ({ ...prev, [id]: !prev[id] }))}
+                                    onToggleSpoiler={(id: string) => setShowSpoiler(prev => ({ ...prev, [id]: !prev[id] }))}
                                     animeId={animeId}
                                     episodeId={episodeId}
                                     onReplyAdded={refreshData}

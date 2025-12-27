@@ -1,6 +1,6 @@
 export interface ReviewsTable {
     Row: {
-        id: number
+        id: string
         user_id: string
         anime_id: string
         title: string | null
@@ -13,7 +13,7 @@ export interface ReviewsTable {
         updated_at: string
     }
     Insert: {
-        id?: number
+        id?: string
         user_id: string
         anime_id: string
         title?: string | null
@@ -26,7 +26,7 @@ export interface ReviewsTable {
         updated_at?: string
     }
     Update: {
-        id?: number
+        id?: string
         user_id?: string
         anime_id?: string
         title?: string | null

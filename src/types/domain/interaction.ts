@@ -10,7 +10,7 @@ export type { CommentRow, ReviewRow, ProfileRow } from "../helpers";
  * Comment type for frontend display (transformed from database)
  */
 export interface Comment {
-    id: number;
+    id: string;
     author: string;
     username: string;
     role: string;
@@ -28,7 +28,7 @@ export interface Comment {
  * Reply type (child comment)
  */
 export interface Reply {
-    id: number;
+    id: string;
     author: string;
     username: string;
     role: string;
@@ -44,7 +44,7 @@ export interface Reply {
  * Review type for frontend display
  */
 export interface Review {
-    id: number;
+    id: string;
     author: string;
     role: string;
     avatarUrl: string | null;

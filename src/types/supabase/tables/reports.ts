@@ -2,10 +2,10 @@
 
 export interface ReportsTable {
     Row: {
-        id: number;
+        id: string;
         anime_id: string;
         anime_title: string;
-        episode_id: number | null;
+        episode_id: string | null;
         episode_number: number | null;
         season_number: number | null;
         user_id: string | null;
@@ -16,10 +16,10 @@ export interface ReportsTable {
         updated_at: string;
     };
     Insert: {
-        id?: number;
+        id?: string;
         anime_id: string;
         anime_title: string;
-        episode_id?: number | null;
+        episode_id?: string | null;
         episode_number?: number | null;
         season_number?: number | null;
         user_id?: string | null;
@@ -30,9 +30,9 @@ export interface ReportsTable {
         updated_at?: string;
     };
     Update: {
-        id?: number;
+        id?: string;
         anime_id?: string;
-        episode_id?: number | null;
+        episode_id?: string | null;
         user_id?: string;
         reason?: string;
         description?: string | null;

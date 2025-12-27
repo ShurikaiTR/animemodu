@@ -11,9 +11,9 @@ import { Badge } from "@/components/ui/badge";
 
 interface ReplyItemProps {
     reply: Reply;
-    parentId: number;
+    parentId: string;
     animeId: string;
-    episodeId?: number;
+    episodeId?: string;
     onReplyAdded: () => void;
     isLast?: boolean;
 }

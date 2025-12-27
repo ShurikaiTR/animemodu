@@ -3,7 +3,7 @@ export type SettingCategory = "general" | "seo" | "social" | "content" | "advanc
 
 export interface SiteSettingsTable {
     Row: {
-        id: number;
+        id: string;
         key: string;
         value: string | null;
         type: SettingType;
@@ -14,7 +14,7 @@ export interface SiteSettingsTable {
         updated_at: string;
     };
     Insert: {
-        id?: number;
+        id?: string;
         key: string;
         value?: string | null;
         type?: SettingType;
@@ -25,7 +25,7 @@ export interface SiteSettingsTable {
         updated_at?: string;
     };
     Update: {
-        id?: number;
+        id?: string;
         key?: string;
         value?: string | null;
         type?: SettingType;

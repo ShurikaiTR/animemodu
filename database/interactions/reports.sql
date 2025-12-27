@@ -4,12 +4,12 @@
 -- =====================================================
 
 create table if not exists public.reports (
-    id bigint primary key generated always as identity,
+    id uuid primary key default gen_random_uuid(),
     
     -- İlişkili anime ve bölüm bilgileri
     anime_id uuid not null references public.animes(id) on delete cascade,
     anime_title text not null,  -- Denormalized, anime silinse bile görüntüleme için
-    episode_id bigint references public.episodes(id) on delete set null,
+    episode_id uuid references public.episodes(id) on delete set null,
     season_number integer,
     episode_number integer,
     

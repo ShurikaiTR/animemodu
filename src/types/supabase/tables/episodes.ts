@@ -1,6 +1,6 @@
 export interface EpisodesTable {
     Row: {
-        id: number
+        id: string
         anime_id: string
         tmdb_id: number | null
         overview: string | null
@@ -15,7 +15,7 @@ export interface EpisodesTable {
         created_at: string
     }
     Insert: {
-        id?: number
+        id?: string
         anime_id: string
         tmdb_id?: number | null
         overview?: string | null
@@ -30,7 +30,7 @@ export interface EpisodesTable {
         created_at?: string
     }
     Update: {
-        id?: number
+        id?: string
         anime_id?: string
         tmdb_id?: number | null
         overview?: string | null

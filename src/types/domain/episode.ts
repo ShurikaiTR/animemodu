@@ -4,7 +4,7 @@
  * Base episode type with all common fields
  */
 export interface Episode {
-    id: number;
+    id: string;
     overview: string | null;
     still_path: string | null;
     video_url: string | null;
@@ -38,7 +38,7 @@ export interface EpisodeListItem {
  * Includes anime_id for editing operations
  */
 export interface EpisodeManagement {
-    id: number;
+    id: string;
     overview: string | null;
     vote_average: number | null;
     air_date: string | null;
