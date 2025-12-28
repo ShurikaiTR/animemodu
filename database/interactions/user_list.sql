@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS public.user_anime_list (
     anime_id UUID NOT NULL REFERENCES public.animes(id) ON DELETE CASCADE,
     status TEXT NOT NULL CHECK (status IN ('watching', 'completed', 'plan_to_watch', 'on_hold', 'dropped')),
     score INTEGER CHECK (score >= 0 AND score <= 10),
-    created_at TIMESTAMPTZ DEFAULT now(),
-    updated_at TIMESTAMPTZ DEFAULT now(),
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+    updated_at timestamp with time zone default timezone('utc'::text, now()) not null,
     UNIQUE(user_id, anime_id)
 );
 
@@ -35,16 +35,17 @@ CREATE INDEX idx_user_anime_list_anime_id ON public.user_anime_list(anime_id);
 CREATE INDEX idx_user_anime_list_status ON public.user_anime_list(status);
 
 -- Trigger for updated_at
-CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updated_at = now();
-    RETURN NEW;
-END;
-$$ language 'plpgsql'
+create or replace function public.handle_updated_at()
+returns trigger as $$
+begin
+    new.updated_at = timezone('utc'::text, now());
+    return new;
+end;
+$$ language plpgsql
 set search_path = public;
 
-CREATE TRIGGER update_user_anime_list_updated_at
-    BEFORE UPDATE ON public.user_anime_list
-    FOR EACH ROW
-    EXECUTE FUNCTION update_updated_at_column();
+drop trigger if exists set_user_anime_list_updated_at on public.user_anime_list;
+create trigger set_user_anime_list_updated_at
+    before update on public.user_anime_list
+    for each row
+    execute function public.handle_updated_at();

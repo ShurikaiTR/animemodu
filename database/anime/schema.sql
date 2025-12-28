@@ -25,6 +25,7 @@ create table if not exists episodes (
   id uuid primary key default gen_random_uuid(),
   anime_id uuid references animes(id) on delete cascade not null,
   tmdb_id integer,
+  title text,
   overview text,
   still_path text,
   vote_average numeric,
@@ -133,8 +134,8 @@ create index if not exists idx_episodes_air_date on episodes(air_date desc);
 -- TRIGGERS
 -- =====================================================
 
--- Updated at trigger fonksiyonu
-create or replace function public.handle_anime_updated_at()
+-- Updated at trigger fonksiyonu (shared across tables)
+create or replace function public.handle_updated_at()
 returns trigger as $$
 begin
     new.updated_at = timezone('utc'::text, now());
@@ -148,11 +149,20 @@ drop trigger if exists set_animes_updated_at on animes;
 create trigger set_animes_updated_at
     before update on animes
     for each row
-    execute function public.handle_anime_updated_at();
+    execute function public.handle_updated_at();
 
 -- Episodes tablosu için updated_at trigger
 drop trigger if exists set_episodes_updated_at on episodes;
 create trigger set_episodes_updated_at
     before update on episodes
     for each row
-    execute function public.handle_anime_updated_at();
+    execute function public.handle_updated_at();
+
+-- =====================================================
+-- FULL-TEXT SEARCH INDEX
+-- =====================================================
+
+-- GIN index for Turkish full-text search on anime titles
+create index if not exists idx_animes_title_search 
+on animes using gin (to_tsvector('simple', coalesce(title, '') || ' ' || coalesce(original_title, '')));
+

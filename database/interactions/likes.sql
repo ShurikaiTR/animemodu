@@ -6,7 +6,7 @@ create table if not exists comment_likes (
   id uuid primary key default gen_random_uuid(),
   user_id uuid references auth.users(id) on delete cascade not null,
   comment_id uuid references comments(id) on delete cascade not null,
-  created_at timestamptz default now(),
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
   
   unique(user_id, comment_id)
 );
@@ -16,7 +16,7 @@ create table if not exists review_likes (
   id uuid primary key default gen_random_uuid(),
   user_id uuid references auth.users(id) on delete cascade not null,
   review_id uuid references reviews(id) on delete cascade not null,
-  created_at timestamptz default now(),
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
   
   unique(user_id, review_id)
 );

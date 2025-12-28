@@ -9,6 +9,7 @@ import Link from "next/link";
 import type { AnimeRow } from "../types";
 import { DeleteAnimeConfirmationModal } from "@/components/panel/tables/CatalogItem/DeleteAnimeConfirmationModal";
 import { useSeriesActions } from "./useSeriesActions";
+import EmptySearchState from "@/components/panel/EmptySearchState";
 
 interface SeriesClientProps {
     initialAnimes: AnimeRow[];
@@ -76,13 +77,7 @@ export default function SeriesClient({ initialAnimes }: SeriesClientProps) {
                         updatingAnimeId={updatingAnimeId}
                     />
                 ) : (
-                    <div className="col-span-full py-24 flex flex-col items-center justify-center text-text-main/20 border border-dashed border-white/5 rounded-2xl bg-bg-secondary/10">
-                        <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
-                            <Search className="w-8 h-8 opacity-40" />
-                        </div>
-                        <p className="text-base font-medium">Kayıt bulunamadı.</p>
-                        {searchQuery && <p className="text-sm mt-1">Arama kriterlerini değiştirmeyi deneyin.</p>}
-                    </div>
+                    <EmptySearchState searchQuery={searchQuery} />
                 )}
             </div>
 

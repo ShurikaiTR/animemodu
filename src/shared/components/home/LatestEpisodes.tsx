@@ -47,7 +47,7 @@ export default function LatestEpisodes({ episodes }: { episodes: EpisodeItem[] }
                     {episodes.map((ep) => {
                         const isSeasonal = ep.anime.structure_type === "seasonal";
                         const epNumberText = isSeasonal
-                            ? `Sezon ${ep.season_number} Bölüm ${ep.episode_number}`
+                            ? `${ep.season_number}.Sezon ${ep.episode_number}.Bölüm`
                             : `${ep.absolute_episode_number || ep.episode_number}. Bölüm`;
 
                         const imagePath = ep.still_path || ep.anime.poster_path;

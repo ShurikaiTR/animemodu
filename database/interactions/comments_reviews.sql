@@ -7,8 +7,8 @@ create table if not exists reviews (
   is_spoiler boolean default false,
   is_verified_critic boolean default false,
   helpful_count int default 0,
-  created_at timestamptz default now(),
-  updated_at timestamptz default now(),
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null,
   
   unique(user_id, anime_id)
 );
@@ -23,8 +23,8 @@ create table if not exists comments (
   is_spoiler boolean default false,
   is_pinned boolean default false,
   like_count int default 0,
-  created_at timestamptz default now(),
-  updated_at timestamptz default now()
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
 alter table reviews enable row level security;

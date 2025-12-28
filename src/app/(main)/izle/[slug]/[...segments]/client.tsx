@@ -6,13 +6,13 @@ import VideoPlayer from "@/features/anime/components/VideoPlayer";
 import FakeVideoPlayer from "@/features/anime/components/FakeVideoPlayer";
 import CommentsSection from "@/features/anime/components/CommentsSection";
 import WatchHero from "./WatchHero";
-
 import WatchSidebar from "./WatchSidebar";
+import WatchControls from "./WatchControls";
+import ReportModal from "@/features/anime/components/ReportModal";
 import type { Episode } from "@/app/(main)/anime/[slug]/types";
 import { getImageUrl } from "@/shared/lib/tmdb";
-import WatchControls from "./WatchControls";
+import { getWatchUrl } from "@/shared/lib/utils";
 import { toast } from "sonner";
-import ReportModal from "@/features/anime/components/ReportModal";
 
 interface WatchClientProps {
     episode: Episode;
@@ -36,8 +36,13 @@ export default function WatchClient({ episode, anime, episodes }: WatchClientPro
     const hasPrev = currentIndex > 0;
     const hasNext = currentIndex < episodes.length - 1;
 
-    // Construct URL format: /izle/[slug]/[season]-[number]
-    const getEpisodeUrl = (ep: Episode) => `/izle/${anime.slug}/${ep.season_number}-${ep.episode_number}`;
+    // Use centralized URL helper for correct format
+    const getEpisodeUrl = (ep: Episode) => getWatchUrl(
+        anime.slug,
+        ep.episode_number,
+        ep.season_number,
+        anime.structure_type
+    );
 
     const handleShare = () => {
         navigator.clipboard.writeText(window.location.href);
@@ -53,7 +58,7 @@ export default function WatchClient({ episode, anime, episodes }: WatchClientPro
 
             <WatchHero backdrop={backdrop} />
 
-            <Container className="relative z-20 pt-32 pb-16">
+            <Container className="relative z-20 pt-8 pb-16">
                 <div className="grid grid-cols-1 xl:grid-cols-[1fr_22rem] gap-8 items-start">
                     <div className="flex flex-col gap-8 min-w-0">
                         <div className="flex flex-col gap-4">

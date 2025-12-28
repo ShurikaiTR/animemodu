@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS public.user_favorites (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
     anime_id UUID NOT NULL REFERENCES public.animes(id) ON DELETE CASCADE,
-    created_at TIMESTAMPTZ DEFAULT now(),
-    updated_at TIMESTAMPTZ DEFAULT now(),
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+    updated_at timestamp with time zone default timezone('utc'::text, now()) not null,
     UNIQUE(user_id, anime_id)
 );
 

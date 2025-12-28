@@ -1,15 +1,39 @@
 import Image from "next/image";
-import { Play } from "lucide-react";
+import { Play, Star } from "lucide-react";
 import { getImageUrl } from "@/shared/lib/tmdb";
 import Container from "@/shared/components/container";
-import WatchStatusWrapper from "./WatchStatusWrapper";
 import FavoriteButton from "@/shared/components/FavoriteButton";
+import WatchStatusDropdown from "@/shared/components/WatchStatusDropdown";
 import type { WatchStatus } from "@/shared/components/WatchStatusDropdown/config";
-import type { AnimeDetailData, VideoResult } from "./types";
+
+interface Genre {
+  id: number;
+  name: string;
+}
+
+interface VideoResult {
+  id: string;
+  key: string;
+  name: string;
+  site: string;
+  type: string;
+}
+
+interface AnimeHeroData {
+  id: string;
+  title: string;
+  overview: string | null;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  vote_average: number | null;
+  release_date: string | null;
+  genres: Genre[];
+  slug: string;
+}
 
 interface AnimeHeroProps {
-  anime: AnimeDetailData;
-  trailer: VideoResult | undefined;
+  anime: AnimeHeroData;
+  trailer?: VideoResult;
   initialFavorite?: boolean;
   initialWatchStatus?: WatchStatus | null;
 }
@@ -47,7 +71,7 @@ export default function AnimeHero({ anime, trailer, initialFavorite, initialWatc
             )}
 
             <div className="mb-6 inline-flex items-center gap-4 ml-6 align-top">
-              <WatchStatusWrapper animeId={anime.id} initialStatus={initialWatchStatus} />
+              <WatchStatusDropdown animeId={anime.id} initialStatus={initialWatchStatus} variant="hero" />
               <FavoriteButton animeId={anime.id} initialFavorite={initialFavorite} variant="featured" />
             </div>
 
@@ -58,13 +82,7 @@ export default function AnimeHero({ anime, trailer, initialFavorite, initialWatc
 
               <ul className="flex flex-wrap items-center gap-6 mb-6 text-text-main font-inter text-base">
                 <li className="flex items-center gap-1.5 text-white">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    className="w-5 h-5 fill-primary"
-                  >
-                    <path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z" />
-                  </svg>
+                  <Star className="w-5 h-5 fill-primary text-primary" />
                   {anime.vote_average?.toFixed(1)}
                 </li>
                 {anime.genres.slice(0, 3).map((g, index) => (

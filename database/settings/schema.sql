@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS site_settings (
     category VARCHAR(50) DEFAULT 'general',
     label VARCHAR(200),
     description TEXT,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+    updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
 -- RLS Policies
@@ -54,20 +54,12 @@ CREATE POLICY "Only admins can delete site settings"
         )
     );
 
--- Updated_at trigger
-CREATE OR REPLACE FUNCTION update_site_settings_updated_at()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updated_at = NOW();
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql
-SET search_path = public;
-
-CREATE TRIGGER site_settings_updated_at
-    BEFORE UPDATE ON site_settings
-    FOR EACH ROW
-    EXECUTE FUNCTION update_site_settings_updated_at();
+-- Updated_at trigger (uses shared handle_updated_at function)
+drop trigger if exists set_site_settings_updated_at on site_settings;
+create trigger set_site_settings_updated_at
+    before update on site_settings
+    for each row
+    execute function public.handle_updated_at();
 
 -- Default site bilgileri
 INSERT INTO site_settings (key, value, type, category, label, description) VALUES

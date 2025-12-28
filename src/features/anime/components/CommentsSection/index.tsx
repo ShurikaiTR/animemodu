@@ -1,8 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "@/shared/components/button";
 import CommentsHeader from "./CommentsHeader";
 import CommentInput from "./CommentInput";
 import CommentItem from "./CommentItem";
@@ -92,15 +90,6 @@ export default function CommentsSection({ animeId, episodeId }: CommentsSectionP
                         reviews.length > 0 ? reviews.map(review => <ReviewCard key={review.id} review={review} />) : user ? <EmptyReviews /> : null
                     )}
                 </div>
-
-                {((activeTab === "comments" && comments.length > 5) || (activeTab === "reviews" && reviews.length > 5)) && (
-                    <div className="mt-10 text-center">
-                        <Button variant="glass" size="lg" className="group">
-                            Daha Fazla Göster
-                            <ChevronDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
-                        </Button>
-                    </div>
-                )}
             </div>
         </div>
     );
