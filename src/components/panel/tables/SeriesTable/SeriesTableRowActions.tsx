@@ -1,9 +1,9 @@
 "use client";
 
 import { Sparkles, Edit2, Trash2, RefreshCw } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import type { Database } from "@/types/supabase";
+import { Button } from "@/shared/components/button";
+import { cn } from "@/shared/lib/utils";
+import type { Database } from "@/shared/types/supabase";
 
 type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];
 

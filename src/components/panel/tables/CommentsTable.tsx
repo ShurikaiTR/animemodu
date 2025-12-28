@@ -9,7 +9,7 @@ interface CommentsTableProps {
 }
 
 export function CommentsTable({ items }: CommentsTableProps) {
-    const handleDelete = async (_id: number, _type: InteractionType) => {
+    const handleDelete = async (_id: string, _type: InteractionType) => {
     };
 
     return (

@@ -1,6 +1,6 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/shared/lib/supabase/server";
 import { CommentsTable, InteractionItem } from "@/components/panel/tables/CommentsTable";
-import { handleSupabaseError } from "@/lib/panel/utils";
+import { handleSupabaseError } from "@/shared/lib/panel/utils";
 
 export async function CommentsContent() {
     const supabase = await createClient();
@@ -22,8 +22,8 @@ export async function CommentsContent() {
     const reviews = handleSupabaseError(reviewsResult, "İncelemeler yüklenirken hata oluştu");
     const animeIds = new Set<string>();
     const userIds = new Set<string>();
-    type CommentData = { anime_id: string; user_id: string; id: number; content: string; created_at: string; is_spoiler: boolean; like_count: number };
-    type ReviewData = { anime_id: string; user_id: string; id: number; content: string; created_at: string; is_spoiler: boolean; helpful_count: number; rating: number | null };
+    type CommentData = { anime_id: string; user_id: string; id: string; content: string; created_at: string; is_spoiler: boolean; like_count: number };
+    type ReviewData = { anime_id: string; user_id: string; id: string; content: string; created_at: string; is_spoiler: boolean; helpful_count: number; rating: number | null };
     type AnimeData = { id: string; title: string; slug: string };
     type ProfileData = { id: string; username: string | null; avatar_url: string | null; role: string };
     (comments as CommentData[]).forEach((c) => {

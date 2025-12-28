@@ -2,8 +2,8 @@
 
 import { createPortal } from "react-dom";
 import { X, MessageSquare, Star, ThumbsUp } from "lucide-react";
-import { useModalMount } from "@/hooks/useModalMount";
-import { Badge } from "@/components/ui/badge";
+import { useModalMount } from "@/shared/hooks/useModalMount";
+import { Badge } from "@/shared/components/badge";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
 import Image from "next/image";

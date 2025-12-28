@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { SeriesTable } from "@/components/panel/tables/SeriesTable";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/shared/components/input";
+import { Button } from "@/shared/components/button";
 import { Search, Plus } from "lucide-react";
 import Link from "next/link";
 import type { AnimeRow } from "../types";

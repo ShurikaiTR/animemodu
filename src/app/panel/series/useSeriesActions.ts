@@ -3,11 +3,11 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { createClient } from "@/lib/supabase/client";
-import { logError, getErrorMessage } from "@/lib/errors";
-import { deleteAnime } from "@/actions/anime/deleteAnime";
-import { updateEpisodes } from "@/actions/anime/updateEpisodes";
-import type { Database } from "@/types/supabase";
+import { createClient } from "@/shared/lib/supabase/client";
+import { logError, getErrorMessage } from "@/shared/lib/errors";
+import { deleteAnime } from "@/features/anime/actions/deleteAnime";
+import { updateEpisodes } from "@/features/anime/actions/updateEpisodes";
+import type { Database } from "@/shared/types/supabase";
 
 type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];
 
@@ -52,7 +52,7 @@ export function useSeriesActions({ onAnimesChange }: UseSeriesActionsOptions) {
 
         onAnimesChange((prev) => prev.map((a) => (a.id === item.id ? { ...a, is_featured: newValue } : a)));
 
-        const { error } = await supabase.from("animes").update({ is_featured: newValue } as never).eq("id", item.id);
+        const { error } = await supabase.from("animes").update({ is_featured: newValue }).eq("id", item.id);
 
         if (error) {
             toast.error("Güncelleme başarısız.");

@@ -5,9 +5,9 @@ import { formatDistanceToNow } from "date-fns";
 import { tr } from "date-fns/locale";
 import { CheckCircle, XCircle, Trash2 } from "lucide-react";
 
-import type { ReportWithDetails } from "@/types/helpers";
-import { Button } from "@/components/ui/button";
-import { getImageUrl } from "@/lib/tmdb";
+import type { ReportWithDetails } from "@/shared/types/helpers";
+import { Button } from "@/shared/components/button";
+import { getImageUrl } from "@/shared/lib/tmdb";
 import { getStatusBadge, getReasonLabel, getAnimeTitle } from "./ReportsTableHelpers";
 
 interface ReportTableRowProps {

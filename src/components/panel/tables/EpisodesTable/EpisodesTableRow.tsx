@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { getImageUrl } from "@/lib/tmdb";
+import { getImageUrl } from "@/shared/lib/tmdb";
 import { Calendar, PlayCircle, Edit2, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import type { Database } from "@/types/supabase";
+import { Button } from "@/shared/components/button";
+import type { Database } from "@/shared/types/supabase";
 
 // Defining a joined type for Episode with Anime
 type EpisodeRow = Database["public"]["Tables"]["episodes"]["Row"];

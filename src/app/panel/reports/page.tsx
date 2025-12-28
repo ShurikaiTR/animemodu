@@ -1,6 +1,6 @@
 
 import { Suspense } from "react";
-import { getReports } from "@/actions/interactions/report";
+import { getReports } from "@/features/reports/actions";
 import { ReportsTable } from "@/components/panel/tables/ReportsTable";
 import { Loader2 } from "lucide-react";
 

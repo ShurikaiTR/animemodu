@@ -2,11 +2,11 @@
 
 import { useState, useTransition } from "react";
 import { EpisodesTable } from "@/components/panel/tables/EpisodesTable";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/shared/components/input";
 import { Search } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { deleteEpisode } from "@/actions/anime";
+import { deleteEpisode } from "@/features/anime/actions";
 import type { EpisodeWithAnime } from "@/components/panel/tables/EpisodesTable/EpisodesTableRow";
 import { DeleteEpisodeConfirmationModal } from "@/components/panel/tables/CatalogItem/DeleteEpisodeConfirmationModal";
 import { Pagination } from "@/components/panel/Pagination";

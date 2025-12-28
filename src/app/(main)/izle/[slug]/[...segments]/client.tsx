@@ -1,18 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import Container from "@/components/ui/container";
-import VideoPlayer from "@/components/anime/VideoPlayer";
-import FakeVideoPlayer from "@/components/anime/FakeVideoPlayer";
-import CommentsSection from "@/components/anime/CommentsSection";
+import Container from "@/shared/components/container";
+import VideoPlayer from "@/features/anime/components/VideoPlayer";
+import FakeVideoPlayer from "@/features/anime/components/FakeVideoPlayer";
+import CommentsSection from "@/features/anime/components/CommentsSection";
 import WatchHero from "./WatchHero";
 
 import WatchSidebar from "./WatchSidebar";
 import type { Episode } from "@/app/(main)/anime/[slug]/types";
-import { getImageUrl } from "@/lib/tmdb";
+import { getImageUrl } from "@/shared/lib/tmdb";
 import WatchControls from "./WatchControls";
 import { toast } from "sonner";
-import ReportModal from "@/components/anime/ReportModal";
+import ReportModal from "@/features/anime/components/ReportModal";
 
 interface WatchClientProps {
     episode: Episode;

@@ -10,7 +10,7 @@ export type {
     AnimeDetailClientProps,
     DatabaseAnime,
     SimilarResult,
-} from "@/types/domain/anime";
+} from "@/shared/types/domain/anime";
 
 // Re-export Character type from central location
-export type { Character as CharacterData } from "@/types/supabase/tables/characters";
+export type { Character as CharacterData } from "@/shared/types/helpers";

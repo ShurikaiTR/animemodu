@@ -1,5 +1,5 @@
-import { getAnimeBySlugOrNotFound } from "@/lib/anime/queries";
-import { parseCharacters } from "@/types/helpers";
+import { getAnimeBySlugOrNotFound } from "@/shared/lib/anime/queries";
+import { parseCharacters } from "@/shared/types/helpers";
 import AnimeHero from "./AnimeHero";
 import type { AnimeDetailData, VideoResult } from "./types";
 
@@ -8,7 +8,7 @@ interface AnimeHeroServerProps {
 }
 
 export default async function AnimeHeroServer({ slug }: AnimeHeroServerProps) {
-  const dbAnime = await getAnimeBySlugOrNotFound(slug, "*");
+  const dbAnime = await getAnimeBySlugOrNotFound(slug);
 
   const characters = parseCharacters(dbAnime.characters ?? null);
 
@@ -38,8 +38,8 @@ export default async function AnimeHeroServer({ slug }: AnimeHeroServerProps) {
     number_of_seasons: 0,
     characters: characters.map(c => ({
       id: c.id,
-      name: { full: c.name.full },
-      image: { large: c.image.large },
+      name: { full: c.name },
+      image: { large: c.image },
     })),
     slug: dbAnime.slug,
   };

@@ -2,10 +2,10 @@
 
 import { useRef } from "react";
 import { MonitorPlay } from "lucide-react";
-import { cn, getWatchUrl } from "@/lib/utils";
-import EpisodeCard from "@/components/ui/EpisodeCard";
-import ScrollButton from "@/components/ui/ScrollButton";
-import { getImageUrl } from "@/lib/tmdb";
+import { cn, getWatchUrl } from "@/shared/lib/utils";
+import EpisodeCard from "@/shared/components/EpisodeCard";
+import ScrollButton from "@/shared/components/ScrollButton";
+import { getImageUrl } from "@/shared/lib/tmdb";
 import type { Episode, AnimeDetailData } from "./types";
 
 interface EpisodeListSectionProps {

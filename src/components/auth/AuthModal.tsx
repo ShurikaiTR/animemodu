@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
-import { useModalMount } from "@/hooks/useModalMount";
+import { useModalMount } from "@/shared/hooks/useModalMount";
 import AuthVisual from "./AuthVisual";
 import AuthForm from "./AuthForm";
 import type { AuthState } from "./authConfig";

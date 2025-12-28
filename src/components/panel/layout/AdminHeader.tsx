@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useAdmin } from "./AdminContext";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 export default function AdminHeader() {
     const { isSidebarOpen, toggleSidebar } = useAdmin();

@@ -1,7 +1,7 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/shared/lib/supabase/server";
 import { notFound, redirect } from "next/navigation";
 import { EditEpisodeForm } from "./EditEpisodeForm";
-import type { EpisodeManagement } from "@/types/domain/anime";
+import type { EpisodeManagement } from "@/shared/types/domain/anime";
 
 interface PageProps {
     params: Promise<{ slug: string; episodeId: string }>;
@@ -32,7 +32,7 @@ export default async function EditEpisodePage({ params }: PageProps) {
         notFound();
     }
 
-    const episode = rawEpisode as unknown as EpisodeWithAnime;
+    const episode: EpisodeWithAnime = rawEpisode as EpisodeWithAnime;
 
     // Verify slug matches
     if (episode.anime.slug !== slug) {

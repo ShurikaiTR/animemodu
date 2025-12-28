@@ -1,8 +1,8 @@
 "use client";
 
 import { Sparkles, Star, Calendar } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import type { Database } from "@/types/supabase";
+import { Badge } from "@/shared/components/badge";
+import type { Database } from "@/shared/types/supabase";
 
 type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];
 

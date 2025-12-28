@@ -1,5 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import Container from "@/components/ui/container";
+import { Skeleton } from "@/shared/components/skeleton";
+import Container from "@/shared/components/container";
 
 export function HeroSkeleton() {
   return (

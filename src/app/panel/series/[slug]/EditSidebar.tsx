@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Image as ImageIcon, Sparkles } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { getImageUrl } from "@/lib/tmdb";
+import { Switch } from "@/shared/components/switch";
+import { Label } from "@/shared/components/label";
+import { getImageUrl } from "@/shared/lib/tmdb";
 import type { EditFormData } from "./types";
 
 interface EditSidebarProps {

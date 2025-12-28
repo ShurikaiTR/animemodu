@@ -6,15 +6,15 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
 import { MessageSquare, Star, Trash2, Eye, ShieldCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { Button } from "@/shared/components/button";
+import { Badge } from "@/shared/components/badge";
+import { cn } from "@/shared/lib/utils";
 import type { InteractionItem, InteractionType } from "./types";
 import { ViewContentModal } from "./ViewContentModal";
 
 interface InteractionTableRowProps {
     item: InteractionItem;
-    onDelete: (id: number, type: InteractionType) => void;
+    onDelete: (id: string, type: InteractionType) => void;
 }
 
 export function InteractionTableRow({ item, onDelete }: InteractionTableRowProps) {

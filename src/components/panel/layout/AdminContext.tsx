@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useState, useCallback } from "react";
-import { createContextHook } from "@/lib/context/utils";
+import { createContextHook } from "@/shared/contexts/utils";
 
 interface AdminContextType {
     isSidebarOpen: boolean;

@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-import { getImageUrl } from "@/lib/tmdb";
+import { getImageUrl } from "@/shared/lib/tmdb";
 import AnimeHeroServer from "./AnimeHeroServer";
 import EpisodesListServer from "./EpisodesListServer";
 import CastSectionServer from "./CastSectionServer";
-import Container from "@/components/ui/container";
+import Container from "@/shared/components/container";
 import { HeroSkeleton, EpisodesSkeleton, CastSkeleton } from "./loading";
-import { getAnimeBySlug, getAnimeBySlugOrNotFound, getStructureType } from "@/lib/anime/queries";
+import { getAnimeBySlug, getAnimeBySlugOrNotFound, getStructureType } from "@/shared/lib/anime/queries";
 
 const CommentsSection = dynamic(
-  () => import("@/components/anime/CommentsSection"),
+  () => import("@/features/anime/components/CommentsSection"),
   { loading: () => <div className="animate-pulse h-64 bg-white/5 rounded-xl" /> }
 );
 
@@ -20,7 +20,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const dbAnime = await getAnimeBySlug(slug, "title, overview, poster_path");
+  const dbAnime = await getAnimeBySlug(slug);
 
   if (!dbAnime) {
     return {
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function AnimeDetailPage({ params }: PageProps) {
   const { slug } = await params;
 
-  const dbAnime = await getAnimeBySlugOrNotFound(slug, "id, structure_type");
+  const dbAnime = await getAnimeBySlugOrNotFound(slug);
 
   const structureType = getStructureType(dbAnime.structure_type);
 

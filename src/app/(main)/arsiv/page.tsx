@@ -1,11 +1,11 @@
-import Container from "@/components/ui/container";
-import ArchiveSidebar from "@/components/archive/ArchiveSidebar";
-import ArchiveGrid from "@/components/archive/ArchiveGrid";
+import Container from "@/shared/components/container";
+import ArchiveSidebar from "@/shared/components/archive/ArchiveSidebar";
+import ArchiveGrid from "@/shared/components/archive/ArchiveGrid";
 import { Suspense } from "react";
-import { ArchiveGridSkeleton } from "@/components/ui/MovieCard/skeleton";
-import { createClient } from "@/lib/supabase/server";
-import type { AnimeRow } from "@/types/helpers";
-import { Button } from "@/components/ui/button";
+import { ArchiveGridSkeleton } from "@/shared/components/MovieCard/skeleton";
+import { createClient } from "@/shared/lib/supabase/server";
+import type { AnimeRow } from "@/shared/types/helpers";
+import { Button } from "@/shared/components/button";
 import { ChevronDown } from "lucide-react";
 
 function ArchiveLoading() {
@@ -26,7 +26,7 @@ export default async function ArchivePage({ searchParams }: { searchParams: Prom
         .select("*")
         .order("created_at", { ascending: false });
 
-    const allAnimes: AnimeRow[] = rawAnimes || [];
+    const allAnimes: AnimeRow[] = (rawAnimes || []) as AnimeRow[];
 
     let filteredAnimes = allAnimes || [];
 

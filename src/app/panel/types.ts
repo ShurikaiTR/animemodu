@@ -1,4 +1,4 @@
-import type { Database } from "@/types/supabase";
+import type { Database } from "@/shared/types/supabase";
 
 export type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];
 

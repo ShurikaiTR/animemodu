@@ -1,5 +1,5 @@
 import { LayoutGrid } from "lucide-react";
-import MediaListPage from "@/components/layout/MediaListPage";
+import MediaListPage from "@/shared/components/layout/MediaListPage";
 import AnimesListServer from "./AnimesListServer";
 
 export const metadata = {

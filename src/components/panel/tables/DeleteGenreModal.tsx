@@ -2,8 +2,8 @@
 
 import { X, AlertTriangle, Trash2, Loader2 } from "lucide-react";
 import { createPortal } from "react-dom";
-import { Button } from "@/components/ui/button";
-import { useModalMount } from "@/hooks/useModalMount";
+import { Button } from "@/shared/components/button";
+import { useModalMount } from "@/shared/hooks/useModalMount";
 
 interface DeleteGenreModalProps {
     isOpen: boolean;

@@ -1,6 +1,6 @@
-import Container from "@/components/ui/container";
+import Container from "@/shared/components/container";
 import { LayoutGrid } from "lucide-react";
-import MovieCardSkeleton from "@/components/ui/MovieCard/skeleton";
+import MovieCardSkeleton from "@/shared/components/MovieCard/skeleton";
 
 export default function AnimelerLoading() {
     return (

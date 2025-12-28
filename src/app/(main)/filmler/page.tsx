@@ -1,5 +1,5 @@
 import { Film } from "lucide-react";
-import MediaListPage from "@/components/layout/MediaListPage";
+import MediaListPage from "@/shared/components/layout/MediaListPage";
 import MoviesListServer from "./MoviesListServer";
 
 export const metadata = {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { searchQuerySchema, parseSearchParams } from "@/lib/validations/api";
+import { createClient } from "@/shared/lib/supabase/server";
+import { searchQuerySchema, parseSearchParams } from "@/shared/lib/validations/api";
 
 export async function GET(request: NextRequest) {
     const validation = parseSearchParams(request.nextUrl.searchParams, searchQuerySchema);

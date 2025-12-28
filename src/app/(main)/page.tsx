@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { cacheLife } from "next/cache";
-import FeaturedHero from "@/components/home/FeaturedHero";
-import LatestEpisodesServer from "@/components/home/LatestEpisodesServer";
-import RecentAnimes from "@/components/home/RecentAnimes";
-import PopularMovies from "@/components/home/PopularMovies";
-import { HeroSkeleton, EpisodesSkeleton, AnimesSkeleton, MoviesSkeleton } from "@/components/home/loading";
+import FeaturedHero from "@/shared/components/home/FeaturedHero";
+import LatestEpisodesServer from "@/shared/components/home/LatestEpisodesServer";
+import RecentAnimes from "@/shared/components/home/RecentAnimes";
+import PopularMovies from "@/shared/components/home/PopularMovies";
+import { HeroSkeleton, EpisodesSkeleton, AnimesSkeleton, MoviesSkeleton } from "@/shared/components/home/loading";
 
 export const metadata: Metadata = {
   title: "AnimeModu - HD Anime İzle",

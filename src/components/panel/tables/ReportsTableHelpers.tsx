@@ -1,4 +1,4 @@
-import type { ReportWithDetails } from "@/types/helpers";
+import type { ReportWithDetails } from "@/shared/types/helpers";
 
 /**
  * Returns a styled status badge JSX element

@@ -1,8 +1,8 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "@/shared/components/button";
+import { cn } from "@/shared/lib/utils";
 import { AUTH_CONFIG, type AuthState } from "./authConfig";
 
 interface AuthFormActionsProps {

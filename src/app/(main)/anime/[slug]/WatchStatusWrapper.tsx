@@ -1,8 +1,8 @@
 "use client";
 
-import WatchStatusDropdown from "@/components/ui/WatchStatusDropdown";
+import WatchStatusDropdown from "@/shared/components/WatchStatusDropdown";
 
-import type { WatchStatus } from "@/components/ui/WatchStatusDropdown/config";
+import type { WatchStatus } from "@/shared/components/WatchStatusDropdown/config";
 
 interface WatchStatusWrapperProps {
   animeId?: string;

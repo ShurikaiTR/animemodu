@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/shared/lib/supabase/server";
 import SeriesClient from "./SeriesClient";
 import type { AnimeRow } from "../types";
 

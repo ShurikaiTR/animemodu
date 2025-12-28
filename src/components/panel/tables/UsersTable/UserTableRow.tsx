@@ -4,14 +4,14 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
 import { MoreHorizontal, ShieldCheck, Trash2, Eye } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/shared/components/button";
+import { Badge } from "@/shared/components/badge";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/shared/components/dropdown-menu";
 import type { UserItem } from "./types";
 
 interface UserTableRowProps {

@@ -1,6 +1,6 @@
 "use client";
 
-import type { Database } from "@/types/supabase";
+import type { Database } from "@/shared/types/supabase";
 import { SeriesTableRowContent } from "./SeriesTableRowContent";
 import { SeriesTableRowRating, SeriesTableRowStatus } from "./SeriesTableRowCells";
 import { SeriesTableRowActions } from "./SeriesTableRowActions";

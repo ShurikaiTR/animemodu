@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import Image from "next/image";
 import { RotateCcw } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { logError } from "@/lib/errors";
+import { Button } from "@/shared/components/button";
+import { logError } from "@/shared/lib/errors";
 
 export default function Error({
     error,

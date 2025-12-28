@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/shared/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { type AuthState } from "./authConfig";

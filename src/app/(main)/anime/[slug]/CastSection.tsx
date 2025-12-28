@@ -2,8 +2,8 @@
 
 import { useRef } from "react";
 import { Users } from "lucide-react";
-import CharacterCard from "@/components/ui/CharacterCard";
-import ScrollButton from "@/components/ui/ScrollButton";
+import CharacterCard from "@/shared/components/CharacterCard";
+import ScrollButton from "@/shared/components/ScrollButton";
 import type { CastMember } from "./types";
 
 interface CastSectionProps {

@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Play } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import EpisodeList from "@/components/anime/EpisodeList";
-import { getImageUrl } from "@/lib/tmdb";
-import type { EpisodeListItem } from "@/types/domain/anime";
+import { Badge } from "@/shared/components/badge";
+import EpisodeList from "@/features/anime/components/EpisodeList";
+import { getImageUrl } from "@/shared/lib/tmdb";
+import type { EpisodeListItem } from "@/shared/types/domain/anime";
 
 interface WatchSidebarProps {
     animeTitle: string;

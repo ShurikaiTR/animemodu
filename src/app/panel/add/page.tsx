@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Search, Loader2 } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/shared/components/input";
+import { Button } from "@/shared/components/button";
 import { AddContentModal } from "@/components/panel/modals/AddContentModal";
 import { SearchResultItem } from "@/components/panel/tables/SearchResultItem";
 import type { SearchResult } from "../types";

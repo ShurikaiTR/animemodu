@@ -3,9 +3,9 @@
 import { User } from "lucide-react";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/shared/contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import { deleteUser } from "@/actions/user";
+import { deleteUser } from "@/features/user/actions";
 import { DeleteConfirmationModal } from "./UsersTable/DeleteConfirmationModal";
 import { UserTableRow } from "./UsersTable/UserTableRow";
 import type { UserItem } from "./UsersTable/types";

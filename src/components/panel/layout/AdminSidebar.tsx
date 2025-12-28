@@ -3,9 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { LayoutDashboard, Film, FileText, Users, MessageSquare, ArrowLeft, LogOut, Settings, Flag, Tags, Tv, Layers } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/button";
 import { useAdmin } from "./AdminContext";
 import { SidebarMenu } from "./SidebarMenu";
 

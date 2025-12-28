@@ -1,4 +1,4 @@
-import { MediaGridServer } from "@/components/anime/MediaGrid";
+import { MediaGridServer } from "@/features/anime/components/MediaGrid";
 
 export default async function MoviesListServer() {
     return (

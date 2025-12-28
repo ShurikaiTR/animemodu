@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getImageUrl } from "@/lib/tmdb";
+import { getImageUrl } from "@/shared/lib/tmdb";
 
 interface WatchHeroProps {
     backdrop: string;

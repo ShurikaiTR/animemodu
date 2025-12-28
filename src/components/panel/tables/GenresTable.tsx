@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { Tags } from "lucide-react";
 import { toast } from "sonner";
-import { renameGenre, deleteGenre } from "@/actions/anime/genres";
+import { renameGenre, deleteGenre } from "@/features/anime/actions/genres";
 import { DeleteGenreModal } from "./DeleteGenreModal";
 import { GenreInlineEdit } from "./GenreInlineEdit";
 import { GenreActions } from "./GenreActions";

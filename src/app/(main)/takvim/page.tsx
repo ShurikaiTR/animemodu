@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
 import { Calendar } from "lucide-react";
 import { cacheLife, cacheTag } from "next/cache";
-import Container from "@/components/ui/container";
-import { createPublicClient } from "@/lib/supabase/server";
-import CalendarClient from "@/components/calendar/CalendarClient";
+import Container from "@/shared/components/container";
+import { createPublicClient } from "@/shared/lib/supabase/server";
+import CalendarClient from "@/shared/components/calendar/CalendarClient";
 
 function CalendarLoading() {
     return (

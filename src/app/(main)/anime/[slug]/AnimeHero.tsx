@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { Play } from "lucide-react";
-import { getImageUrl } from "@/lib/tmdb";
-import Container from "@/components/ui/container";
+import { getImageUrl } from "@/shared/lib/tmdb";
+import Container from "@/shared/components/container";
 import WatchStatusWrapper from "./WatchStatusWrapper";
-import FavoriteButton from "@/components/ui/FavoriteButton";
-import type { WatchStatus } from "@/components/ui/WatchStatusDropdown/config";
+import FavoriteButton from "@/shared/components/FavoriteButton";
+import type { WatchStatus } from "@/shared/components/WatchStatusDropdown/config";
 import type { AnimeDetailData, VideoResult } from "./types";
 
 interface AnimeHeroProps {

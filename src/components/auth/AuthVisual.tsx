@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { AUTH_CONFIG, type AuthState } from "./authConfig";
 
 interface AuthVisualProps {

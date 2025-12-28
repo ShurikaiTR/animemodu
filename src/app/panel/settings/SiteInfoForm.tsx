@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { ImageUpload } from "@/components/ui/ImageUpload";
-import { updateSiteInfo } from "@/actions/settings";
+import { Input } from "@/shared/components/input";
+import { Button } from "@/shared/components/button";
+import { Textarea } from "@/shared/components/textarea";
+import { Label } from "@/shared/components/label";
+import { ImageUpload } from "@/shared/components/ImageUpload";
+import { updateSiteInfo } from "@/features/settings/actions";
 import { toast } from "sonner";
 import { Save } from "lucide-react";
 import FeatureToggles from "./FeatureToggles";

@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/button";
 import { ChevronLeft, ChevronRight, Share2, Flag } from "lucide-react";
 
 interface WatchControlsProps {

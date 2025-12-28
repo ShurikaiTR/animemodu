@@ -3,16 +3,16 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
-import { createClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
+import { createClient } from "@/shared/lib/supabase/client";
+import { Button } from "@/shared/components/button";
 import { ArrowLeft, Save, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { EditSidebar } from "./EditSidebar";
 import { EditFormFields } from "./EditFormFields";
 import type { EditFormData } from "./types";
-import { updateAnime } from "@/actions/anime";
-import type { AnimeRow } from "@/types/helpers";
+import { updateAnime } from "@/features/anime/actions";
+import type { AnimeRow } from "@/shared/types/helpers";
 
 function SaveButton() {
     const { pending } = useFormStatus();
@@ -70,7 +70,7 @@ export function EditAnimeForm({ slug }: { slug: string }) {
                     backdrop_path: anime.backdrop_path || "",
                     vote_average: anime.vote_average || 0,
                     release_date: anime.release_date || "",
-                    structure_type: anime.structure_type || "seasonal",
+                    structure_type: (anime.structure_type || "seasonal") as "seasonal" | "absolute",
                     is_featured: anime.is_featured || false,
                     trailer_key: (anime as AnimeRow).trailer_key || "",
                     genres: anime.genres || [],

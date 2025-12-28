@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { useFormStatus } from "react-dom";
-import { Dialog, DialogContent, DialogFooter, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogFooter, DialogTitle } from "@/shared/components/dialog";
+import { Button } from "@/shared/components/button";
+import { Input } from "@/shared/components/input";
+import { Label } from "@/shared/components/label";
 import { Loader2, List, Layers } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { AddContentModalHeader } from "./AddContentModalHeader";
-import { addAnimeToDB } from "@/actions/anime";
+import { addAnimeToDB } from "@/features/anime/actions";
 import { toast } from "sonner";
 import type { SearchResult } from "@/app/panel/types";
 

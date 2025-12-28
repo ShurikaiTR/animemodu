@@ -2,8 +2,8 @@
 
 import { createPortal } from "react-dom";
 import { X, Trash2, AlertTriangle, Loader2 } from "lucide-react";
-import { useModalMount } from "@/hooks/useModalMount";
-import { Button } from "@/components/ui/button";
+import { useModalMount } from "@/shared/hooks/useModalMount";
+import { Button } from "@/shared/components/button";
 
 interface DeleteEpisodeConfirmationModalProps {
     isOpen: boolean;

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Plus } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/button";
 import StatsCardsServer from "./_components/StatsCardsServer";
 import TopAnimesServer from "./_components/TopAnimesServer";
 import RecentAnimesServer from "./_components/RecentAnimesServer";

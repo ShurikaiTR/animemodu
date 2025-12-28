@@ -1,7 +1,7 @@
 export type InteractionType = "comment" | "review";
 
 export interface InteractionItem {
-    id: number;
+    id: string;
     type: InteractionType;
     content: string;
     user: {

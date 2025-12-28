@@ -1,7 +1,7 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/shared/lib/supabase/server";
 import { UsersTable } from "@/components/panel/tables/UsersTable";
 import type { UserItem } from "@/components/panel/tables/UsersTable";
-import { handleSupabaseError } from "@/lib/panel/utils";
+import { handleSupabaseError } from "@/shared/lib/panel/utils";
 
 export async function UsersContent() {
     const supabase = await createClient();

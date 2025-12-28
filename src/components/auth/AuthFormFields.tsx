@@ -1,7 +1,7 @@
 "use client";
 
 import { Lock, User } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/shared/components/input";
 import { type AuthState } from "./authConfig";
 
 interface AuthFormFieldsProps {

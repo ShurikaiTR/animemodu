@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { headers } from 'next/headers';
-import { createPublicClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/shared/lib/supabase/server';
 
 async function getBaseUrl(): Promise<string> {
     const headersList = await headers();

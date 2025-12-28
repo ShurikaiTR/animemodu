@@ -2,11 +2,11 @@
 
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/shared/lib/supabase/client";
 import { Lock, CheckCircle2, AlertCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import Container from "@/components/ui/container";
+import { Button } from "@/shared/components/button";
+import { Input } from "@/shared/components/input";
+import Container from "@/shared/components/container";
 
 function ResetPasswordForm() {
     const router = useRouter();

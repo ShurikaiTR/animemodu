@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Rubik } from "next/font/google";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { AuthModalProvider } from "@/contexts/AuthModalContext";
-import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/shared/contexts/AuthContext";
+import { AuthModalProvider } from "@/shared/contexts/AuthModalContext";
+import { Toaster } from "@/shared/components/sonner";
 import "./globals.css";
 
 const inter = Inter({
@@ -17,7 +17,7 @@ const rubik = Rubik({
   display: "swap",
 });
 
-import { getSiteInfo } from "@/actions/settings";
+import { getSiteInfo } from "@/features/settings/actions";
 
 export async function generateMetadata(): Promise<Metadata> {
   try {

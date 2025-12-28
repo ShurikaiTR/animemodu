@@ -1,7 +1,7 @@
 "use client";
 
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import { Switch } from "@/shared/components/switch";
+import { Label } from "@/shared/components/label";
 import { Construction, Users } from "lucide-react";
 
 interface FeatureTogglesProps {

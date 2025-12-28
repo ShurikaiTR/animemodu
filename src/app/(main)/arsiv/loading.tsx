@@ -1,5 +1,5 @@
-import Container from "@/components/ui/container";
-import { Skeleton } from "@/components/ui/skeleton";
+import Container from "@/shared/components/container";
+import { Skeleton } from "@/shared/components/skeleton";
 
 export default function ArchiveLoading() {
   return (

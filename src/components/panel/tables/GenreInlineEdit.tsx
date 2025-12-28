@@ -1,8 +1,8 @@
 "use client";
 
 import { Check, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/shared/components/button";
+import { Input } from "@/shared/components/input";
 
 interface GenreInlineEditProps {
     value: string;

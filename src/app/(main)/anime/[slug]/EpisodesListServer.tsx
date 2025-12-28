@@ -1,9 +1,9 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/shared/lib/supabase/server";
 import { notFound } from "next/navigation";
 import type { Episode, AnimeDetailData } from "./types";
 import EpisodeListClient from "./EpisodeListClient";
-import { getAnimeBySlugOrNotFound } from "@/lib/anime/queries";
-import { filterAiredEpisodes, mapEpisodeRowsToEpisodes, orderEpisodesBySeasonAndNumber } from "@/lib/anime/episodes";
+import { getAnimeBySlugOrNotFound } from "@/shared/lib/anime/queries";
+import { filterAiredEpisodes, mapEpisodeRowsToEpisodes, orderEpisodesBySeasonAndNumber } from "@/shared/lib/anime/episodes";
 
 interface EpisodesListServerProps {
   slug: string;
@@ -18,7 +18,7 @@ export default async function EpisodesListServer({
 }: EpisodesListServerProps) {
   const supabase = await createClient();
 
-  const dbAnime = await getAnimeBySlugOrNotFound(slug, "id, title, slug");
+  const dbAnime = await getAnimeBySlugOrNotFound(slug);
 
   let query = supabase
     .from("episodes")

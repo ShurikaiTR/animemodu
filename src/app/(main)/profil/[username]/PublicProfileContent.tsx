@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
-import { getUserProfile } from "@/actions/profile/getProfile";
-import { getUserWatchList } from "@/actions/profile/userList";
-import { getUserFavorites } from "@/actions/profile/favorites";
-import Container from "@/components/ui/container";
-import ProfileHeader from "@/components/profile/ProfileHeader";
-import AnimatedProfileHeader from "@/components/profile/AnimatedProfileHeader";
-import WatchListTabs from "@/components/profile/WatchListTabs";
-import ProfileActivities from "@/components/profile/ProfileActivities";
-import type { WatchListItem, FavoriteItem } from "@/types/helpers";
+import { getUserProfile } from "@/features/profile/actions/getProfile";
+import { getUserWatchList } from "@/features/profile/actions/userList";
+import { getUserFavorites } from "@/features/profile/actions/favorites";
+import Container from "@/shared/components/container";
+import ProfileHeader from "@/features/profile/components/ProfileHeader";
+import AnimatedProfileHeader from "@/features/profile/components/AnimatedProfileHeader";
+import WatchListTabs from "@/features/profile/components/WatchListTabs";
+import ProfileActivities from "@/features/profile/components/ProfileActivities";
+import type { WatchListItem, FavoriteItem } from "@/shared/types/helpers";
 
 interface PublicProfileContentProps {
     username: string;

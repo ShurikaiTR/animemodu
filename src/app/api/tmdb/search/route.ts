@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { searchMulti } from "@/lib/tmdb/search";
-import { tmdbSearchQuerySchema, parseSearchParams } from "@/lib/validations/api";
+import { searchMulti } from "@/shared/lib/tmdb/search";
+import { tmdbSearchQuerySchema, parseSearchParams } from "@/shared/lib/validations/api";
 
 export async function GET(request: NextRequest) {
     const validation = parseSearchParams(request.nextUrl.searchParams, tmdbSearchQuerySchema);

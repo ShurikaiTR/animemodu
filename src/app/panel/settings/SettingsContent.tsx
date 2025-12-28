@@ -1,7 +1,7 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/shared/lib/supabase/server";
 import SiteInfoForm from "./SiteInfoForm";
 import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/button";
 import Link from "next/link";
 
 export default async function SettingsContent() {

@@ -1,9 +1,9 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/shared/lib/supabase/server";
 import { notFound } from "next/navigation";
 import WatchClient from "./client";
 import type { Episode } from "@/app/(main)/anime/[slug]/types";
-import { getAnimeBySlugOrNotFound, getStructureType } from "@/lib/anime/queries";
-import { mapEpisodeRowsToEpisodes, orderEpisodesBySeasonAndNumber } from "@/lib/anime/episodes";
+import { getAnimeBySlugOrNotFound, getStructureType } from "@/shared/lib/anime/queries";
+import { mapEpisodeRowsToEpisodes, orderEpisodesBySeasonAndNumber } from "@/shared/lib/anime/episodes";
 
 interface VideoPlayerServerProps {
   slug: string;
@@ -13,7 +13,7 @@ interface VideoPlayerServerProps {
 export default async function VideoPlayerServer({ slug, segments }: VideoPlayerServerProps) {
   const supabase = await createClient();
 
-  const anime = await getAnimeBySlugOrNotFound(slug, "*");
+  const anime = await getAnimeBySlugOrNotFound(slug);
 
   const structureType = getStructureType(anime.structure_type);
   let episodeNumber: number | null = null;
@@ -97,7 +97,7 @@ export default async function VideoPlayerServer({ slug, segments }: VideoPlayerS
         slug: anime.slug,
         backdrop_path: anime.backdrop_path,
         poster_path: anime.poster_path,
-        structure_type: anime.structure_type || "seasonal",
+        structure_type: (anime.structure_type || "seasonal") as "seasonal" | "absolute",
       }}
       episodes={episodes}
     />

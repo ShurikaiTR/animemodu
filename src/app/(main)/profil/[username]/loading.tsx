@@ -1,4 +1,4 @@
-import Container from "@/components/ui/container";
+import Container from "@/shared/components/container";
 
 export default function Loading() {
     return (

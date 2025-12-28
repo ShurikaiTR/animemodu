@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import PublicProfileContent from "./PublicProfileContent";
-import ProfileSkeleton from "@/components/profile/ProfileSkeleton";
+import ProfileSkeleton from "@/features/profile/components/ProfileSkeleton";
 
 interface PageProps {
     params: Promise<{ username: string }>;

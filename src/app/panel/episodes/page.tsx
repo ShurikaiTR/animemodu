@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/shared/lib/supabase/server";
 import EpisodesClient from "./EpisodesClient";
 import type { EpisodeWithAnime } from "@/components/panel/tables/EpisodesTable/EpisodesTableRow";
 
@@ -39,7 +39,7 @@ export default async function EpisodesPage({ searchParams }: EpisodesPageProps) 
         .order("episode_number", { ascending: false })
         .range(from, to);
 
-    const episodes = (data || []) as unknown as EpisodeWithAnime[];
+    const episodes: EpisodeWithAnime[] = (data || []) as EpisodeWithAnime[];
     const totalItems = count || 0;
 
     return (
