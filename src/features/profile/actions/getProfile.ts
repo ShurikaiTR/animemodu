@@ -1,7 +1,6 @@
 "use server";
 
 import { createPublicClient } from "@/shared/lib/supabase/server";
-import { cacheLife, cacheTag } from "next/cache";
 import type { SocialMediaLinks, ProfileRow } from "@/shared/types/helpers";
 
 /** Profil veri transformasyonu */
@@ -28,13 +27,9 @@ function transformProfile(profile: ProfileRow) {
 
 /**
  * Kullanıcı profil bilgilerini username ile getirir
- * Public data - auth gerektirmez, cache kullanır
+ * Public data - auth gerektirmez
  */
 export async function getUserProfile(username: string) {
-    "use cache";
-    cacheLife("minutes");
-    cacheTag(`profile-${username}`);
-
     const supabase = createPublicClient();
 
     const { data: rawProfile, error } = await supabase
@@ -52,13 +47,9 @@ export async function getUserProfile(username: string) {
 
 /**
  * Kullanıcı profil bilgilerini userId ile getirir
- * Public data - auth gerektirmez, cache kullanır
+ * Public data - auth gerektirmez
  */
 export async function getUserProfileById(userId: string) {
-    "use cache";
-    cacheLife("minutes");
-    cacheTag(`profile-id-${userId}`);
-
     const supabase = createPublicClient();
 
     const { data: rawProfile, error } = await supabase
@@ -73,7 +64,3 @@ export async function getUserProfileById(userId: string) {
 
     return transformProfile(rawProfile as ProfileRow);
 }
-
-
-
-

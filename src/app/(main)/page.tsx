@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { cacheLife } from "next/cache";
 import FeaturedHero from "@/shared/components/home/FeaturedHero";
 import LatestEpisodesServer from "@/shared/components/home/LatestEpisodesServer";
 import RecentAnimes from "@/shared/components/home/RecentAnimes";
@@ -13,9 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  "use cache";
-  cacheLife("minutes");
-
   return (
     <>
       <Suspense fallback={<HeroSkeleton />}>

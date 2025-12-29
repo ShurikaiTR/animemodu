@@ -1,7 +1,6 @@
 "use server";
 
 import { createClient, createPublicClient } from "@/shared/lib/supabase/server";
-import { cacheLife, cacheTag } from "next/cache";
 import { revalidatePath } from "next/cache";
 import { logError } from "@/shared/lib/errors";
 import { requireUser, isAuthError } from "@/shared/lib/auth/guards";
@@ -14,13 +13,9 @@ type ActivitiesResult =
 
 /**
  * Kullanıcının son aktivitelerini getirir
- * Public data - auth gerektirmez, cache kullanır
+ * Public data - auth gerektirmez
  */
 export async function getUserActivities(userId: string, limit = 20): Promise<ActivitiesResult> {
-    "use cache";
-    cacheLife("minutes");
-    cacheTag(`activities-${userId}`);
-
     const supabase = createPublicClient();
 
     // Type casting gerekli - user_activities tablosu henüz Supabase types'ta yok

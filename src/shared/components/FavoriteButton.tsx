@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Heart } from "lucide-react";
 import { Button } from "@/shared/components/button";
 import { toggleFavorite, checkFavorite } from "@/features/profile/actions/favorites";
 import { toast } from "sonner";
 import { useAuthModal } from "@/shared/contexts/AuthModalContext";
 import { useAuth } from "@/shared/contexts/AuthContext";
-import { useEffect } from "react";
 
 interface FavoriteButtonProps {
     animeId: string;
@@ -18,6 +18,7 @@ interface FavoriteButtonProps {
 export default function FavoriteButton({ animeId, initialFavorite, variant = "featured" }: FavoriteButtonProps) {
     const [isFavorite, setIsFavorite] = useState(initialFavorite ?? false);
     const [isPending, startTransition] = useTransition();
+    const router = useRouter();
     const { user } = useAuth();
     const { openAuthModal } = useAuthModal();
 
@@ -50,6 +51,8 @@ export default function FavoriteButton({ animeId, initialFavorite, variant = "fe
                 // Sunucudan gelen gerçek durumu kullan
                 setIsFavorite(result.isFavorite ?? newFavorite);
                 toast.success(result.isFavorite ? "Favorilere eklendi" : "Favorilerden çıkarıldı");
+                // Client-side router cache'i invalidate et
+                router.refresh();
             } else {
                 setIsFavorite(!newFavorite); // Revert
                 toast.error(result.error || "Bir hata oluştu");

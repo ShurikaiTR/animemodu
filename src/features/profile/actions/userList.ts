@@ -1,10 +1,10 @@
 "use server";
 
 import { createClient } from "@/shared/lib/supabase/server";
-import { revalidatePath } from "next/cache";
 import { logError } from "@/shared/lib/errors";
 import { requireUser, isAuthError } from "@/shared/lib/auth/guards";
 import { getImageUrl } from "@/shared/lib/tmdb/utils";
+import { revalidateProfileData } from "@/shared/lib/cache/revalidate";
 import type { WatchStatus } from "@/shared/types/domain/watchlist";
 import type { WatchListResult } from "@/shared/types/helpers";
 
@@ -67,7 +67,7 @@ export async function updateWatchStatus(animeId: string, status: WatchStatus | n
         if (error) { logError("updateWatchStatus.upsert", error); return { success: false, error: error.message }; }
     }
 
-    if (auth.username) revalidatePath(`/profil/${auth.username}`);
+    if (auth.username) revalidateProfileData(auth.username);
     return { success: true };
 }
 

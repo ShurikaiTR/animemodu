@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import { Calendar } from "lucide-react";
-import { cacheLife, cacheTag } from "next/cache";
 import Container from "@/shared/components/container";
 import { createPublicClient } from "@/shared/lib/supabase/server";
 import CalendarClient from "@/shared/components/calendar/CalendarClient";
@@ -16,10 +15,6 @@ function CalendarLoading() {
 }
 
 export default async function CalendarPage() {
-    "use cache";
-    cacheLife("hours");
-    cacheTag("episodes");
-
     const supabase = createPublicClient();
 
     const { data: episodes } = await supabase

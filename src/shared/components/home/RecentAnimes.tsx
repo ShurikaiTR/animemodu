@@ -23,7 +23,6 @@ export default async function RecentAnimes() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 sm:gap-8">
                     <MediaGridServer
                         mediaType="all"
-                        cacheTagName="animes"
                         limit={12}
                         emptyTitle="Henüz İçerik Eklenmemiş"
                         emptyDescription="Panel → Yeni Ekle'den içerik ekleyebilirsin."

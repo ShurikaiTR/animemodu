@@ -1,5 +1,4 @@
 import { createPublicClient } from "@/shared/lib/supabase/server";
-import { cacheLife, cacheTag } from "next/cache";
 import MovieCard from "@/shared/components/MovieCard";
 import EmptyState from "@/shared/components/EmptyState";
 import { getImageUrl } from "@/shared/lib/tmdb";
@@ -30,8 +29,6 @@ interface MediaGridItem {
 interface MediaGridServerProps {
     /** Filter by media type: "tv" for anime series, "movie" for films, "all" for both */
     mediaType?: MediaType;
-    /** Cache tag for revalidation */
-    cacheTagName?: string;
     /** Maximum number of items to display */
     limit?: number;
     /** Icon key for empty state (use string key, not component) */
@@ -48,7 +45,6 @@ interface MediaGridServerProps {
 
 export default async function MediaGridServer({
     mediaType = "all",
-    cacheTagName = "animes",
     limit,
     emptyIcon = "layout-grid",
     emptyTitle = "Henüz İçerik Eklenmemiş",
@@ -56,10 +52,6 @@ export default async function MediaGridServer({
     orderBy = "created_at",
     orderDirection = "desc",
 }: MediaGridServerProps) {
-    "use cache";
-    cacheLife("minutes");
-    cacheTag(cacheTagName);
-
     const supabase = createPublicClient();
 
     let query = supabase
@@ -110,4 +102,3 @@ export default async function MediaGridServer({
         </>
     );
 }
-

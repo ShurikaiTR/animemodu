@@ -1,5 +1,4 @@
 import { createPublicClient } from "@/shared/lib/supabase/server";
-import { cacheLife, cacheTag } from "next/cache";
 import LatestEpisodes from "./LatestEpisodes";
 
 /** Episode item structure expected by LatestEpisodes component */
@@ -35,10 +34,6 @@ interface EpisodeWithAnime {
 }
 
 export default async function LatestEpisodesServer() {
-  "use cache";
-  cacheLife("minutes");
-  cacheTag("latest-episodes");
-
   const supabase = createPublicClient();
 
   const { data: latestEpisodes } = await supabase
@@ -69,4 +64,3 @@ export default async function LatestEpisodesServer() {
 
   return <LatestEpisodes episodes={episodes} />;
 }
-

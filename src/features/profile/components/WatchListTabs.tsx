@@ -7,8 +7,8 @@ import MobileTabDropdown from "./MobileTabDropdown";
 import WatchListEmptyState from "./WatchListEmptyState";
 import FavoritesEmptyState from "./FavoritesEmptyState";
 import { updateWatchStatus } from "@/features/profile/actions/userList";
+import { toggleFavorite } from "@/features/profile/actions/favorites";
 import { toast } from "sonner";
-import { toggleFavorite } from "@/features/profile/actions/favorites"; // Import toggleFavorite
 import type { WatchListItem, FavoriteItem } from "@/shared/types/helpers";
 
 const TABS = [
@@ -16,6 +16,8 @@ const TABS = [
     { id: "watching", label: "İzliyorum" },
     { id: "completed", label: "İzledim" },
     { id: "plan_to_watch", label: "İzleyeceğim" },
+    { id: "on_hold", label: "Beklemede" },
+    { id: "dropped", label: "Bıraktım" },
     { id: "favorites", label: "Favoriler" },
 ];
 
@@ -32,7 +34,7 @@ export default function WatchListTabs({ initialItems, favorites: initialFavorite
 
     const handleRemove = (animeId: string) => {
         if (activeTab === "favorites") {
-            // Remove from favorites
+            // Optimistic update
             setFavorites(prev => prev.filter(item => item.anime.id !== animeId));
 
             startTransition(async () => {
@@ -47,7 +49,7 @@ export default function WatchListTabs({ initialItems, favorites: initialFavorite
             return;
         }
 
-        // Remove from watchlist
+        // Optimistic update for watchlist
         setItems(prev => prev.filter(item => item.anime.id !== animeId));
 
         startTransition(async () => {
@@ -55,7 +57,7 @@ export default function WatchListTabs({ initialItems, favorites: initialFavorite
             if (result.success) {
                 toast.success("Listeden kaldırıldı");
             } else {
-                setItems(initialItems);
+                setItems(initialItems); // Revert on error
                 toast.error(result.error || "Bir hata oluştu");
             }
         });
@@ -71,18 +73,8 @@ export default function WatchListTabs({ initialItems, favorites: initialFavorite
 
     return (
         <div className="w-full">
-            <DesktopTabs
-                tabs={TABS}
-                activeTab={activeTab}
-                onTabChange={setActiveTab}
-            />
-
-            <MobileTabDropdown
-                tabs={TABS}
-                activeTab={activeTab}
-                activeTabLabel={activeTabLabel}
-                onTabChange={setActiveTab}
-            />
+            <DesktopTabs tabs={TABS} activeTab={activeTab} onTabChange={setActiveTab} />
+            <MobileTabDropdown tabs={TABS} activeTab={activeTab} activeTabLabel={activeTabLabel} onTabChange={setActiveTab} />
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {filteredItems.map((item, index) => (
@@ -113,6 +105,3 @@ export default function WatchListTabs({ initialItems, favorites: initialFavorite
         </div>
     );
 }
-
-
-

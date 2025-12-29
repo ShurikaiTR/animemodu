@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
 import {
     DropdownMenu,
@@ -26,6 +27,7 @@ interface WatchStatusDropdownProps {
 export default function WatchStatusDropdown({ animeId, initialStatus, variant = "hero" }: WatchStatusDropdownProps) {
     const [status, setStatus] = useState<WatchStatus | null>(initialStatus ?? null);
     const [isPending, startTransition] = useTransition();
+    const router = useRouter();
     const { user } = useAuth();
     const { openAuthModal } = useAuthModal();
 
@@ -56,6 +58,8 @@ export default function WatchStatusDropdown({ animeId, initialStatus, variant = 
             if (result.success) {
                 setStatus(newStatus);
                 toast.success(newStatus ? "Listeye eklendi" : "Listeden kaldırıldı");
+                // Client-side router cache'i invalidate et
+                router.refresh();
             } else {
                 toast.error(result.error || "Bir hata oluştu");
             }

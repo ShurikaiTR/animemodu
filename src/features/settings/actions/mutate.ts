@@ -3,7 +3,7 @@
 import { createClient } from "@/shared/lib/supabase/server";
 import { requireAdmin, isAuthError } from "@/shared/lib/auth/guards";
 import { logError } from "@/shared/lib/errors";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { parseSettingsFormData, formatZodError } from "@/shared/lib/validations/settings";
 import { saveFileLocally } from "@/shared/lib/file-system";
 
@@ -128,9 +128,6 @@ export async function updateSiteInfo(
         );
 
         await Promise.all(updates);
-
-        // Fixed revalidateTag with correct parameters for the project
-        revalidateTag("site-info", "max");
 
         revalidatePath("/panel/settings", "page");
         revalidatePath("/", "layout");

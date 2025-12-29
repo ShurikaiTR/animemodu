@@ -20,6 +20,7 @@ describe("isAuthError", () => {
         const authResult: AuthResult = {
             userId: "123",
             role: "admin",
+            username: "testuser",
         };
 
         expect(isAuthError(authResult)).toBe(false);
@@ -31,6 +32,7 @@ describe("Auth Guard Types", () => {
         const result: AuthResult = {
             userId: "test-user-id",
             role: "admin",
+            username: "adminuser",
         };
 
         expect(result.userId).toBe("test-user-id");
@@ -51,6 +53,7 @@ describe("Auth Guard Types", () => {
         const result: AuthResult = {
             userId: "test-user-id",
             role: "user",
+            username: null,
         };
 
         expect(result.role).toBe("user");

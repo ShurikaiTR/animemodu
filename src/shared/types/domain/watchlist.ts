@@ -1,5 +1,5 @@
 // Watch status type - matches database enum
-export type WatchStatus = "watching" | "completed" | "planned" | "on_hold" | "dropped";
+export type WatchStatus = "watching" | "completed" | "plan_to_watch" | "on_hold" | "dropped";
 
 /**
  * Sosyal medya linkleri için type-safe interface

@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/shared/lib/supabase/server";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { logError } from "@/shared/lib/errors";
 import { requireOwnerOrAdmin, isAuthError } from "@/shared/lib/auth/guards";
 import { profileSchema } from "@/shared/lib/validations/profile";
@@ -79,7 +79,6 @@ export async function createOrUpdateProfile(userId: string, data?: unknown): Pro
         }
 
         revalidatePath("/profil");
-        revalidateTag(`profile-id-${userId}`, "max");
         return { success: true, data: newProfile };
     }
 
@@ -123,7 +122,6 @@ export async function createOrUpdateProfile(userId: string, data?: unknown): Pro
     }
 
     revalidatePath("/profil");
-    revalidateTag(`profile-id-${userId}`, "max");
     return { success: true, data: updatedProfile };
 }
 

@@ -1,7 +1,7 @@
 import { Eye, Check, Clock, XCircle, Pause } from "lucide-react";
 
-// Must match database enum: watching, completed, planned, on_hold, dropped
-export type WatchStatus = "watching" | "completed" | "planned" | "on_hold" | "dropped";
+// Must match database enum: watching, completed, plan_to_watch, on_hold, dropped
+export type WatchStatus = "watching" | "completed" | "plan_to_watch" | "on_hold" | "dropped";
 
 export interface StatusConfig {
     label: string;
@@ -26,7 +26,7 @@ export const statusConfig: Record<WatchStatus, StatusConfig> = {
         bgColor: "bg-green-500/20",
         borderColor: "border-green-500/50",
     },
-    planned: {
+    plan_to_watch: {
         label: "İzleyeceğim",
         icon: Clock,
         color: "text-orange-500",

@@ -1,27 +1,16 @@
-import { revalidatePath, updateTag, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 /**
- * Revalidates all anime-related cache tags and paths
+ * Revalidates all anime-related cache paths
  * Use after adding, updating, or deleting anime content
  */
 export function revalidateAnimeData(slug?: string) {
-    // Update cache tags
-    updateTag("animes");
-    updateTag("featured-anime");
-    updateTag("latest-episodes");
-    updateTag("episodes");
-
-    // Force revalidation with max stale time
-    revalidateTag("animes", "max");
-    revalidateTag("featured-anime", "max");
-    revalidateTag("latest-episodes", "max");
-    revalidateTag("episodes", "max");
-
     // Revalidate common paths
     revalidatePath("/");
     revalidatePath("/arsiv");
     revalidatePath("/animeler");
     revalidatePath("/filmler");
+    revalidatePath("/takvim");
 
     // Revalidate specific anime page if slug provided
     if (slug) {
@@ -30,18 +19,13 @@ export function revalidateAnimeData(slug?: string) {
 }
 
 /**
- * Revalidates episode-related cache tags and paths
+ * Revalidates episode-related cache paths
  * Use after adding, updating, or deleting episodes
  */
 export function revalidateEpisodeData(animeSlug?: string) {
-    updateTag("episodes");
-    updateTag("latest-episodes");
-
-    revalidateTag("episodes", "max");
-    revalidateTag("latest-episodes", "max");
-
     revalidatePath("/");
     revalidatePath("/arsiv");
+    revalidatePath("/takvim");
 
     if (animeSlug) {
         revalidatePath(`/anime/${animeSlug}`);
@@ -55,8 +39,6 @@ export function revalidateEpisodeData(animeSlug?: string) {
  * Use when toggling featured status
  */
 export function revalidateFeaturedAnime() {
-    updateTag("featured-anime");
-    revalidateTag("featured-anime", "max");
     revalidatePath("/");
 }
 
@@ -71,6 +53,19 @@ export function revalidateUserData(userId?: string) {
         // Could add user-specific paths if needed in the future
         revalidatePath("/profil");
     }
+}
+
+/**
+ * Revalidates user profile page data
+ * Use after watchlist, favorites, or other profile-related changes
+ * @param username - Username for the profile path
+ */
+export function revalidateProfileData(username: string) {
+    // Revalidate the specific profile page with layout
+    revalidatePath(`/profil/${username}`, "layout");
+
+    // Also revalidate with page type for good measure
+    revalidatePath(`/profil/${username}`, "page");
 }
 
 /**
@@ -94,4 +89,3 @@ export function revalidateAll() {
     revalidateAnimeData();
     revalidateUserData();
 }
-

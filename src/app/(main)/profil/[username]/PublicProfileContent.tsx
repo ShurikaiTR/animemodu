@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { getUserProfile } from "@/features/profile/actions/getProfile";
 import { getUserWatchList } from "@/features/profile/actions/userList";
 import { getUserFavorites } from "@/features/profile/actions/favorites";
@@ -11,6 +12,9 @@ interface PublicProfileContentProps {
 }
 
 export default async function PublicProfileContent({ username }: PublicProfileContentProps) {
+    // Force dynamic rendering - profil sayfası her zaman fresh data göstermeli
+    await connection();
+
     const profile = await getUserProfile(username);
 
     if (!profile) {
