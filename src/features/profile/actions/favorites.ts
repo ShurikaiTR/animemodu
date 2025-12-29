@@ -5,6 +5,7 @@ import { revalidateProfileData } from "@/shared/lib/cache/revalidate";
 import { logError } from "@/shared/lib/errors";
 import { requireUser, isAuthError } from "@/shared/lib/auth/guards";
 import { getImageUrl } from "@/shared/lib/tmdb/utils";
+import { createActivity } from "@/features/profile/actions/activities";
 
 // Internal types
 interface FavItem { id: string; anime_id: string; created_at: string; }
@@ -27,11 +28,15 @@ export async function toggleFavorite(animeId: string) {
     if (existing) {
         const { error } = await supabase.from("user_favorites").delete().eq("user_id", auth.userId).eq("anime_id", animeId);
         if (error) { logError("toggleFavorite.delete", error); return { success: false, error: error.message }; }
+        // Track activity
+        await createActivity("favorite_remove", animeId);
         if (auth.username) revalidateProfileData(auth.username);
         return { success: true, isFavorite: false };
     } else {
         const { error } = await supabase.from("user_favorites").insert({ user_id: auth.userId, anime_id: animeId });
         if (error) { logError("toggleFavorite.insert", error); return { success: false, error: error.message }; }
+        // Track activity
+        await createActivity("favorite_add", animeId);
         if (auth.username) revalidateProfileData(auth.username);
         return { success: true, isFavorite: true };
     }

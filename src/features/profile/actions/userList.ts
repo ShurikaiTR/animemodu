@@ -5,6 +5,7 @@ import { logError } from "@/shared/lib/errors";
 import { requireUser, isAuthError } from "@/shared/lib/auth/guards";
 import { getImageUrl } from "@/shared/lib/tmdb/utils";
 import { revalidateProfileData } from "@/shared/lib/cache/revalidate";
+import { createActivity } from "@/features/profile/actions/activities";
 import type { WatchStatus } from "@/shared/types/domain/watchlist";
 import type { WatchListResult } from "@/shared/types/helpers";
 
@@ -61,10 +62,23 @@ export async function updateWatchStatus(animeId: string, status: WatchStatus | n
     if (status === null) {
         const { error } = await supabase.from("user_anime_list").delete().eq("user_id", auth.userId).eq("anime_id", animeId);
         if (error) { logError("updateWatchStatus.delete", error); return { success: false, error: error.message }; }
+        // Track activity
+        await createActivity("watchlist_remove", animeId);
     } else {
+        // Check if this is an update or new add
+        const { data: existing } = await supabase.from("user_anime_list").select("status").eq("user_id", auth.userId).eq("anime_id", animeId).maybeSingle();
+        const isNewAdd = !existing;
+
         const { error } = await (supabase.from("user_anime_list") as ReturnType<typeof supabase.from>)
             .upsert({ user_id: auth.userId, anime_id: animeId, status: status, updated_at: new Date().toISOString() } as Record<string, unknown>, { onConflict: "user_id, anime_id" });
         if (error) { logError("updateWatchStatus.upsert", error); return { success: false, error: error.message }; }
+
+        // Track activity
+        if (isNewAdd) {
+            await createActivity("watchlist_add", animeId, { status });
+        } else {
+            await createActivity("watchlist_update", animeId, { status, old_status: (existing as { status: string }).status });
+        }
     }
 
     if (auth.username) revalidateProfileData(auth.username);
