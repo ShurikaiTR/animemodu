@@ -5,6 +5,7 @@ import MovieCard from "@/shared/components/MovieCard";
 import DesktopTabs from "./DesktopTabs";
 import MobileTabDropdown from "./MobileTabDropdown";
 import WatchListEmptyState from "./WatchListEmptyState";
+import FavoritesEmptyState from "./FavoritesEmptyState";
 import { updateWatchStatus } from "@/features/profile/actions/userList";
 import { toast } from "sonner";
 import { toggleFavorite } from "@/features/profile/actions/favorites"; // Import toggleFavorite
@@ -106,7 +107,9 @@ export default function WatchListTabs({ initialItems, favorites: initialFavorite
                 ))}
             </div>
 
-            {filteredItems.length === 0 && <WatchListEmptyState />}
+            {filteredItems.length === 0 && (
+                activeTab === "favorites" ? <FavoritesEmptyState /> : <WatchListEmptyState />
+            )}
         </div>
     );
 }

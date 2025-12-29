@@ -67,7 +67,7 @@ export async function updateWatchStatus(animeId: string, status: WatchStatus | n
         if (error) { logError("updateWatchStatus.upsert", error); return { success: false, error: error.message }; }
     }
 
-    revalidatePath("/profil", "layout");
+    if (auth.username) revalidatePath(`/profil/${auth.username}`);
     return { success: true };
 }
 

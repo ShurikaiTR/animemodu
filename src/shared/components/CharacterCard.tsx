@@ -21,7 +21,7 @@ export default function CharacterCard({ name, character, image, className, prior
                         ? image.startsWith("http")
                             ? image
                             : getImageUrl(image, "w500")
-                        : "/placeholder-avatar.png"
+                        : "/placeholder.webp"
                 }
                 alt={name}
                 fill

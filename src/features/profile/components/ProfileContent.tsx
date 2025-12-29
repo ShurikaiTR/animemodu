@@ -2,9 +2,10 @@ import { createClient } from "@/shared/lib/supabase/server";
 import { getUserProfileById } from "@/features/profile/actions/getProfile";
 import { getUserWatchList } from "@/features/profile/actions/userList";
 import { getUserFavorites } from "@/features/profile/actions/favorites";
+import { getUserActivities } from "@/features/profile/actions/activities";
 import { redirect } from "next/navigation";
 import ProfileLayout from "./ProfileLayout";
-import type { WatchListItem, FavoriteItem } from "@/shared/types/helpers";
+import type { WatchListItem, FavoriteItem, Activity } from "@/shared/types/helpers";
 
 /**
  * Profil içeriğini dinamik olarak çeken ve render eden Server Component.
@@ -18,10 +19,11 @@ export default async function ProfileContent() {
         redirect("/?login=true");
     }
 
-    const [profile, watchListResult, favoritesResult] = await Promise.all([
+    const [profile, watchListResult, favoritesResult, activitiesResult] = await Promise.all([
         getUserProfileById(authUser.id),
         getUserWatchList(authUser.id),
-        getUserFavorites(authUser.id)
+        getUserFavorites(authUser.id),
+        getUserActivities(authUser.id)
     ]);
 
     if (!profile) {
@@ -30,6 +32,7 @@ export default async function ProfileContent() {
 
     const watchListItems: WatchListItem[] = watchListResult.success ? watchListResult.data : [];
     const favoriteItems: FavoriteItem[] = favoritesResult.success ? favoritesResult.data : [];
+    const activities: Activity[] = activitiesResult.success ? activitiesResult.data : [];
 
     const user = {
         ...profile,
@@ -44,6 +47,7 @@ export default async function ProfileContent() {
             user={user}
             watchListItems={watchListItems}
             favoriteItems={favoriteItems}
+            activities={activities}
             isOwnProfile={true}
         />
     );

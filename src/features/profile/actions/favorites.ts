@@ -16,6 +16,7 @@ export async function toggleFavorite(animeId: string) {
     if (isAuthError(auth)) return { success: false, error: auth.error };
 
     const supabase = await createClient();
+
     const { data: existing } = await supabase
         .from("user_favorites")
         .select("id")
@@ -26,12 +27,12 @@ export async function toggleFavorite(animeId: string) {
     if (existing) {
         const { error } = await supabase.from("user_favorites").delete().eq("user_id", auth.userId).eq("anime_id", animeId);
         if (error) { logError("toggleFavorite.delete", error); return { success: false, error: error.message }; }
-        revalidatePath("/profil", "layout");
+        if (auth.username) revalidatePath(`/profil/${auth.username}`);
         return { success: true, isFavorite: false };
     } else {
         const { error } = await supabase.from("user_favorites").insert({ user_id: auth.userId, anime_id: animeId });
         if (error) { logError("toggleFavorite.insert", error); return { success: false, error: error.message }; }
-        revalidatePath("/profil", "layout");
+        if (auth.username) revalidatePath(`/profil/${auth.username}`);
         return { success: true, isFavorite: true };
     }
 }

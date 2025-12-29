@@ -3,6 +3,7 @@ import { createClient } from "@/shared/lib/supabase/server";
 export type AuthResult = {
     userId: string;
     role: "admin" | "user";
+    username: string | null;
 };
 
 export type AuthError = {
@@ -25,13 +26,16 @@ export async function requireUser(): Promise<AuthResult | AuthError> {
 
     const { data: profile } = await supabase
         .from("profiles")
-        .select("role")
+        .select("role, username")
         .eq("id", user.id)
         .single();
 
+    const profileData = profile as { role: string; username: string | null } | null;
+
     return {
         userId: user.id,
-        role: (profile as { role: string } | null)?.role === "admin" ? "admin" : "user",
+        role: profileData?.role === "admin" ? "admin" : "user",
+        username: profileData?.username || null,
     };
 }
 

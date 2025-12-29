@@ -1,4 +1,4 @@
-import { Calendar, MapPin, Heart } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 
 interface ProfileInfoPillsProps {
     age?: string | null;
@@ -27,10 +27,6 @@ export default function ProfileInfoPills({ age, location, joinDate }: ProfileInf
                     {joinDate} tarihinde katıldı
                 </div>
             )}
-            <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/[0.03] border border-white/[0.05] rounded-full text-xs sm:text-xs font-semibold text-text-main/40">
-                <Heart className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-pink-500/60" />
-                Waifu: Makima
-            </div>
         </div>
     );
 }

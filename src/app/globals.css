@@ -5,6 +5,7 @@
   --bg-secondary: #151f30;
   --bg-dark: #12141a;
   --bg-dropdown: #1a1f2e;
+  --bg-input: #1e2330;
   --bg-video: #0a0a0a;
   --gradient-dark: #0f1115;
   --color-primary: #2f80ed;
@@ -43,6 +44,7 @@
   --color-bg-secondary: var(--bg-secondary);
   --color-bg-dark: var(--bg-dark);
   --color-bg-dropdown: var(--bg-dropdown);
+  --color-bg-input: var(--bg-input);
   --color-bg-video: var(--bg-video);
   --color-gradient-dark: var(--gradient-dark);
   --color-primary: var(--color-primary);

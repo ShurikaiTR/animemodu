@@ -7,7 +7,7 @@ import ProfileActions from "./ProfileActions";
 import ProfileSocials from "./ProfileSocials";
 import ProfileStats from "./ProfileStats";
 import ProfileInfoPills from "./ProfileInfoPills";
-import type { ProfileRow } from "@/shared/types/helpers";
+import type { ProfileRow, SocialMediaLinks } from "@/shared/types/helpers";
 
 interface UserProfile extends ProfileRow {
     email: string;
@@ -16,6 +16,7 @@ interface UserProfile extends ProfileRow {
     followers?: string;
     following?: string;
     avatar?: string;
+    socials?: SocialMediaLinks;
 }
 
 interface ProfileHeaderProps {
@@ -32,7 +33,7 @@ export default async function ProfileHeader({ user, isOwnProfile = true }: Profi
                 {/* Banner */}
                 <div className="relative h-32 sm:h-48 md:h-64 lg:h-72 w-full">
                     <Image
-                        src={user.banner_url || "/img/banner-placeholder.jpg"}
+                        src={user.banner_url || "/banner-placeholder.webp"}
                         alt="Kapak Fotoğrafı"
                         fill
                         className="object-cover"
@@ -96,7 +97,7 @@ export default async function ProfileHeader({ user, isOwnProfile = true }: Profi
                             {/* Right Side: Actions (Desktop) - Moves to bottom on mobile */}
                             <div className="hidden sm:flex flex-col items-end gap-3 self-start shrink-0">
                                 <ProfileActions user={user} isOwnProfile={isOwnProfile} />
-                                <ProfileSocials />
+                                <ProfileSocials socials={user.socials} />
                             </div>
                         </div>
 
@@ -104,7 +105,7 @@ export default async function ProfileHeader({ user, isOwnProfile = true }: Profi
                         <div className="flex sm:hidden flex-col items-center gap-4 pt-2 border-t border-white/5 w-full">
                             <ProfileActions user={user} isOwnProfile={isOwnProfile} />
                             <div className="scale-110 pt-2">
-                                <ProfileSocials />
+                                <ProfileSocials socials={user.socials} />
                             </div>
                         </div>
                     </div>

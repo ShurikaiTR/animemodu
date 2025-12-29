@@ -41,3 +41,8 @@ export type {
   WatchListAnime, WatchListAnimeMapped, WatchListResult,
   FavoriteItem, UserFavoritesWithAnime,
 } from "./domain/watchlist";
+
+// Activity types (from domain)
+export type {
+  ActivityType, ActivityMetadata, ActivityRow, Activity,
+} from "./domain/activity";

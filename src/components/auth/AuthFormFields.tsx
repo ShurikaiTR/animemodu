@@ -34,6 +34,8 @@ export default function AuthFormFields({
                         value={username}
                         onChange={(e) => onUsernameChange(e.target.value)}
                         className="h-12 pl-12"
+                        required
+                        minLength={3}
                     />
                 </div>
             )}

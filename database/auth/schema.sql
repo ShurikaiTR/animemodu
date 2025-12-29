@@ -5,7 +5,7 @@ create table if not exists profiles (
     username text unique,
     full_name text,
     avatar_url text default '/default-avatar.webp',
-    banner_url text,
+    banner_url text default '/banner-placeholder.webp',
     bio text,
     location text,
     social_media jsonb default '{}'::jsonb,
@@ -72,7 +72,7 @@ begin
     insert into public.profiles (id, username, full_name, avatar_url, role, created_at, updated_at)
     values (
         new.id,
-        coalesce(new.raw_user_meta_data->>'username', split_part(new.email, '@', 1)),
+        coalesce(nullif(trim(new.raw_user_meta_data->>'username'), ''), split_part(new.email, '@', 1)),
         coalesce(new.raw_user_meta_data->>'full_name', ''),
         '/default-avatar.webp',
         'user',

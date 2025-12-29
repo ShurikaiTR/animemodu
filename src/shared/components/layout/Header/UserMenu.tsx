@@ -37,7 +37,11 @@ export default function UserMenu({ user, signOut }: UserMenuProps) {
                 .single();
 
             if (profile) {
-                const profileData = profile as any;
+                const profileData = profile as {
+                    avatar_url: string | null;
+                    username: string | null;
+                    full_name: string | null;
+                };
                 setAvatarUrl(profileData.avatar_url);
                 setUsername(profileData.username || profileData.full_name || user.user_metadata?.username || user.email?.split("@")[0] || "User");
             } else {

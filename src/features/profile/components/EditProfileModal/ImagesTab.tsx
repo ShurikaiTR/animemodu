@@ -22,8 +22,8 @@ export default function ImagesTab({ avatarPreview, bannerPreview, onAvatarChange
                 <div className="flex items-center gap-6">
                     <div className="relative group cursor-pointer">
                         <div className={cn(
-                            "w-24 h-24 rounded-full border-2 overflow-hidden bg-bg-secondary flex items-center justify-center transition-all shadow-xl",
-                            avatarPreview ? "border-primary ring-4 ring-primary/10" : "border-dashed border-white/20 group-hover:border-primary group-hover:bg-primary/5"
+                            "w-24 h-24 rounded-full border-2 overflow-hidden bg-bg-input flex items-center justify-center transition-all shadow-xl",
+                            avatarPreview ? "border-primary ring-4 ring-primary/10" : "border-dashed border-white/10 group-hover:border-primary group-hover:bg-bg-dark"
                         )}>
                             {avatarPreview ? (
                                 /* eslint-disable-next-line @next/next/no-img-element */
@@ -64,7 +64,7 @@ export default function ImagesTab({ avatarPreview, bannerPreview, onAvatarChange
 
             <div className="space-y-4">
                 <Label className="text-text-main/50">Banner Görseli</Label>
-                <div className="relative w-full h-40 rounded-xl border-2 border-dashed border-white/20 overflow-hidden bg-bg-secondary group transition-all hover:border-primary hover:bg-primary/5 cursor-pointer">
+                <div className="relative w-full h-40 rounded-xl border-2 border-dashed border-white/10 overflow-hidden bg-bg-input group transition-all hover:border-primary hover:bg-bg-dark cursor-pointer">
                     {bannerPreview ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img src={bannerPreview} alt="Banner Preview" className="w-full h-full object-cover opacity-50 transition-opacity group-hover:opacity-30" />

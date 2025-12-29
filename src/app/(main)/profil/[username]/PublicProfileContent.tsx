@@ -2,8 +2,9 @@ import { notFound } from "next/navigation";
 import { getUserProfile } from "@/features/profile/actions/getProfile";
 import { getUserWatchList } from "@/features/profile/actions/userList";
 import { getUserFavorites } from "@/features/profile/actions/favorites";
+import { getUserActivities } from "@/features/profile/actions/activities";
 import ProfileLayout from "@/features/profile/components/ProfileLayout";
-import type { WatchListItem, FavoriteItem } from "@/shared/types/helpers";
+import type { WatchListItem, FavoriteItem, Activity } from "@/shared/types/helpers";
 
 interface PublicProfileContentProps {
     username: string;
@@ -16,13 +17,15 @@ export default async function PublicProfileContent({ username }: PublicProfileCo
         notFound();
     }
 
-    const [watchListResult, favoritesResult] = await Promise.all([
+    const [watchListResult, favoritesResult, activitiesResult] = await Promise.all([
         getUserWatchList(profile.id),
-        getUserFavorites(profile.id)
+        getUserFavorites(profile.id),
+        getUserActivities(profile.id)
     ]);
 
     const watchListItems: WatchListItem[] = watchListResult.success ? watchListResult.data : [];
     const favoriteItems: FavoriteItem[] = favoritesResult.success ? favoritesResult.data : [];
+    const activities: Activity[] = activitiesResult.success ? activitiesResult.data : [];
 
     const user = {
         ...profile,
@@ -37,6 +40,7 @@ export default async function PublicProfileContent({ username }: PublicProfileCo
             user={user}
             watchListItems={watchListItems}
             favoriteItems={favoriteItems}
+            activities={activities}
             isOwnProfile={false}
         />
     );
