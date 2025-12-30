@@ -13,7 +13,7 @@ export default function ProfileActivities({ activities, username }: ProfileActiv
         return (
             <div className="bg-bg-secondary/50 backdrop-blur-sm border border-white/5 rounded-3xl p-6 h-fit sticky top-24">
                 <h3 className="text-xl font-bold text-white font-rubik mb-6 flex items-center gap-2">
-                    <span className="w-1.5 h-6 bg-green-500 rounded-full" />
+                    <span className="w-1.5 h-6 bg-primary rounded-full" />
                     Son Aktiviteler
                 </h3>
                 <p className="text-text-main/50 text-sm text-center py-8">
@@ -26,7 +26,7 @@ export default function ProfileActivities({ activities, username }: ProfileActiv
     return (
         <div className="bg-bg-secondary/50 backdrop-blur-sm border border-white/5 rounded-3xl p-6 h-fit sticky top-24">
             <h3 className="text-xl font-bold text-white font-rubik mb-6 flex items-center gap-2">
-                <span className="w-1.5 h-6 bg-green-500 rounded-full" />
+                <span className="w-1.5 h-6 bg-primary rounded-full" />
                 Son Aktiviteler
             </h3>
 

@@ -21,7 +21,7 @@ interface EditProfileModalProps {
         location?: string | null;
         age?: string | null;
         bio?: string | null;
-        socials?: { twitter?: string; instagram?: string; github?: string; website?: string }
+        socials?: { x?: string; instagram?: string; discord?: string; reddit?: string; telegram?: string }
     };
     children: React.ReactNode;
 }
@@ -58,7 +58,13 @@ export default function EditProfileModal({ user, children }: EditProfileModalPro
                 location: formData.get("location") as string,
                 avatar_url: avatarPreview,
                 banner_url: bannerPreview,
-                social_media: user.socials,
+                social_media: {
+                    x: formData.get("social_x") as string || undefined,
+                    instagram: formData.get("social_instagram") as string || undefined,
+                    discord: formData.get("social_discord") as string || undefined,
+                    reddit: formData.get("social_reddit") as string || undefined,
+                    telegram: formData.get("social_telegram") as string || undefined,
+                },
                 age: formData.get("age") as string,
             };
 

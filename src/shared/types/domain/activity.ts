@@ -9,7 +9,10 @@ export type ActivityType =
     | "favorite_remove"
     | "comment_add"
     | "review_add"
-    | "profile_update";
+    | "profile_update"
+    | "follow_add"
+    | "follow_remove"
+    | "followed_by";
 
 /**
  * Aktivite metadata yapısı
@@ -22,6 +25,10 @@ export interface ActivityMetadata {
     anime_title?: string;
     rating?: number;
     comment_preview?: string;
+    target_user_id?: string;
+    target_username?: string;
+    follower_user_id?: string;
+    follower_username?: string;
 }
 
 /**

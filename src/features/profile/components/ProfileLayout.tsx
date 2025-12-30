@@ -21,6 +21,8 @@ interface ProfileLayoutProps {
     favoriteItems: FavoriteItem[];
     activities: Activity[];
     isOwnProfile?: boolean;
+    isFollowing?: boolean;
+    targetUserId?: string;
 }
 
 export default function ProfileLayout({
@@ -29,11 +31,13 @@ export default function ProfileLayout({
     favoriteItems,
     activities,
     isOwnProfile = true,
+    isFollowing = false,
+    targetUserId,
 }: ProfileLayoutProps) {
     return (
         <div className="bg-bg-main min-h-screen pb-20">
             <AnimatedProfileHeader>
-                <ProfileHeader user={user} isOwnProfile={isOwnProfile} />
+                <ProfileHeader user={user} isOwnProfile={isOwnProfile} isFollowing={isFollowing} targetUserId={targetUserId} />
             </AnimatedProfileHeader>
 
             <Container>
@@ -53,6 +57,6 @@ export default function ProfileLayout({
                     </div>
                 </div>
             </Container>
-        </div>
+        </div >
     );
 }

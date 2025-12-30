@@ -5,13 +5,11 @@ export type WatchStatus = "watching" | "completed" | "plan_to_watch" | "on_hold"
  * Sosyal medya linkleri için type-safe interface
  */
 export interface SocialMediaLinks {
-    twitter?: string;
+    x?: string;
     instagram?: string;
-    github?: string;
-    website?: string;
-    youtube?: string;
     discord?: string;
-    tiktok?: string;
+    reddit?: string;
+    telegram?: string;
 }
 
 /**

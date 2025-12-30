@@ -24,6 +24,9 @@
   /* Social Media Brand Colors */
   --color-twitter: #1DA1F2;
   --color-instagram: #E1306C;
+  --color-discord: #5865F2;
+  --color-reddit: #FF4500;
+  --color-telegram: #0088cc;
 
   --shadow-primary-glow: 0 0 50px rgba(47, 128, 237, 0.4);
   --shadow-primary-glow-sm: 0 0 8px rgba(47, 128, 237, 0.5);
@@ -62,6 +65,9 @@
   /* Social Media Brand Colors */
   --color-twitter: var(--color-twitter);
   --color-instagram: var(--color-instagram);
+  --color-discord: var(--color-discord);
+  --color-reddit: var(--color-reddit);
+  --color-telegram: var(--color-telegram);
 
   /* Grid Pattern Colors */
   --color-grid-line: var(--color-grid-line);

@@ -21,6 +21,9 @@ function getActivityIcon(type: ActivityType) {
         case "comment_add": return <MessageSquare className="w-3 h-3 text-primary" />;
         case "review_add": return <Star className="w-3 h-3 text-yellow-500" />;
         case "profile_update": return <User className="w-3 h-3 text-primary" />;
+        case "follow_add": return <UserPlus className="w-3 h-3 text-accent-green" />;
+        case "follow_remove": return <UserPlus className="w-3 h-3 text-text-main/50" />;
+        case "followed_by": return <UserPlus className="w-3 h-3 text-primary" />;
         default: return <Play className="w-3 h-3 text-primary" />;
     }
 }
@@ -44,6 +47,12 @@ function getActivityText(activity: Activity): string {
             return "inceleme yazdı:";
         case "profile_update":
             return "profilini güncelledi";
+        case "follow_add":
+            return `@${activity.metadata?.target_username || 'kullanıcı'} adlı kişiyi takip etti`;
+        case "follow_remove":
+            return `@${activity.metadata?.target_username || 'kullanıcı'} adlı kişiyi takipten çıkardı`;
+        case "followed_by":
+            return `@${activity.metadata?.follower_username || 'kullanıcı'} tarafından takip edildi`;
         default:
             return "";
     }

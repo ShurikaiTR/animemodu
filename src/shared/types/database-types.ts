@@ -1,6 +1,6 @@
 /**
  * Database row types - derived from auto-generated Supabase types
- * Regenerate with: npx supabase gen types typescript --project-id mlzlkrsorfzreyzkpogr > src/shared/types/database.generated.ts
+ * Regenerate with: npx supabase gen types typescript --linked > src/shared/types/database.generated.ts
  */
 
 import type { Database, Json } from "./database.generated";
@@ -43,6 +43,14 @@ export type SiteSettingUpdate = Database["public"]["Tables"]["site_settings"]["U
 
 export type CommentLikeRow = Database["public"]["Tables"]["comment_likes"]["Row"];
 export type ReviewLikeRow = Database["public"]["Tables"]["review_likes"]["Row"];
+
+// User Follows
+export type UserFollowRow = Database["public"]["Tables"]["user_follows"]["Row"];
+export type UserFollowInsert = Database["public"]["Tables"]["user_follows"]["Insert"];
+
+// User Activities
+export type UserActivityRow = Database["public"]["Tables"]["user_activities"]["Row"];
+export type UserActivityInsert = Database["public"]["Tables"]["user_activities"]["Insert"];
 
 // Re-export Json type
 export type { Json };

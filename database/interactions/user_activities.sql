@@ -14,7 +14,10 @@ CREATE TABLE IF NOT EXISTS public.user_activities (
         'favorite_remove',    -- Favorilerden çıkarma
         'comment_add',        -- Yorum yapma
         'review_add',         -- İnceleme yazma (puan dahil)
-        'profile_update'      -- Profil güncelleme (metadata: changed_fields)
+        'profile_update',     -- Profil güncelleme (metadata: changed_fields)
+        'follow_add',         -- Kullanıcı takip etme (metadata: target_user_id, target_username)
+        'follow_remove',      -- Kullanıcı takipten çıkarma
+        'followed_by'         -- Biri tarafından takip edilme (metadata: follower_user_id, follower_username)
     )),
     anime_id UUID REFERENCES public.animes(id) ON DELETE CASCADE,
     -- Metadata örnekleri:

@@ -25,7 +25,7 @@ export const profileSchema = z.object({
         .nullable(),
     avatar_url: z.union([z.string().url("Geçersiz avatar URL'si"), z.string().length(0)]).optional().nullable(),
     banner_url: z.union([z.string().url("Geçersiz banner URL'si"), z.string().length(0)]).optional().nullable(),
-    social_media: z.record(z.string(), z.union([z.string().url(), z.string().length(0)])).optional().nullable(),
+    social_media: z.record(z.string(), z.union([z.string().max(50, "Kullanıcı adı en fazla 50 karakter olmalıdır"), z.string().length(0)])).optional().nullable(),
 });
 
 export type ProfileFormValues = z.infer<typeof profileSchema>;

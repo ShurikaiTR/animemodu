@@ -22,9 +22,11 @@ interface UserProfile extends ProfileRow {
 interface ProfileHeaderProps {
     user: UserProfile;
     isOwnProfile?: boolean;
+    isFollowing?: boolean;
+    targetUserId?: string;
 }
 
-export default async function ProfileHeader({ user, isOwnProfile = true }: ProfileHeaderProps) {
+export default async function ProfileHeader({ user, isOwnProfile = true, isFollowing = false, targetUserId }: ProfileHeaderProps) {
     const avatarSrc = getAvatarUrl(user.avatar_url || user.avatar);
 
     return (
@@ -96,14 +98,14 @@ export default async function ProfileHeader({ user, isOwnProfile = true }: Profi
 
                             {/* Right Side: Actions (Desktop) - Moves to bottom on mobile */}
                             <div className="hidden sm:flex flex-col items-end gap-3 self-start shrink-0">
-                                <ProfileActions user={user} isOwnProfile={isOwnProfile} />
+                                <ProfileActions user={user} isOwnProfile={isOwnProfile} initialIsFollowing={isFollowing} targetUserId={targetUserId} />
                                 <ProfileSocials socials={user.socials} />
                             </div>
                         </div>
 
                         {/* Mobile Actions Stack */}
                         <div className="flex sm:hidden flex-col items-center gap-4 pt-2 border-t border-white/5 w-full">
-                            <ProfileActions user={user} isOwnProfile={isOwnProfile} />
+                            <ProfileActions user={user} isOwnProfile={isOwnProfile} initialIsFollowing={isFollowing} targetUserId={targetUserId} />
                             <div className="scale-110 pt-2">
                                 <ProfileSocials socials={user.socials} />
                             </div>

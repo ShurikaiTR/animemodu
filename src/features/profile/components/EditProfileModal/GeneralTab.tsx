@@ -41,6 +41,7 @@ export default function GeneralTab({ user }: GeneralTabProps) {
                             variant="modal"
                             className="pl-10"
                             placeholder="Adınız Soyadınız"
+                            autoComplete="off"
                         />
                     </div>
                 </div>
@@ -59,14 +60,14 @@ export default function GeneralTab({ user }: GeneralTabProps) {
                     <Label className="text-text-main/50">Konum</Label>
                     <div className="relative group focus-within:text-primary transition-colors">
                         <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-main/30 group-focus-within:text-primary transition-colors" />
-                        <Input name="location" defaultValue={user.location || ""} variant="modal" className="pl-10" placeholder="İstanbul, TR" />
+                        <Input name="location" defaultValue={user.location || ""} variant="modal" className="pl-10" placeholder="İstanbul, TR" autoComplete="off" />
                     </div>
                 </div>
                 <div className="space-y-2">
                     <Label className="text-text-main/50">Yaş</Label>
                     <div className="relative group focus-within:text-primary transition-colors">
                         <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-main/30 group-focus-within:text-primary transition-colors" />
-                        <Input name="age" defaultValue={user.age || ""} variant="modal" className="pl-10" placeholder="24" />
+                        <Input name="age" defaultValue={user.age || ""} variant="modal" className="pl-10" placeholder="24" autoComplete="off" />
                     </div>
                 </div>
             </div>
@@ -78,6 +79,7 @@ export default function GeneralTab({ user }: GeneralTabProps) {
                     className="w-full min-h-32 bg-bg-input border border-white/10 rounded-xl p-4 text-sm text-text-main placeholder:text-text-main/40 focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all resize-none font-rubik"
                     placeholder="Kendinden bahset..."
                     defaultValue={user.bio || ""}
+                    autoComplete="off"
                 />
             </div>
         </div>
