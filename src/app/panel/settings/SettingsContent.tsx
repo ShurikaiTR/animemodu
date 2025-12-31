@@ -10,7 +10,7 @@ export default async function SettingsContent() {
     const { data, error } = await supabase
         .from("site_settings")
         .select("*")
-        .in("category", ["general", "advanced", "social", "content"])
+        .in("category", ["general", "advanced", "social", "content", "seo"])
         .order("id", { ascending: true });
 
     // Settings'i key-value map'e çevir

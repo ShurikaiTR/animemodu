@@ -20,6 +20,31 @@
 | Testing | Vitest | Latest |
 | Notifications | Sonner | Latest |
 
+### ⚠️ Next.js 16 Önemli Değişiklikler
+
+> **KRİTİK:** Next.js 16'da **Middleware artık Proxy** olarak adlandırılıyor!
+
+| Eski (v15) | Yeni (v16) |
+|------------|------------|
+| `middleware.ts` | `src/proxy.ts` |
+| `export function middleware()` | `export default function proxy()` |
+
+**Proxy dosyası:** `src/proxy.ts` - Auth kontrolü, bakım modu, redirectler için kullanılıyor.
+
+```typescript
+// src/proxy.ts - DOĞRU
+import { type NextRequest, NextResponse } from "next/server";
+
+export default async function proxy(request: NextRequest) {
+  // İstek işleme mantığı
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
+};
+```
+
 ---
 
 ## 📁 Klasör Yapısı

@@ -98,6 +98,11 @@ export async function updateSiteInfo(
         if (data.site_name) settings.site_name = data.site_name;
         if (data.site_footer_text) settings.site_footer_text = data.site_footer_text;
 
+        // SEO settings - allow empty strings to clear values
+        if (data.seo_meta_title !== undefined) settings.seo_meta_title = data.seo_meta_title;
+        if (data.seo_meta_description !== undefined) settings.seo_meta_description = data.seo_meta_description;
+        if (data.seo_keywords !== undefined) settings.seo_keywords = data.seo_keywords;
+
         // Feature toggles
         if (data.maintenance_mode !== undefined) settings.maintenance_mode = data.maintenance_mode;
         if (data.watch_together !== undefined) settings.watch_together = data.watch_together;
@@ -121,6 +126,13 @@ export async function updateSiteInfo(
             const upload = await saveFileLocally(data.site_favicon, fileName, "uploads/icon");
             if (upload.success && upload.path) settings.site_favicon = upload.path;
             else return { success: false, error: "Favicon kaydedilemedi: " + upload.error };
+        }
+
+        if (data.seo_og_image instanceof File) {
+            const fileName = `og-image-${Date.now()}.${data.seo_og_image.name.split('.').pop()}`;
+            const upload = await saveFileLocally(data.seo_og_image, fileName, "uploads/seo");
+            if (upload.success && upload.path) settings.seo_og_image = upload.path;
+            else return { success: false, error: "OG Image kaydedilemedi: " + upload.error };
         }
 
         const updates = Object.entries(settings).map(([key, value]) =>

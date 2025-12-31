@@ -1,16 +1,13 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Input } from "@/shared/components/input";
 import { Button } from "@/shared/components/button";
-import { Textarea } from "@/shared/components/textarea";
-import { Label } from "@/shared/components/label";
-import { ImageUpload } from "@/shared/components/ImageUpload";
 import { updateSiteInfo } from "@/features/settings/actions";
 import { toast } from "sonner";
 import { Save } from "lucide-react";
-import FeatureToggles from "./FeatureToggles";
-import SocialMediaFields from "./SocialMediaFields";
+import SettingsTabs, { type SettingsTab } from "./SettingsTabs";
+import GeneralSettingsTab from "./tabs/GeneralSettingsTab";
+import SeoSettingsTab from "./tabs/SeoSettingsTab";
 
 interface SiteInfoFormProps {
     initialSettings: Record<string, string>;
@@ -19,8 +16,10 @@ interface SiteInfoFormProps {
 export default function SiteInfoForm({ initialSettings }: SiteInfoFormProps) {
     const [isPending, startTransition] = useTransition();
     const [settings, setSettings] = useState(initialSettings);
+    const [activeTab, setActiveTab] = useState<SettingsTab>("general");
     const [logoFile, setLogoFile] = useState<File | null>(null);
     const [faviconFile, setFaviconFile] = useState<File | null>(null);
+    const [ogImageFile, setOgImageFile] = useState<File | null>(null);
 
     const handleChange = (key: string, value: string) => {
         setSettings((prev) => ({ ...prev, [key]: value }));
@@ -33,6 +32,10 @@ export default function SiteInfoForm({ initialSettings }: SiteInfoFormProps) {
         // General settings
         formData.append("site_name", settings.site_name || "");
         formData.append("site_footer_text", settings.site_footer_text || "");
+        // SEO settings
+        formData.append("seo_meta_title", settings.seo_meta_title || "");
+        formData.append("seo_meta_description", settings.seo_meta_description || "");
+        formData.append("seo_keywords", settings.seo_keywords || "");
         // Feature toggles
         formData.append("maintenance_mode", settings.maintenance_mode || "false");
         formData.append("watch_together", settings.watch_together || "false");
@@ -45,79 +48,48 @@ export default function SiteInfoForm({ initialSettings }: SiteInfoFormProps) {
 
         if (logoFile) formData.append("site_logo", logoFile);
         if (faviconFile) formData.append("site_favicon", faviconFile);
+        if (ogImageFile) formData.append("seo_og_image", ogImageFile);
 
         startTransition(async () => {
             const result = await updateSiteInfo(formData);
 
             if (result.success) {
-                toast.success("Site bilgileri güncellendi! ✨");
+                toast.success("Ayarlar kaydedildi! ✨");
                 setLogoFile(null);
                 setFaviconFile(null);
+                setOgImageFile(null);
             } else {
-                toast.error(result.error || "Güncelleme başarısız oldu.");
+                toast.error(result.error || "Kayıt başarısız oldu.");
             }
         });
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-8 pb-20">
-            {/* General Settings */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                    <div className="space-y-2">
-                        <Label htmlFor="site_name" className="text-sm font-medium text-text-main/80">Site Adı</Label>
-                        <Input
-                            id="site_name"
-                            value={settings.site_name || ""}
-                            onChange={(e) => handleChange("site_name", e.target.value)}
-                            placeholder="AnimeModu"
-                            className="bg-bg-secondary/30 border-white/5 text-white focus:bg-bg-secondary/50 focus-visible:ring-0 h-12"
-                        />
-                    </div>
+        <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Tab Navigation */}
+            <SettingsTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-                    <div className="space-y-2">
-                        <Label htmlFor="site_footer_text" className="text-sm font-medium text-text-main/80">Footer Tanıtım Metni</Label>
-                        <Textarea
-                            id="site_footer_text"
-                            value={settings.site_footer_text || ""}
-                            onChange={(e) => handleChange("site_footer_text", e.target.value)}
-                            placeholder="Sitenin en altında görünecek kısa tanıtım yazısı..."
-                            rows={4}
-                            className="w-full rounded-xl bg-bg-secondary/30 border border-white/5 p-3 text-sm text-white focus:bg-bg-secondary/50 focus-visible:ring-0 outline-none resize-none placeholder:text-text-main/30"
-                        />
-                    </div>
-                </div>
-
-                <div className="space-y-8">
-                    <ImageUpload
-                        label="Site Logosu"
-                        description="Header bölümünde görünecek ana logo."
-                        value={settings.site_logo}
-                        onChange={setLogoFile}
-                        aspectRatio="video"
+            {/* Tab Content */}
+            <div className="min-h-[400px] p-6 bg-bg-secondary/10 rounded-2xl border border-white/5">
+                {activeTab === "general" && (
+                    <GeneralSettingsTab
+                        settings={settings}
+                        onChange={handleChange}
+                        onLogoChange={setLogoFile}
+                        onFaviconChange={setFaviconFile}
                     />
-                    <ImageUpload
-                        label="Site Favicon"
-                        description="Tarayıcı sekmesinde görünecek küçük ikon."
-                        value={settings.site_favicon}
-                        onChange={setFaviconFile}
-                        aspectRatio="favicon"
+                )}
+                {activeTab === "seo" && (
+                    <SeoSettingsTab
+                        settings={settings}
+                        onChange={handleChange}
+                        onOgImageChange={setOgImageFile}
                     />
-                </div>
-            </div>
-
-            {/* Feature Toggles */}
-            <div className="pt-6 border-t border-white/5">
-                <FeatureToggles settings={settings} onChange={handleChange} />
-            </div>
-
-            {/* Social Media */}
-            <div className="pt-6 border-t border-white/5">
-                <SocialMediaFields settings={settings} onChange={handleChange} />
+                )}
             </div>
 
             {/* Submit Button */}
-            <div className="pt-8 border-t border-white/5 flex justify-end">
+            <div className="flex justify-end">
                 <Button
                     type="submit"
                     disabled={isPending}

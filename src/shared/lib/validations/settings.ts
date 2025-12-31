@@ -6,6 +6,11 @@ export const siteInfoSchema = z.object({
     site_footer_text: z.string().max(500, "Footer metni en fazla 500 karakter olabilir").optional(),
     site_logo: z.union([z.instanceof(File), z.string()]).optional(),
     site_favicon: z.union([z.instanceof(File), z.string()]).optional(),
+    // SEO
+    seo_meta_title: z.string().max(70, "Meta title en fazla 70 karakter olabilir").optional(),
+    seo_meta_description: z.string().max(200, "Meta description en fazla 200 karakter olabilir").optional(),
+    seo_keywords: z.string().max(300, "Keywords en fazla 300 karakter olabilir").optional(),
+    seo_og_image: z.union([z.instanceof(File), z.string()]).optional(),
     // Feature toggles
     maintenance_mode: z.string().optional(),
     watch_together: z.string().optional(),
