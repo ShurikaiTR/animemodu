@@ -1,18 +1,14 @@
 "use client";
 
 import { Input } from "@/shared/components/input";
-import { Textarea } from "@/shared/components/textarea";
-import { Label } from "@/shared/components/label";
-import { ImageUpload } from "@/shared/components/ImageUpload";
-import { Search, Globe, Image, Tag, Compass } from "lucide-react";
+import { Search, Globe, Compass } from "lucide-react";
 
 interface SeoSettingsTabProps {
     settings: Record<string, string>;
     onChange: (key: string, value: string) => void;
-    onOgImageChange: (file: File | null) => void;
 }
 
-export default function SeoSettingsTab({ settings, onChange, onOgImageChange }: SeoSettingsTabProps) {
+export default function SeoSettingsTab({ settings, onChange }: SeoSettingsTabProps) {
     return (
         <div className="space-y-8">
             <div>

@@ -2,7 +2,6 @@
 
 import { Input } from "@/shared/components/input";
 import { Textarea } from "@/shared/components/textarea";
-import { Label } from "@/shared/components/label";
 import { ImageUpload } from "@/shared/components/ImageUpload";
 import { Switch } from "@/shared/components/switch";
 import { AlertTriangle, Users } from "lucide-react";

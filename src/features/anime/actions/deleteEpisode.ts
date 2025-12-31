@@ -10,7 +10,7 @@ type ActionResult<T = void> =
     | { success: true; data?: T }
     | { success: false; error: string };
 
-export async function deleteEpisode(id: string): Promise<ActionResult> {
+export async function deleteEpisode(id: string, animeSlug?: string): Promise<ActionResult> {
     // Auth kontrolü
     const auth = await requireAdmin();
     if (isAuthError(auth)) {
@@ -34,7 +34,7 @@ export async function deleteEpisode(id: string): Promise<ActionResult> {
         if (error) throw error;
 
         // Cache temizleme
-        revalidateEpisodeData();
+        revalidateEpisodeData(animeSlug);
 
         return { success: true };
     } catch (error) {

@@ -39,19 +39,21 @@ export default function SeriesClient({ initialAnimes }: SeriesClientProps) {
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500 pb-20">
-            <div className="flex flex-col gap-6 pb-6 border-b border-white/5">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h2 className="text-3xl font-rubik font-bold text-white mb-2">İçerik Kataloğu</h2>
-                        <p className="text-text-main/60 text-sm">Veritabanındaki tüm anime, film ve dizileri yönetin.</p>
-                    </div>
-                    <Link href="/panel/add">
-                        <Button className="bg-primary hover:bg-primary/90 text-white font-bold shadow-lg shadow-primary/20 gap-2">
-                            <Plus className="w-4 h-4" />
-                            Yeni Ekle
-                        </Button>
-                    </Link>
+            <div className="flex flex-wrap items-center justify-between gap-6 pb-8 border-b border-white/5">
+                <div>
+                    <h1 className="text-3xl font-rubik font-bold text-white tracking-tight mb-2">
+                        İçerik Kataloğu
+                    </h1>
+                    <p className="flex items-center gap-2 font-inter text-sm font-semibold text-primary">
+                        Yönetim: <span className="text-text-main/40 font-medium">Veritabanındaki tüm anime, film ve dizileri yönetin.</span>
+                    </p>
                 </div>
+                <Link href="/panel/add">
+                    <Button className="h-11 px-6 rounded-xl text-sm font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300 gap-2">
+                        <Plus className="w-4 h-4" />
+                        Yeni Ekle
+                    </Button>
+                </Link>
             </div>
 
             <div className="relative group w-full">

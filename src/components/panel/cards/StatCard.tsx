@@ -1,4 +1,4 @@
-import { LucideIcon } from "lucide-react";
+import { LucideIcon, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 
 interface StatCardProps {
@@ -10,33 +10,50 @@ interface StatCardProps {
 }
 
 export default function StatCard({ title, value, icon: Icon, change, trend }: StatCardProps) {
-    return (
-        <div className="relative overflow-hidden rounded-2xl bg-bg-secondary/50 border border-white/5 p-6 group hover:bg-bg-secondary/80 transition-all duration-300 backdrop-blur-sm">
-            <div className="absolute -right-6 -top-6 w-24 h-24 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-colors duration-500" />
+    const trendStyles = {
+        up: {
+            text: "text-accent-green bg-accent-green/10",
+            icon: TrendingUp
+        },
+        down: {
+            text: "text-danger bg-danger/10",
+            icon: TrendingDown
+        },
+        neutral: {
+            text: "text-text-main/40 bg-white/5",
+            icon: Minus
+        }
+    };
 
-            <div className="relative z-10 flex justify-between items-start">
+    const TrendIcon = trend ? trendStyles[trend].icon : null;
+
+    return (
+        <div className="flex flex-col relative overflow-hidden p-6 rounded-2xl bg-bg-secondary/40 border border-white/5 shadow-sm backdrop-blur-md transition-all duration-300 group hover:bg-bg-secondary/60">
+            <div className="flex items-start justify-between">
                 <div>
-                    <h3 className="text-text-main/70 text-sm font-medium mb-1 font-inter">{title}</h3>
-                    <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-bold text-white font-rubik tracking-tight">{value}</span>
-                        {change && (
-                            <span className={cn(
-                                "text-xs font-bold px-1.5 py-0.5 rounded-md",
-                                trend === "up" ? "text-emerald-400 bg-emerald-400/10" :
-                                    trend === "down" ? "text-red-400 bg-red-400/10" : "text-white/50 bg-white/5"
-                            )}>
-                                {change}
-                            </span>
-                        )}
-                    </div>
+                    <p className="mb-1.5 font-inter text-sm font-medium text-text-main/50">{title}</p>
+                    <h3 className="font-rubik text-3xl font-bold tracking-tight text-white">{value}</h3>
                 </div>
 
-                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/5 group-hover:scale-110 group-hover:bg-white/10 transition-all duration-300 cursor-default">
-                    <Icon className="w-6 h-6 text-primary" />
+                <div className="flex items-center justify-center w-12 h-12 rounded-xl text-primary bg-primary/10 border border-primary/20 transition-all duration-300 group-hover:scale-110">
+                    <Icon className="w-5 h-5" />
                 </div>
             </div>
 
-            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="flex items-center gap-2 mt-5">
+                {change && TrendIcon && (
+                    <span className={cn(
+                        "flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-bold",
+                        trendStyles[trend!].text
+                    )}>
+                        <TrendIcon className="w-4 h-4" />
+                        {change}
+                    </span>
+                )}
+                <span className="font-inter text-xs font-medium text-text-main/40">geçen aydan beri</span>
+            </div>
+
+            <div className="absolute -right-4 -bottom-4 w-24 h-24 rounded-full bg-primary blur-3xl opacity-0 transition-opacity duration-700 group-hover:opacity-20" />
         </div>
     );
 }

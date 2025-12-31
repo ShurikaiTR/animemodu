@@ -83,7 +83,6 @@ export default function SiteInfoForm({ initialSettings }: SiteInfoFormProps) {
                     <SeoSettingsTab
                         settings={settings}
                         onChange={handleChange}
-                        onOgImageChange={setOgImageFile}
                     />
                 )}
             </div>

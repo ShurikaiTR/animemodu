@@ -1,6 +1,6 @@
 import { createClient } from "@/shared/lib/supabase/server";
 import StatCard from "@/components/panel/cards/StatCard";
-import { Eye, Plus, MessageSquare, Star } from "lucide-react";
+import { Film, PlusCircle, MessageCircle, Star } from "lucide-react";
 import { formatNumber, calculateChange, getDaysAgo } from "@/shared/lib/panel/utils";
 
 export default async function StatsCardsServer() {
@@ -32,9 +32,9 @@ export default async function StatsCardsServer() {
   const reviewsChange = calculateChange(totalReviews, previousReviews);
 
   const STATS = [
-    { title: "Toplam İçerik", value: formatNumber(totalAnimes), icon: Eye, change: "", trend: "up" as const },
-    { title: "Yeni İçerik (30 gün)", value: formatNumber(newAnimes), icon: Plus, change: newAnimesChange.change, trend: newAnimesChange.trend },
-    { title: "Yorumlar", value: formatNumber(totalComments), icon: MessageSquare, change: commentsChange.change, trend: commentsChange.trend },
+    { title: "Toplam İçerik", value: formatNumber(totalAnimes), icon: Film, change: "", trend: "neutral" as const },
+    { title: "Yeni İçerik (30 gün)", value: formatNumber(newAnimes), icon: PlusCircle, change: newAnimesChange.change, trend: newAnimesChange.trend },
+    { title: "Yorumlar", value: formatNumber(totalComments), icon: MessageCircle, change: commentsChange.change, trend: commentsChange.trend },
     { title: "İncelemeler", value: formatNumber(totalReviews), icon: Star, change: reviewsChange.change, trend: reviewsChange.trend },
   ];
 

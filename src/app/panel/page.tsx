@@ -15,13 +15,17 @@ export const metadata: Metadata = {
 
 export default function AdminDashboard() {
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex flex-wrap items-center justify-between pb-6 border-b border-white/5">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
+      <div className="flex flex-wrap items-center justify-between gap-6 pb-8 border-b border-white/5">
         <div>
-          <h2 className="text-3xl font-rubik font-bold text-white mb-1">Gösterge Paneli</h2>
-          <p className="text-text-main/60 text-sm">Hoş geldin, içerik durumunu buradan yönetebilirsin.</p>
+          <h1 className="text-3xl font-rubik font-bold text-white tracking-tight mb-2">
+            Gösterge Paneli
+          </h1>
+          <p className="flex items-center gap-2 font-inter text-sm font-semibold text-primary">
+            Hoş geldin, <span className="text-text-main/40 font-medium">içerik durumunu buradan yönetebilirsin.</span>
+          </p>
         </div>
-        <Button asChild className="h-12 px-6 rounded-xl text-sm font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+        <Button asChild className="h-11 px-6 rounded-xl text-sm font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-0.5 transition-all duration-300">
           <Link href="/panel/add">
             <Plus className="w-4 h-4 mr-2" /> Yeni Ekle
           </Link>

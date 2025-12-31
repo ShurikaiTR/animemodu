@@ -66,7 +66,7 @@ export default function AdminSidebar() {
                     isSidebarOpen ? "!flex fixed inset-0 h-screen" : ""
                 )}
             >
-                <div className="h-20 flex items-center px-8 border-b border-primary/10 bg-bg-main">
+                <div className="h-20 flex-none flex items-center px-8 bg-bg-main">
                     <Link href="/panel" className="block">
                         <Image
                             src="/img/animemodu-logo.svg"
@@ -82,26 +82,26 @@ export default function AdminSidebar() {
                     </Link>
                 </div>
 
-                <div className="p-8 border-b border-primary/10 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl overflow-hidden">
+                <div className="flex-none px-4 pb-4">
+                    <div className="bg-bg-secondary/40 border border-white/5 rounded-2xl p-3 flex items-center gap-3 backdrop-blur-sm">
+                        <div className="w-10 h-10 rounded-xl overflow-hidden border border-white/10 shrink-0">
                             <Image src="/img/auth/gojo.png" alt="Admin" width={40} height={40} className="object-cover" />
                         </div>
-                        <div>
-                            <span className="block text-xs text-text-main leading-tight mb-1">Admin</span>
-                            <p className="block text-base font-medium text-white leading-tight">Gojo Satoru</p>
+                        <div className="flex-1 min-w-0">
+                            <span className="block text-[10px] uppercase tracking-[0.1em] text-text-main/40 font-bold leading-tight mb-0.5">Admin</span>
+                            <p className="block text-sm font-semibold text-white truncate">Gojo Satoru</p>
                         </div>
+                        <Button variant="ghost" size="icon" className="w-8 h-8 rounded-lg text-text-main/40 hover:text-danger hover:bg-danger/10 transition-colors">
+                            <LogOut className="w-4 h-4 !relative !z-auto" />
+                        </Button>
                     </div>
-                    <Button variant="secondary" size="icon" className="w-10 h-10 rounded-xl bg-bg-secondary hover:bg-white hover:text-bg-secondary text-primary">
-                        <LogOut className="w-5 h-5 !relative !z-auto" />
-                    </Button>
                 </div>
 
-                <nav className="py-8">
+                <nav className="py-6">
                     <SidebarMenu items={MENU_ITEMS} expandedMenu={expandedMenu} setExpandedMenu={setExpandedMenu} />
                 </nav>
 
-                <div className="p-8 mt-auto">
+                <div className="flex-none p-8 border-t border-primary/10">
                     <p className="text-xs text-text-main/70 leading-5">
                         © AnimeModu, 2024. <br /> Created by <a href="#" className="text-white hover:text-primary">Dev Team</a>
                     </p>
