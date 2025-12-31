@@ -66,12 +66,6 @@ async function handleUnfollow(
         return { success: false, error: "Takip bırakılamadı" };
     }
 
-    await supabase.from("user_activities").insert({
-        user_id: currentUserId,
-        activity_type: "follow_remove",
-        metadata: { target_user_id: targetUserId, target_username: targetProfile?.username || "Kullanıcı" },
-    });
-
     revalidatePath(`/profil/${targetProfile?.username}`);
     return { success: true, isFollowing: false };
 }

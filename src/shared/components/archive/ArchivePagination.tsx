@@ -76,7 +76,7 @@ export default function ArchivePagination({ currentPage, totalPages, baseUrl = "
                             key={page}
                             href={createPageUrl(page)}
                             className={cn(
-                                "min-w-[40px] h-10 flex items-center justify-center rounded-xl font-medium transition-colors",
+                                "min-w-10 h-10 flex items-center justify-center rounded-xl font-medium transition-colors",
                                 currentPage === page
                                     ? "bg-primary text-white"
                                     : "bg-bg-secondary text-text-main hover:bg-white/10"

@@ -25,7 +25,7 @@ export default function NotFound() {
                     {/* Ground Shadow */}
                     <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-40 sm:w-56 h-4 bg-black/50 blur-xl rounded-full" />
 
-                    <div className="relative h-80 w-80 sm:h-[440px] sm:w-[440px] drop-shadow-2xl">
+                    <div className="relative h-80 w-80 drop-shadow-2xl sm:h-[28rem] sm:w-[28rem]">
                         <Image
                             src="/img/404/zoro.webp"
                             alt="Zoro - 404"
@@ -41,7 +41,7 @@ export default function NotFound() {
                     Yine Yanlış Tarafa Saptık...
                 </h2>
 
-                <p className="mb-10 max-w-md text-base sm:text-lg text-gray-400 font-inter leading-relaxed">
+                <p className="mb-10 max-w-md text-base text-text-main/60 font-inter leading-relaxed sm:text-lg">
                     Zoro&apos;nun eline teknolojik harita bile versek sonuç değişmiyor.
                     Aradığın sayfa Grand Line&apos;ın bilinmeyen bir köşesinde kayboldu.
                 </p>

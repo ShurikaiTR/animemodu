@@ -65,7 +65,7 @@ export default function ProfileSocials({ socials }: ProfileSocialsProps) {
                     href={buildSocialUrl("instagram", socials.instagram)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors text-white/40 hover:text-[#E4405F]"
+                    className="w-10 h-10 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors text-white/40 hover:text-instagram"
                 >
                     <Instagram className="w-4 h-4" />
                 </a>

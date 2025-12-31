@@ -22,14 +22,13 @@ function getActivityIcon(type: ActivityType) {
         case "review_add": return <Star className="w-3 h-3 text-yellow-500" />;
         case "profile_update": return <User className="w-3 h-3 text-primary" />;
         case "follow_add": return <UserPlus className="w-3 h-3 text-accent-green" />;
-        case "follow_remove": return <UserPlus className="w-3 h-3 text-text-main/50" />;
         case "followed_by": return <UserPlus className="w-3 h-3 text-primary" />;
         default: return <Play className="w-3 h-3 text-primary" />;
     }
 }
 
 /** Aktivite tipine göre metin döndürür */
-function getActivityText(activity: Activity): string {
+function getActivityText(activity: Activity): string | null {
     switch (activity.activity_type) {
         case "watchlist_add":
             return `"${activity.metadata?.status || 'izleme listesine'}" listesine ekledi:`;
@@ -48,11 +47,8 @@ function getActivityText(activity: Activity): string {
         case "profile_update":
             return "profilini güncelledi";
         case "follow_add":
-            return `@${activity.metadata?.target_username || 'kullanıcı'} adlı kişiyi takip etti`;
-        case "follow_remove":
-            return `@${activity.metadata?.target_username || 'kullanıcı'} adlı kişiyi takipten çıkardı`;
         case "followed_by":
-            return `@${activity.metadata?.follower_username || 'kullanıcı'} tarafından takip edildi`;
+            return null; // Bu tipler için özel JSX render kullanılıyor
         default:
             return "";
     }
@@ -111,16 +107,42 @@ export default function ActivityItem({ activity, username, index }: ActivityItem
                     <p className="text-white text-sm leading-relaxed">
                         <span className="font-bold text-primary">{username}</span>
                         {" "}
-                        {getActivityText(activity)}
-                        {activity.anime && (
+                        {activity.activity_type === "follow_add" && (
                             <>
-                                {" "}
+                                takip etti:{" "}
                                 <Link
-                                    href={`/anime/${activity.anime.slug}`}
+                                    href={`/profil/${activity.metadata?.target_username}`}
                                     className="font-bold text-white hover:text-primary transition-colors"
                                 >
-                                    {activity.anime.title}
+                                    {activity.metadata?.target_username || "kullanıcı"}
                                 </Link>
+                            </>
+                        )}
+                        {activity.activity_type === "followed_by" && (
+                            <>
+                                tarafından takip edildi:{" "}
+                                <Link
+                                    href={`/profil/${activity.metadata?.follower_username}`}
+                                    className="font-bold text-white hover:text-primary transition-colors"
+                                >
+                                    {activity.metadata?.follower_username || "kullanıcı"}
+                                </Link>
+                            </>
+                        )}
+                        {activity.activity_type !== "follow_add" && activity.activity_type !== "followed_by" && (
+                            <>
+                                {getActivityText(activity)}
+                                {activity.anime && (
+                                    <>
+                                        {" "}
+                                        <Link
+                                            href={`/anime/${activity.anime.slug}`}
+                                            className="font-bold text-white hover:text-primary transition-colors"
+                                        >
+                                            {activity.anime.title}
+                                        </Link>
+                                    </>
+                                )}
                             </>
                         )}
                     </p>

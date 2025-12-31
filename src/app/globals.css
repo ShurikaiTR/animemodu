@@ -40,6 +40,11 @@
 
   /* Error Page Colors */
   --color-error-glow: #f97316;
+
+  /* Maintenance Page Colors */
+  --color-maintenance: #f59e0b;
+  --color-maintenance-light: #fbbf24;
+  --color-maintenance-glow: rgba(245, 158, 11, 0.15);
 }
 
 @theme {
@@ -75,6 +80,11 @@
 
   /* Error Page Colors */
   --color-error-glow: var(--color-error-glow);
+
+  /* Maintenance Page Colors */
+  --color-maintenance: var(--color-maintenance);
+  --color-maintenance-light: var(--color-maintenance-light);
+  --color-maintenance-glow: var(--color-maintenance-glow);
 }
 
 body {
@@ -213,6 +223,21 @@ h6 {
 
 .animate-bounce-slow {
   animation: bounce-slow 3s infinite;
+}
+
+/* Shimmer Animation - Progress Bar */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
 }
 
 /* Custom Scrollbar - Tema Uyumlu */

@@ -11,7 +11,6 @@ export type ActivityType =
     | "review_add"
     | "profile_update"
     | "follow_add"
-    | "follow_remove"
     | "followed_by";
 
 /**

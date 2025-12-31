@@ -59,7 +59,7 @@ export default function ProfileActions({
     return (
         <Button
             variant={isFollowing ? "glass" : "default"}
-            className="h-10 sm:h-11 px-4 sm:px-8 rounded-xl shadow-lg shadow-primary/20 text-sm sm:text-base w-full sm:w-auto"
+            className={`h-10 sm:h-11 px-4 sm:px-8 rounded-xl text-sm sm:text-base w-full sm:w-auto ${!isFollowing ? "shadow-lg shadow-primary/20" : ""}`}
             onClick={handleFollowClick}
             disabled={isPending}
         >

@@ -38,11 +38,11 @@ export function SeriesTableRowContent({ item }: SeriesTableRowContentProps) {
                     </div>
                 )}
                 <div className="flex items-center gap-2">
-                    <Badge variant={item.media_type === "movie" ? "purple" : "default"} className="text-[10px] px-1.5 py-0 h-5">
+                    <Badge variant={item.media_type === "movie" ? "purple" : "default"} className="text-[0.625rem] px-1.5 py-0 h-5">
                         {item.media_type === 'movie' ? 'Film' : 'Dizi'}
                     </Badge>
                     {item.genres && item.genres.length > 0 && (
-                        <span className="text-xs text-text-main/40 truncate max-w-[150px]">
+                        <span className="text-xs text-text-main/40 truncate max-w-36">
                             {item.genres.slice(0, 2).join(", ")}
                         </span>
                     )}

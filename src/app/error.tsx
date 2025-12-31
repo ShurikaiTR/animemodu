@@ -36,7 +36,7 @@ export default function Error({
                     {/* Ground Shadow */}
                     <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-40 sm:w-56 h-4 bg-black/50 blur-xl rounded-full" />
 
-                    <div className="relative h-[420px] w-[420px] sm:h-[575px] sm:w-[575px] drop-shadow-2xl">
+                    <div className="relative size-96 drop-shadow-2xl sm:h-[36rem] sm:w-[36rem]">
                         <Image
                             src="/img/500/franky.webp"
                             alt="Franky - 500"
@@ -52,7 +52,7 @@ export default function Error({
                     SÜPEEERRR Bir Hata Oluştu!
                 </h1>
 
-                <p className="mb-10 max-w-md text-base sm:text-lg text-gray-400 font-inter leading-relaxed">
+                <p className="mb-10 max-w-md text-base text-text-main/60 font-inter leading-relaxed sm:text-lg">
                     Sunucu motorları biraz hararet yaptı. Franky şu an ana dişlileri ve kabloları kontrol ediyor.
                     Merak etme, gemiyi batırmayız!
                 </p>

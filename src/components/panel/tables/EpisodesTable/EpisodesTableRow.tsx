@@ -61,7 +61,7 @@ export function EpisodesTableRow({ item, onDelete }: EpisodesTableRowProps) {
                         }
                     </span>
                     {isAbsolute && (
-                        <span className="text-[10px] text-text-main/40 uppercase tracking-widest mt-0.5">
+                        <span className="text-[0.625rem] text-text-main/40 uppercase tracking-widest mt-0.5">
                             Tek Liste
                         </span>
                     )}
