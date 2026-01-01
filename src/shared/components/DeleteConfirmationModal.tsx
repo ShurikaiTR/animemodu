@@ -1,20 +1,59 @@
 "use client";
 
-import { X, AlertTriangle, Trash2, Loader2 } from "lucide-react";
 import { createPortal } from "react-dom";
-import { Button } from "@/shared/components/button";
+import { X, Trash2, AlertTriangle, Loader2 } from "lucide-react";
 import { useModalMount } from "@/shared/hooks/useModalMount";
+import { Button } from "@/shared/components/button";
 
-interface DeleteGenreModalProps {
+const ENTITY_CONFIG = {
+    anime: {
+        title: "İçeriği Sil",
+        getDescription: (name: string | null) =>
+            `${name || "Bu içerik"} adlı içeriği silmek istediğinize emin misiniz?`,
+        warning: "İçeriğe ait tüm veriler (bölümler, yorumlar, değerlendirmeler) kalıcı olarak silinecektir.",
+    },
+    episode: {
+        title: "Bölümü Sil",
+        getDescription: (name: string | null) =>
+            `${name || "Bu bölümü"} silmek istediğinize emin misiniz?`,
+        warning: undefined,
+    },
+    user: {
+        title: "Kullanıcıyı Sil",
+        getDescription: (name: string | null) =>
+            `${name || "Bu kullanıcı"} adlı kullanıcıyı silmek istediğinize emin misiniz?`,
+        warning: "Kullanıcının tüm verileri (yorumlar, incelemeler, profil bilgileri) kalıcı olarak silinecektir.",
+    },
+    genre: {
+        title: "Türü Sil",
+        getDescription: (name: string | null) =>
+            `"${name}" türünü silmek istediğinize emin misiniz?`,
+        warning: "Bu tür tüm animelerden kaldırılacaktır.",
+    },
+} as const;
+
+type EntityType = keyof typeof ENTITY_CONFIG;
+
+interface DeleteConfirmationModalProps {
     isOpen: boolean;
     onClose: () => void;
     onConfirm: () => void;
     isPending: boolean;
-    genreName: string | null;
+    entityType: EntityType;
+    entityName?: string | null;
 }
 
-export function DeleteGenreModal({ isOpen, onClose, onConfirm, isPending, genreName }: DeleteGenreModalProps) {
+export function DeleteConfirmationModal({
+    isOpen,
+    onClose,
+    onConfirm,
+    isPending,
+    entityType,
+    entityName,
+}: DeleteConfirmationModalProps) {
     const mounted = useModalMount();
+    const config = ENTITY_CONFIG[entityType];
+
     if (!isOpen || !mounted) return null;
 
     return createPortal(
@@ -35,22 +74,30 @@ export function DeleteGenreModal({ isOpen, onClose, onConfirm, isPending, genreN
 
                 <div className="p-8">
                     <div className="flex items-center gap-4 mb-6">
-                        <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20">
-                            <AlertTriangle className="w-8 h-8 text-red-500" />
+                        <div className="w-16 h-16 rounded-full bg-danger/10 flex items-center justify-center border border-danger/20">
+                            <AlertTriangle className="w-8 h-8 text-danger" />
                         </div>
                         <div>
-                            <h2 className="text-2xl font-bold text-white font-rubik mb-1">Türü Sil</h2>
-                            <p className="text-sm text-white/60">Bu işlem geri alınamaz</p>
+                            <h2 className="text-2xl font-bold text-white font-rubik mb-1">
+                                {config.title}
+                            </h2>
+                            <p className="text-sm text-white/60">
+                                Bu işlem geri alınamaz
+                            </p>
                         </div>
                     </div>
 
                     <div className="mb-8">
                         <p className="text-white/80 leading-relaxed">
-                            <span className="font-bold text-primary">&quot;{genreName}&quot;</span> türünü silmek istediğinize emin misiniz?
+                            <span className="font-bold text-white">
+                                {config.getDescription(entityName ?? null)}
+                            </span>
                         </p>
-                        <p className="text-sm text-white/50 mt-3">
-                            Bu tür tüm animelerden kaldırılacaktır.
-                        </p>
+                        {config.warning && (
+                            <p className="text-sm text-white/50 mt-3">
+                                {config.warning}
+                            </p>
+                        )}
                     </div>
 
                     <div className="flex items-center gap-3">
@@ -67,7 +114,7 @@ export function DeleteGenreModal({ isOpen, onClose, onConfirm, isPending, genreN
                             size="lg"
                             onClick={onConfirm}
                             disabled={isPending}
-                            className="flex-1 bg-red-500 hover:bg-red-600 text-white shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:shadow-[0_0_40px_rgba(239,68,68,0.6)] font-bold rounded-xl"
+                            className="flex-1 bg-danger hover:bg-danger/90 text-white shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:shadow-[0_0_40px_rgba(239,68,68,0.6)] font-bold rounded-xl"
                         >
                             {isPending ? (
                                 <>

@@ -17,9 +17,9 @@ export function MediaFields({
     setStillPath
 }: MediaFieldsProps) {
     return (
-        <div className="p-6 lg:p-8 space-y-8 bg-white/[0.01]">
+        <div className="p-6 lg:p-8 space-y-8">
             <h3 className="flex items-center gap-3 font-rubik text-lg font-bold text-white">
-                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-accent-orange/10 text-accent-orange border border-accent-orange/20">
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 text-primary border border-primary/20">
                     <Film className="w-4 h-4" />
                 </div>
                 Medya & İçerik
@@ -40,7 +40,7 @@ export function MediaFields({
                         min="0"
                         max="10"
                         defaultValue={episode.vote_average || 0}
-                        className="w-full h-12 pl-11 pr-4 py-2 font-inter text-sm font-medium rounded-xl border border-white/5 bg-white/[0.03] text-white placeholder-text-main/20 focus:bg-white/[0.05] focus:border-accent-orange/50 focus:ring-1 focus:ring-accent-orange/50 outline-none transition-all shadow-sm"
+                        className="w-full h-12 pl-11 pr-4 py-2 font-inter text-sm font-medium rounded-xl border border-white/5 bg-white/[0.03] text-white placeholder-text-main/20 focus:bg-white/[0.05] focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all shadow-sm"
                     />
                 </FormField>
 
@@ -68,7 +68,7 @@ export function MediaFields({
                                     className="object-cover transition-transform group-hover:scale-110"
                                 />
                             ) : (
-                                <div className="flex items-center justify-center w-full h-full text-[10px] text-white/10 font-mono">Modu</div>
+                                <div className="flex items-center justify-center w-full h-full text-xs text-white/10 font-mono">Modu</div>
                             )}
                         </div>
                     </div>
@@ -88,7 +88,7 @@ export function MediaFields({
                     className="w-full h-12 pl-11 pr-4 py-2 font-mono text-sm font-medium rounded-xl border border-white/5 bg-white/[0.03] text-white placeholder-text-main/20 focus:bg-white/[0.05] focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all shadow-sm"
                 />
             </FormField>
-            <p className="font-inter text-[11px] font-medium text-text-main/20 mt-1 pl-1">
+            <p className="font-inter text-xs font-medium text-text-main/20 mt-1 pl-1">
                 Desteklenen formatlar: .m3u8 (HLS), .mp4 veya Embed URL
             </p>
         </div>

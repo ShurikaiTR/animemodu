@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { Tags } from "lucide-react";
 import { toast } from "sonner";
 import { renameGenre, deleteGenre } from "@/features/anime/actions/genres";
-import { DeleteGenreModal } from "./DeleteGenreModal";
+import { DeleteConfirmationModal } from "@/shared/components/DeleteConfirmationModal";
 import { GenreInlineEdit } from "./GenreInlineEdit";
 import { GenreActions } from "./GenreActions";
 
@@ -127,12 +127,13 @@ export function GenresTable({ items }: GenresTableProps) {
                 </div>
             </div>
 
-            <DeleteGenreModal
+            <DeleteConfirmationModal
                 isOpen={!!deleteGenreName}
                 onClose={() => setDeleteGenreName(null)}
                 onConfirm={handleDelete}
                 isPending={isPending}
-                genreName={deleteGenreName}
+                entityType="genre"
+                entityName={deleteGenreName}
             />
         </>
     );

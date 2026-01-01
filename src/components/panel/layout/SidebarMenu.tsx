@@ -33,7 +33,7 @@ export function SidebarMenu({ items, expandedMenu, setExpandedMenu }: SidebarMen
         if (item.isHeader) {
           return (
             <li key={idx} className="px-6 pt-8 pb-3">
-              <span className="text-[10px] font-bold text-text-main/40 uppercase tracking-[0.2em] font-rubik">
+              <span className="text-xs font-bold text-text-main/40 uppercase tracking-[0.2em] font-rubik">
                 {item.title}
               </span>
             </li>

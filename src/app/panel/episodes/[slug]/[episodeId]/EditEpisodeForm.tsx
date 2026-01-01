@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Loader2, ArrowLeft, Save, Trash2 } from "lucide-react";
 import type { EpisodeManagement } from "@/shared/types/domain/anime";
 import { EpisodeFields } from "./EpisodeFields";
+import { Button } from "@/shared/components/button";
 
 interface EditEpisodeFormProps {
     episode: EpisodeManagement;
@@ -49,11 +50,11 @@ export function EditEpisodeForm({ episode, animeSlug }: EditEpisodeFormProps) {
     };
 
     return (
-        <div className="bg-bg-secondary/40 border border-white/5 rounded-2xl shadow-sm overflow-hidden backdrop-blur-md">
+        <div className="rounded-2xl overflow-hidden">
             <form action={handleSubmit} className="divide-y divide-white/5">
                 <EpisodeFields episode={episode} />
 
-                <div className="px-6 lg:px-8 py-5 bg-white/[0.02] flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
+                <div className="px-6 lg:px-8 py-5 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
                     <Link
                         href="/panel/episodes"
                         className="w-full sm:w-auto px-5 py-2.5 flex items-center justify-center gap-2 font-inter text-sm font-medium text-text-main/60 rounded-xl transition-all hover:bg-white/5 hover:text-white"
@@ -75,10 +76,10 @@ export function EditEpisodeForm({ episode, animeSlug }: EditEpisodeFormProps) {
                             </span>
                         </button>
 
-                        <button
+                        <Button
                             type="submit"
                             disabled={isPending}
-                            className="flex-1 sm:flex-none px-8 py-2.5 bg-primary text-white font-inter text-sm font-semibold rounded-xl shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 hover:shadow-primary/40 active:scale-95 disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-2"
+                            className="flex-1 sm:flex-none bg-primary hover:bg-primary/90 text-white font-bold shadow-lg shadow-primary/20 px-6 py-2.5"
                         >
                             {isPending ? (
                                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -86,7 +87,7 @@ export function EditEpisodeForm({ episode, animeSlug }: EditEpisodeFormProps) {
                                 <Save className="w-4 h-4" />
                             )}
                             Kaydet
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </form>

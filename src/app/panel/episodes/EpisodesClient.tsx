@@ -8,9 +8,9 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { deleteEpisode } from "@/features/anime/actions";
 import type { EpisodeWithAnime } from "@/components/panel/tables/EpisodesTable/EpisodesTableRow";
-import { DeleteEpisodeConfirmationModal } from "@/components/panel/tables/CatalogItem/DeleteEpisodeConfirmationModal";
-import { Pagination } from "@/components/panel/Pagination";
-import EmptySearchState from "@/components/panel/EmptySearchState";
+import { DeleteConfirmationModal } from "@/shared/components/DeleteConfirmationModal";
+import { Pagination } from "@/shared/components/Pagination";
+import EmptyState from "@/shared/components/EmptyState";
 
 interface EpisodesClientProps {
     initialEpisodes: EpisodeWithAnime[];
@@ -101,16 +101,21 @@ export default function EpisodesClient({
                         </div>
                     </>
                 ) : (
-                    <EmptySearchState searchQuery={searchQuery} />
+                    <EmptyState
+                        icon={Search}
+                        title="Kayıt bulunamadı."
+                        description={searchQuery ? "Arama kriterlerini değiştirmeyi deneyin." : undefined}
+                    />
                 )}
             </div>
 
-            <DeleteEpisodeConfirmationModal
+            <DeleteConfirmationModal
                 isOpen={!!deleteEpisodeId}
                 onClose={() => setDeleteEpisodeId(null)}
                 onConfirm={handleDelete}
                 isPending={isPending}
-                episodeTitle={episodeTitle}
+                entityType="episode"
+                entityName={episodeTitle}
             />
         </div>
     );

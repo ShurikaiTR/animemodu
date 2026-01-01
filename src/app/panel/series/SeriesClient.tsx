@@ -7,9 +7,9 @@ import { Button } from "@/shared/components/button";
 import { Search, Plus } from "lucide-react";
 import Link from "next/link";
 import type { AnimeRow } from "../types";
-import { DeleteAnimeConfirmationModal } from "@/components/panel/tables/CatalogItem/DeleteAnimeConfirmationModal";
+import { DeleteConfirmationModal } from "@/shared/components/DeleteConfirmationModal";
 import { useSeriesActions } from "./useSeriesActions";
-import EmptySearchState from "@/components/panel/EmptySearchState";
+import EmptyState from "@/shared/components/EmptyState";
 
 interface SeriesClientProps {
     initialAnimes: AnimeRow[];
@@ -79,16 +79,21 @@ export default function SeriesClient({ initialAnimes }: SeriesClientProps) {
                         updatingAnimeId={updatingAnimeId}
                     />
                 ) : (
-                    <EmptySearchState searchQuery={searchQuery} />
+                    <EmptyState
+                        icon={Search}
+                        title="Kayıt bulunamadı."
+                        description={searchQuery ? "Arama kriterlerini değiştirmeyi deneyin." : undefined}
+                    />
                 )}
             </div>
 
-            <DeleteAnimeConfirmationModal
+            <DeleteConfirmationModal
                 isOpen={!!deleteAnimeId}
                 onClose={() => setDeleteAnimeId(null)}
                 onConfirm={handleDelete}
                 isPending={isPending}
-                animeTitle={animes.find(anime => anime.id === deleteAnimeId)?.title || null}
+                entityType="anime"
+                entityName={animes.find(anime => anime.id === deleteAnimeId)?.title || null}
             />
         </div>
     );

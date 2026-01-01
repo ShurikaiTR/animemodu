@@ -14,7 +14,7 @@ export function EditSidebar({ formData, setFormData }: EditSidebarProps) {
   return (
     <div className="space-y-6">
       <div className="bg-bg-secondary/30 border border-white/5 rounded-xl p-4">
-        <label className="block text-xs font-bold text-text-main/60 uppercase mb-3">Poster Önizleme</label>
+        <Label variant="panel" className="block text-xs uppercase mb-3">Poster Önizleme</Label>
         <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden bg-black/50 border border-white/5 flex items-center justify-center">
           {formData.poster_path ? (
             <Image

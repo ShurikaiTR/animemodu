@@ -70,7 +70,7 @@ export default function SiteInfoForm({ initialSettings }: SiteInfoFormProps) {
             <SettingsTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
             {/* Tab Content */}
-            <div className="min-h-[400px] p-6 bg-bg-secondary/10 rounded-2xl border border-white/5">
+            <div className="min-h-96 p-6 bg-bg-secondary/10 rounded-2xl border border-white/5">
                 {activeTab === "general" && (
                     <GeneralSettingsTab
                         settings={settings}

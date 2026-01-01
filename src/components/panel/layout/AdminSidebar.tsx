@@ -88,7 +88,7 @@ export default function AdminSidebar() {
                             <Image src="/img/auth/gojo.png" alt="Admin" width={40} height={40} className="object-cover" />
                         </div>
                         <div className="flex-1 min-w-0">
-                            <span className="block text-[10px] uppercase tracking-[0.1em] text-text-main/40 font-bold leading-tight mb-0.5">Admin</span>
+                            <span className="block text-xs uppercase tracking-[0.1em] text-text-main/40 font-bold leading-tight mb-0.5">Admin</span>
                             <p className="block text-sm font-semibold text-white truncate">Gojo Satoru</p>
                         </div>
                         <Button variant="ghost" size="icon" className="w-8 h-8 rounded-lg text-text-main/40 hover:text-danger hover:bg-danger/10 transition-colors">

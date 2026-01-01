@@ -7,7 +7,8 @@ import { Button } from "@/shared/components/button";
 import { Search, Plus } from "lucide-react";
 import Link from "next/link";
 import type { Database } from "@/shared/types/supabase";
-import { DeleteAnimeConfirmationModal } from "@/components/panel/tables/CatalogItem/DeleteAnimeConfirmationModal";
+import { DeleteConfirmationModal } from "@/shared/components/DeleteConfirmationModal";
+import EmptyState from "@/shared/components/EmptyState";
 import { useMoviesActions } from "./useMoviesActions";
 
 type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];
@@ -75,22 +76,21 @@ export default function MoviesClient({ initialMovies }: MoviesClientProps) {
                         updatingAnimeId={null}
                     />
                 ) : (
-                    <div className="col-span-full py-24 flex flex-col items-center justify-center text-text-main/20 border border-dashed border-white/5 rounded-2xl bg-bg-secondary/10">
-                        <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
-                            <Search className="w-8 h-8 opacity-40" />
-                        </div>
-                        <p className="text-base font-medium">Kayıt bulunamadı.</p>
-                        {searchQuery && <p className="text-sm mt-1">Arama kriterlerini değiştirmeyi deneyin.</p>}
-                    </div>
+                    <EmptyState
+                        icon={Search}
+                        title="Kayıt bulunamadı."
+                        description={searchQuery ? "Arama kriterlerini değiştirmeyi deneyin." : undefined}
+                    />
                 )}
             </div>
 
-            <DeleteAnimeConfirmationModal
+            <DeleteConfirmationModal
                 isOpen={!!deleteMovieId}
                 onClose={() => setDeleteMovieId(null)}
                 onConfirm={handleDelete}
                 isPending={isPending}
-                animeTitle={movies.find(m => m.id === deleteMovieId)?.title || null}
+                entityType="anime"
+                entityName={movies.find(m => m.id === deleteMovieId)?.title || null}
             />
         </div>
     );

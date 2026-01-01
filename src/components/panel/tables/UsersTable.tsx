@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/shared/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { deleteUser } from "@/features/user/actions";
-import { DeleteConfirmationModal } from "./UsersTable/DeleteConfirmationModal";
+import { DeleteConfirmationModal } from "@/shared/components/DeleteConfirmationModal";
 import { UserTableRow } from "./UsersTable/UserTableRow";
 import type { UserItem } from "./UsersTable/types";
 
@@ -80,7 +80,8 @@ export function UsersTable({ items }: UsersTableProps) {
                 onClose={() => setDeleteId(null)}
                 onConfirm={handleDelete}
                 isPending={isPending}
-                username={items.find(item => item.id === deleteId)?.username || null}
+                entityType="user"
+                entityName={items.find(item => item.id === deleteId)?.username || null}
             />
         </>
     );

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { Heart, Library } from "lucide-react";
 import MovieCard from "@/shared/components/MovieCard";
 import DesktopTabs from "./DesktopTabs";
 import MobileTabDropdown from "./MobileTabDropdown";
-import WatchListEmptyState from "./WatchListEmptyState";
-import FavoritesEmptyState from "./FavoritesEmptyState";
+import EmptyState from "@/shared/components/EmptyState";
 import { updateWatchStatus } from "@/features/profile/actions/userList";
 import { toggleFavorite } from "@/features/profile/actions/favorites";
 import { toast } from "sonner";
@@ -100,7 +100,19 @@ export default function WatchListTabs({ initialItems, favorites: initialFavorite
             </div>
 
             {filteredItems.length === 0 && (
-                activeTab === "favorites" ? <FavoritesEmptyState /> : <WatchListEmptyState />
+                activeTab === "favorites" ? (
+                    <EmptyState
+                        icon={Heart}
+                        title="Henüz Favori Yok"
+                        description="Favorilerine henüz bir anime eklenmemiş."
+                    />
+                ) : (
+                    <EmptyState
+                        icon={Library}
+                        title="Henüz İçerik Yok"
+                        description="Bu listeye henüz bir anime eklenmemiş."
+                    />
+                )
             )}
         </div>
     );

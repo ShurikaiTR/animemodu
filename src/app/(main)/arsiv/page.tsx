@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Container from "@/shared/components/container";
 import ArchiveSidebar from "@/shared/components/archive/ArchiveSidebar";
 import ArchiveGrid from "@/shared/components/archive/ArchiveGrid";
-import ArchivePagination from "@/shared/components/archive/ArchivePagination";
+import { Pagination } from "@/shared/components/Pagination";
 import { ArchiveGridSkeleton } from "@/shared/components/MovieCard/skeleton";
 import { createClient } from "@/shared/lib/supabase/server";
 import { slugifyTurkish } from "@/shared/lib/utils";
@@ -103,7 +103,7 @@ export default async function ArchivePage({ searchParams }: PageProps) {
                             <ArchiveGrid animes={animes} />
                         </Suspense>
 
-                        <ArchivePagination currentPage={currentPage} totalPages={totalPages} />
+                        <Pagination currentPage={currentPage} totalPages={totalPages} variant="full" pageParam="sayfa" />
                     </div>
                 </div>
             </Container>

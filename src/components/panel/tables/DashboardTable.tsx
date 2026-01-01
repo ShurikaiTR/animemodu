@@ -63,7 +63,7 @@ export function DashboardTable({ title, icon: Icon, items, showRating = false }:
                           className="object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                       ) : (
-                        <div className="flex items-center justify-center w-full h-full text-[10px] text-white/20">Modu</div>
+                        <div className="flex items-center justify-center w-full h-full text-xs text-white/20">Modu</div>
                       )}
                       <div className="absolute inset-0 transition-opacity bg-black/20 opacity-0 group-hover:opacity-100" />
                     </div>

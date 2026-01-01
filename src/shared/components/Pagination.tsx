@@ -1,36 +1,63 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
+import { Button } from "@/shared/components/button";
 
-interface ArchivePaginationProps {
+interface PaginationProps {
     currentPage: number;
-    totalPages: number;
+    totalPages?: number;
+    /** For variant="minimal", calculate totalPages from these values */
+    totalItems?: number;
+    itemsPerPage?: number;
+    /** "minimal" = prev/next only, "full" = page numbers with ellipsis */
+    variant?: "minimal" | "full";
+    /** Query parameter name for page number */
+    pageParam?: string;
+    /** Base URL for link-based pagination (full variant) */
     baseUrl?: string;
 }
 
-export default function ArchivePagination({ currentPage, totalPages, baseUrl = "/arsiv" }: ArchivePaginationProps) {
+export function Pagination({
+    currentPage,
+    totalPages: propTotalPages,
+    totalItems,
+    itemsPerPage,
+    variant = "minimal",
+    pageParam = "page",
+    baseUrl,
+}: PaginationProps) {
     const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
+
+    // Calculate totalPages from totalItems and itemsPerPage if not provided
+    const totalPages = propTotalPages ?? (totalItems && itemsPerPage ? Math.ceil(totalItems / itemsPerPage) : 1);
 
     if (totalPages <= 1) return null;
 
     const createPageUrl = (page: number) => {
         const params = new URLSearchParams(searchParams.toString());
         if (page === 1) {
-            params.delete("sayfa");
+            params.delete(pageParam);
         } else {
-            params.set("sayfa", page.toString());
+            params.set(pageParam, page.toString());
         }
         const queryString = params.toString();
-        return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+        const base = baseUrl ?? pathname;
+        return queryString ? `${base}?${queryString}` : base;
     };
 
-    // Generate page numbers to show
+    const handlePageChange = (page: number) => {
+        router.push(createPageUrl(page));
+    };
+
+    // Generate page numbers to show (for full variant)
     const getPageNumbers = () => {
         const pages: (number | "...")[] = [];
-        const showAround = 2; // Pages to show around current
+        const showAround = 2;
 
         for (let i = 1; i <= totalPages; i++) {
             if (
@@ -46,6 +73,41 @@ export default function ArchivePagination({ currentPage, totalPages, baseUrl = "
         return pages;
     };
 
+    if (variant === "minimal") {
+        return (
+            <div className="flex items-center justify-center gap-4 py-4">
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    disabled={currentPage <= 1}
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    className="h-10 w-10 rounded-xl border border-white/10 bg-white/5 text-white/60 hover:bg-white/10 hover:text-white disabled:opacity-30 transition-colors"
+                >
+                    <span className="sr-only">Önceki</span>
+                    <ChevronLeft className="h-5 w-5" />
+                </Button>
+
+                <span className="text-sm text-text-main/60 tabular-nums">
+                    <span className="font-medium text-white">{currentPage}</span>
+                    <span className="mx-1">/</span>
+                    <span>{totalPages}</span>
+                </span>
+
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    disabled={currentPage >= totalPages}
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    className="h-10 w-10 rounded-xl border border-white/10 bg-white/5 text-white/60 hover:bg-white/10 hover:text-white disabled:opacity-30 transition-colors"
+                >
+                    <span className="sr-only">Sonraki</span>
+                    <ChevronRight className="h-5 w-5" />
+                </Button>
+            </div>
+        );
+    }
+
+    // Full variant with page numbers
     return (
         <div className="flex items-center justify-center gap-2 mt-12">
             {/* Previous */}
@@ -106,3 +168,5 @@ export default function ArchivePagination({ currentPage, totalPages, baseUrl = "
         </div>
     );
 }
+
+export default Pagination;
