@@ -3,6 +3,7 @@
 import { Share2 } from "lucide-react";
 import { FormField } from "@/shared/components/FormField";
 import { XIcon, InstagramIcon, DiscordIcon, RedditIcon, TelegramIcon } from "@/shared/components/SocialIcons";
+import { extractUsername, SocialPlatform } from "@/shared/lib/socials";
 
 interface SocialSectionProps {
     settings: Record<string, string>;
@@ -12,12 +13,12 @@ interface SocialSectionProps {
 const inputClassName =
     "w-full h-12 pl-11 pr-4 py-2 text-sm font-medium rounded-xl border border-white/5 bg-white/[0.03] text-white placeholder-text-main/20 focus:bg-white/[0.05] focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all shadow-sm";
 
-const socialFields = [
-    { key: "social_x", label: "X (Twitter)", placeholder: "https://x.com/animemodu", icon: XIcon },
-    { key: "social_instagram", label: "Instagram", placeholder: "https://instagram.com/animemodu", icon: InstagramIcon },
-    { key: "social_telegram", label: "Telegram", placeholder: "https://t.me/animemodu", icon: TelegramIcon },
-    { key: "social_discord", label: "Discord", placeholder: "https://discord.gg/animemodu", icon: DiscordIcon },
-    { key: "social_reddit", label: "Reddit", placeholder: "https://reddit.com/r/animemodu", icon: RedditIcon },
+const socialFields: { key: string; label: string; placeholder: string; icon: any; platform: SocialPlatform }[] = [
+    { key: "social_x", label: "X (Twitter)", placeholder: "animemodu", icon: XIcon, platform: "x" },
+    { key: "social_instagram", label: "Instagram", placeholder: "animemodu", icon: InstagramIcon, platform: "instagram" },
+    { key: "social_telegram", label: "Telegram", placeholder: "animemodu", icon: TelegramIcon, platform: "telegram" },
+    { key: "social_discord", label: "Discord", placeholder: "animemodu", icon: DiscordIcon, platform: "discord" },
+    { key: "social_reddit", label: "Reddit", placeholder: "animemodu", icon: RedditIcon, platform: "reddit" },
 ];
 
 export function SocialSection({ settings, onChange }: SocialSectionProps) {
@@ -42,7 +43,11 @@ export function SocialSection({ settings, onChange }: SocialSectionProps) {
                             id={field.key}
                             name={field.key}
                             value={settings[field.key] || ""}
-                            onChange={(e) => onChange(field.key, e.target.value)}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                const username = extractUsername(field.platform, value);
+                                onChange(field.key, username);
+                            }}
                             placeholder={field.placeholder}
                             autoComplete="off"
                             className={inputClassName}

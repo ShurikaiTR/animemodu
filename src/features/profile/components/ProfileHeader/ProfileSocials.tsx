@@ -1,17 +1,6 @@
 import type { SocialMediaLinks } from "@/shared/types/helpers";
 import { XIcon, InstagramIcon, DiscordIcon, RedditIcon, TelegramIcon } from "@/shared/components/SocialIcons";
-
-// URL builder functions for social platforms
-const buildSocialUrl = (platform: string, username: string): string => {
-    const urls: Record<string, string> = {
-        x: `https://x.com/${username}`,
-        instagram: `https://instagram.com/${username}`,
-        discord: `https://discord.com/users/${username}`,
-        reddit: `https://reddit.com/user/${username}`,
-        telegram: `https://t.me/${username}`,
-    };
-    return urls[platform] || "#";
-};
+import { buildSocialUrl } from "@/shared/lib/socials";
 
 interface ProfileSocialsProps {
     socials?: SocialMediaLinks;

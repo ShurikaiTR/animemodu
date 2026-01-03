@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { getSiteInfo } from "@/features/settings/actions";
 import { XIcon, InstagramIcon, DiscordIcon, RedditIcon, TelegramIcon } from "@/shared/components/SocialIcons";
+import { buildSocialUrl } from "@/shared/lib/socials";
 
 export default async function Footer() {
     const siteInfo = await getSiteInfo();
@@ -28,27 +29,27 @@ export default async function Footer() {
                         {(siteInfo.social_x || siteInfo.social_instagram || siteInfo.social_discord || siteInfo.social_reddit || siteInfo.social_telegram) && (
                             <div className="flex items-center gap-4">
                                 {siteInfo.social_x && (
-                                    <a href={siteInfo.social_x} target="_blank" rel="noopener noreferrer" className="text-text-main hover:text-primary transition-colors" aria-label="X (Twitter)">
+                                    <a href={buildSocialUrl("x", siteInfo.social_x)} target="_blank" rel="noopener noreferrer" className="text-text-main hover:text-primary transition-colors" aria-label="X (Twitter)">
                                         <XIcon size={20} />
                                     </a>
                                 )}
                                 {siteInfo.social_instagram && (
-                                    <a href={siteInfo.social_instagram} target="_blank" rel="noopener noreferrer" className="text-text-main hover:text-primary transition-colors" aria-label="Instagram">
+                                    <a href={buildSocialUrl("instagram", siteInfo.social_instagram)} target="_blank" rel="noopener noreferrer" className="text-text-main hover:text-primary transition-colors" aria-label="Instagram">
                                         <InstagramIcon size={20} />
                                     </a>
                                 )}
                                 {siteInfo.social_discord && (
-                                    <a href={siteInfo.social_discord} target="_blank" rel="noopener noreferrer" className="text-text-main hover:text-primary transition-colors" aria-label="Discord">
+                                    <a href={buildSocialUrl("discord", siteInfo.social_discord)} target="_blank" rel="noopener noreferrer" className="text-text-main hover:text-primary transition-colors" aria-label="Discord">
                                         <DiscordIcon size={20} />
                                     </a>
                                 )}
                                 {siteInfo.social_reddit && (
-                                    <a href={siteInfo.social_reddit} target="_blank" rel="noopener noreferrer" className="text-text-main hover:text-primary transition-colors" aria-label="Reddit">
+                                    <a href={buildSocialUrl("reddit", siteInfo.social_reddit)} target="_blank" rel="noopener noreferrer" className="text-text-main hover:text-primary transition-colors" aria-label="Reddit">
                                         <RedditIcon size={20} />
                                     </a>
                                 )}
                                 {siteInfo.social_telegram && (
-                                    <a href={siteInfo.social_telegram} target="_blank" rel="noopener noreferrer" className="text-text-main hover:text-primary transition-colors" aria-label="Telegram">
+                                    <a href={buildSocialUrl("telegram", siteInfo.social_telegram)} target="_blank" rel="noopener noreferrer" className="text-text-main hover:text-primary transition-colors" aria-label="Telegram">
                                         <TelegramIcon size={20} />
                                     </a>
                                 )}
