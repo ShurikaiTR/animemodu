@@ -17,7 +17,7 @@ const tabs: { id: SettingsTab; label: string; icon: React.ElementType }[] = [
 
 export default function SettingsTabs({ activeTab, onTabChange }: SettingsTabsProps) {
     return (
-        <div className="flex gap-1 p-1 bg-bg-secondary/30 rounded-xl border border-white/5">
+        <div className="inline-flex gap-1 p-1 bg-white/5 rounded-xl">
             {tabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;

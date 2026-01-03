@@ -99,9 +99,21 @@ export async function updateSiteInfo(
         if (data.site_footer_text) settings.site_footer_text = data.site_footer_text;
 
         // SEO settings - allow empty strings to clear values
-        if (data.seo_meta_title !== undefined) settings.seo_meta_title = data.seo_meta_title;
-        if (data.seo_meta_description !== undefined) settings.seo_meta_description = data.seo_meta_description;
-        if (data.seo_keywords !== undefined) settings.seo_keywords = data.seo_keywords;
+        if (data.seo_og_image !== undefined) settings.seo_og_image = data.seo_og_image;
+        if (data.seo_home_title !== undefined) settings.seo_home_title = data.seo_home_title;
+        if (data.seo_home_description !== undefined) settings.seo_home_description = data.seo_home_description;
+        if (data.seo_discover_title !== undefined) settings.seo_discover_title = data.seo_discover_title;
+        if (data.seo_discover_description !== undefined) settings.seo_discover_description = data.seo_discover_description;
+        if (data.seo_animes_title !== undefined) settings.seo_animes_title = data.seo_animes_title;
+        if (data.seo_animes_description !== undefined) settings.seo_animes_description = data.seo_animes_description;
+        if (data.seo_movies_title !== undefined) settings.seo_movies_title = data.seo_movies_title;
+        if (data.seo_movies_description !== undefined) settings.seo_movies_description = data.seo_movies_description;
+        if (data.seo_calendar_title !== undefined) settings.seo_calendar_title = data.seo_calendar_title;
+        if (data.seo_calendar_description !== undefined) settings.seo_calendar_description = data.seo_calendar_description;
+        if (data.seo_anime_title !== undefined) settings.seo_anime_title = data.seo_anime_title;
+        if (data.seo_anime_description !== undefined) settings.seo_anime_description = data.seo_anime_description;
+        if (data.seo_watch_title !== undefined) settings.seo_watch_title = data.seo_watch_title;
+        if (data.seo_watch_description !== undefined) settings.seo_watch_description = data.seo_watch_description;
 
         // Feature toggles
         if (data.maintenance_mode !== undefined) settings.maintenance_mode = data.maintenance_mode;
@@ -126,13 +138,6 @@ export async function updateSiteInfo(
             const upload = await saveFileLocally(data.site_favicon, fileName, "uploads/icon");
             if (upload.success && upload.path) settings.site_favicon = upload.path;
             else return { success: false, error: "Favicon kaydedilemedi: " + upload.error };
-        }
-
-        if (data.seo_og_image instanceof File) {
-            const fileName = `og-image-${Date.now()}.${data.seo_og_image.name.split('.').pop()}`;
-            const upload = await saveFileLocally(data.seo_og_image, fileName, "uploads/seo");
-            if (upload.success && upload.path) settings.seo_og_image = upload.path;
-            else return { success: false, error: "OG Image kaydedilemedi: " + upload.error };
         }
 
         const updates = Object.entries(settings).map(([key, value]) =>

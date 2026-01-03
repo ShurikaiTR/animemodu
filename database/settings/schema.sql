@@ -75,6 +75,29 @@ INSERT INTO site_settings (key, value, type, category, label, description) VALUE
     ('social_instagram', '', 'text', 'social', 'Instagram', 'Instagram hesabı URL''si'),
     ('social_telegram', '', 'text', 'social', 'Telegram', 'Telegram kanal/grup URL''si'),
     ('social_discord', '', 'text', 'social', 'Discord', 'Discord sunucu davet linki'),
-    ('social_reddit', '', 'text', 'social', 'Reddit', 'Reddit subreddit URL''si')
+    ('social_reddit', '', 'text', 'social', 'Reddit', 'Reddit subreddit URL''si'),
+    -- SEO - General
+    ('seo_og_image', '/img/opengraph/opengraph.webp', 'text', 'seo', 'OG Görsel', 'Sosyal medya paylaşımlarında görünen varsayılan görsel'),
+    -- SEO - Home
+    ('seo_home_title', 'AnimeModu - Türkçe Altyazılı Anime İzle', 'text', 'seo', 'Ana Sayfa Başlığı', 'Ana sayfa meta başlık'),
+    ('seo_home_description', 'En yeni animeleri Türkçe altyazılı olarak izleyin. Binlerce anime ve film arşivi.', 'text', 'seo', 'Ana Sayfa Açıklaması', 'Ana sayfa meta açıklama'),
+    -- SEO - Discover
+    ('seo_discover_title', 'Anime Keşfet - Tüm Animeler', 'text', 'seo', 'Keşfet Başlığı', 'Keşfet sayfası meta başlık'),
+    ('seo_discover_description', 'Binlerce anime arasından arama yapın, türe göre filtreleyin ve izleme listenizi oluşturun.', 'text', 'seo', 'Keşfet Açıklaması', 'Keşfet sayfası meta açıklama'),
+    -- SEO - Animes
+    ('seo_animes_title', 'Anime Serileri - AnimeModu', 'text', 'seo', 'Animeler Başlığı', 'Animeler sayfası meta başlık'),
+    ('seo_animes_description', 'En popüler anime serilerini keşfedin. Aksiyon, romantik, komedi ve daha fazlası.', 'text', 'seo', 'Animeler Açıklaması', 'Animeler sayfası meta açıklama'),
+    -- SEO - Movies
+    ('seo_movies_title', 'Anime Filmleri - AnimeModu', 'text', 'seo', 'Filmler Başlığı', 'Filmler sayfası meta başlık'),
+    ('seo_movies_description', 'En iyi anime filmlerini Türkçe altyazılı izleyin. Ghibli, Makoto Shinkai ve daha fazlası.', 'text', 'seo', 'Filmler Açıklaması', 'Filmler sayfası meta açıklama'),
+    -- SEO - Calendar
+    ('seo_calendar_title', 'Yayın Takvimi - Haftalık Anime Programı', 'text', 'seo', 'Takvim Başlığı', 'Takvim sayfası meta başlık'),
+    ('seo_calendar_description', 'Anime yayın takvimini takip edin. Hangi gün hangi anime yayınlanıyor görün.', 'text', 'seo', 'Takvim Açıklaması', 'Takvim sayfası meta açıklama'),
+    -- SEO - Anime Detail
+    ('seo_anime_title', '{anime_title} İzle', 'text', 'seo', 'Anime Detay Başlığı', 'Anime detay sayfası meta başlık şablonu'),
+    ('seo_anime_description', '{anime_title} animesini Türkçe altyazılı izle. {overview}', 'text', 'seo', 'Anime Detay Açıklaması', 'Anime detay sayfası meta açıklama şablonu'),
+    -- SEO - Watch
+    ('seo_watch_title', '{anime_title} {episode} İzle', 'text', 'seo', 'İzle Başlığı', 'İzle sayfası meta başlık şablonu'),
+    ('seo_watch_description', '{anime_title} {episode} Türkçe altyazılı izle.', 'text', 'seo', 'İzle Açıklaması', 'İzle sayfası meta açıklama şablonu')
 ON CONFLICT (key) DO NOTHING;
 

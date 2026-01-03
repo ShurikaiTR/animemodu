@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 export function revalidateAnimeData(slug?: string) {
     // Revalidate common paths
     revalidatePath("/");
-    revalidatePath("/arsiv");
+    revalidatePath("/kesfet");
     revalidatePath("/animeler");
     revalidatePath("/filmler");
     revalidatePath("/takvim");
@@ -24,7 +24,7 @@ export function revalidateAnimeData(slug?: string) {
  */
 export function revalidateEpisodeData(animeSlug?: string) {
     revalidatePath("/");
-    revalidatePath("/arsiv");
+    revalidatePath("/kesfet");
     revalidatePath("/takvim");
 
     if (animeSlug) {

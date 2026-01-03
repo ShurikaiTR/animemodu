@@ -12,7 +12,7 @@ export default async function RecentAnimes() {
                         AnimeModu&apos;nda Yeni
                     </h2>
                     <Link
-                        href="/arsiv"
+                        href="/kesfet"
                         className="flex items-center gap-2 text-sm font-bold text-primary hover:text-white transition-colors group"
                     >
                         Tümünü Gör

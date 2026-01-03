@@ -12,7 +12,7 @@ export default async function PopularMovies() {
                         Popüler Anime Filmleri
                     </h2>
                     <Link
-                        href="/arsiv?type=movie"
+                        href="/kesfet?type=movie"
                         className="flex items-center gap-2 text-sm font-bold text-primary hover:text-white transition-colors group"
                     >
                         Tümünü Gör

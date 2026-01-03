@@ -13,6 +13,7 @@ async function HeaderServer() {
         <HeaderClient
             siteLogo={siteInfo.site_logo}
             siteName={siteInfo.site_name}
+            discordUrl={siteInfo.social_discord}
         />
     );
 }

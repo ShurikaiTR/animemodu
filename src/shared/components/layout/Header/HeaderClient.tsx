@@ -16,9 +16,10 @@ import UserActions from "./UserActions";
 interface HeaderProps {
     siteLogo: string;
     siteName: string;
+    discordUrl?: string;
 }
 
-export default function Header({ siteLogo, siteName }: HeaderProps) {
+export default function Header({ siteLogo, siteName, discordUrl }: HeaderProps) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -51,7 +52,7 @@ export default function Header({ siteLogo, siteName }: HeaderProps) {
     const handleSearchSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!searchQuery.trim()) return;
-        router.push(`/arsiv?ara=${encodeURIComponent(searchQuery.trim())}`);
+        router.push(`/kesfet?ara=${encodeURIComponent(searchQuery.trim())}`);
         setSearchQuery("");
         setIsSearchOpen(false);
     };
@@ -86,7 +87,7 @@ export default function Header({ siteLogo, siteName }: HeaderProps) {
                             </Link>
 
                             <div className="hidden xl:block">
-                                <Navigation isMobileMenuOpen={false} />
+                                <Navigation isMobileMenuOpen={false} discordUrl={discordUrl} />
                             </div>
 
                             <div className="flex items-center justify-end gap-4 lg:gap-8 xl:gap-11">
@@ -112,7 +113,7 @@ export default function Header({ siteLogo, siteName }: HeaderProps) {
                 <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
             </header>
             <div className="xl:hidden">
-                <Navigation isMobileMenuOpen={isMobileMenuOpen} />
+                <Navigation isMobileMenuOpen={isMobileMenuOpen} discordUrl={discordUrl} />
             </div>
         </>
     );

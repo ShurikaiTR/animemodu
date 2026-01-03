@@ -50,7 +50,7 @@ export async function renameGenre(oldName: string, newName: string): Promise<Act
         }));
 
         revalidatePath("/panel/genres");
-        revalidatePath("/arsiv");
+        revalidatePath("/kesfet");
 
         return { success: true };
     } catch (error) {
@@ -101,7 +101,7 @@ export async function deleteGenre(genreName: string): Promise<ActionResult<{ upd
         }));
 
         revalidatePath("/panel/genres");
-        revalidatePath("/arsiv");
+        revalidatePath("/kesfet");
 
         return { success: true, data: { updatedCount: animesToUpdate.length } };
     } catch (error) {

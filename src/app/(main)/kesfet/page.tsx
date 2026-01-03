@@ -91,7 +91,7 @@ export default async function ArchivePage({ searchParams }: PageProps) {
                     <div className="flex-1 w-full">
                         <div className="mb-8">
                             <h1 className="text-3xl font-bold text-white font-rubik tracking-tight mb-2">
-                                Anime Arşivi
+                                Keşfet
                             </h1>
                             <p className="text-text-main/60 text-sm">
                                 Toplam <span className="text-primary font-bold">{totalItems}</span> içerik

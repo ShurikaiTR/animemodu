@@ -6,11 +6,29 @@ export const siteInfoSchema = z.object({
     site_footer_text: z.string().max(500, "Footer metni en fazla 500 karakter olabilir").optional(),
     site_logo: z.union([z.instanceof(File), z.string()]).optional(),
     site_favicon: z.union([z.instanceof(File), z.string()]).optional(),
-    // SEO
-    seo_meta_title: z.string().max(70, "Meta title en fazla 70 karakter olabilir").optional(),
-    seo_meta_description: z.string().max(200, "Meta description en fazla 200 karakter olabilir").optional(),
-    seo_keywords: z.string().max(300, "Keywords en fazla 300 karakter olabilir").optional(),
-    seo_og_image: z.union([z.instanceof(File), z.string()]).optional(),
+    // SEO - General
+    seo_og_image: z.string().max(200, "OG görsel URL en fazla 200 karakter olabilir").optional(),
+    // SEO - Home
+    seo_home_title: z.string().max(70, "Başlık en fazla 70 karakter olabilir").optional(),
+    seo_home_description: z.string().max(200, "Açıklama en fazla 200 karakter olabilir").optional(),
+    // SEO - Discover
+    seo_discover_title: z.string().max(70, "Başlık en fazla 70 karakter olabilir").optional(),
+    seo_discover_description: z.string().max(200, "Açıklama en fazla 200 karakter olabilir").optional(),
+    // SEO - Animes
+    seo_animes_title: z.string().max(70, "Başlık en fazla 70 karakter olabilir").optional(),
+    seo_animes_description: z.string().max(200, "Açıklama en fazla 200 karakter olabilir").optional(),
+    // SEO - Movies
+    seo_movies_title: z.string().max(70, "Başlık en fazla 70 karakter olabilir").optional(),
+    seo_movies_description: z.string().max(200, "Açıklama en fazla 200 karakter olabilir").optional(),
+    // SEO - Calendar
+    seo_calendar_title: z.string().max(70, "Başlık en fazla 70 karakter olabilir").optional(),
+    seo_calendar_description: z.string().max(200, "Açıklama en fazla 200 karakter olabilir").optional(),
+    // SEO - Anime Detail
+    seo_anime_title: z.string().max(100, "Başlık şablonu en fazla 100 karakter olabilir").optional(),
+    seo_anime_description: z.string().max(250, "Açıklama şablonu en fazla 250 karakter olabilir").optional(),
+    // SEO - Watch
+    seo_watch_title: z.string().max(100, "Başlık şablonu en fazla 100 karakter olabilir").optional(),
+    seo_watch_description: z.string().max(250, "Açıklama şablonu en fazla 250 karakter olabilir").optional(),
     // Feature toggles
     maintenance_mode: z.string().optional(),
     watch_together: z.string().optional(),
