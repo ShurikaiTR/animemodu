@@ -33,11 +33,11 @@ export const siteInfoSchema = z.object({
     maintenance_mode: z.string().optional(),
     watch_together: z.string().optional(),
     // Social media
-    social_x: z.string().url("Geçerli bir URL giriniz").or(z.literal("")).optional(),
-    social_instagram: z.string().url("Geçerli bir URL giriniz").or(z.literal("")).optional(),
-    social_telegram: z.string().url("Geçerli bir URL giriniz").or(z.literal("")).optional(),
-    social_discord: z.string().url("Geçerli bir URL giriniz").or(z.literal("")).optional(),
-    social_reddit: z.string().url("Geçerli bir URL giriniz").or(z.literal("")).optional(),
+    social_x: z.string().max(100, "En fazla 100 karakter olabilir").optional().or(z.literal("")),
+    social_instagram: z.string().max(100, "En fazla 100 karakter olabilir").optional().or(z.literal("")),
+    social_telegram: z.string().max(100, "En fazla 100 karakter olabilir").optional().or(z.literal("")),
+    social_discord: z.string().max(100, "En fazla 100 karakter olabilir").optional().or(z.literal("")),
+    social_reddit: z.string().max(100, "En fazla 100 karakter olabilir").optional().or(z.literal("")),
 });
 
 export type SiteInfoInput = z.infer<typeof siteInfoSchema>;
