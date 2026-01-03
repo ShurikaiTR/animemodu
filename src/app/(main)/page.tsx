@@ -6,10 +6,20 @@ import RecentAnimes from "@/shared/components/home/RecentAnimes";
 import PopularMovies from "@/shared/components/home/PopularMovies";
 import { HeroSkeleton, EpisodesSkeleton, AnimesSkeleton, MoviesSkeleton } from "@/shared/components/home/loading";
 
-export const metadata: Metadata = {
-  title: "AnimeModu - HD Anime İzle",
-  description: "En yeni animeleri HD kalitesinde izleyin. AnimeModu, Türkiye'nin en büyük anime platformu.",
-};
+import { getSiteInfo } from "@/features/settings/actions";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const siteInfo = await getSiteInfo();
+
+  return {
+    title: siteInfo.seo_home_title,
+    description: siteInfo.seo_home_description,
+    openGraph: {
+      title: siteInfo.seo_home_title,
+      description: siteInfo.seo_home_description,
+    }
+  };
+}
 
 export default async function Home() {
   return (

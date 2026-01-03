@@ -9,7 +9,7 @@ import RecentAnimesServer from "./_components/RecentAnimesServer";
 import { StatsSkeleton, TableSkeleton } from "./loading";
 
 export const metadata: Metadata = {
-  title: "Admin Panel - AnimeModu",
+  title: "Admin Panel · AnimeModu",
   description: "İçerik yönetim paneli",
 };
 

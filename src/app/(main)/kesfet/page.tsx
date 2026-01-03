@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import Container from "@/shared/components/container";
 import ArchiveSidebar from "@/shared/components/archive/ArchiveSidebar";
 import ArchiveGrid from "@/shared/components/archive/ArchiveGrid";
@@ -8,6 +9,19 @@ import { createClient } from "@/shared/lib/supabase/server";
 import { slugifyTurkish } from "@/shared/lib/utils";
 import { PAGINATION } from "@/shared/lib/constants";
 import type { AnimeRow } from "@/shared/types/helpers";
+import { getSiteInfo } from "@/features/settings/actions";
+
+export async function generateMetadata(): Promise<Metadata> {
+    const siteInfo = await getSiteInfo();
+    return {
+        title: siteInfo.seo_discover_title,
+        description: siteInfo.seo_discover_description,
+        openGraph: {
+            title: siteInfo.seo_discover_title,
+            description: siteInfo.seo_discover_description,
+        },
+    };
+}
 
 const ITEMS_PER_PAGE = PAGINATION.DEFAULT_PAGE_SIZE;
 

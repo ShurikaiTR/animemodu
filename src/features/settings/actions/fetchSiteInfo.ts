@@ -45,6 +45,29 @@ const getSiteInfoCached = unstable_cache(
                 social_telegram: settings.social_telegram || DEFAULT_SITE_INFO.social_telegram,
                 social_discord: settings.social_discord || DEFAULT_SITE_INFO.social_discord,
                 social_reddit: settings.social_reddit || DEFAULT_SITE_INFO.social_reddit,
+                // SEO - General
+                seo_og_image: settings.seo_og_image || DEFAULT_SITE_INFO.seo_og_image,
+                // SEO - Home
+                seo_home_title: settings.seo_home_title || DEFAULT_SITE_INFO.seo_home_title,
+                seo_home_description: settings.seo_home_description || DEFAULT_SITE_INFO.seo_home_description,
+                // SEO - Discover
+                seo_discover_title: settings.seo_discover_title || DEFAULT_SITE_INFO.seo_discover_title,
+                seo_discover_description: settings.seo_discover_description || DEFAULT_SITE_INFO.seo_discover_description,
+                // SEO - Animes
+                seo_animes_title: settings.seo_animes_title || DEFAULT_SITE_INFO.seo_animes_title,
+                seo_animes_description: settings.seo_animes_description || DEFAULT_SITE_INFO.seo_animes_description,
+                // SEO - Movies
+                seo_movies_title: settings.seo_movies_title || DEFAULT_SITE_INFO.seo_movies_title,
+                seo_movies_description: settings.seo_movies_description || DEFAULT_SITE_INFO.seo_movies_description,
+                // SEO - Calendar
+                seo_calendar_title: settings.seo_calendar_title || DEFAULT_SITE_INFO.seo_calendar_title,
+                seo_calendar_description: settings.seo_calendar_description || DEFAULT_SITE_INFO.seo_calendar_description,
+                // SEO - Anime Detail
+                seo_anime_title: settings.seo_anime_title || DEFAULT_SITE_INFO.seo_anime_title,
+                seo_anime_description: settings.seo_anime_description || DEFAULT_SITE_INFO.seo_anime_description,
+                // SEO - Watch
+                seo_watch_title: settings.seo_watch_title || DEFAULT_SITE_INFO.seo_watch_title,
+                seo_watch_description: settings.seo_watch_description || DEFAULT_SITE_INFO.seo_watch_description,
             };
         } catch (error) {
             logError("getSiteInfo", error);

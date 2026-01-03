@@ -7,6 +7,7 @@ import { createClient } from "@/shared/lib/supabase/server";
 import { parseCharacters } from "@/shared/types/helpers";
 import { filterAiredEpisodes, mapEpisodeRowsToEpisodes, orderEpisodesBySeasonAndNumber } from "@/shared/lib/anime/episodes";
 import { getAnimeBySlug, getStructureType } from "@/shared/lib/anime/queries";
+import { getSiteInfo } from "@/features/settings/actions";
 import Container from "@/shared/components/container";
 import AnimeHero from "./AnimeHero";
 import EpisodeList from "./EpisodeList";
@@ -25,17 +26,21 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const dbAnime = await getAnimeBySlug(slug);
+  const siteInfo = await getSiteInfo();
 
   if (!dbAnime) {
     return { title: "Anime Bulunamadı" };
   }
 
+  const title = siteInfo.seo_anime_title.replace(/{anime_title}/g, dbAnime.title);
+  const description = siteInfo.seo_anime_description.replace(/{anime_title}/g, dbAnime.title);
+
   return {
-    title: `${dbAnime.title} - AnimeModu`,
-    description: dbAnime.overview || `${dbAnime.title} hakkında bilgiler.`,
+    title,
+    description: dbAnime.overview || description,
     openGraph: {
-      title: dbAnime.title,
-      description: dbAnime.overview || undefined,
+      title,
+      description: dbAnime.overview || description,
       images: dbAnime.poster_path ? [getImageUrl(dbAnime.poster_path, "w500")] : undefined,
     },
   };

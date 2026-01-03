@@ -25,10 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const description = "Türkiye'nin en büyük anime izleme platformu. HD kalitede binlerce anime serisi ve filmi. Türkçe altyazılı anime arşivi.";
 
     return {
-      title: {
-        default: siteInfo.site_name,
-        template: `%s | ${siteInfo.site_name}`,
-      },
+      title: siteInfo.site_name,
       description,
       icons: {
         icon: siteInfo.site_favicon,

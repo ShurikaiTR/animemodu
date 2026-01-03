@@ -13,7 +13,7 @@ interface SocialSectionProps {
 const inputClassName =
     "w-full h-12 pl-11 pr-4 py-2 text-sm font-medium rounded-xl border border-white/5 bg-white/[0.03] text-white placeholder-text-main/20 focus:bg-white/[0.05] focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all shadow-sm";
 
-const socialFields: { key: string; label: string; placeholder: string; icon: any; platform: SocialPlatform }[] = [
+const socialFields: { key: string; label: string; placeholder: string; icon: React.ComponentType<{ className?: string }>; platform: SocialPlatform }[] = [
     { key: "social_x", label: "X (Twitter)", placeholder: "animemodu", icon: XIcon, platform: "x" },
     { key: "social_instagram", label: "Instagram", placeholder: "animemodu", icon: InstagramIcon, platform: "instagram" },
     { key: "social_telegram", label: "Telegram", placeholder: "animemodu", icon: TelegramIcon, platform: "telegram" },

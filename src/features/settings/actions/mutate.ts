@@ -5,7 +5,6 @@ import { requireAdmin, isAuthError } from "@/shared/lib/auth/guards";
 import { logError } from "@/shared/lib/errors";
 import { revalidatePath } from "next/cache";
 import { parseSettingsFormData, formatZodError } from "@/shared/lib/validations/settings";
-import { saveFileLocally } from "@/shared/lib/file-system";
 
 // ============================================
 // WRITE OPERATIONS (Admin only)
@@ -75,6 +74,8 @@ export async function updateSettings(
     }
 }
 
+import { mapSettingsData, handleSettingsFiles } from "./utils";
+
 /**
  * Site bilgilerini topluca günceller (admin only)
  */
@@ -92,53 +93,10 @@ export async function updateSiteInfo(
 
         const data = validation.data;
         const supabase = await createClient();
-        const settings: Record<string, string> = {};
+        const settings = mapSettingsData(data);
 
-        // General settings
-        if (data.site_name) settings.site_name = data.site_name;
-        if (data.site_footer_text) settings.site_footer_text = data.site_footer_text;
-
-        // SEO settings - allow empty strings to clear values
-        if (data.seo_og_image !== undefined) settings.seo_og_image = data.seo_og_image;
-        if (data.seo_home_title !== undefined) settings.seo_home_title = data.seo_home_title;
-        if (data.seo_home_description !== undefined) settings.seo_home_description = data.seo_home_description;
-        if (data.seo_discover_title !== undefined) settings.seo_discover_title = data.seo_discover_title;
-        if (data.seo_discover_description !== undefined) settings.seo_discover_description = data.seo_discover_description;
-        if (data.seo_animes_title !== undefined) settings.seo_animes_title = data.seo_animes_title;
-        if (data.seo_animes_description !== undefined) settings.seo_animes_description = data.seo_animes_description;
-        if (data.seo_movies_title !== undefined) settings.seo_movies_title = data.seo_movies_title;
-        if (data.seo_movies_description !== undefined) settings.seo_movies_description = data.seo_movies_description;
-        if (data.seo_calendar_title !== undefined) settings.seo_calendar_title = data.seo_calendar_title;
-        if (data.seo_calendar_description !== undefined) settings.seo_calendar_description = data.seo_calendar_description;
-        if (data.seo_anime_title !== undefined) settings.seo_anime_title = data.seo_anime_title;
-        if (data.seo_anime_description !== undefined) settings.seo_anime_description = data.seo_anime_description;
-        if (data.seo_watch_title !== undefined) settings.seo_watch_title = data.seo_watch_title;
-        if (data.seo_watch_description !== undefined) settings.seo_watch_description = data.seo_watch_description;
-
-        // Feature toggles
-        if (data.maintenance_mode !== undefined) settings.maintenance_mode = data.maintenance_mode;
-        if (data.watch_together !== undefined) settings.watch_together = data.watch_together;
-
-        // Social media - allow empty strings to clear values
-        if (data.social_x !== undefined) settings.social_x = data.social_x;
-        if (data.social_instagram !== undefined) settings.social_instagram = data.social_instagram;
-        if (data.social_telegram !== undefined) settings.social_telegram = data.social_telegram;
-        if (data.social_discord !== undefined) settings.social_discord = data.social_discord;
-        if (data.social_reddit !== undefined) settings.social_reddit = data.social_reddit;
-
-        if (data.site_logo instanceof File) {
-            const fileName = `logo-${Date.now()}.${data.site_logo.name.split('.').pop()}`;
-            const upload = await saveFileLocally(data.site_logo, fileName, "uploads/logo");
-            if (upload.success && upload.path) settings.site_logo = upload.path;
-            else return { success: false, error: "Logo kaydedilemedi: " + upload.error };
-        }
-
-        if (data.site_favicon instanceof File) {
-            const fileName = `favicon-${Date.now()}.${data.site_favicon.name.split('.').pop()}`;
-            const upload = await saveFileLocally(data.site_favicon, fileName, "uploads/icon");
-            if (upload.success && upload.path) settings.site_favicon = upload.path;
-            else return { success: false, error: "Favicon kaydedilemedi: " + upload.error };
-        }
+        const fileJob = await handleSettingsFiles(data, settings);
+        if (!fileJob.success) return fileJob;
 
         const updates = Object.entries(settings).map(([key, value]) =>
             supabase.from("site_settings").update({ value }).eq("key", key)

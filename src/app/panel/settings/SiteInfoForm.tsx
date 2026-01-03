@@ -32,13 +32,32 @@ export default function SiteInfoForm({ initialSettings }: SiteInfoFormProps) {
         // General settings
         formData.append("site_name", settings.site_name || "");
         formData.append("site_footer_text", settings.site_footer_text || "");
-        // SEO settings
-        formData.append("seo_meta_title", settings.seo_meta_title || "");
-        formData.append("seo_meta_description", settings.seo_meta_description || "");
-        formData.append("seo_keywords", settings.seo_keywords || "");
+        // SEO settings - Home
+        formData.append("seo_home_title", settings.seo_home_title || "");
+        formData.append("seo_home_description", settings.seo_home_description || "");
+        // SEO - Discover
+        formData.append("seo_discover_title", settings.seo_discover_title || "");
+        formData.append("seo_discover_description", settings.seo_discover_description || "");
+        // SEO - Animes
+        formData.append("seo_animes_title", settings.seo_animes_title || "");
+        formData.append("seo_animes_description", settings.seo_animes_description || "");
+        // SEO - Movies
+        formData.append("seo_movies_title", settings.seo_movies_title || "");
+        formData.append("seo_movies_description", settings.seo_movies_description || "");
+        // SEO - Calendar
+        formData.append("seo_calendar_title", settings.seo_calendar_title || "");
+        formData.append("seo_calendar_description", settings.seo_calendar_description || "");
+        // SEO - Anime Detail
+        formData.append("seo_anime_title", settings.seo_anime_title || "");
+        formData.append("seo_anime_description", settings.seo_anime_description || "");
+        // SEO - Watch
+        formData.append("seo_watch_title", settings.seo_watch_title || "");
+        formData.append("seo_watch_description", settings.seo_watch_description || "");
+
         // Feature toggles
         formData.append("maintenance_mode", settings.maintenance_mode || "false");
         formData.append("watch_together", settings.watch_together || "false");
+
         // Social media
         formData.append("social_x", settings.social_x || "");
         formData.append("social_instagram", settings.social_instagram || "");

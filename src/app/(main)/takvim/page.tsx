@@ -1,8 +1,22 @@
 import React, { Suspense } from "react";
+import type { Metadata } from "next";
 import { Calendar } from "lucide-react";
 import Container from "@/shared/components/container";
 import { createPublicClient } from "@/shared/lib/supabase/server";
 import CalendarClient from "@/shared/components/calendar/CalendarClient";
+import { getSiteInfo } from "@/features/settings/actions";
+
+export async function generateMetadata(): Promise<Metadata> {
+    const siteInfo = await getSiteInfo();
+    return {
+        title: siteInfo.seo_calendar_title,
+        description: siteInfo.seo_calendar_description,
+        openGraph: {
+            title: siteInfo.seo_calendar_title,
+            description: siteInfo.seo_calendar_description,
+        },
+    };
+}
 
 function CalendarLoading() {
     return (
