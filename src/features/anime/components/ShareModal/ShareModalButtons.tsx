@@ -1,7 +1,8 @@
 "use client";
 
 import { toast } from "sonner";
-import { XIcon, TelegramIcon, InstagramIcon, WhatsAppIcon } from "@/shared/components/SocialIcons";
+
+import { InstagramIcon, TelegramIcon, WhatsAppIcon,XIcon } from "@/shared/components/SocialIcons";
 import { cn } from "@/shared/lib/utils";
 
 interface ShareModalButtonsProps {

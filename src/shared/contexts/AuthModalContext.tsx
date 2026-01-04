@@ -1,9 +1,10 @@
 "use client";
 
-import { createContext, useState, useCallback } from "react";
-import { createContextHook } from "@/shared/contexts/utils";
-import AuthModal from "@/components/auth/AuthModal";
+import { createContext, useCallback,useState } from "react";
+
 import type { AuthState } from "@/components/auth/authConfig";
+import AuthModal from "@/components/auth/AuthModal";
+import { createContextHook } from "@/shared/contexts/utils";
 
 interface AuthModalContextType {
     openAuthModal: (view?: AuthState) => void;

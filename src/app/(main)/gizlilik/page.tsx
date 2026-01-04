@@ -1,9 +1,10 @@
-import { Metadata } from "next";
-import Container from "@/shared/components/container";
 import { Calendar } from "lucide-react";
-import PolicySection from "./PolicySection";
-import PolicyCTA from "./PolicyCTA";
+import { Metadata } from "next";
 
+import Container from "@/shared/components/container";
+
+import PolicyCTA from "./PolicyCTA";
+import PolicySection from "./PolicySection";
 import { PRIVACY_SECTIONS } from "./PrivacyContent";
 
 export const metadata: Metadata = {

@@ -1,12 +1,12 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
-import { getSiteInfo } from "@/features/settings/actions";
-import { XIcon, InstagramIcon, DiscordIcon, RedditIcon, TelegramIcon } from "@/shared/components/SocialIcons";
+import { SettingsService } from "@/features/settings/services/settings-service";
+import { DiscordIcon, InstagramIcon, RedditIcon, TelegramIcon, XIcon } from "@/shared/components/SocialIcons";
 import { buildSocialUrl } from "@/shared/lib/socials";
 
 export default async function Footer() {
-    const siteInfo = await getSiteInfo();
+    const siteInfo = await SettingsService.getAllSettings();
 
     return (
         <footer className="bg-bg-main pt-20 pb-12 border-t border-bg-secondary mt-auto">

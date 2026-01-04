@@ -1,6 +1,7 @@
 import { Suspense } from "react";
-import { UsersContent } from "./UsersContent";
+
 import UsersLoading from "./loading";
+import { UsersContent } from "./UsersContent";
 
 export const metadata = {
     title: "Kullanıcılar - Admin Panel",

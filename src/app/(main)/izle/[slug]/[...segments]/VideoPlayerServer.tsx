@@ -1,10 +1,12 @@
-import { createClient } from "@/shared/lib/supabase/server";
 import { notFound } from "next/navigation";
-import WatchClient from "./client";
+
 import type { Episode } from "@/app/(main)/anime/[slug]/types";
-import { getAnimeBySlugOrNotFound, getStructureType } from "@/shared/lib/anime/queries";
+import { SettingsService } from "@/features/settings/services/settings-service";
 import { mapEpisodeRowsToEpisodes, orderEpisodesBySeasonAndNumber } from "@/shared/lib/anime/episodes";
-import { getSiteInfo } from "@/features/settings/actions";
+import { getAnimeBySlugOrNotFound, getStructureType } from "@/shared/lib/anime/queries";
+import { createClient } from "@/shared/lib/supabase/server";
+
+import WatchClient from "./client";
 
 interface VideoPlayerServerProps {
   slug: string;
@@ -13,7 +15,7 @@ interface VideoPlayerServerProps {
 
 export default async function VideoPlayerServer({ slug, segments }: VideoPlayerServerProps) {
   const supabase = await createClient();
-  const siteInfo = await getSiteInfo();
+  const siteInfo = await SettingsService.getAllSettings();
 
   const anime = await getAnimeBySlugOrNotFound(slug);
 

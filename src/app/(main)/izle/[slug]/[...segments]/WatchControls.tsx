@@ -1,9 +1,10 @@
 
 "use client";
 
+import { ChevronLeft, ChevronRight, Flag,Share2 } from "lucide-react";
 import Link from "next/link";
+
 import { Button } from "@/shared/components/button";
-import { ChevronLeft, ChevronRight, Share2, Flag } from "lucide-react";
 
 interface WatchControlsProps {
     prevEpisodeUrl: string | null;

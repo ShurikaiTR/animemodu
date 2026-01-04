@@ -1,6 +1,12 @@
 "use client";
 
 import { MessageSquare } from "lucide-react";
+import { useTransition } from "react";
+import { toast } from "sonner";
+
+import { deleteCommentAction } from "@/features/comments/actions/comment-actions";
+import { deleteReviewAction } from "@/features/reviews/actions/review-actions";
+
 import { InteractionTableRow } from "./CommentsTable/InteractionTableRow";
 import type { InteractionItem, InteractionType } from "./CommentsTable/types";
 
@@ -9,7 +15,21 @@ interface CommentsTableProps {
 }
 
 export function CommentsTable({ items }: CommentsTableProps) {
-    const handleDelete = async (_id: string, _type: InteractionType) => {
+    const [isPending, startTransition] = useTransition();
+
+    const handleDelete = async (id: string, type: InteractionType) => {
+        if (!confirm("Bu içeriği silmek istediğinize emin misiniz?")) return;
+
+        startTransition(async () => {
+            const action = type === "comment" ? deleteCommentAction : deleteReviewAction;
+            const result = await action(id);
+
+            if (result.success) {
+                toast.success("İçerik başarıyla silindi");
+            } else {
+                toast.error(result.error || "Silme işlemi başarısız");
+            }
+        });
     };
 
     return (

@@ -1,15 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { cn } from "@/shared/lib/utils";
-import Navigation from "./Navigation";
+import { useEffect,useState } from "react";
+
 import AuthModal from "@/components/auth/AuthModal";
 import Container from "@/shared/components/container";
 import { useAuth } from "@/shared/contexts/AuthContext";
+import { cn } from "@/shared/lib/utils";
+
 import MobileMenuButton from "./MobileMenuButton";
+import Navigation from "./Navigation";
 import SearchForm from "./SearchForm";
 import UserActions from "./UserActions";
 

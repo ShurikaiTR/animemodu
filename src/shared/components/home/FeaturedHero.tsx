@@ -1,5 +1,6 @@
 import { createPublicClient } from "@/shared/lib/supabase/server";
 import type { AnimeRow } from "@/shared/types/helpers";
+
 import HeroSection from "./HeroSection";
 
 export default async function FeaturedHero() {

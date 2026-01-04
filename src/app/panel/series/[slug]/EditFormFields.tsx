@@ -1,6 +1,7 @@
 import { Input } from "@/shared/components/input";
-import { Textarea } from "@/shared/components/textarea";
 import { Label } from "@/shared/components/label";
+import { Textarea } from "@/shared/components/textarea";
+
 import { GenresField } from "./GenresField";
 import { MediaFields } from "./MediaFields";
 import { MetaFields } from "./MetaFields";

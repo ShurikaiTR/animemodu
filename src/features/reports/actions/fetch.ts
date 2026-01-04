@@ -1,23 +1,17 @@
 "use server";
 
+import { safeAction } from "@/shared/lib/actions/wrapper";
+import { isAuthError, requireAdmin } from "@/shared/lib/auth/guards";
 import { createClient } from "@/shared/lib/supabase/server";
-import { requireAdmin, isAuthError } from "@/shared/lib/auth/guards";
 import type { ReportWithDetails } from "@/shared/types/helpers";
 
 const PAGE_SIZE = 20;
 
-type GetReportsResult = {
-    success: boolean;
-    error?: string;
-    data: ReportWithDetails[];
-    totalPages: number;
-};
-
-export async function getReports(page = 1, status: string | null = null): Promise<GetReportsResult> {
-    try {
+export async function getReports(page = 1, status: string | null = null) {
+    return await safeAction(async () => {
         const auth = await requireAdmin();
         if (isAuthError(auth)) {
-            return { success: false, error: auth.error, data: [], totalPages: 0 };
+            throw new Error(auth.error);
         }
 
         const supabase = await createClient();
@@ -41,7 +35,7 @@ export async function getReports(page = 1, status: string | null = null): Promis
         const { data: rawReports, error, count } = await query;
 
         if (error) {
-            return { success: false, error: "Bildirimler alınamadı.", data: [], totalPages: 0 };
+            throw new Error("Bildirimler alınamadı.");
         }
 
         // Fetch user profiles separately for reports that have user_id
@@ -67,7 +61,7 @@ export async function getReports(page = 1, status: string | null = null): Promis
         }
 
         // Combine reports with user data
-        const reports: ReportWithDetails[] = (rawReports || []).map(report => ({
+        const items: ReportWithDetails[] = (rawReports || []).map(report => ({
             id: report.id,
             anime_id: report.anime_id,
             anime_title: report.anime_title,
@@ -85,12 +79,8 @@ export async function getReports(page = 1, status: string | null = null): Promis
         }));
 
         return {
-            success: true,
-            data: reports,
+            items,
             totalPages: Math.ceil((count || 0) / PAGE_SIZE)
         };
-
-    } catch {
-        return { success: false, error: "Beklenmeyen bir hata oluştu.", data: [], totalPages: 0 };
-    }
+    }, "getReports");
 }

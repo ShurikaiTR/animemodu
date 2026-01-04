@@ -1,7 +1,8 @@
 "use client";
 
+import { ArrowRight,Calendar, Sparkles, Star } from "lucide-react";
 import Image from "next/image";
-import { Sparkles, Calendar, Star, ArrowRight } from "lucide-react";
+
 import { cn } from "@/shared/lib/utils";
 
 interface SearchResult {

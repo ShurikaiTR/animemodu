@@ -1,12 +1,14 @@
-import { createClient } from "@/shared/lib/supabase/server";
-import { getUserProfileById } from "@/features/profile/actions/getProfile";
-import { getUserWatchList } from "@/features/profile/actions/userList";
-import { getUserFavorites } from "@/features/profile/actions/favorites";
-import { getUserActivities } from "@/features/profile/actions/activities";
-import { getFollowCounts } from "@/features/profile/actions/followQueries";
 import { redirect } from "next/navigation";
+
+import { getUserActivities } from "@/features/profile/actions/activities";
+import { getFollowCounts } from "@/features/profile/actions/follow-actions";
+import { getUserProfileById } from "@/features/profile/actions/getProfile";
+import { getUserWatchList } from "@/features/profile/actions/list-actions";
+import { getUserFavorites } from "@/features/profile/actions/list-actions";
+import { createClient } from "@/shared/lib/supabase/server";
+import type { Activity, FavoriteItem, WatchListItem } from "@/shared/types/helpers";
+
 import ProfileLayout from "./ProfileLayout";
-import type { WatchListItem, FavoriteItem, Activity } from "@/shared/types/helpers";
 
 /**
  * Profil içeriğini dinamik olarak çeken ve render eden Server Component.
@@ -32,10 +34,10 @@ export default async function ProfileContent() {
         redirect("/");
     }
 
-    const watchListItems: WatchListItem[] = watchListResult.success ? watchListResult.data : [];
-    const favoriteItems: FavoriteItem[] = favoritesResult.success ? favoritesResult.data : [];
-    const activities: Activity[] = activitiesResult.success ? activitiesResult.data : [];
-    const followCounts = followCountsResult.success ? followCountsResult.data : { followers: 0, following: 0 };
+    const watchListItems: WatchListItem[] = (watchListResult.success && watchListResult.data) ? watchListResult.data : [];
+    const favoriteItems: FavoriteItem[] = (favoritesResult.success && favoritesResult.data) ? favoritesResult.data : [];
+    const activities: Activity[] = (activitiesResult.success && activitiesResult.data) ? activitiesResult.data : [];
+    const followCounts = (followCountsResult.success && followCountsResult.data) ? followCountsResult.data : { followers: 0, following: 0 };
 
     const user = {
         ...profile,

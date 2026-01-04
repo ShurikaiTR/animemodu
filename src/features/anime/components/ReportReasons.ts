@@ -1,4 +1,4 @@
-import { MonitorPlay, VolumeX, Captions, Flag, type LucideIcon } from "lucide-react";
+import { Captions, Flag, type LucideIcon,MonitorPlay, VolumeX } from "lucide-react";
 
 export type ReportReasonId = "playback" | "audio" | "subtitle" | "wrong";
 

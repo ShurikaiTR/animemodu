@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
-import { MessageSquare, Star, Trash2, Eye, ShieldCheck } from "lucide-react";
-import { Button } from "@/shared/components/button";
+import { Eye, MessageSquare, ShieldCheck,Star, Trash2 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+
 import { Badge } from "@/shared/components/badge";
+import { Button } from "@/shared/components/button";
 import { cn } from "@/shared/lib/utils";
+
 import type { InteractionItem, InteractionType } from "./types";
 import { ViewContentModal } from "./ViewContentModal";
 

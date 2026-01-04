@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { toast } from "sonner";
-import { createClient } from "@/shared/lib/supabase/client";
-import { toggleCommentLike, checkUserLikedComment } from "./likesService";
 import type { User } from "@supabase/supabase-js";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
+
+import { checkUserLikedCommentAction, toggleCommentLikeAction, toggleCommentPinAction } from "@/features/comments/actions/comment-actions";
 
 interface UseCommentActionsProps {
     commentId: string;
@@ -19,11 +19,17 @@ export function useCommentActions({ commentId, initialLikes, initialPinned, user
     const [isLiking, setIsLiking] = useState(false);
     const [isPinned, setIsPinned] = useState(initialPinned);
 
-    useEffect(() => {
-        if (user) {
-            checkUserLikedComment(commentId, user.id).then(setLiked);
+    const checkLiked = useCallback(async () => {
+        if (!user) return;
+        const result = await checkUserLikedCommentAction(commentId);
+        if (result.success && 'data' in result) {
+            setLiked(!!result.data);
         }
     }, [user, commentId]);
+
+    useEffect(() => {
+        checkLiked();
+    }, [checkLiked]);
 
     const handleLike = async () => {
         if (!user) {
@@ -33,23 +39,27 @@ export function useCommentActions({ commentId, initialLikes, initialPinned, user
         if (isLiking) return;
 
         setIsLiking(true);
-        const { liked: newLiked, error } = await toggleCommentLike(commentId, user);
+        const result = await toggleCommentLikeAction(commentId);
         setIsLiking(false);
 
-        if (error) {
-            toast.error(error);
+        if (!result.success) {
+            toast.error(result.error);
             return;
         }
 
+        const newLiked = (result.data as { liked: boolean }).liked;
         setLiked(newLiked);
         setLikeCount(prev => newLiked ? prev + 1 : prev - 1);
     };
 
     const handlePin = async () => {
-        const supabase = createClient();
-        const newPinned = !isPinned;
-        const { error } = await supabase.from("comments").update({ is_pinned: newPinned }).eq("id", commentId);
-        if (error) return toast.error("Sabitleme işlemi başarısız");
+        const result = await toggleCommentPinAction(commentId);
+        if (!result.success) {
+            toast.error(result.error || "Sabitleme işlemi başarısız");
+            return;
+        }
+
+        const newPinned = !!result.data;
         setIsPinned(newPinned);
         toast.success(newPinned ? "Yorum sabitlendi" : "Sabitleme kaldırıldı");
     };

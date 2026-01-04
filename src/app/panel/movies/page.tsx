@@ -1,6 +1,7 @@
 import { createClient } from "@/shared/lib/supabase/server";
-import MoviesClient from "./MoviesClient";
+
 import type { AnimeRow } from "../types";
+import MoviesClient from "./MoviesClient";
 
 export const metadata = {
     title: "Filmler - Admin Panel",

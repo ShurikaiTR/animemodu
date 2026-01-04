@@ -1,12 +1,14 @@
 "use client";
 
-import { createPortal } from "react-dom";
-import { X, MessageSquare, Star, ThumbsUp } from "lucide-react";
-import { useModalMount } from "@/shared/hooks/useModalMount";
-import { Badge } from "@/shared/components/badge";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
+import { MessageSquare, Star, ThumbsUp,X } from "lucide-react";
 import Image from "next/image";
+import { createPortal } from "react-dom";
+
+import { Badge } from "@/shared/components/badge";
+import { useModalMount } from "@/shared/hooks/useModalMount";
+
 import type { InteractionItem } from "./types";
 
 interface ViewContentModalProps {

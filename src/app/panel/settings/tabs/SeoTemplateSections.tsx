@@ -1,9 +1,11 @@
 "use client";
 
+import { Info, Play,Search } from "lucide-react";
 import { useRef } from "react";
-import { Search, Info, Play } from "lucide-react";
-import { SeoSection } from "./SeoComponents";
+
 import { Label } from "@/shared/components/label";
+
+import { SeoSection } from "./SeoComponents";
 
 interface SeoSectionProps {
     settings: Record<string, string>;

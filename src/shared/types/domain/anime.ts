@@ -4,7 +4,7 @@
  */
 
 // Re-export database row types for convenience
-export type { AnimeRow, EpisodeRow, Character, CharacterJson } from "../helpers";
+export type { AnimeRow, Character, CharacterJson,EpisodeRow } from "../helpers";
 
 // Episode types are moved to ./episode.ts
 export * from "./episode";

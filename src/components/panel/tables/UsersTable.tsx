@@ -1,14 +1,16 @@
 "use client";
 
 import { User } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { useAuth } from "@/shared/contexts/AuthContext";
-import { useRouter } from "next/navigation";
+
 import { deleteUser } from "@/features/user/actions";
 import { DeleteConfirmationModal } from "@/shared/components/DeleteConfirmationModal";
-import { UserTableRow } from "./UsersTable/UserTableRow";
+import { useAuth } from "@/shared/contexts/AuthContext";
+
 import type { UserItem } from "./UsersTable/types";
+import { UserTableRow } from "./UsersTable/UserTableRow";
 
 interface UsersTableProps {
     items: UserItem[];

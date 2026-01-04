@@ -1,10 +1,10 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
-import { User, Session } from "@supabase/supabase-js";
-import { createClient } from "@/shared/lib/supabase/client";
+import { Session, User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
-import { createContextHook } from "@/shared/contexts/utils";
+import { createContext, useContext, useEffect, useState } from "react";
+
+import { createClient } from "@/shared/lib/supabase/client";
 import type { ProfileRow } from "@/shared/types/helpers";
 
 type Profile = ProfileRow;
@@ -15,6 +15,7 @@ interface AuthContextType {
     profile: Profile | null;
     isLoading: boolean;
     signOut: () => Promise<void>;
+    refreshSession: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,6 +28,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const supabase = createClient();
 
+    console.log("AuthProvider mounted"); // Debug log
+
     const fetchProfile = async (userId: string) => {
         const { data } = await supabase.from("profiles").select("*").eq("id", userId).single();
         setProfile(data as Profile | null);
@@ -35,6 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             (event, session) => {
+                console.log("Auth state change:", event, session?.user?.id); // Debug log
                 setSession(session);
                 setUser(session?.user ?? null);
                 if (session?.user) {
@@ -54,6 +58,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
     }, [router, supabase]);
 
+    const refreshSession = async () => {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) {
+            console.error("Session refresh error:", error);
+            return;
+        }
+        setSession(session);
+        setUser(session?.user ?? null);
+        if (session?.user) {
+            fetchProfile(session.user.id);
+        } else {
+            setProfile(null);
+        }
+    };
+
     const signOut = async () => {
         await supabase.auth.signOut();
         setProfile(null);
@@ -61,10 +80,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <AuthContext.Provider value={{ user, session, profile, isLoading, signOut }}>
+        <AuthContext.Provider value={{ user, session, profile, isLoading, signOut, refreshSession }}>
             {children}
         </AuthContext.Provider>
     );
 }
 
-export const useAuth = createContextHook(AuthContext, "useAuth", "AuthProvider");
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error("useAuth must be used within a AuthProvider");
+    }
+    return context;
+};

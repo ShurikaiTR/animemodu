@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { Sparkles } from "lucide-react";
-import DaySelector from "./DaySelector";
+import { useState } from "react";
+
 import CalendarEpisodeCard from "./CalendarEpisodeCard";
+import DaySelector from "./DaySelector";
 
 const DAYS = [
     { id: "mon", label: "Pazartesi", short: "Pzt", dayIdx: 1 },

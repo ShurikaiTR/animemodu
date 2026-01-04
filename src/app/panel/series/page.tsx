@@ -1,6 +1,7 @@
 import { createClient } from "@/shared/lib/supabase/server";
-import SeriesClient from "./SeriesClient";
+
 import type { AnimeRow } from "../types";
+import SeriesClient from "./SeriesClient";
 
 export const metadata = {
     title: "Diziler - Admin Panel",

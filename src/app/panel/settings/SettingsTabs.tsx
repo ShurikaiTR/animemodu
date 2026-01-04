@@ -1,7 +1,8 @@
 "use client";
 
+import { Search,Settings } from "lucide-react";
+
 import { cn } from "@/shared/lib/utils";
-import { Settings, Search } from "lucide-react";
 
 export type SettingsTab = "general" | "seo";
 

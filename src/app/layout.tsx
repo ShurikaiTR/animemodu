@@ -1,9 +1,11 @@
+import "./globals.css";
+
 import type { Metadata } from "next";
 import { Inter, Rubik } from "next/font/google";
+
+import { Toaster } from "@/shared/components/sonner";
 import { AuthProvider } from "@/shared/contexts/AuthContext";
 import { AuthModalProvider } from "@/shared/contexts/AuthModalContext";
-import { Toaster } from "@/shared/components/sonner";
-import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -17,11 +19,11 @@ const rubik = Rubik({
   display: "swap",
 });
 
-import { getSiteInfo } from "@/features/settings/actions";
+import { SettingsService } from "@/features/settings/services/settings-service";
 
 export async function generateMetadata(): Promise<Metadata> {
   try {
-    const siteInfo = await getSiteInfo();
+    const siteInfo = await SettingsService.getAllSettings();
     const description = "Türkiye'nin en büyük anime izleme platformu. HD kalitede binlerce anime serisi ve filmi. Türkçe altyazılı anime arşivi.";
 
     return {

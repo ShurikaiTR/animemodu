@@ -1,8 +1,9 @@
 "use client";
 
-import { User, ImageIcon, Upload } from "lucide-react";
-import { Label } from "@/shared/components/label";
+import { ImageIcon, Upload,User } from "lucide-react";
+
 import { Button } from "@/shared/components/button";
+import { Label } from "@/shared/components/label";
 import { cn } from "@/shared/lib/utils";
 import type { ProfileRow } from "@/shared/types/helpers";
 

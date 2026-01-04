@@ -1,7 +1,8 @@
 "use client";
 
-import { cn } from "@/shared/lib/utils";
 import { Layers } from "lucide-react";
+
+import { cn } from "@/shared/lib/utils";
 
 interface SeasonTabsProps {
     seasons: number[];

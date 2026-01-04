@@ -1,6 +1,7 @@
 "use client";
 
-import { Type, FileText } from "lucide-react";
+import { FileText,Type } from "lucide-react";
+
 import { FormField } from "@/shared/components/FormField";
 import { ImageUpload } from "@/shared/components/ImageUpload";
 

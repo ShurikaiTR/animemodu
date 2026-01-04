@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useTransition, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Heart } from "lucide-react";
-import { Button } from "@/shared/components/button";
-import { toggleFavorite, checkFavorite } from "@/features/profile/actions/favorites";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
-import { useAuthModal } from "@/shared/contexts/AuthModalContext";
+
+import { checkFavorite, toggleFavorite } from "@/features/profile/actions/list-actions";
+import { Button } from "@/shared/components/button";
 import { useAuth } from "@/shared/contexts/AuthContext";
+import { useAuthModal } from "@/shared/contexts/AuthModalContext";
 
 interface FavoriteButtonProps {
     animeId: string;
@@ -28,8 +29,8 @@ export default function FavoriteButton({ animeId, initialFavorite, variant = "fe
 
         const syncStatus = async () => {
             const result = await checkFavorite(animeId);
-            if (result.success) {
-                setIsFavorite(result.isFavorite);
+            if (result.success && "data" in result) {
+                setIsFavorite(!!(result.data as { isFavorite: boolean })?.isFavorite);
             }
         };
 
@@ -48,9 +49,9 @@ export default function FavoriteButton({ animeId, initialFavorite, variant = "fe
         startTransition(async () => {
             const result = await toggleFavorite(animeId);
             if (result.success) {
-                // Sunucudan gelen gerçek durumu kullan
-                setIsFavorite(result.isFavorite ?? newFavorite);
-                toast.success(result.isFavorite ? "Favorilere eklendi" : "Favorilerden çıkarıldı");
+                const updatedIsFavorite = (result.data as { isFavorite: boolean })?.isFavorite;
+                setIsFavorite(updatedIsFavorite ?? newFavorite);
+                toast.success(updatedIsFavorite ? "Favorilere eklendi" : "Favorilerden çıkarıldı");
                 // Client-side router cache'i invalidate et
                 router.refresh();
             } else {

@@ -1,7 +1,8 @@
 
-import Link from "next/link";
+import { Bell, Clock, Play } from "lucide-react";
 import Image from "next/image";
-import { Clock, Bell, Play } from "lucide-react";
+import Link from "next/link";
+
 import { Button } from "@/shared/components/button";
 import { getImageUrl } from "@/shared/lib/tmdb";
 

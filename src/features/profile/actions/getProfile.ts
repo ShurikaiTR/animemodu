@@ -1,7 +1,7 @@
 "use server";
 
 import { createPublicClient } from "@/shared/lib/supabase/server";
-import type { SocialMediaLinks, ProfileRow } from "@/shared/types/helpers";
+import type { ProfileRow,SocialMediaLinks } from "@/shared/types/helpers";
 
 /** Profil veri transformasyonu */
 function transformProfile(profile: ProfileRow) {

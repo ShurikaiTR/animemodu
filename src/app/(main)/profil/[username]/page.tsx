@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
-import { createClient } from "@/shared/lib/supabase/server";
-import { getUserProfile } from "@/features/profile/actions/getProfile";
-import { getUserWatchList } from "@/features/profile/actions/userList";
-import { getUserFavorites } from "@/features/profile/actions/favorites";
+
 import { getUserActivities } from "@/features/profile/actions/activities";
-import { getFollowStatus, getFollowCounts } from "@/features/profile/actions/followQueries";
+import { getFollowCounts, getFollowStatus } from "@/features/profile/actions/follow-actions";
+import { getUserProfile } from "@/features/profile/actions/getProfile";
+import { getUserWatchList } from "@/features/profile/actions/list-actions";
+import { getUserFavorites } from "@/features/profile/actions/list-actions";
 import ProfileLayout from "@/features/profile/components/ProfileLayout";
-import type { WatchListItem, FavoriteItem, Activity } from "@/shared/types/helpers";
+import { createClient } from "@/shared/lib/supabase/server";
+import type { Activity, FavoriteItem, WatchListItem } from "@/shared/types/helpers";
 
 // Force dynamic rendering - no caching
 export const dynamic = "force-dynamic";
@@ -37,14 +38,16 @@ export default async function PublicProfilePage({ params }: PageProps) {
         getUserFavorites(profile.id),
         getUserActivities(profile.id),
         getFollowCounts(profile.id),
-        isOwnProfile ? Promise.resolve({ success: true, isFollowing: false }) : getFollowStatus(profile.id),
+        isOwnProfile ? Promise.resolve({ success: true, data: { isFollowing: false } }) : getFollowStatus(profile.id),
     ]);
 
-    const watchListItems: WatchListItem[] = watchListResult.success ? watchListResult.data : [];
-    const favoriteItems: FavoriteItem[] = favoritesResult.success ? favoritesResult.data : [];
-    const activities: Activity[] = activitiesResult.success ? activitiesResult.data : [];
-    const followCounts = followCountsResult.success ? followCountsResult.data : { followers: 0, following: 0 };
-    const isFollowing = followStatusResult.success ? followStatusResult.isFollowing : false;
+    const watchListItems: WatchListItem[] = (watchListResult.success && 'data' in watchListResult && watchListResult.data) ? watchListResult.data : [];
+    const favoriteItems: FavoriteItem[] = (favoritesResult.success && 'data' in favoritesResult && favoritesResult.data) ? favoritesResult.data : [];
+    const activities: Activity[] = (activitiesResult.success && 'data' in activitiesResult && activitiesResult.data) ? activitiesResult.data : [];
+    const followCounts = (followCountsResult.success && 'data' in followCountsResult && followCountsResult.data) ? followCountsResult.data : { followers: 0, following: 0 };
+    // TypeScript safe access
+    const followStatusData = (followStatusResult.success && 'data' in followStatusResult) ? followStatusResult.data : undefined;
+    const isFollowing = followStatusData ? followStatusData.isFollowing : false;
 
     const user = {
         ...profile,

@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import { useEffect,useState } from "react";
+import { createPortal } from "react-dom";
+
 import { useModalMount } from "@/shared/hooks/useModalMount";
-import AuthVisual from "./AuthVisual";
-import AuthForm from "./AuthForm";
+
 import type { AuthState } from "./authConfig";
+import AuthForm from "./AuthForm";
+import AuthVisual from "./AuthVisual";
 
 interface AuthModalProps {
     isOpen: boolean;

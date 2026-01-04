@@ -1,10 +1,11 @@
-import Link from "next/link";
+import { Film,Play } from "lucide-react";
 import Image from "next/image";
-import { Play, Film } from "lucide-react";
+import Link from "next/link";
+
 import { Button } from "@/shared/components/button";
-import { getImageUrl } from "@/shared/lib/tmdb";
-import WatchStatusDropdown from "@/shared/components/WatchStatusDropdown";
 import FavoriteButton from "@/shared/components/FavoriteButton";
+import WatchStatusDropdown from "@/shared/components/WatchStatusDropdown";
+import { getImageUrl } from "@/shared/lib/tmdb";
 
 interface FeaturedCardProps {
     anime: {

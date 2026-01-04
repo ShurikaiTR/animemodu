@@ -1,6 +1,7 @@
 "use client";
 
-import { Sparkles, Star, Calendar } from "lucide-react";
+import { Calendar,Sparkles, Star } from "lucide-react";
+
 import { Badge } from "@/shared/components/badge";
 import type { Database } from "@/shared/types/supabase";
 

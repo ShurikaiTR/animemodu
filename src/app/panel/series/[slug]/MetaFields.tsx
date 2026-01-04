@@ -1,7 +1,9 @@
+import { Calendar, Star } from "lucide-react";
 import { useRef } from "react";
+
 import { Input } from "@/shared/components/input";
 import { Label } from "@/shared/components/label";
-import { Calendar, Star } from "lucide-react";
+
 import type { EditFormData } from "./types";
 
 interface MetaFieldsProps {

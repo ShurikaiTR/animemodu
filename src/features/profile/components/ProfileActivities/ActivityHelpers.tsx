@@ -1,5 +1,6 @@
+import { Heart, MessageSquare, Play, Plus, RefreshCw, Star, Trash2, User,UserPlus } from "lucide-react";
 import Link from "next/link";
-import { MessageSquare, Play, Heart, Star, UserPlus, Plus, RefreshCw, Trash2, User } from "lucide-react";
+
 import type { Activity, ActivityType } from "@/shared/types/helpers";
 
 /** Aktivite tipine göre ikon döndürür */

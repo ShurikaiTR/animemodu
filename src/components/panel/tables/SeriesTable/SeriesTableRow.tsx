@@ -1,9 +1,10 @@
 "use client";
 
 import type { Database } from "@/shared/types/supabase";
-import { SeriesTableRowContent } from "./SeriesTableRowContent";
-import { SeriesTableRowRating, SeriesTableRowStatus } from "./SeriesTableRowCells";
+
 import { SeriesTableRowActions } from "./SeriesTableRowActions";
+import { SeriesTableRowRating, SeriesTableRowStatus } from "./SeriesTableRowCells";
+import { SeriesTableRowContent } from "./SeriesTableRowContent";
 
 type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];
 

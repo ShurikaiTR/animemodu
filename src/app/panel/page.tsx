@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
-import { Suspense } from "react";
 import { Plus } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
+
 import { Button } from "@/shared/components/button";
+
+import RecentAnimesServer from "./_components/RecentAnimesServer";
 import StatsCardsServer from "./_components/StatsCardsServer";
 import TopAnimesServer from "./_components/TopAnimesServer";
-import RecentAnimesServer from "./_components/RecentAnimesServer";
 import { StatsSkeleton, TableSkeleton } from "./loading";
 
 export const metadata: Metadata = {

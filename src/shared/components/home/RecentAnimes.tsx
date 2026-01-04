@@ -1,7 +1,8 @@
-import Container from "@/shared/components/container";
-import { MediaGridServer } from "@/features/anime/components/MediaGrid";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+
+import { MediaGridServer } from "@/features/anime/components/MediaGrid";
+import Container from "@/shared/components/container";
 
 export default async function RecentAnimes() {
     return (

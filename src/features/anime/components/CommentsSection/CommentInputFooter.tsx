@@ -1,8 +1,9 @@
 
 "use client";
 
+import { Eye, EyeOff,Send } from "lucide-react";
+
 import { Button } from "@/shared/components/button";
-import { Send, Eye, EyeOff } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 
 interface CommentInputFooterProps {

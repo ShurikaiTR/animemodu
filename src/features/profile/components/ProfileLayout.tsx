@@ -1,9 +1,9 @@
-import Container from "@/shared/components/container";
-import ProfileHeader from "@/features/profile/components/ProfileHeader";
 import AnimatedProfileHeader from "@/features/profile/components/AnimatedProfileHeader";
-import WatchListTabs from "@/features/profile/components/WatchListTabs";
 import ProfileActivities from "@/features/profile/components/ProfileActivities";
-import type { WatchListItem, FavoriteItem, ProfileRow, SocialMediaLinks, Activity } from "@/shared/types/helpers";
+import ProfileHeader from "@/features/profile/components/ProfileHeader";
+import WatchListTabs from "@/features/profile/components/WatchListTabs";
+import Container from "@/shared/components/container";
+import type { Activity,FavoriteItem, ProfileRow, SocialMediaLinks, WatchListItem } from "@/shared/types/helpers";
 
 export interface ProfileUser extends ProfileRow {
     email: string;

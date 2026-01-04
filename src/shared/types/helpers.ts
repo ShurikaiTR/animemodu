@@ -7,25 +7,25 @@
 
 // Database types
 export type {
-  AnimeRow, AnimeInsert, AnimeUpdate,
-  EpisodeRow, EpisodeInsert, EpisodeUpdate,
-  CommentRow, CommentInsert,
-  ReviewRow, ReviewInsert,
-  ProfileRow, ProfileInsert, ProfileUpdate,
-  UserAnimeListRow, UserAnimeListInsert,
-  UserFavoritesRow, UserFavoritesInsert,
-  ReportRow, ReportInsert, ReportUpdate,
-  SiteSettingRow, SiteSettingInsert, SiteSettingUpdate,
-  CommentLikeRow, ReviewLikeRow,
-  ReportWithDetails, Json,
-} from "./database-types";
+AnimeInsert,   AnimeRow, AnimeUpdate,
+CommentInsert,
+  CommentLikeRow,   CommentRow, EpisodeInsert,   EpisodeRow, EpisodeUpdate,
+Json,
+ProfileInsert,   ProfileRow, ProfileUpdate,
+ReportInsert,   ReportRow, ReportUpdate,
+  ReportWithDetails, ReviewInsert,
+ReviewLikeRow,
+  ReviewRow, SiteSettingInsert,   SiteSettingRow, SiteSettingUpdate,
+UserAnimeListInsert,
+  UserAnimeListRow, UserFavoritesInsert,
+  UserFavoritesRow, } from "./database-types";
 
 // Character types
 export type { Character, CharacterJson } from "./character";
 export { parseCharacters } from "./character";
 
 // External API types
-export type { TMDBItem, TMDBSeriesData, AniListEdge } from "./external-api";
+export type { AniListEdge,TMDBItem, TMDBSeriesData } from "./external-api";
 
 // Utility types
 export type { ErrorWithMessage, VideoJSPlayer } from "./utils";
@@ -37,12 +37,12 @@ export { DEFAULT_SITE_INFO } from "./site-settings";
 
 // Watch list types (from domain)
 export type {
-  SocialMediaLinks, WatchListItem, WatchListItemRaw,
-  WatchListAnime, WatchListAnimeMapped, WatchListResult,
-  FavoriteItem, UserFavoritesWithAnime,
+  FavoriteItem,   SocialMediaLinks, UserFavoritesWithAnime,
+  WatchListAnime, WatchListAnimeMapped, WatchListItem, WatchListItemRaw,
+WatchListResult,
 } from "./domain/watchlist";
 
 // Activity types (from domain)
 export type {
-  ActivityType, ActivityMetadata, ActivityRow, Activity,
-} from "./domain/activity";
+Activity,
+ActivityMetadata, ActivityRow,   ActivityType, } from "./domain/activity";

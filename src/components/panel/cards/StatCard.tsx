@@ -1,4 +1,5 @@
-import { LucideIcon, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { LucideIcon, Minus,TrendingDown, TrendingUp } from "lucide-react";
+
 import { cn } from "@/shared/lib/utils";
 
 interface StatCardProps {

@@ -1,8 +1,10 @@
 "use client";
 
-import { useRef } from "react";
 import Script from "next/script";
+import { useRef } from "react";
+
 import PlayerHeader from "@/features/anime/components/PlayerHeader";
+
 import { useVideoJSLoader } from "./useVideoJSLoader";
 import { useVideoJSPlayer } from "./useVideoJSPlayer";
 

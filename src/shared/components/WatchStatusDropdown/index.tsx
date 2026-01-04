@@ -1,22 +1,24 @@
 "use client";
 
-import { useState, useTransition, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
+
+import { checkWatchStatus, updateWatchStatus } from "@/features/profile/actions/list-actions";
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuTrigger,
     DropdownMenuLabel,
     DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from "@/shared/components/dropdown-menu";
-import { cn } from "@/shared/lib/utils";
-import { statusConfig, type WatchStatus } from "./config";
-import { updateWatchStatus, checkWatchStatus } from "@/features/profile/actions/userList";
-import { toast } from "sonner";
 import { useAuth } from "@/shared/contexts/AuthContext";
 import { useAuthModal } from "@/shared/contexts/AuthModalContext";
-import { StatusItem, RemoveItem } from "./items";
+import { cn } from "@/shared/lib/utils";
+
+import { statusConfig, type WatchStatus } from "./config";
+import { RemoveItem, StatusItem } from "./items";
 
 interface WatchStatusDropdownProps {
     animeId?: string;
@@ -37,8 +39,11 @@ export default function WatchStatusDropdown({ animeId, initialStatus, variant = 
 
         const syncStatus = async () => {
             const result = await checkWatchStatus(animeId);
-            if (result.success && result.status) {
-                setStatus(result.status as WatchStatus);
+            if (result.success && "data" in result) {
+                const updatedStatus = (result.data as { status: string | null })?.status;
+                if (updatedStatus) {
+                    setStatus(updatedStatus as WatchStatus);
+                }
             }
         };
 

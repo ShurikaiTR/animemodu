@@ -1,4 +1,5 @@
 import * as Icons from "lucide-react";
+
 import { PolicyData } from "./PrivacyContent";
 
 export const SECTION_PART_1: PolicyData[] = [

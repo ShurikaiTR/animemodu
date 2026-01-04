@@ -1,9 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import { getImageUrl } from "@/shared/lib/tmdb";
 import { Sparkles } from "lucide-react";
+import Image from "next/image";
+
 import { Badge } from "@/shared/components/badge";
+import { getImageUrl } from "@/shared/lib/tmdb";
 import type { Database } from "@/shared/types/supabase";
 
 type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];

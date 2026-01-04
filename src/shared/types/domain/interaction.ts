@@ -4,7 +4,7 @@
  */
 
 // Re-export database row types for convenience
-export type { CommentRow, ReviewRow, ProfileRow } from "../helpers";
+export type { CommentRow, ProfileRow,ReviewRow } from "../helpers";
 
 /**
  * Comment type for frontend display (transformed from database)

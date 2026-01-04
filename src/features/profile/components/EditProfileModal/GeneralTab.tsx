@@ -1,6 +1,7 @@
 "use client";
 
-import { User, Mail, MapPin, Calendar } from "lucide-react";
+import { Calendar,Mail, MapPin, User } from "lucide-react";
+
 import { Input } from "@/shared/components/input";
 import { Label } from "@/shared/components/label";
 import type { ProfileRow } from "@/shared/types/helpers";

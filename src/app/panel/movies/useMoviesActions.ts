@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
+
+import { deleteAnime } from "@/features/anime/actions/delete-actions"; // Action is generic enough
+import { getErrorMessage,logError } from "@/shared/lib/errors";
 import { createClient } from "@/shared/lib/supabase/client";
-import { logError, getErrorMessage } from "@/shared/lib/errors";
-import { deleteAnime } from "@/features/anime/actions/deleteAnime"; // Action is generic enough
 import type { Database } from "@/shared/types/supabase";
 
 type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];

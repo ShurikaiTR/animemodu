@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { Button } from "@/shared/components/button";
-import { updateSiteInfo } from "@/features/settings/actions";
-import { toast } from "sonner";
 import { Save } from "lucide-react";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
+
+import { updateSiteInfo } from "@/features/settings/actions/mutate";
+import { Button } from "@/shared/components/button";
+
 import SettingsTabs, { type SettingsTab } from "./SettingsTabs";
 import GeneralSettingsTab from "./tabs/GeneralSettingsTab";
 import SeoSettingsTab from "./tabs/SeoSettingsTab";

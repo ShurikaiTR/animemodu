@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { createReport } from "@/features/reports/actions";
+import { useEffect,useState } from "react";
 import { toast } from "sonner";
+
+import { createReport } from "@/features/reports/actions";
+
 import type { ReportReasonId } from "./ReportReasons";
 
 interface UseReportModalProps {

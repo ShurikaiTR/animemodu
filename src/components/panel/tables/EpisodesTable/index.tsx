@@ -1,6 +1,7 @@
 "use client";
 
 import { PlayCircle } from "lucide-react";
+
 import { EpisodesTableRow, type EpisodeWithAnime } from "./EpisodesTableRow";
 
 interface EpisodesTableProps {

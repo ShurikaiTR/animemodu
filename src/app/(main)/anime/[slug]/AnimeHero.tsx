@@ -1,10 +1,11 @@
-import Image from "next/image";
 import { Play, Star } from "lucide-react";
-import { getImageUrl } from "@/shared/lib/tmdb";
+import Image from "next/image";
+
 import Container from "@/shared/components/container";
 import FavoriteButton from "@/shared/components/FavoriteButton";
 import WatchStatusDropdown from "@/shared/components/WatchStatusDropdown";
 import type { WatchStatus } from "@/shared/components/WatchStatusDropdown/config";
+import { getImageUrl } from "@/shared/lib/tmdb";
 
 interface Genre {
   id: number;

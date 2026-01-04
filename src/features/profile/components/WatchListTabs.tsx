@@ -1,15 +1,17 @@
 "use client";
 
-import { useState, useTransition } from "react";
 import { Heart, Library } from "lucide-react";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
+
+import { updateWatchStatus } from "@/features/profile/actions/list-actions";
+import { toggleFavorite } from "@/features/profile/actions/list-actions";
+import EmptyState from "@/shared/components/EmptyState";
 import MovieCard from "@/shared/components/MovieCard";
+import type { FavoriteItem, WatchListItem } from "@/shared/types/helpers";
+
 import DesktopTabs from "./DesktopTabs";
 import MobileTabDropdown from "./MobileTabDropdown";
-import EmptyState from "@/shared/components/EmptyState";
-import { updateWatchStatus } from "@/features/profile/actions/userList";
-import { toggleFavorite } from "@/features/profile/actions/favorites";
-import { toast } from "sonner";
-import type { WatchListItem, FavoriteItem } from "@/shared/types/helpers";
 
 const TABS = [
     { id: "all", label: "Tümü" },
@@ -39,8 +41,11 @@ export default function WatchListTabs({ initialItems, favorites: initialFavorite
 
             startTransition(async () => {
                 const result = await toggleFavorite(animeId);
-                if (result.success && !result.isFavorite) {
-                    toast.success("Favorilerden çıkarıldı");
+                if (result.success) {
+                    const isFavorite = (result.data as { isFavorite: boolean })?.isFavorite;
+                    if (!isFavorite) {
+                        toast.success("Favorilerden çıkarıldı");
+                    }
                 } else {
                     setFavorites(initialFavorites); // Revert on error
                     toast.error(result.error || "Bir hata oluştu");

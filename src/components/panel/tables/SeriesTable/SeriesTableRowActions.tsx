@@ -1,6 +1,7 @@
 "use client";
 
-import { Sparkles, Edit2, Trash2, RefreshCw } from "lucide-react";
+import { Edit2, RefreshCw,Sparkles, Trash2 } from "lucide-react";
+
 import { Button } from "@/shared/components/button";
 import { cn } from "@/shared/lib/utils";
 import type { Database } from "@/shared/types/supabase";

@@ -1,5 +1,5 @@
+import { type GenreItem,GenresTable } from "@/components/panel/tables/GenresTable";
 import { createClient } from "@/shared/lib/supabase/server";
-import { GenresTable, type GenreItem } from "@/components/panel/tables/GenresTable";
 
 export async function GenresContent() {
     const supabase = await createClient();

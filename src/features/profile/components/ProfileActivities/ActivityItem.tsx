@@ -1,14 +1,15 @@
+import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Star } from "lucide-react";
+
 import { getImageUrl } from "@/shared/lib/tmdb/utils";
 import type { Activity } from "@/shared/types/helpers";
+
 import {
-    getActivityIcon,
-    getActivityText,
+    FollowContent,
     formatTimestamp,
-    FollowContent
-} from "./ActivityHelpers";
+    getActivityIcon,
+    getActivityText} from "./ActivityHelpers";
 
 interface ActivityItemProps {
     activity: Activity;

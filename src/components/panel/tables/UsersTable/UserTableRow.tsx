@@ -1,17 +1,19 @@
 "use client";
 
-import Image from "next/image";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
-import { MoreHorizontal, ShieldCheck, Trash2, Eye } from "lucide-react";
-import { Button } from "@/shared/components/button";
+import { Eye,MoreHorizontal, ShieldCheck, Trash2 } from "lucide-react";
+import Image from "next/image";
+
 import { Badge } from "@/shared/components/badge";
+import { Button } from "@/shared/components/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/shared/components/dropdown-menu";
+
 import type { UserItem } from "./types";
 
 interface UserTableRowProps {

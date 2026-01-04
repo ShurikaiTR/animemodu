@@ -1,8 +1,9 @@
-import type { EpisodeRow, TMDBSeriesData } from "@/shared/types/helpers";
-import type { Episode } from "@/shared/types/domain/anime";
-import { getSeasonDetails } from "@/shared/lib/tmdb/details";
-import { logError } from "@/shared/lib/errors";
 import type { SupabaseClient } from "@supabase/supabase-js";
+
+import { logError } from "@/shared/lib/errors";
+import { getSeasonDetails } from "@/shared/lib/tmdb/api";
+import type { Episode } from "@/shared/types/domain/anime";
+import type { EpisodeRow, TMDBSeriesData } from "@/shared/types/helpers";
 
 /**
  * Episode insert data type for database operations
@@ -54,6 +55,9 @@ export function orderEpisodesBySeasonAndNumber<T extends { order: (column: strin
     .order("episode_number", { ascending: true });
 }
 
+
+export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 /**
  * Fetches episodes from TMDB and inserts them into the database
  * Filters out future episodes and handles absolute numbering
@@ -72,7 +76,14 @@ export async function insertEpisodesFromTMDB(
   today.setHours(0, 0, 0, 0);
 
   for (let i = 1; i <= numberOfSeasons; i++) {
+    // Add small delay to prevent TMDB 429 errors
+    if (i > 1) await delay(200);
+
     const seasonData = await getSeasonDetails(tmdbId, i) as TMDBSeriesData | null;
+
+    // If season data is missing, we should probably throw an error in strict mode,
+    // but for now continuing allows partial insertion.
+    // However, if the API explicitly fails, getSeasonDetails currently returns null.
     if (!seasonData?.episodes) continue;
 
     const seasonEpisodes = seasonData.episodes
@@ -113,7 +124,8 @@ export async function insertEpisodesFromTMDB(
 
   if (error) {
     logError("insertEpisodesFromTMDB", error);
-    return { insertedCount: 0 };
+    // Throw error to trigger rollback in the parent function
+    throw new Error(`Failed to insert episodes: ${error.message}`);
   }
 
   return { insertedCount: allEpisodes.length };

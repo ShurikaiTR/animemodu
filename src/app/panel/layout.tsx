@@ -1,9 +1,10 @@
 "use client";
 
-import { Suspense, type ReactNode } from "react";
-import AdminSidebar from "@/components/panel/layout/AdminSidebar";
-import AdminHeader from "@/components/panel/layout/AdminHeader";
+import { type ReactNode,Suspense } from "react";
+
 import { AdminProvider } from "@/components/panel/layout/AdminContext";
+import AdminHeader from "@/components/panel/layout/AdminHeader";
+import AdminSidebar from "@/components/panel/layout/AdminSidebar";
 
 interface AdminLayoutProps {
     children: ReactNode;

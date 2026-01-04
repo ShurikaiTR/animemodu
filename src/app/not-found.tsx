@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
 import { Button } from "@/shared/components/button";
 
 export default function NotFound() {

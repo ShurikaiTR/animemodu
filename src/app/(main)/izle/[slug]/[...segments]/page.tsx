@@ -1,10 +1,12 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
-import { getSiteInfo } from "@/features/settings/actions";
+import { Suspense } from "react";
+
+import { SettingsService } from "@/features/settings/services/settings-service";
 import { getAnimeBySlug } from "@/shared/lib/anime/queries";
 import { getImageUrl } from "@/shared/lib/tmdb";
-import VideoPlayerServer from "./VideoPlayerServer";
+
 import Loading from "./loading";
+import VideoPlayerServer from "./VideoPlayerServer";
 
 interface PageProps {
     params: Promise<{ slug: string; segments: string[] }>;
@@ -35,7 +37,7 @@ function parseEpisodeInfo(segments: string[]): { season: number; episode: number
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const siteInfo = await getSiteInfo();
+    const siteInfo = await SettingsService.getAllSettings();
     const { slug, segments } = await params;
     const dbAnime = await getAnimeBySlug(slug);
 

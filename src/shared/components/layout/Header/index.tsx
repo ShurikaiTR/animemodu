@@ -1,5 +1,7 @@
 import { Suspense } from "react";
-import { getSiteInfo } from "@/features/settings/actions";
+
+import { SettingsService } from "@/features/settings/services/settings-service";
+
 import HeaderClient from "./HeaderClient";
 
 /**
@@ -7,7 +9,7 @@ import HeaderClient from "./HeaderClient";
  * Suspense ile sarmalanarak 'blocking route' hatalarını önler.
  */
 async function HeaderServer() {
-    const siteInfo = await getSiteInfo();
+    const siteInfo = await SettingsService.getAllSettings();
 
     return (
         <HeaderClient

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
-import SettingsContent from "./SettingsContent";
+
 import SettingsLoading from "./loading";
+import SettingsContent from "./SettingsContent";
 
 export const metadata = {
     title: "Ayarlar - Admin Panel",

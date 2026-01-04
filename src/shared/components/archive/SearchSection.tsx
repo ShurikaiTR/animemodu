@@ -1,6 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
+
 import { Input } from "@/shared/components/input";
 
 interface SearchSectionProps {

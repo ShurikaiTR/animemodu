@@ -1,9 +1,10 @@
 
 "use client";
 
-import Link from "next/link";
-import { Badge } from "@/shared/components/badge";
 import { ShieldCheck, Sparkles } from "lucide-react";
+import Link from "next/link";
+
+import { Badge } from "@/shared/components/badge";
 import { cn } from "@/shared/lib/utils";
 
 interface CommentHeaderProps {

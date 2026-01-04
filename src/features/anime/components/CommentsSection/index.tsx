@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import CommentsHeader from "./CommentsHeader";
+
+import { useAuth } from "@/shared/contexts/AuthContext";
+
 import CommentInput from "./CommentInput";
 import CommentItem from "./CommentItem";
-import ReviewCard from "./ReviewCard";
-import { useComments } from "./useComments";
+import CommentsHeader from "./CommentsHeader";
 import { EmptyComments, EmptyReviews, SkeletonCard } from "./Placeholders";
-import { useAuth } from "@/shared/contexts/AuthContext";
+import ReviewCard from "./ReviewCard";
 import type { Comment, Review } from "./types";
+import { useComments } from "./useComments";
 
 interface CommentsSectionProps {
     animeId: string;

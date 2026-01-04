@@ -1,7 +1,9 @@
 "use client";
 
 import { Tv } from "lucide-react";
+
 import type { Database } from "@/shared/types/supabase";
+
 import { SeriesTableRow } from "./SeriesTableRow";
 
 type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];

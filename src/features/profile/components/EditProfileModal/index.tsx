@@ -1,17 +1,19 @@
 "use client";
 
+import { AnimatePresence,motion } from "framer-motion";
+import { Globe, Image as ImageIcon, User, X } from "lucide-react";
 import { useState, useTransition } from "react";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger, DialogClose } from "@/shared/components/dialog";
-import { User, Image as ImageIcon, Globe, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
+
+import { createOrUpdateProfile } from "@/features/profile/actions/mutate";
+import { Dialog, DialogClose,DialogContent, DialogTitle, DialogTrigger } from "@/shared/components/dialog";
+import type { ProfileRow } from "@/shared/types/helpers";
+
 import GeneralTab from "./GeneralTab";
 import ImagesTab from "./ImagesTab";
+import ModalActions from "./ModalActions";
 import SocialsTab from "./SocialsTab";
 import TabSidebar from "./TabSidebar";
-import ModalActions from "./ModalActions";
-import type { ProfileRow } from "@/shared/types/helpers";
-import { toast } from "sonner";
-import { createOrUpdateProfile } from "@/features/profile/actions/mutate";
 
 interface EditProfileModalProps {
     user: ProfileRow & {

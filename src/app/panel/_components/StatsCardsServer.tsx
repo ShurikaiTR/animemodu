@@ -1,7 +1,8 @@
-import { createClient } from "@/shared/lib/supabase/server";
+import { Film, MessageCircle, PlusCircle, Star } from "lucide-react";
+
 import StatCard from "@/components/panel/cards/StatCard";
-import { Film, PlusCircle, MessageCircle, Star } from "lucide-react";
-import { formatNumber, calculateChange, getDaysAgo } from "@/shared/lib/panel/utils";
+import { calculateChange, formatNumber, getDaysAgo } from "@/shared/lib/panel/utils";
+import { createClient } from "@/shared/lib/supabase/server";
 
 export default async function StatsCardsServer() {
   const supabase = await createClient();

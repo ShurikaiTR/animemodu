@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { MessageCircle, ShieldCheck,ThumbsUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ThumbsUp, MessageCircle, ShieldCheck } from "lucide-react";
-import { cn, getAvatarUrl } from "@/shared/lib/utils";
-import type { Reply } from "./types";
-import CommentInput from "./CommentInput";
+import { useState } from "react";
+
 import { Badge } from "@/shared/components/badge";
+import { cn, getAvatarUrl } from "@/shared/lib/utils";
+
+import CommentInput from "./CommentInput";
+import type { Reply } from "./types";
 
 interface ReplyItemProps {
     reply: Reply;

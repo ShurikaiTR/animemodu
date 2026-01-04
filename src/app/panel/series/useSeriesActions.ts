@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
+
+import { deleteAnime } from "@/features/anime/actions/delete-actions";
+import { updateEpisodes } from "@/features/anime/actions/update-actions";
+import { getErrorMessage, logError } from "@/shared/lib/errors";
 import { createClient } from "@/shared/lib/supabase/client";
-import { logError, getErrorMessage } from "@/shared/lib/errors";
-import { deleteAnime } from "@/features/anime/actions/deleteAnime";
-import { updateEpisodes } from "@/features/anime/actions/updateEpisodes";
 import type { Database } from "@/shared/types/supabase";
 
 type AnimeRow = Database["public"]["Tables"]["animes"]["Row"];
@@ -68,12 +69,15 @@ export function useSeriesActions({ onAnimesChange }: UseSeriesActionsOptions) {
         try {
             const result = await updateEpisodes(animeId);
 
-            if (result.success) {
-                if (result.addedCount > 0) {
-                    toast.success(`${result.addedCount} yeni bölüm eklendi! 🎉`);
+            if (result.success && result.data) {
+                const addedCount = (result.data as { addedCount: number }).addedCount;
+                if (addedCount > 0) {
+                    toast.success(`${addedCount} yeni bölüm eklendi! 🎉`);
                 } else {
                     toast.info("Güncelleme tamamlandı. Yeni bölüm bulunamadı.");
                 }
+            } else if (result.success) {
+                toast.info("Güncelleme tamamlandı.");
             } else {
                 toast.error(result.error || "Güncelleme başarısız.");
             }

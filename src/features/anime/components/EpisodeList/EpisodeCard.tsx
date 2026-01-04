@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import { Play } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
 import { cn, getWatchUrl } from "@/shared/lib/utils";
 import type { EpisodeListItem } from "@/shared/types/domain/anime";
 

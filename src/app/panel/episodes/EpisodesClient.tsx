@@ -1,16 +1,17 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { EpisodesTable } from "@/components/panel/tables/EpisodesTable";
-import { Input } from "@/shared/components/input";
 import { Search } from "lucide-react";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { deleteEpisode } from "@/features/anime/actions";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
+
+import { EpisodesTable } from "@/components/panel/tables/EpisodesTable";
 import type { EpisodeWithAnime } from "@/components/panel/tables/EpisodesTable/EpisodesTableRow";
+import { deleteEpisode } from "@/features/anime/actions";
 import { DeleteConfirmationModal } from "@/shared/components/DeleteConfirmationModal";
-import { Pagination } from "@/shared/components/Pagination";
 import EmptyState from "@/shared/components/EmptyState";
+import { Input } from "@/shared/components/input";
+import { Pagination } from "@/shared/components/Pagination";
 
 interface EpisodesClientProps {
     initialEpisodes: EpisodeWithAnime[];

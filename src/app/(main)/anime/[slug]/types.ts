@@ -3,13 +3,13 @@
  * Kept for backward compatibility with existing imports
  */
 export type {
-    Episode,
-    CastMember,
-    VideoResult,
-    AnimeDetailData,
     AnimeDetailClientProps,
+    AnimeDetailData,
+    CastMember,
     DatabaseAnime,
+    Episode,
     SimilarResult,
+    VideoResult,
 } from "@/shared/types/domain/anime";
 
 // Re-export Character type from central location

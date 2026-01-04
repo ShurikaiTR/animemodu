@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+
 import { CommentsContent } from "./CommentsContent";
 import CommentsLoading from "./loading";
 

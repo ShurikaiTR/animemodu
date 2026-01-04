@@ -1,7 +1,8 @@
 "use client";
 
-import { Button } from "@/shared/components/button";
 import { CheckCircle, Trash2 } from "lucide-react";
+
+import { Button } from "@/shared/components/button";
 
 interface ExistingReviewMessageProps {
     onDelete: () => void;

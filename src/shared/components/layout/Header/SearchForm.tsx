@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef,useState } from "react";
+
 import { cn } from "@/shared/lib/utils";
-import { SearchIcon, CloseIcon } from "./HeaderIcons";
+
+import { CloseIcon,SearchIcon } from "./HeaderIcons";
 import SearchResults from "./SearchResults";
 
 interface SearchResult {

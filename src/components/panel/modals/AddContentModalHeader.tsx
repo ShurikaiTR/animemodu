@@ -1,5 +1,6 @@
+import { Calendar,Film, Star } from "lucide-react";
 import Image from "next/image";
-import { Film, Star, Calendar } from "lucide-react";
+
 import { cn } from "@/shared/lib/utils";
 
 interface SearchResult {

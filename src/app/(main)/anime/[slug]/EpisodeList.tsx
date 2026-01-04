@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
 import { MonitorPlay } from "lucide-react";
-import { cn, getWatchUrl } from "@/shared/lib/utils";
+import { useEffect, useMemo,useRef, useState } from "react";
+
 import EpisodeCard from "@/shared/components/EpisodeCard";
 import ScrollButton from "@/shared/components/ScrollButton";
 import { getImageUrl } from "@/shared/lib/tmdb";
+import { cn, getWatchUrl } from "@/shared/lib/utils";
+
 import type { Episode } from "./types";
 
 interface EpisodeListProps {

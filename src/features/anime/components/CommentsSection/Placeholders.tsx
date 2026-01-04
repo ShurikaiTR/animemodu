@@ -1,4 +1,4 @@
-import { MessageCircle, Star, Loader2 } from "lucide-react";
+import { Loader2,MessageCircle, Star } from "lucide-react";
 
 export const EmptyComments = () => (
     <div className="py-16 text-center flex flex-col items-center justify-center">

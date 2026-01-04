@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { User } from "@supabase/supabase-js";
-import { LogOut, User as UserIcon, Settings, ChevronDown } from "lucide-react";
-import Link from "next/link";
+import { ChevronDown,LogOut, Settings, User as UserIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect,useState } from "react";
+
 import {
     DropdownMenu,
     DropdownMenuContent,

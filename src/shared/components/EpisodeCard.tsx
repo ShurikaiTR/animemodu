@@ -1,8 +1,9 @@
 "use client";
 
+import { Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Play } from "lucide-react";
+
 import { cn } from "@/shared/lib/utils";
 
 interface EpisodeCardProps {

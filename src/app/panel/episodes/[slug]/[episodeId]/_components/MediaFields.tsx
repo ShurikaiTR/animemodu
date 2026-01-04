@@ -1,9 +1,11 @@
 "use client";
 
+import { Film,Image as ImageIcon, Link as LinkIcon, Star } from "lucide-react";
 import Image from "next/image";
-import { Star, Image as ImageIcon, Link as LinkIcon, Film } from "lucide-react";
-import { FormField } from "./FormField";
+
 import type { EpisodeManagement } from "@/shared/types/domain/anime";
+
+import { FormField } from "./FormField";
 
 interface MediaFieldsProps {
     episode: EpisodeManagement;

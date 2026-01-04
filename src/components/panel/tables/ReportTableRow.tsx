@@ -1,14 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import { tr } from "date-fns/locale";
-import { CheckCircle, XCircle, Trash2 } from "lucide-react";
+import { CheckCircle, Trash2,XCircle } from "lucide-react";
+import Image from "next/image";
 
-import type { ReportWithDetails } from "@/shared/types/helpers";
 import { Button } from "@/shared/components/button";
 import { getImageUrl } from "@/shared/lib/tmdb";
-import { getStatusBadge, getReasonLabel, getAnimeTitle } from "./ReportsTableHelpers";
+import type { ReportWithDetails } from "@/shared/types/helpers";
+
+import { getAnimeTitle,getReasonLabel, getStatusBadge } from "./ReportsTableHelpers";
 
 interface ReportTableRowProps {
     item: ReportWithDetails;

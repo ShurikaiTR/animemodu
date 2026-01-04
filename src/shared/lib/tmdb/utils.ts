@@ -1,4 +1,4 @@
-import { TMDBDetailResult, Genre } from "./types";
+import { Genre,TMDBDetailResult } from "./types";
 
 export function getImageUrl(path: string | null, size: "w200" | "w300" | "w500" | "w780" | "original" = "w500"): string {
     if (!path) return "/img/placeholder.jpg";

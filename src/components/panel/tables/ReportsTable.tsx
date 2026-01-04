@@ -4,8 +4,9 @@ import { Flag } from "lucide-react";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
+import { deleteReport,updateReportStatus } from "@/features/reports/actions";
 import type { ReportWithDetails } from "@/shared/types/helpers";
-import { updateReportStatus, deleteReport } from "@/features/reports/actions";
+
 import { ReportTableRow } from "./ReportTableRow";
 
 interface ReportsTableProps {

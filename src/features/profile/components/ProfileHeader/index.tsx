@@ -1,13 +1,15 @@
-import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
+import Image from "next/image";
+
 import { Badge } from "@/shared/components/badge";
-import { getAvatarUrl } from "@/shared/lib/utils";
 import Container from "@/shared/components/container";
+import { getAvatarUrl } from "@/shared/lib/utils";
+import type { ProfileRow, SocialMediaLinks } from "@/shared/types/helpers";
+
 import ProfileActions from "./ProfileActions";
+import ProfileInfoPills from "./ProfileInfoPills";
 import ProfileSocials from "./ProfileSocials";
 import ProfileStats from "./ProfileStats";
-import ProfileInfoPills from "./ProfileInfoPills";
-import type { ProfileRow, SocialMediaLinks } from "@/shared/types/helpers";
 
 interface UserProfile extends ProfileRow {
     email: string;

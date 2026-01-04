@@ -1,10 +1,11 @@
 "use server";
 
-import { createClient } from "@/shared/lib/supabase/server";
-import { createAdminClient } from "@/shared/lib/supabase/admin";
 import { revalidatePath } from "next/cache";
-import { logError, getErrorMessage } from "@/shared/lib/errors";
-import { requireAdmin, isAuthError } from "@/shared/lib/auth/guards";
+
+import { isAuthError,requireAdmin } from "@/shared/lib/auth/guards";
+import { getErrorMessage,logError } from "@/shared/lib/errors";
+import { createAdminClient } from "@/shared/lib/supabase/admin";
+import { createClient } from "@/shared/lib/supabase/server";
 import { userIdSchema } from "@/shared/lib/validations/user";
 
 type DeleteUserResult = { success: true; deletedSelf: boolean } | { success: false; error: string };

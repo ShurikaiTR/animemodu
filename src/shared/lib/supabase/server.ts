@@ -2,8 +2,10 @@
 import { createServerClient } from '@supabase/ssr'
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
+
 import { Database } from '@/shared/types/supabase'
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config'
+
+import { SUPABASE_ANON_KEY,SUPABASE_URL } from './config'
 import { createServerCookieHandler } from './cookies'
 
 export async function createClient() {

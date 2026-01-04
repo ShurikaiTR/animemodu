@@ -1,2 +1,2 @@
-export { default as MediaGridServer, type MediaType, type EmptyIconType } from "./MediaGridServer";
+export { type EmptyIconType,default as MediaGridServer, type MediaType } from "./MediaGridServer";
 

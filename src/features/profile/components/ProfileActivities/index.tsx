@@ -1,7 +1,9 @@
 import { ChevronDown } from "lucide-react";
+
 import { Button } from "@/shared/components/button";
-import ActivityItem from "./ActivityItem";
 import type { Activity } from "@/shared/types/helpers";
+
+import ActivityItem from "./ActivityItem";
 
 interface ProfileActivitiesProps {
     activities: Activity[];

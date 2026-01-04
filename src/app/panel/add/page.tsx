@@ -1,11 +1,13 @@
 "use client";
 
+import { Loader2,Search } from "lucide-react";
 import { useState } from "react";
-import { Search, Loader2 } from "lucide-react";
-import { Input } from "@/shared/components/input";
-import { Button } from "@/shared/components/button";
+
 import { AddContentModal } from "@/components/panel/modals/AddContentModal";
 import { SearchResultItem } from "@/components/panel/tables/SearchResultItem";
+import { Button } from "@/shared/components/button";
+import { Input } from "@/shared/components/input";
+
 import type { SearchResult } from "../types";
 
 export default function AddAnimePage() {

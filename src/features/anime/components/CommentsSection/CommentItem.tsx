@@ -1,16 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
 import { Pin } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+
+import { useAuth } from "@/shared/contexts/AuthContext";
 import { cn, getAvatarUrl } from "@/shared/lib/utils";
-import type { Comment } from "./types";
+
+import CommentActions from "./CommentActions";
+import CommentHeader from "./CommentHeader";
 import CommentInput from "./CommentInput";
 import RepliesList from "./RepliesList";
 import SpoilerContent from "./SpoilerContent";
-import { useAuth } from "@/shared/contexts/AuthContext";
-import CommentActions from "./CommentActions";
-import CommentHeader from "./CommentHeader";
+import type { Comment } from "./types";
 import { useCommentActions } from "./useCommentActions";
 
 interface CommentItemProps {

@@ -1,6 +1,6 @@
-import type { SocialMediaLinks } from "@/shared/types/helpers";
-import { XIcon, InstagramIcon, DiscordIcon, RedditIcon, TelegramIcon } from "@/shared/components/SocialIcons";
+import { DiscordIcon, InstagramIcon, RedditIcon, TelegramIcon,XIcon } from "@/shared/components/SocialIcons";
 import { buildSocialUrl } from "@/shared/lib/socials";
+import type { SocialMediaLinks } from "@/shared/types/helpers";
 
 interface ProfileSocialsProps {
     socials?: SocialMediaLinks;

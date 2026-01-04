@@ -1,5 +1,6 @@
 import { Input } from "@/shared/components/input";
 import { Label } from "@/shared/components/label";
+
 import type { EditFormData } from "./types";
 
 interface MediaFieldsProps {

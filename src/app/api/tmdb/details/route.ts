@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { getAnimeDetails } from "@/shared/lib/tmdb";
-import { tmdbDetailsQuerySchema, parseSearchParams } from "@/shared/lib/validations/api";
+import { parseSearchParams,tmdbDetailsQuerySchema } from "@/shared/lib/validations/api";
 
 export async function GET(request: NextRequest) {
     const validation = parseSearchParams(request.nextUrl.searchParams, tmdbDetailsQuerySchema);

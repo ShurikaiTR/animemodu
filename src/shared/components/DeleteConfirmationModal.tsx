@@ -1,9 +1,10 @@
 "use client";
 
+import { AlertTriangle, Loader2,Trash2, X } from "lucide-react";
 import { createPortal } from "react-dom";
-import { X, Trash2, AlertTriangle, Loader2 } from "lucide-react";
-import { useModalMount } from "@/shared/hooks/useModalMount";
+
 import { Button } from "@/shared/components/button";
+import { useModalMount } from "@/shared/hooks/useModalMount";
 
 const ENTITY_CONFIG = {
     anime: {

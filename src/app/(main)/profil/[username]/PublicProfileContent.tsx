@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
-import { getUserProfile } from "@/features/profile/actions/getProfile";
-import { getUserWatchList } from "@/features/profile/actions/userList";
-import { getUserFavorites } from "@/features/profile/actions/favorites";
+
 import { getUserActivities } from "@/features/profile/actions/activities";
+import { getUserProfile } from "@/features/profile/actions/getProfile";
+import { getUserWatchList } from "@/features/profile/actions/list-actions";
+import { getUserFavorites } from "@/features/profile/actions/list-actions";
 import ProfileLayout from "@/features/profile/components/ProfileLayout";
-import type { WatchListItem, FavoriteItem, Activity } from "@/shared/types/helpers";
+import type { Activity, FavoriteItem, WatchListItem } from "@/shared/types/helpers";
 
 interface PublicProfileContentProps {
     username: string;
@@ -27,9 +28,9 @@ export default async function PublicProfileContent({ username }: PublicProfileCo
         getUserActivities(profile.id)
     ]);
 
-    const watchListItems: WatchListItem[] = watchListResult.success ? watchListResult.data : [];
-    const favoriteItems: FavoriteItem[] = favoritesResult.success ? favoritesResult.data : [];
-    const activities: Activity[] = activitiesResult.success ? activitiesResult.data : [];
+    const watchListItems: WatchListItem[] = (watchListResult.success && watchListResult.data) ? watchListResult.data : [];
+    const favoriteItems: FavoriteItem[] = (favoritesResult.success && favoritesResult.data) ? favoritesResult.data : [];
+    const activities: Activity[] = (activitiesResult.success && activitiesResult.data) ? activitiesResult.data : [];
 
     const user = {
         ...profile,

@@ -1,9 +1,10 @@
 "use server";
 
-import { createClient } from "@/shared/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+
+import { isAuthError,requireOwnerOrAdmin } from "@/shared/lib/auth/guards";
 import { logError } from "@/shared/lib/errors";
-import { requireOwnerOrAdmin, isAuthError } from "@/shared/lib/auth/guards";
+import { createClient } from "@/shared/lib/supabase/server";
 import { profileSchema } from "@/shared/lib/validations/profile";
 import type { SocialMediaLinks } from "@/shared/types/helpers";
 

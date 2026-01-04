@@ -1,10 +1,11 @@
 "use server";
 
-import { createClient, createPublicClient } from "@/shared/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+
+import { isAuthError,requireUser } from "@/shared/lib/auth/guards";
 import { logError } from "@/shared/lib/errors";
-import { requireUser, isAuthError } from "@/shared/lib/auth/guards";
-import type { Activity, ActivityType, ActivityMetadata, ActivityRow } from "@/shared/types/helpers";
+import { createClient, createPublicClient } from "@/shared/lib/supabase/server";
+import type { Activity, ActivityMetadata, ActivityRow,ActivityType } from "@/shared/types/helpers";
 
 /** Aktivite sonuç tipi */
 type ActivitiesResult =

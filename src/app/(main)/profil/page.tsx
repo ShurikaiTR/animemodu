@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+
 import ProfileContent from "@/features/profile/components/ProfileContent";
 import ProfileSkeleton from "@/features/profile/components/ProfileSkeleton";
 

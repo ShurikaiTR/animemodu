@@ -1,6 +1,7 @@
 "use client";
 
-import { Settings2, AlertTriangle, Users } from "lucide-react";
+import { AlertTriangle, Settings2, Users } from "lucide-react";
+
 import { Switch } from "@/shared/components/switch";
 
 interface FeatureSectionProps {

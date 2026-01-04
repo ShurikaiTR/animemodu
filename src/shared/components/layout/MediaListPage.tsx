@@ -1,5 +1,6 @@
-import { Suspense, type ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
+import { type ReactNode,Suspense } from "react";
+
 import Container from "@/shared/components/container";
 import MovieCardSkeleton from "@/shared/components/MovieCard/skeleton";
 

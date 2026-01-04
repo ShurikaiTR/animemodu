@@ -1,11 +1,13 @@
 "use client";
 
-import { createPortal } from "react-dom";
-import { useModalMount } from "@/shared/hooks/useModalMount";
 import { X } from "lucide-react";
-import ShareModalPreview from "./ShareModalPreview";
+import { createPortal } from "react-dom";
+
+import { useModalMount } from "@/shared/hooks/useModalMount";
+
 import ShareModalButtons from "./ShareModalButtons";
 import ShareModalCopyLink from "./ShareModalCopyLink";
+import ShareModalPreview from "./ShareModalPreview";
 
 interface ShareModalProps {
     isOpen: boolean;

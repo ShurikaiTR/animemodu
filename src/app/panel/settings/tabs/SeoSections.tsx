@@ -1,9 +1,11 @@
 "use client";
 
-import { Search, Home, Compass, Tv } from "lucide-react";
-import { SeoSection } from "./SeoComponents";
+import { Compass, Home, Search, Tv } from "lucide-react";
+
 import { FormField } from "@/shared/components/FormField";
 import { ImageUpload } from "@/shared/components/ImageUpload";
+
+import { SeoSection } from "./SeoComponents";
 
 interface SeoSectionProps {
     settings: Record<string, string>;

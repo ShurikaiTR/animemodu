@@ -1,9 +1,11 @@
 "use client";
 
-import { Info, Calendar, Clock, FileText } from "lucide-react";
-import { FormField } from "./FormField";
+import { Calendar, Clock, FileText,Info } from "lucide-react";
+
 import { cn } from "@/shared/lib/utils";
 import type { EpisodeManagement } from "@/shared/types/domain/anime";
+
+import { FormField } from "./FormField";
 
 interface BasicInfoFieldsProps {
     episode: EpisodeManagement;

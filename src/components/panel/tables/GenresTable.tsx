@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useTransition } from "react";
 import { Tags } from "lucide-react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { renameGenre, deleteGenre } from "@/features/anime/actions/genres";
+
+import { deleteGenre,renameGenre } from "@/features/anime/actions/meta-actions";
 import { DeleteConfirmationModal } from "@/shared/components/DeleteConfirmationModal";
-import { GenreInlineEdit } from "./GenreInlineEdit";
+
 import { GenreActions } from "./GenreActions";
+import { GenreInlineEdit } from "./GenreInlineEdit";
 
 export interface GenreItem {
     name: string;

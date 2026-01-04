@@ -1,15 +1,16 @@
 "use client";
 
-import Link from "next/link";
+import type { LucideIcon } from "lucide-react";
+import { ArrowLeft, FileText, Film, Flag, Layers,LayoutDashboard, LogOut, MessageSquare, Settings, Tags, Tv, Users } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-import { cn } from "@/shared/lib/utils";
-import { LayoutDashboard, Film, FileText, Users, MessageSquare, ArrowLeft, LogOut, Settings, Flag, Tags, Tv, Layers } from "lucide-react";
+
 import { Button } from "@/shared/components/button";
+import { cn } from "@/shared/lib/utils";
+
 import { useAdmin } from "./AdminContext";
 import { SidebarMenu } from "./SidebarMenu";
-
-import type { LucideIcon } from "lucide-react";
 
 type MenuItem = {
     title: string;

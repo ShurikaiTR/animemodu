@@ -1,13 +1,14 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
-import { cn } from "@/shared/lib/utils";
+
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/shared/components/dropdown-menu";
+import { cn } from "@/shared/lib/utils";
 
 interface TabItem {
     id: string;

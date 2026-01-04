@@ -1,12 +1,12 @@
 "use client";
 
+import { CalendarSeoSection,MoviesSeoSection } from "./SeoPageSections";
 import {
+    AnimesSeoSection,
+    DiscoverSeoSection,
     GlobalSeoSection,
     HomeSeoSection,
-    DiscoverSeoSection,
-    AnimesSeoSection,
 } from "./SeoSections";
-import { MoviesSeoSection, CalendarSeoSection } from "./SeoPageSections";
 import { AnimeDetailSeoSection, WatchSeoSection } from "./SeoTemplateSections";
 
 interface SeoSettingsTabProps {

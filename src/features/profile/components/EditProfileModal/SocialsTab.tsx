@@ -2,8 +2,8 @@
 
 import { Input } from "@/shared/components/input";
 import { Label } from "@/shared/components/label";
+import { DiscordIcon, InstagramIcon, RedditIcon, TelegramIcon,XIcon } from "@/shared/components/SocialIcons";
 import type { ProfileRow } from "@/shared/types/helpers";
-import { XIcon, InstagramIcon, DiscordIcon, RedditIcon, TelegramIcon } from "@/shared/components/SocialIcons";
 
 interface SocialsTabProps {
     user: ProfileRow & { socials?: { x?: string; instagram?: string; discord?: string; reddit?: string; telegram?: string } };

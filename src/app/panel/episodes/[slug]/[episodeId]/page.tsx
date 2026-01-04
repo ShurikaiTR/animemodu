@@ -1,7 +1,9 @@
-import { createClient } from "@/shared/lib/supabase/server";
 import { notFound, redirect } from "next/navigation";
-import { EditEpisodeForm } from "./EditEpisodeForm";
+
+import { createClient } from "@/shared/lib/supabase/server";
 import type { EpisodeManagement } from "@/shared/types/domain/anime";
+
+import { EditEpisodeForm } from "./EditEpisodeForm";
 
 interface PageProps {
     params: Promise<{ slug: string; episodeId: string }>;

@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { SeriesTable } from "@/components/panel/tables/SeriesTable";
-import { Input } from "@/shared/components/input";
-import { Button } from "@/shared/components/button";
-import { Search, Plus } from "lucide-react";
+import { Plus,Search } from "lucide-react";
 import Link from "next/link";
-import type { AnimeRow } from "../types";
+import { useState } from "react";
+
+import { SeriesTable } from "@/components/panel/tables/SeriesTable";
+import { Button } from "@/shared/components/button";
 import { DeleteConfirmationModal } from "@/shared/components/DeleteConfirmationModal";
-import { useSeriesActions } from "./useSeriesActions";
 import EmptyState from "@/shared/components/EmptyState";
+import { Input } from "@/shared/components/input";
+
+import type { AnimeRow } from "../types";
+import { useSeriesActions } from "./useSeriesActions";
 
 interface SeriesClientProps {
     initialAnimes: AnimeRow[];

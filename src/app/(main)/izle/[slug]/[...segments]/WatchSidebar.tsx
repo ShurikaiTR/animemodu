@@ -1,8 +1,9 @@
-import Link from "next/link";
-import Image from "next/image";
 import { Play } from "lucide-react";
-import { Badge } from "@/shared/components/badge";
+import Image from "next/image";
+import Link from "next/link";
+
 import EpisodeList from "@/features/anime/components/EpisodeList";
+import { Badge } from "@/shared/components/badge";
 import { getImageUrl } from "@/shared/lib/tmdb";
 import type { EpisodeListItem } from "@/shared/types/domain/anime";
 

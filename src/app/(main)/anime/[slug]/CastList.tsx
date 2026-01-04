@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
 import { Users } from "lucide-react";
+import { useRef } from "react";
+
 import CharacterCard from "@/shared/components/CharacterCard";
 import ScrollButton from "@/shared/components/ScrollButton";
 import type { Character } from "@/shared/types/helpers";

@@ -1,15 +1,17 @@
 "use client";
 
-import { useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { ArrowLeft, Loader2, Save, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { updateEpisode } from "@/features/anime/actions/updateEpisode";
-import { deleteEpisode } from "@/features/anime/actions/deleteEpisode";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { toast } from "sonner";
-import { Loader2, ArrowLeft, Save, Trash2 } from "lucide-react";
-import type { EpisodeManagement } from "@/shared/types/domain/anime";
-import { EpisodeFields } from "./EpisodeFields";
+
+import { deleteEpisode } from "@/features/anime/actions/delete-actions";
+import { updateEpisode } from "@/features/anime/actions/update-actions";
 import { Button } from "@/shared/components/button";
+import type { EpisodeManagement } from "@/shared/types/domain/anime";
+
+import { EpisodeFields } from "./EpisodeFields";
 
 interface EditEpisodeFormProps {
     episode: EpisodeManagement;

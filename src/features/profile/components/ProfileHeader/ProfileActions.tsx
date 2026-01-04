@@ -1,11 +1,12 @@
 "use client";
 
+import { Edit, Loader2, UserCheck, UserPlus } from "lucide-react";
 import { useState, useTransition } from "react";
-import { Edit, UserPlus, UserCheck, Loader2 } from "lucide-react";
-import { Button } from "@/shared/components/button";
-import EditProfileModal from "@/features/profile/components/EditProfileModal";
-import { toggleFollow } from "@/features/profile/actions/follows";
 import { toast } from "sonner";
+
+import { toggleFollow } from "@/features/profile/actions/follow-actions";
+import EditProfileModal from "@/features/profile/components/EditProfileModal";
+import { Button } from "@/shared/components/button";
 import type { ProfileRow } from "@/shared/types/helpers";
 
 interface ProfileActionsProps {
@@ -30,11 +31,14 @@ export default function ProfileActions({
         startTransition(async () => {
             const result = await toggleFollow(targetUserId);
 
-            if (result.success) {
-                setIsFollowing(result.isFollowing);
-                toast.success(result.isFollowing ? "Takip edildi" : "Takip bırakıldı");
+            if (result.success && 'data' in result && result.data) {
+                const newStatus = !!result.data.isFollowing;
+                setIsFollowing(newStatus);
+                toast.success(newStatus ? "Takip edildi" : "Takip bırakıldı");
             } else {
-                toast.error(result.error);
+                if (!result.success) {
+                    toast.error(result.error);
+                }
             }
         });
     };

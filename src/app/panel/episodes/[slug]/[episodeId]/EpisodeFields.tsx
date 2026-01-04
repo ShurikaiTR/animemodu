@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef,useState } from "react";
+
 import type { EpisodeManagement } from "@/shared/types/domain/anime";
+
 import { BasicInfoFields } from "./_components/BasicInfoFields";
 import { MediaFields } from "./_components/MediaFields";
 

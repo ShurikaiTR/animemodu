@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
-import { getImageUrl } from "@/shared/lib/tmdb";
-import { createClient } from "@/shared/lib/supabase/server";
-import { parseCharacters } from "@/shared/types/helpers";
+import { Suspense } from "react";
+
+import { SettingsService } from "@/features/settings/services/settings-service";
+import Container from "@/shared/components/container";
 import { filterAiredEpisodes, mapEpisodeRowsToEpisodes, orderEpisodesBySeasonAndNumber } from "@/shared/lib/anime/episodes";
 import { getAnimeBySlug, getStructureType } from "@/shared/lib/anime/queries";
-import { getSiteInfo } from "@/features/settings/actions";
-import Container from "@/shared/components/container";
+import { createClient } from "@/shared/lib/supabase/server";
+import { getImageUrl } from "@/shared/lib/tmdb";
+import { parseCharacters } from "@/shared/types/helpers";
+
 import AnimeHero from "./AnimeHero";
-import EpisodeList from "./EpisodeList";
 import CastList from "./CastList";
-import { HeroSkeleton, EpisodesSkeleton, CastSkeleton } from "./loading";
+import EpisodeList from "./EpisodeList";
+import { CastSkeleton, EpisodesSkeleton, HeroSkeleton } from "./loading";
 
 const CommentsSection = dynamic(
   () => import("@/features/anime/components/CommentsSection"),
@@ -26,7 +28,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const dbAnime = await getAnimeBySlug(slug);
-  const siteInfo = await getSiteInfo();
+  const siteInfo = await SettingsService.getAllSettings();
 
   if (!dbAnime) {
     return { title: "Anime Bulunamadı" };

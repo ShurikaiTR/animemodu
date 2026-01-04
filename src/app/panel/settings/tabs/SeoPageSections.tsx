@@ -1,8 +1,10 @@
 "use client";
 
-import { Search, Film, Calendar } from "lucide-react";
-import { SeoSection } from "./SeoComponents";
+import { Calendar,Film, Search } from "lucide-react";
+
 import { FormField } from "@/shared/components/FormField";
+
+import { SeoSection } from "./SeoComponents";
 
 interface SeoSectionProps {
     settings: Record<string, string>;

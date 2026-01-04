@@ -1,8 +1,10 @@
 
+import type { LucideIcon } from "lucide-react";
+import { XCircle } from "lucide-react";
+
 import { DropdownMenuItem } from "@/shared/components/dropdown-menu";
 import { cn } from "@/shared/lib/utils";
-import { XCircle } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+
 import type { WatchStatus } from "./config";
 
 interface StatusItemProps {

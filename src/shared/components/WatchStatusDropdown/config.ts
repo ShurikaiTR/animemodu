@@ -1,4 +1,4 @@
-import { Eye, Check, Clock, XCircle, Pause } from "lucide-react";
+import { Check, Clock, Eye, Pause,XCircle } from "lucide-react";
 
 // Must match database enum: watching, completed, plan_to_watch, on_hold, dropped
 export type WatchStatus = "watching" | "completed" | "plan_to_watch" | "on_hold" | "dropped";

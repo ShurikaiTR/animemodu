@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+
 import type { VideoJSPlayer } from "@/shared/types/helpers";
+
 import { videoPlayerConfig } from "./playerConfig";
 
 interface UseVideoJSPlayerProps {

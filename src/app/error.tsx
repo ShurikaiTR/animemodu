@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
-import Image from "next/image";
 import { RotateCcw } from "lucide-react";
+import Image from "next/image";
+import { useEffect } from "react";
+
 import { Button } from "@/shared/components/button";
 import { logError } from "@/shared/lib/errors";
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, X } from "lucide-react";
+
 import { Button } from "@/shared/components/button";
 import { Input } from "@/shared/components/input";
 

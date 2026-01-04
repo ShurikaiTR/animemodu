@@ -1,8 +1,9 @@
 
 "use client";
 
+import { MessageCircle, Pin,ThumbsUp } from "lucide-react";
+
 import { cn } from "@/shared/lib/utils";
-import { ThumbsUp, MessageCircle, Pin } from "lucide-react";
 
 interface CommentActionsProps {
     liked: boolean;

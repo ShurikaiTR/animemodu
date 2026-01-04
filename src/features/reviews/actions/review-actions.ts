@@ -1,0 +1,99 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+
+import { safeAction } from "@/shared/lib/actions/wrapper";
+import { isAuthError, requireUser } from "@/shared/lib/auth/guards";
+import { formatZodError } from "@/shared/lib/validations/anime";
+
+import { type CreateReviewInput, createReviewSchema } from "../schemas/review-schemas";
+import { ReviewService } from "../services/review-service";
+
+/**
+ * Fetch reviews for an anime
+ */
+export async function getReviewsAction(animeId: string) {
+    return await safeAction(async () => {
+        return await ReviewService.getReviews(animeId);
+    }, "getReviews");
+}
+
+/**
+ * Get current user's review
+ */
+export async function getUserReviewAction(animeId: string) {
+    return await safeAction(async () => {
+        const auth = await requireUser();
+        if (isAuthError(auth)) return null;
+
+        return await ReviewService.getUserReview(animeId, auth.userId);
+    }, "getUserReview");
+}
+
+/**
+ * Create a review
+ */
+export async function createReviewAction(data: CreateReviewInput) {
+    return await safeAction(async () => {
+        const auth = await requireUser();
+        if (isAuthError(auth)) throw new Error(auth.error);
+
+        const validation = createReviewSchema.safeParse(data);
+        if (!validation.success) {
+            throw new Error(formatZodError(validation.error));
+        }
+
+        const { animeId, title, content, rating, isSpoiler } = validation.data;
+
+        await ReviewService.createReview({
+            anime_id: animeId,
+            user_id: auth.userId,
+            title: title || null,
+            content,
+            rating,
+            is_spoiler: isSpoiler,
+        });
+
+        revalidatePath(`/anime/${animeId}`);
+    }, "createReview");
+}
+
+/**
+ * Delete a review
+ */
+export async function deleteReviewAction(id: string) {
+    return await safeAction(async () => {
+        const auth = await requireUser();
+        if (isAuthError(auth)) throw new Error(auth.error);
+
+        const isAdmin = auth.role === "admin";
+        await ReviewService.deleteReview(id, auth.userId, isAdmin);
+
+        revalidatePath("/panel/comments");
+        revalidatePath("/"); // Home page might have lists
+    }, "deleteReview");
+}
+
+/**
+ * Toggle like (helpful)
+ */
+export async function toggleReviewLikeAction(reviewId: string) {
+    return await safeAction(async () => {
+        const auth = await requireUser();
+        if (isAuthError(auth)) throw new Error(auth.error);
+
+        return await ReviewService.toggleLike(reviewId, auth.userId);
+    }, "toggleReviewLike");
+}
+
+/**
+ * Check if user liked
+ */
+export async function checkUserLikedReviewAction(reviewId: string) {
+    return await safeAction(async () => {
+        const auth = await requireUser();
+        if (isAuthError(auth)) return false;
+
+        return await ReviewService.checkUserLiked(reviewId, auth.userId);
+    }, "checkUserLikedReview");
+}

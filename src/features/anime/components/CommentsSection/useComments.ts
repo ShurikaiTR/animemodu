@@ -1,6 +1,8 @@
 import { useCallback } from "react";
-import { fetchCommentsData } from "./useComments/fetchComments";
-import { fetchReviewsData } from "./useComments/fetchReviews";
+
+import { getCommentsAction } from "@/features/comments/actions/comment-actions";
+import { getReviewsAction } from "@/features/reviews/actions/review-actions";
+
 import type { Comment, Review } from "./types";
 
 interface UseCommentsReturn {
@@ -15,30 +17,48 @@ interface UseCommentsReturn {
 export function useComments(animeId: string, episodeId: string | undefined, activeTab: "comments" | "reviews"): UseCommentsReturn {
     const fetchComments = useCallback(async () => {
         if (activeTab === "comments") {
-            const { comments, totalCount } = await fetchCommentsData(animeId, episodeId);
-            return {
-                comments,
-                reviews: [],
-                totalCount
-            };
+            const result = await getCommentsAction(animeId, episodeId);
+            if (result.success && 'data' in result && result.data) {
+                return {
+                    comments: result.data.comments,
+                    reviews: [],
+                    totalCount: result.data.totalCount
+                };
+            }
+            return { comments: [], reviews: [], totalCount: 0 };
         } else {
-            const { reviews, totalCount } = await fetchReviewsData(animeId);
-            return {
-                comments: [],
-                reviews,
-                totalCount
-            };
+            const result = await getReviewsAction(animeId);
+            if (result.success && 'data' in result && result.data) {
+                return {
+                    comments: [],
+                    reviews: result.data.reviews,
+                    totalCount: result.data.totalCount
+                };
+            }
+            return { comments: [], reviews: [], totalCount: 0 };
         }
     }, [animeId, episodeId, activeTab]);
 
     const fetchCounts = useCallback(async () => {
         const [commentsResult, reviewsResult] = await Promise.all([
-            fetchCommentsData(animeId, episodeId),
-            fetchReviewsData(animeId)
+            getCommentsAction(animeId, episodeId),
+            getReviewsAction(animeId)
         ]);
+
+        let commentsCount = 0;
+        let reviewsCount = 0;
+
+        if (commentsResult.success && 'data' in commentsResult && commentsResult.data) {
+            commentsCount = commentsResult.data.totalCount;
+        }
+
+        if (reviewsResult.success && 'data' in reviewsResult && reviewsResult.data) {
+            reviewsCount = reviewsResult.data.totalCount;
+        }
+
         return {
-            comments: commentsResult.totalCount,
-            reviews: reviewsResult.totalCount
+            comments: commentsCount,
+            reviews: reviewsCount
         };
     }, [animeId, episodeId]);
 

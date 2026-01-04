@@ -1,8 +1,9 @@
 "use client";
 
-import { Settings } from "lucide-react";
-import { cn } from "@/shared/lib/utils";
 import type { LucideIcon } from "lucide-react";
+import { Settings } from "lucide-react";
+
+import { cn } from "@/shared/lib/utils";
 
 interface TabItem {
     id: string;

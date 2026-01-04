@@ -1,6 +1,7 @@
-import { createClient } from "@/shared/lib/supabase/server";
 import { NextRequest } from "next/server";
+
 import { getSearchParam, redirectTo, redirectWithError } from "@/shared/lib/auth/utils";
+import { createClient } from "@/shared/lib/supabase/server";
 
 export async function GET(request: NextRequest) {
     const token_hash = getSearchParam(request, "token_hash", "");

@@ -1,6 +1,7 @@
-import { createClient } from "@/shared/lib/supabase/server";
-import { DashboardTable } from "@/components/panel/tables/DashboardTable";
 import { Flame } from "lucide-react";
+
+import { DashboardTable } from "@/components/panel/tables/DashboardTable";
+import { createClient } from "@/shared/lib/supabase/server";
 
 interface TopItem {
   id: number;

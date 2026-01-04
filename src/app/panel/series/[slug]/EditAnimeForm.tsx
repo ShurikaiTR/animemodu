@@ -1,18 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
-import { createClient } from "@/shared/lib/supabase/client";
-import { Button } from "@/shared/components/button";
-import { ArrowLeft, Save, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2,Save } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
-import { EditSidebar } from "./EditSidebar";
-import { EditFormFields } from "./EditFormFields";
-import type { EditFormData } from "./types";
+
 import { updateAnime } from "@/features/anime/actions";
+import { Button } from "@/shared/components/button";
+import { createClient } from "@/shared/lib/supabase/client";
 import type { AnimeRow } from "@/shared/types/helpers";
+
+import { EditFormFields } from "./EditFormFields";
+import { EditSidebar } from "./EditSidebar";
+import type { EditFormData } from "./types";
 
 function SaveButton() {
     const { pending } = useFormStatus();

@@ -1,8 +1,9 @@
 "use client";
 
 import { Share2 } from "lucide-react";
+
 import { FormField } from "@/shared/components/FormField";
-import { XIcon, InstagramIcon, DiscordIcon, RedditIcon, TelegramIcon } from "@/shared/components/SocialIcons";
+import { DiscordIcon, InstagramIcon, RedditIcon, TelegramIcon,XIcon } from "@/shared/components/SocialIcons";
 import { extractUsername, SocialPlatform } from "@/shared/lib/socials";
 
 interface SocialSectionProps {

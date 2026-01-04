@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import { Play } from "lucide-react";
+import { useState } from "react";
+
 import { cn } from "@/shared/lib/utils";
-import SeasonTabs from "./EpisodeList/SeasonTabs";
-import EpisodeCard from "./EpisodeList/EpisodeCard";
 import type { EpisodeListItem } from "@/shared/types/domain/anime";
+
+import EpisodeCard from "./EpisodeList/EpisodeCard";
+import SeasonTabs from "./EpisodeList/SeasonTabs";
 
 interface EpisodeListProps {
     episodes: EpisodeListItem[];

@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import { getImageUrl } from "@/shared/lib/tmdb";
 
 interface WatchHeroProps {

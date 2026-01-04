@@ -1,5 +1,6 @@
-import { describe, it, expect, vi } from "vitest";
-import { isAuthError, type AuthResult, type AuthError } from "./guards";
+import { describe, expect, it, vi } from "vitest";
+
+import { type AuthError,type AuthResult, isAuthError } from "./guards";
 
 // Mock the module
 vi.mock("@/shared/lib/supabase/server", () => ({

@@ -1,17 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Layers,List, Loader2 } from "lucide-react";
+import { useEffect,useState } from "react";
 import { useFormStatus } from "react-dom";
-import { Dialog, DialogContent, DialogFooter, DialogTitle } from "@/shared/components/dialog";
+import { toast } from "sonner";
+
+import type { SearchResult } from "@/app/panel/types";
+import { addAnimeToDB } from "@/features/anime/actions";
 import { Button } from "@/shared/components/button";
+import { Dialog, DialogContent, DialogFooter, DialogTitle } from "@/shared/components/dialog";
 import { Input } from "@/shared/components/input";
 import { Label } from "@/shared/components/label";
-import { Loader2, List, Layers } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
+
 import { AddContentModalHeader } from "./AddContentModalHeader";
-import { addAnimeToDB } from "@/features/anime/actions";
-import { toast } from "sonner";
-import type { SearchResult } from "@/app/panel/types";
 
 interface AddContentModalProps {
     isOpen: boolean;

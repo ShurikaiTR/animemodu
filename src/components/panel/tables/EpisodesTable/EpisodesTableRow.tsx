@@ -1,10 +1,11 @@
 "use client";
 
+import { Calendar, Edit2, PlayCircle, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { getImageUrl } from "@/shared/lib/tmdb";
-import { Calendar, PlayCircle, Edit2, Trash2 } from "lucide-react";
+
 import { Button } from "@/shared/components/button";
+import { getImageUrl } from "@/shared/lib/tmdb";
 import type { Database } from "@/shared/types/supabase";
 
 // Defining a joined type for Episode with Anime

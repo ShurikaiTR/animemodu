@@ -1,8 +1,8 @@
 "use client";
 
+import { FeatureSection } from "./FeatureSection";
 import { SiteInfoSection } from "./SiteInfoSection";
 import { SocialSection } from "./SocialSection";
-import { FeatureSection } from "./FeatureSection";
 
 interface GeneralSettingsTabProps {
     settings: Record<string, string>;

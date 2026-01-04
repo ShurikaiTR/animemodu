@@ -1,7 +1,9 @@
-import Link from "next/link";
-import Image from "next/image";
-import { cn } from "@/shared/lib/utils";
 import { Play, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
+import { cn } from "@/shared/lib/utils";
+
 import WatchStatusDropdown from "../WatchStatusDropdown";
 import type { WatchStatus } from "../WatchStatusDropdown/config";
 import { RatingBadge } from "./RatingBadge";

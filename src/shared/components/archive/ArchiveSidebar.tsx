@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { ChevronDown,Filter, X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { cn } from "@/shared/lib/utils";
-import { Filter, X, ChevronDown } from "lucide-react";
+import { useState } from "react";
+
 import { Button } from "@/shared/components/button";
+import { cn } from "@/shared/lib/utils";
+
+import GenreSection from "./GenreSection";
 import SearchSection from "./SearchSection";
 import SortSection from "./SortSection";
-import GenreSection from "./GenreSection";
 
 interface ArchiveSidebarProps {
     genres: { label: string; value: string }[];

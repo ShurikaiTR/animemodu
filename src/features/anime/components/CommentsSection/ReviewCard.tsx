@@ -1,14 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Quote, ShieldCheck, Star, ThumbsUp } from "lucide-react";
 import Image from "next/image";
-import { Star, ThumbsUp, ShieldCheck, Quote } from "lucide-react";
-import { cn, getAvatarUrl } from "@/shared/lib/utils";
-import type { Review } from "./types";
-import { useAuth } from "@/shared/contexts/AuthContext";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { toggleReviewLike, checkUserLikedReview } from "./likesService";
+
+import { checkUserLikedReviewAction, toggleReviewLikeAction } from "@/features/reviews/actions/review-actions";
 import { Badge } from "@/shared/components/badge";
+import { useAuth } from "@/shared/contexts/AuthContext";
+import { cn, getAvatarUrl } from "@/shared/lib/utils";
+
+import type { Review } from "./types";
 
 interface ReviewCardProps {
     review: Review;
@@ -21,11 +23,17 @@ export default function ReviewCard({ review }: ReviewCardProps) {
     const [likeCount, setLikeCount] = useState(review.helpfulCount || 0);
     const [isLiking, setIsLiking] = useState(false);
 
-    useEffect(() => {
-        if (user) {
-            checkUserLikedReview(review.id, user.id).then(setLiked);
+    const checkLiked = useCallback(async () => {
+        if (!user) return;
+        const result = await checkUserLikedReviewAction(review.id);
+        if (result.success && 'data' in result) {
+            setLiked(!!result.data);
         }
     }, [user, review.id]);
+
+    useEffect(() => {
+        checkLiked();
+    }, [checkLiked]);
 
     const handleLike = async () => {
         if (!user) {
@@ -35,14 +43,15 @@ export default function ReviewCard({ review }: ReviewCardProps) {
         if (isLiking) return;
 
         setIsLiking(true);
-        const { liked: newLiked, error } = await toggleReviewLike(review.id, user);
+        const result = await toggleReviewLikeAction(review.id);
         setIsLiking(false);
 
-        if (error) {
-            toast.error(error);
+        if (!result.success) {
+            toast.error(result.error);
             return;
         }
 
+        const newLiked = (result.data as { liked: boolean }).liked;
         setLiked(newLiked);
         setLikeCount(prev => newLiked ? prev + 1 : prev - 1);
     };

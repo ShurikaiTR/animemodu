@@ -1,15 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback,useEffect, useState } from "react";
+import { toast } from "sonner";
+
+import { createCommentAction } from "@/features/comments/actions/comment-actions";
+import { createReviewAction, deleteReviewAction, getUserReviewAction } from "@/features/reviews/actions/review-actions";
 import { Textarea } from "@/shared/components/textarea";
-import { createClient } from "@/shared/lib/supabase/client";
-import { cn } from "@/shared/lib/utils";
 import { useAuth } from "@/shared/contexts/AuthContext";
-import ExistingReviewMessage from "./ExistingReviewMessage";
-import ReviewFormHeader from "./ReviewFormHeader";
-import LoginPrompt from "./LoginPrompt";
+import { cn } from "@/shared/lib/utils";
+
 import CommentInputFooter from "./CommentInputFooter";
-import { submitComment, submitReview } from "./submitHelpers";
+import ExistingReviewMessage from "./ExistingReviewMessage";
+import LoginPrompt from "./LoginPrompt";
+import ReviewFormHeader from "./ReviewFormHeader";
 
 interface CommentInputProps {
     activeTab: "comments" | "reviews";
@@ -29,33 +32,34 @@ export default function CommentInput({ activeTab, animeId, episodeId, parentId, 
     const [isSpoiler, setIsSpoiler] = useState(false);
     const [hasExistingReview, setHasExistingReview] = useState(false);
     const [existingReviewId, setExistingReviewId] = useState<string | null>(null);
-    const supabase = createClient();
+
+    const checkExistingReview = useCallback(async () => {
+        if (!user || activeTab !== "reviews") return;
+        const result = await getUserReviewAction(animeId);
+
+        if (result.success && result.data) {
+            setHasExistingReview(true);
+            setExistingReviewId(result.data.id);
+        } else {
+            setHasExistingReview(false);
+            setExistingReviewId(null);
+        }
+    }, [user, animeId, activeTab]);
 
     useEffect(() => {
-        async function checkExistingReview() {
-            if (!user || activeTab !== "reviews") return;
-            const { data } = await supabase
-                .from("reviews")
-                .select("id")
-                .eq("anime_id", animeId)
-                .eq("user_id", user.id)
-                .single();
-
-            if (data) {
-                setHasExistingReview(true);
-                setExistingReviewId((data as { id: string } | null)?.id ?? null);
-            } else {
-                setHasExistingReview(false);
-                setExistingReviewId(null);
-            }
-        }
         checkExistingReview();
-    }, [user, animeId, activeTab, supabase]);
+    }, [checkExistingReview]);
 
     const handleDeleteReview = async () => {
         if (!existingReviewId) return;
-        const { error } = await supabase.from("reviews").delete().eq("id", existingReviewId);
-        if (error) return;
+
+        const result = await deleteReviewAction(existingReviewId);
+        if (!result.success) {
+            toast.error(result.error);
+            return;
+        }
+
+        toast.success("İnceleme silindi");
         setHasExistingReview(false);
         setExistingReviewId(null);
         onCommentAdded();
@@ -65,27 +69,49 @@ export default function CommentInput({ activeTab, animeId, episodeId, parentId, 
 
     const handleSubmit = async () => {
         if (!content.trim()) return;
-        if (activeTab === "reviews" && rating === 0) return;
+        if (activeTab === "reviews" && rating === 0) {
+            toast.error("Lütfen bir puan verin");
+            return;
+        }
         setIsSubmitting(true);
 
         try {
-            let success = false;
             if (activeTab === "comments") {
-                success = await submitComment({
-                    supabase, animeId, userId: user.id, content, isSpoiler, episodeId, parentId
+                const result = await createCommentAction({
+                    animeId,
+                    episodeId,
+                    parentId,
+                    content: content.trim(),
+                    isSpoiler
                 });
-            } else {
-                success = await submitReview({
-                    supabase, animeId, userId: user.id, content, isSpoiler, rating, title
-                });
-            }
 
-            if (success) {
-                setContent("");
-                setTitle("");
-                setRating(0);
-                setIsSpoiler(false);
-                onCommentAdded();
+                if (result.success) {
+                    toast.success("Yorum gönderildi");
+                    setContent("");
+                    setIsSpoiler(false);
+                    onCommentAdded();
+                } else {
+                    toast.error(result.error || "Yorum gönderilirken bir hata oluştu");
+                }
+            } else {
+                const result = await createReviewAction({
+                    animeId,
+                    title: title.trim() || null,
+                    content: content.trim(),
+                    rating,
+                    isSpoiler
+                });
+
+                if (result.success) {
+                    toast.success("İnceleme paylaşıldı");
+                    setContent("");
+                    setTitle("");
+                    setRating(0);
+                    setIsSpoiler(false);
+                    onCommentAdded();
+                } else {
+                    toast.error(result.error || "İnceleme paylaşılırken bir hata oluştu");
+                }
             }
         } finally {
             setIsSubmitting(false);

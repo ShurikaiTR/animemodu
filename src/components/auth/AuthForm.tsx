@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { createClient } from "@/shared/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
+
+import { forgotPasswordAction, loginAction, registerAction } from "@/features/auth/actions/auth-actions";
+import { useAuth } from "@/shared/contexts/AuthContext";
+
 import { type AuthState } from "./authConfig";
-import AuthFormFields from "./AuthFormFields";
 import AuthFormActions from "./AuthFormActions";
+import AuthFormFields from "./AuthFormFields";
 
 interface AuthFormProps {
     authState: AuthState;
@@ -15,82 +18,65 @@ interface AuthFormProps {
 }
 
 export default function AuthForm({ authState, onStateChange, onClose }: AuthFormProps) {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [username, setUsername] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
-    const supabase = createClient();
+    const { refreshSession } = useAuth();
 
-    const handleAuth = async () => {
+
+    const handleAuth = async (formData: FormData) => {
         setError(null);
         setLoading(true);
         const startTime = Date.now();
 
         try {
+            let result;
+
+            // Pass null as prevState to mimic useActionState if needed, or simply pass formData
+            // The actions expect (prevState, formData) because they are designed for usage with useActionState/useFormState
             if (authState === "login") {
-                const { error } = await supabase.auth.signInWithPassword({ email, password });
-                if (error) throw error;
+                result = await loginAction(null, formData);
+            } else if (authState === "register") {
+                result = await registerAction(null, formData);
+            } else if (authState === "forgot-password") {
+                result = await forgotPasswordAction(null, formData);
+            }
 
-                // Minimum yükleme süresini bekle
-                const elapsed = Date.now() - startTime;
-                if (elapsed < 1500) {
-                    await new Promise(resolve => setTimeout(resolve, 1500 - elapsed));
-                }
+            if (!result?.success) {
+                throw new Error(result?.error || "Bir hata oluştu");
+            }
 
+            // Minimum yükleme süresini bekle (Animasyon için)
+            const elapsed = Date.now() - startTime;
+            if (elapsed < 1500) {
+                await new Promise(resolve => setTimeout(resolve, 1500 - elapsed));
+            }
+
+            if (authState === "login") {
+                await refreshSession(); // Client state'i güncelle
                 toast.success("Giriş başarılı!", {
                     description: `Hoş geldiniz!`,
                     duration: 3000,
                 });
-
                 onClose();
                 router.refresh();
             } else if (authState === "register") {
-                const { error } = await supabase.auth.signUp({
-                    email,
-                    password,
-                    options: {
-                        data: { full_name: username, username: username },
-                        emailRedirectTo: `${window.location.origin}/auth/callback`,
-                    },
-                });
-                if (error) throw error;
-
-                // Minimum yükleme süresini bekle
-                const elapsed = Date.now() - startTime;
-                if (elapsed < 1500) {
-                    await new Promise(resolve => setTimeout(resolve, 1500 - elapsed));
-                }
-
+                await refreshSession(); // Client state'i güncelle
                 toast.success("Kayıt başarılı!", {
-                    description: "Email adresinizi kontrol edin ve doğrulama linkine tıklayın.",
+                    description: result.data?.message || "Email adresinizi kontrol edin.",
                     duration: 5000,
                 });
-
                 onClose();
                 router.refresh();
             } else if (authState === "forgot-password") {
-                const { error } = await supabase.auth.resetPasswordForEmail(email, {
-                    redirectTo: `${window.location.origin}/auth/reset-password`,
-                });
-                if (error) throw error;
-
-                // Minimum yükleme süresini bekle
-                const elapsed = Date.now() - startTime;
-                if (elapsed < 1500) {
-                    await new Promise(resolve => setTimeout(resolve, 1500 - elapsed));
-                }
-
-                toast.success("Email gönderildi!", {
-                    description: "Şifre sıfırlama linki email adresinize gönderildi. Lütfen email'inizi kontrol edin.",
+                toast.success("İşlem başarılı!", {
+                    description: result.data?.message || "Email gönderildi.",
                     duration: 5000,
                 });
-
                 onClose();
             }
         } catch (err) {
-            // Hata durumunda da minimum süreyi bekle ki animasyon görünsün
+            // Hata durumunda da minimum süreyi bekle
             const elapsed = Date.now() - startTime;
             if (elapsed < 1500) {
                 await new Promise(resolve => setTimeout(resolve, 1500 - elapsed));
@@ -107,7 +93,7 @@ export default function AuthForm({ authState, onStateChange, onClose }: AuthForm
         <form
             onSubmit={(e) => {
                 e.preventDefault();
-                handleAuth();
+                handleAuth(new FormData(e.currentTarget));
             }}
             className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center relative bg-bg-dark"
         >
@@ -126,19 +112,12 @@ export default function AuthForm({ authState, onStateChange, onClose }: AuthForm
 
             <AuthFormFields
                 authState={authState}
-                email={email}
-                password={password}
-                username={username}
-                onEmailChange={setEmail}
-                onPasswordChange={setPassword}
-                onUsernameChange={setUsername}
             />
 
             <AuthFormActions
                 authState={authState}
                 loading={loading}
                 error={error}
-                onAuth={handleAuth}
                 onStateChange={onStateChange}
             />
         </form>

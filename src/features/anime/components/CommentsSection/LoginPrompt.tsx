@@ -1,9 +1,10 @@
 "use client";
 
+import { LogIn, Sparkles,UserPlus } from "lucide-react";
+
 import { Button } from "@/shared/components/button";
-import { LogIn, UserPlus, Sparkles } from "lucide-react";
-import { cn } from "@/shared/lib/utils";
 import { useAuthModal } from "@/shared/contexts/AuthModalContext";
+import { cn } from "@/shared/lib/utils";
 
 interface LoginPromptProps {
     compact?: boolean;

@@ -1,8 +1,9 @@
 "use client";
 
-import { Check } from "lucide-react";
-import { Button } from "@/shared/components/button";
 import { motion } from "framer-motion";
+import { Check } from "lucide-react";
+
+import { Button } from "@/shared/components/button";
 
 interface ModalActionsProps {
     isPending: boolean;

@@ -1,5 +1,6 @@
-import { writeFile, mkdir } from "fs/promises";
+import { mkdir,writeFile } from "fs/promises";
 import { join } from "path";
+
 import { logError } from "@/shared/lib/errors";
 
 const _UPLOADS_DIR = join(process.cwd(), "public", "uploads");

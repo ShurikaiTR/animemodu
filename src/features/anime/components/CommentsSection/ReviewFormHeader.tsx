@@ -1,7 +1,8 @@
 "use client";
 
-import { Input } from "@/shared/components/input";
 import { Star } from "lucide-react";
+
+import { Input } from "@/shared/components/input";
 import { cn } from "@/shared/lib/utils";
 
 interface ReviewFormHeaderProps {

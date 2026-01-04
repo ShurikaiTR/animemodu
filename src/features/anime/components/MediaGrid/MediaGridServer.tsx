@@ -1,8 +1,9 @@
-import { createPublicClient } from "@/shared/lib/supabase/server";
-import MovieCard from "@/shared/components/MovieCard";
+import { Film, Inbox,LayoutGrid } from "lucide-react";
+
 import EmptyState from "@/shared/components/EmptyState";
+import MovieCard from "@/shared/components/MovieCard";
+import { createPublicClient } from "@/shared/lib/supabase/server";
 import { getImageUrl } from "@/shared/lib/tmdb";
-import { LayoutGrid, Film, Inbox } from "lucide-react";
 
 export type MediaType = "tv" | "movie" | "all";
 export type EmptyIconType = "layout-grid" | "film" | "inbox";

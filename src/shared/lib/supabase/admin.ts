@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
+
 import { Database } from '@/shared/types/supabase'
-import { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } from './config'
+
+import { SUPABASE_SERVICE_ROLE_KEY,SUPABASE_URL } from './config'
 
 export function createAdminClient() {
   if (!SUPABASE_SERVICE_ROLE_KEY) {

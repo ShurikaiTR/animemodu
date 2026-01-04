@@ -1,25 +1,19 @@
-import { createClient } from "@/shared/lib/supabase/server";
-import SiteInfoForm from "./SiteInfoForm";
 import { ArrowLeft } from "lucide-react";
-import { Button } from "@/shared/components/button";
 import Link from "next/link";
 
+import { SettingsService } from "@/features/settings/services/settings-service";
+import { Button } from "@/shared/components/button";
+
+import SiteInfoForm from "./SiteInfoForm";
+
 export default async function SettingsContent() {
-    const supabase = await createClient();
+    let settingsMap: Record<string, string> = {};
 
-    const { data, error } = await supabase
-        .from("site_settings")
-        .select("*")
-        .in("category", ["general", "advanced", "social", "content", "seo"])
-        .order("id", { ascending: true });
-
-    // Settings'i key-value map'e çevir
-    type SettingData = { key: string; value: string | null };
-    const settingsMap: Record<string, string> = {};
-    if (!error && data) {
-        (data as SettingData[]).forEach((setting) => {
-            settingsMap[setting.key] = setting.value || "";
-        });
+    try {
+        settingsMap = await SettingsService.getAllSettings();
+    } catch (error) {
+        console.error("Settings load error:", error);
+        // Error state handled gracefully by empty map for form
     }
 
     return (

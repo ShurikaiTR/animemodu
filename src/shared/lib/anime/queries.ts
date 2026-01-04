@@ -1,5 +1,6 @@
-import { createClient } from "@/shared/lib/supabase/server";
 import { notFound } from "next/navigation";
+
+import { createClient } from "@/shared/lib/supabase/server";
 import type { AnimeRow } from "@/shared/types/helpers";
 
 

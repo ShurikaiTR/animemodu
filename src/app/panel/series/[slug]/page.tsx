@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+
 import { EditAnimeForm } from "./EditAnimeForm";
 import Loading from "./loading";
 

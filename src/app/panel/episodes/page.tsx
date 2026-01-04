@@ -1,6 +1,7 @@
-import { createClient } from "@/shared/lib/supabase/server";
-import EpisodesClient from "./EpisodesClient";
 import type { EpisodeWithAnime } from "@/components/panel/tables/EpisodesTable/EpisodesTableRow";
+import { createClient } from "@/shared/lib/supabase/server";
+
+import EpisodesClient from "./EpisodesClient";
 
 export const metadata = {
     title: "Bölümler - Admin Panel",

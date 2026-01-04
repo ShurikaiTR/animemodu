@@ -1,6 +1,7 @@
 import Container from "@/shared/components/container";
-import FeaturedCard from "./FeaturedCard";
 import type { AnimeRow } from "@/shared/types/helpers";
+
+import FeaturedCard from "./FeaturedCard";
 
 interface HeroSectionProps {
     featuredAnime?: AnimeRow | null;

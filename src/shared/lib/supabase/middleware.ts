@@ -1,8 +1,10 @@
 import { createServerClient } from '@supabase/ssr'
-import { NextResponse, type NextRequest } from 'next/server'
-import type { Database } from '@/shared/types/supabase'
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config'
+import { type NextRequest,NextResponse } from 'next/server'
+
+import type { Database } from '@/shared/types/supabase'
+
+import { SUPABASE_ANON_KEY,SUPABASE_URL } from './config'
 import { createMiddlewareCookieHandler } from './cookies'
 
 export async function updateSession(request: NextRequest) {

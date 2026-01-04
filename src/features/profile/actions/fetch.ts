@@ -1,7 +1,7 @@
 "use server";
 
-import { createClient } from "@/shared/lib/supabase/server";
 import { logError } from "@/shared/lib/errors";
+import { createClient } from "@/shared/lib/supabase/server";
 import { userIdSchema } from "@/shared/lib/validations/user";
 import type { ProfileRow } from "@/shared/types/helpers";
 

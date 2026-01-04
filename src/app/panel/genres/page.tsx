@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+
 import { GenresContent } from "./GenresContent";
 import GenresLoading from "./loading";
 

@@ -1,15 +1,16 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+
 import { Button } from "@/shared/components/button";
 import { cn } from "@/shared/lib/utils";
+
 import { AUTH_CONFIG, type AuthState } from "./authConfig";
 
 interface AuthFormActionsProps {
     authState: AuthState;
     loading: boolean;
     error: string | null;
-    onAuth: () => void;
     onStateChange: (state: AuthState) => void;
 }
 
@@ -17,7 +18,6 @@ export default function AuthFormActions({
     authState,
     loading,
     error,
-    onAuth: _onAuth,
     onStateChange
 }: AuthFormActionsProps) {
     const config = AUTH_CONFIG[authState];

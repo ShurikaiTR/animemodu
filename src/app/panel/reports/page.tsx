@@ -1,21 +1,34 @@
 
-import { Suspense } from "react";
-import { getReports } from "@/features/reports/actions";
-import { ReportsTable } from "@/components/panel/tables/ReportsTable";
 import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
+
+import { ReportsTable } from "@/components/panel/tables/ReportsTable";
+import { getReports } from "@/features/reports/actions";
 
 export default async function ReportsPage() {
-    const { data: reports, success, error } = await getReports(1, "all");
+    const result = await getReports(1, "all");
 
-    if (!success) {
+    if (!result.success) {
         return (
             <div className="p-6">
                 <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-xl">
-                    Hata: {error}
+                    Hata: {result.error}
                 </div>
             </div>
         );
     }
+
+    if (!('data' in result) || !result.data) {
+        return (
+            <div className="p-6">
+                <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-xl">
+                    Hata: Veri alınamadı.
+                </div>
+            </div>
+        );
+    }
+
+    const { items: reports } = result.data;
 
     return (
         <div className="flex flex-col gap-6 p-6 lg:p-8 max-w-screen-2xl mx-auto w-full">
