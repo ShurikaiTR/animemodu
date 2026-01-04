@@ -1,11 +1,9 @@
 "use server";
 
 import { safeAction } from "@/shared/lib/actions/wrapper";
-import { insertEpisodesFromTMDB } from "@/shared/lib/anime/episodes";
 import { isAuthError, requireAdmin } from "@/shared/lib/auth/guards";
 import { revalidateAnimeData } from "@/shared/lib/cache/revalidate";
 import { SlugService } from "@/shared/lib/slug-service";
-import { createClient } from "@/shared/lib/supabase/server";
 import { getAnimeDetails } from "@/shared/lib/tmdb/api";
 import { addAnimeSchema, formatZodError, parseFormData } from "@/shared/lib/validations/anime";
 
@@ -76,16 +74,13 @@ export async function addAnimeToDB(formData: FormData) {
             }
 
             // 7. Dependent Data (Episodes & Characters)
-            const supabase = await createClient();
-
             if (tmdbItem.media_type === "tv" && details?.number_of_seasons) {
-                await insertEpisodesFromTMDB(
-                    supabase,
-                    tmdbItem.id,
+                await AnimeService.importEpisodesFromTMDB({
+                    tmdbId: tmdbItem.id,
                     animeId,
-                    details.number_of_seasons,
-                    structureType
-                );
+                    numberOfSeasons: details.number_of_seasons,
+                    structureType: validation.data.structureType
+                });
             }
 
             const syncResult = await syncAnimeCharacters(animeId);

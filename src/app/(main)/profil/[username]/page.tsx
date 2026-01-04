@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
 
+import { getUserProfile } from "@/features/profile/actions";
 import { getUserActivities } from "@/features/profile/actions/activities";
 import { getFollowCounts, getFollowStatus } from "@/features/profile/actions/follow-actions";
-import { getUserProfile } from "@/features/profile/actions/getProfile";
 import { getUserWatchList } from "@/features/profile/actions/list-actions";
 import { getUserFavorites } from "@/features/profile/actions/list-actions";
 import ProfileLayout from "@/features/profile/components/ProfileLayout";
@@ -22,11 +22,12 @@ export default async function PublicProfilePage({ params }: PageProps) {
     await connection();
 
     const { username } = await params;
-    const profile = await getUserProfile(username);
+    const profileResult = await getUserProfile(username);
 
-    if (!profile) {
+    if (!profileResult.success || !profileResult.data) {
         notFound();
     }
+    const profile = profileResult.data;
 
     // Mevcut kullanıcıyı kontrol et (takip durumu için)
     const supabase = await createClient();

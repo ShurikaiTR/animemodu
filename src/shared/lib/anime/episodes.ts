@@ -1,9 +1,5 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
-
-import { logError } from "@/shared/lib/errors";
-import { getSeasonDetails } from "@/shared/lib/tmdb/api";
 import type { Episode } from "@/shared/types/domain/anime";
-import type { EpisodeRow, TMDBSeriesData } from "@/shared/types/helpers";
+import type { EpisodeRow } from "@/shared/types/helpers";
 
 /**
  * Episode insert data type for database operations
@@ -56,77 +52,3 @@ export function orderEpisodesBySeasonAndNumber<T extends { order: (column: strin
 }
 
 
-export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-/**
- * Fetches episodes from TMDB and inserts them into the database
- * Filters out future episodes and handles absolute numbering
- */
-export async function insertEpisodesFromTMDB(
-  supabase: SupabaseClient,
-  tmdbId: number,
-  animeId: string,
-  numberOfSeasons: number,
-  structureType: "seasonal" | "absolute"
-): Promise<{ insertedCount: number }> {
-  const allEpisodes: EpisodeInsertData[] = [];
-  let absoluteCounter = 1;
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  for (let i = 1; i <= numberOfSeasons; i++) {
-    // Add small delay to prevent TMDB 429 errors
-    if (i > 1) await delay(200);
-
-    const seasonData = await getSeasonDetails(tmdbId, i) as TMDBSeriesData | null;
-
-    // If season data is missing, we should probably throw an error in strict mode,
-    // but for now continuing allows partial insertion.
-    // However, if the API explicitly fails, getSeasonDetails currently returns null.
-    if (!seasonData?.episodes) continue;
-
-    const seasonEpisodes = seasonData.episodes
-      .filter((ep) => {
-        if (!ep.air_date) return false;
-        const episodeDate = new Date(ep.air_date);
-        episodeDate.setHours(0, 0, 0, 0);
-        return episodeDate <= today;
-      })
-      .map((ep) => {
-        const isAbsolute = structureType === "absolute";
-        const absoluteNum = isAbsolute ? absoluteCounter++ : null;
-
-        return {
-          anime_id: animeId,
-          tmdb_id: ep.id,
-          overview: ep.overview || null,
-          still_path: ep.still_path || null,
-          vote_average: ep.vote_average || null,
-          air_date: ep.air_date || null,
-          // Absolute modda: season_number = 1, episode_number = absolute numara
-          // Seasonal modda: TMDB'den gelen değerler
-          season_number: isAbsolute ? 1 : ep.season_number,
-          episode_number: isAbsolute ? absoluteNum! : ep.episode_number,
-          absolute_episode_number: absoluteNum ?? ep.episode_number,
-          duration: ep.runtime || null
-        };
-      });
-
-    allEpisodes.push(...seasonEpisodes);
-  }
-
-  if (allEpisodes.length === 0) {
-    return { insertedCount: 0 };
-  }
-
-  const { error } = await supabase.from("episodes").insert(allEpisodes);
-
-  if (error) {
-    logError("insertEpisodesFromTMDB", error);
-    // Throw error to trigger rollback in the parent function
-    throw new Error(`Failed to insert episodes: ${error.message}`);
-  }
-
-  return { insertedCount: allEpisodes.length };
-}

@@ -1,10 +1,8 @@
 import { redirect } from "next/navigation";
 
+import { getProfile, getUserFavorites,getUserWatchList } from "@/features/profile/actions";
 import { getUserActivities } from "@/features/profile/actions/activities";
 import { getFollowCounts } from "@/features/profile/actions/follow-actions";
-import { getUserProfileById } from "@/features/profile/actions/getProfile";
-import { getUserWatchList } from "@/features/profile/actions/list-actions";
-import { getUserFavorites } from "@/features/profile/actions/list-actions";
 import { createClient } from "@/shared/lib/supabase/server";
 import type { Activity, FavoriteItem, WatchListItem } from "@/shared/types/helpers";
 
@@ -22,17 +20,18 @@ export default async function ProfileContent() {
         redirect("/?login=true");
     }
 
-    const [profile, watchListResult, favoritesResult, activitiesResult, followCountsResult] = await Promise.all([
-        getUserProfileById(authUser.id),
+    const [profileResult, watchListResult, favoritesResult, activitiesResult, followCountsResult] = await Promise.all([
+        getProfile(authUser.id),
         getUserWatchList(authUser.id),
         getUserFavorites(authUser.id),
         getUserActivities(authUser.id),
         getFollowCounts(authUser.id),
     ]);
 
-    if (!profile) {
+    if (!profileResult.success || !profileResult.data) {
         redirect("/");
     }
+    const profile = profileResult.data;
 
     const watchListItems: WatchListItem[] = (watchListResult.success && watchListResult.data) ? watchListResult.data : [];
     const favoriteItems: FavoriteItem[] = (favoritesResult.success && favoritesResult.data) ? favoritesResult.data : [];

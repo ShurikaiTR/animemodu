@@ -1,6 +1,7 @@
 import { createClient } from "@/shared/lib/supabase/server";
 import { getImageUrl } from "@/shared/lib/tmdb/utils";
 import type { WatchStatus } from "@/shared/types/domain/watchlist";
+import type { ProfileRow, ProfileUpdate } from "@/shared/types/helpers";
 
 // Internal types for mapped data
 interface FavItem { id: string; anime_id: string; created_at: string; }
@@ -264,14 +265,41 @@ export const ProfileService = {
         };
     },
 
-    // Helper to get basic profile infos for activity
-    async getProfileBasic(userId: string) {
+    // --- Profile Management ---
+
+    async getProfileById(userId: string): Promise<ProfileRow | null> {
         const supabase = await createClient();
-        const { data } = await supabase
+        const { data, error } = await supabase
             .from("profiles")
-            .select("username")
+            .select("*")
             .eq("id", userId)
+            .maybeSingle();
+
+        if (error) throw error;
+        return data;
+    },
+
+    async upsertProfile(userId: string, data: ProfileUpdate): Promise<ProfileRow> {
+        const supabase = await createClient();
+        const { data: result, error } = await supabase
+            .from("profiles")
+            .upsert({ id: userId, ...data, updated_at: new Date().toISOString() })
+            .select()
             .single();
+
+        if (error) throw error;
+        return result;
+    },
+
+    async getProfileByUsername(username: string): Promise<ProfileRow | null> {
+        const supabase = await createClient();
+        const { data, error } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("username", username)
+            .maybeSingle();
+
+        if (error) throw error;
         return data;
     }
 };

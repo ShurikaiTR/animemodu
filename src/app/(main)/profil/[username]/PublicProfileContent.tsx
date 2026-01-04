@@ -1,10 +1,8 @@
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
 
+import { getUserFavorites,getUserProfile, getUserWatchList } from "@/features/profile/actions";
 import { getUserActivities } from "@/features/profile/actions/activities";
-import { getUserProfile } from "@/features/profile/actions/getProfile";
-import { getUserWatchList } from "@/features/profile/actions/list-actions";
-import { getUserFavorites } from "@/features/profile/actions/list-actions";
 import ProfileLayout from "@/features/profile/components/ProfileLayout";
 import type { Activity, FavoriteItem, WatchListItem } from "@/shared/types/helpers";
 
@@ -16,11 +14,12 @@ export default async function PublicProfileContent({ username }: PublicProfileCo
     // Force dynamic rendering - profil sayfası her zaman fresh data göstermeli
     await connection();
 
-    const profile = await getUserProfile(username);
+    const profileResult = await getUserProfile(username);
 
-    if (!profile) {
+    if (!profileResult.success || !profileResult.data) {
         notFound();
     }
+    const profile = profileResult.data;
 
     const [watchListResult, favoritesResult, activitiesResult] = await Promise.all([
         getUserWatchList(profile.id),

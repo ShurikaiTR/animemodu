@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache";
 
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireUser } from "@/shared/lib/auth/guards";
-import { createClient } from "@/shared/lib/supabase/server";
 
+import { ActivityService } from "../services/activity-service";
 import { ProfileService } from "../services/profile-service";
 
 /**
@@ -25,21 +25,20 @@ export async function toggleFollow(targetUserId: string) {
         const result = await ProfileService.toggleFollow(currentUserId, targetUserId);
 
         const [targetProfile, currentProfile] = await Promise.all([
-            ProfileService.getProfileBasic(targetUserId),
-            ProfileService.getProfileBasic(currentUserId)
+            ProfileService.getProfileById(targetUserId),
+            ProfileService.getProfileById(currentUserId)
         ]);
 
         if (result.isFollowing) {
-            const supabase = await createClient();
             await Promise.all([
-                supabase.from("user_activities").insert({
-                    user_id: currentUserId,
-                    activity_type: "follow_add",
+                ActivityService.createActivity({
+                    userId: currentUserId,
+                    activityType: "follow_add",
                     metadata: { target_user_id: targetUserId, target_username: targetProfile?.username || "Kullanıcı" },
                 }),
-                supabase.from("user_activities").insert({
-                    user_id: targetUserId,
-                    activity_type: "followed_by",
+                ActivityService.createActivity({
+                    userId: targetUserId,
+                    activityType: "followed_by",
                     metadata: { follower_user_id: currentUserId, follower_username: currentProfile?.username || "Kullanıcı" },
                 }),
             ]);

@@ -1,9 +1,11 @@
 "use server";
 
+import { AnimeService } from "@/features/anime/services/anime-service";
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { createClient } from "@/shared/lib/supabase/server";
 import { type CreateReportInput, createReportSchema } from "@/shared/lib/validations/api";
-import type { ReportInsert } from "@/shared/types/helpers";
+
+import { ReportService } from "../services/report-service";
 
 type ReportReason = 'playback' | 'audio' | 'subtitle' | 'wrong';
 
@@ -23,62 +25,36 @@ export async function createReport(data: CreateReportInput) {
         const { data: { user } } = await supabase.auth.getUser();
 
         // Rate limiting: Check reports in last hour
-        const oneHourAgo = new Date(Date.now() - RATE_LIMIT_WINDOW_HOURS * 60 * 60 * 1000).toISOString();
+        const since = new Date(Date.now() - RATE_LIMIT_WINDOW_HOURS * 60 * 60 * 1000).toISOString();
+        const recentReports = await ReportService.getRecentCount({
+            userId: user?.id,
+            animeId: validatedData.animeId,
+            episodeNumber: validatedData.episodeNumber,
+            since
+        });
 
-        let rateLimitQuery = supabase
-            .from("reports")
-            .select("id", { count: "exact", head: true })
-            .gte("created_at", oneHourAgo);
-
-        if (user) {
-            // Logged-in user: limit by user_id
-            rateLimitQuery = rateLimitQuery.eq("user_id", user.id);
-        } else {
-            // Anonymous: limit by anime_id + episode to prevent spam on same content
-            rateLimitQuery = rateLimitQuery
-                .is("user_id", null)
-                .eq("anime_id", validatedData.animeId);
-
-            if (validatedData.episodeNumber) {
-                rateLimitQuery = rateLimitQuery.eq("episode_number", validatedData.episodeNumber);
-            }
-        }
-
-        const { count: recentReports } = await rateLimitQuery;
-
-        if ((recentReports || 0) >= RATE_LIMIT_MAX_REPORTS) {
+        if (recentReports >= RATE_LIMIT_MAX_REPORTS) {
             throw new Error(user
                 ? "Çok fazla bildirim gönderdiniz. Lütfen 1 saat sonra tekrar deneyin."
                 : "Bu içerik için çok fazla anonim bildirim gönderilmiş. Lütfen giriş yapın veya daha sonra tekrar deneyin.");
         }
 
         // Fetch anime title for normalized data
-        const { data: anime, error: animeError } = await supabase
-            .from('animes')
-            .select('title')
-            .eq('id', validatedData.animeId)
-            .single();
-
-        if (animeError || !anime) {
+        const anime = await AnimeService.getById(validatedData.animeId);
+        if (!anime) {
             throw new Error("Anime bulunamadı.");
         }
 
-        const reportPayload: ReportInsert = {
+        await ReportService.create({
             anime_id: validatedData.animeId,
             anime_title: anime.title,
             episode_number: validatedData.episodeNumber,
             season_number: validatedData.seasonNumber,
-            reason: validatedData.reason as ReportReason,
+            reason: validatedData.reason,
             description: validatedData.description || null,
             user_id: user?.id || null,
             status: 'pending',
-        };
-
-        const { error } = await supabase.from("reports").insert(reportPayload);
-
-        if (error) {
-            throw new Error("Bildirim oluşturulurken bir hata oluştu.");
-        }
+        });
 
         return { success: true };
     }, "createReport");
