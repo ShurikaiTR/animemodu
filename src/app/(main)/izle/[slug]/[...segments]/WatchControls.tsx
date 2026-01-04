@@ -26,6 +26,7 @@ export default function WatchControls({
                     <Link href={prevEpisodeUrl}>
                         <Button
                             variant="ghost"
+                            aria-label="Önceki bölüme git"
                             className="bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 text-white hover:text-primary rounded-xl h-10 px-4 sm:px-5 transition-all duration-300 group"
                         >
                             <ChevronLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
@@ -42,6 +43,7 @@ export default function WatchControls({
                 {nextEpisodeUrl ? (
                     <Link href={nextEpisodeUrl}>
                         <Button
+                            aria-label="Sonraki bölüme git"
                             className="bg-primary hover:bg-primary-hover text-white hover:scale-[1.02] border-none rounded-xl h-10 px-4 sm:px-6 transition-all duration-300 shadow-[0_0_20px_-5px_rgba(47,128,237,0.4)] group"
                         >
                             <span className="hidden sm:inline font-bold">Sonraki Bölüm</span>
@@ -62,6 +64,7 @@ export default function WatchControls({
                 <Button
                     variant="ghost"
                     onClick={onShare}
+                    aria-label="Bu bölümü paylaş"
                     className="gap-2 text-text-main/80 hover:text-primary hover:bg-primary/10 rounded-xl h-10 px-4 transition-all duration-300"
                 >
                     <Share2 className="w-4 h-4" />
@@ -71,6 +74,7 @@ export default function WatchControls({
                 <Button
                     variant="ghost"
                     onClick={onReport}
+                    aria-label="Hata bildir"
                     className="gap-2 text-text-main/80 hover:text-red-500 hover:bg-red-500/10 rounded-xl h-10 px-4 transition-all duration-300"
                 >
                     <Flag className="w-4 h-4" />

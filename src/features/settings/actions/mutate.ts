@@ -5,6 +5,7 @@ import { requireAdmin, isAuthError } from "@/shared/lib/auth/guards";
 import { logError } from "@/shared/lib/errors";
 import { revalidatePath } from "next/cache";
 import { parseSettingsFormData, formatZodError } from "@/shared/lib/validations/settings";
+import { mapSettingsData, handleSettingsFiles } from "./utils";
 
 // ============================================
 // WRITE OPERATIONS (Admin only)
@@ -43,40 +44,6 @@ export async function updateSetting(
 }
 
 /**
- * Birden fazla ayarı topluca günceller (admin only)
- */
-export async function updateSettings(
-    settings: Record<string, string>
-): Promise<{ success: boolean; error?: string }> {
-    const auth = await requireAdmin();
-    if (isAuthError(auth)) return auth;
-
-    try {
-        const supabase = await createClient();
-        const updates = Object.entries(settings).map(([key, value]) =>
-            supabase.from("site_settings").update({ value }).eq("key", key)
-        );
-
-        const results = await Promise.all(updates);
-        const errors = results.filter((r) => r.error);
-        if (errors.length > 0) {
-            logError("updateSettings", errors[0].error);
-            return { success: false, error: "Bazı ayarlar güncellenemedi." };
-        }
-
-        revalidatePath("/panel/settings", "page");
-        revalidatePath("/", "layout");
-
-        return { success: true };
-    } catch (error) {
-        logError("updateSettings", error);
-        return { success: false, error: "Ayarlar güncellenirken hata oluştu." };
-    }
-}
-
-import { mapSettingsData, handleSettingsFiles } from "./utils";
-
-/**
  * Site bilgilerini topluca günceller (admin only)
  */
 export async function updateSiteInfo(
@@ -98,11 +65,20 @@ export async function updateSiteInfo(
         const fileJob = await handleSettingsFiles(data, settings);
         if (!fileJob.success) return fileJob;
 
-        const updates = Object.entries(settings).map(([key, value]) =>
-            supabase.from("site_settings").update({ value }).eq("key", key)
-        );
+        // Use upsert to handle both insert and update
+        const upsertData = Object.entries(settings).map(([key, value]) => ({
+            key,
+            value
+        }));
 
-        await Promise.all(updates);
+        const { error } = await supabase
+            .from("site_settings")
+            .upsert(upsertData, { onConflict: "key" });
+
+        if (error) {
+            logError("updateSiteInfo upsert", error);
+            return { success: false, error: `Ayarlar kaydedilemedi: ${error.message}` };
+        }
 
         revalidatePath("/panel/settings", "page");
         revalidatePath("/", "layout");

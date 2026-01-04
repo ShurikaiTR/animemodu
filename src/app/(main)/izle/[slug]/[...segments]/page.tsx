@@ -10,6 +10,30 @@ interface PageProps {
     params: Promise<{ slug: string; segments: string[] }>;
 }
 
+function parseEpisodeInfo(segments: string[]): { season: number; episode: number } {
+    // Seasonal format: ["sezon-3", "bolum-12"]
+    // Absolute format: ["bolum-45"]
+
+    if (segments.length === 2) {
+        // Seasonal
+        const seasonMatch = segments[0]?.match(/^sezon-(\d+)$/i);
+        const episodeMatch = segments[1]?.match(/^bolum-(\d+)$/i);
+        return {
+            season: seasonMatch ? parseInt(seasonMatch[1]) : 1,
+            episode: episodeMatch ? parseInt(episodeMatch[1]) : 1
+        };
+    } else if (segments.length === 1) {
+        // Absolute
+        const episodeMatch = segments[0]?.match(/^bolum-(\d+)$/i);
+        return {
+            season: 1,
+            episode: episodeMatch ? parseInt(episodeMatch[1]) : 1
+        };
+    }
+
+    return { season: 1, episode: 1 };
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const siteInfo = await getSiteInfo();
     const { slug, segments } = await params;
@@ -19,16 +43,29 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         return { title: "Anime Bulunamadı" };
     }
 
-    // Try to get episode number from segments (usually the last segment if it's dynamic)
-    const episodeNumber = segments[segments.length - 1] || "1";
+    const { season, episode } = parseEpisodeInfo(segments);
+
+    // Akıllı Bölüm Etiketi
+    const episodeLabel = segments.length === 2
+        ? `${season}. Sezon ${episode}. Bölüm`
+        : `${episode}. Bölüm`;
+
+    const yearLabel = dbAnime.release_date ? new Date(dbAnime.release_date).getFullYear().toString() : "";
+    const genresLabel = dbAnime.genres?.join(", ") || "";
+    const overviewLabel = dbAnime.overview || "";
 
     const title = siteInfo.seo_watch_title
         .replace(/{anime_title}/g, dbAnime.title)
-        .replace(/{episode_number}/g, episodeNumber);
+        .replace(/{episode}/g, episodeLabel)
+        .replace(/{year}/g, yearLabel)
+        .replace(/{genres}/g, genresLabel);
 
     const description = siteInfo.seo_watch_description
         .replace(/{anime_title}/g, dbAnime.title)
-        .replace(/{episode_number}/g, episodeNumber);
+        .replace(/{episode}/g, episodeLabel)
+        .replace(/{year}/g, yearLabel)
+        .replace(/{genres}/g, genresLabel)
+        .replace(/{overview}/g, overviewLabel);
 
     return {
         title,

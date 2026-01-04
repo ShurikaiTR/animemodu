@@ -9,10 +9,10 @@ import WatchHero from "./WatchHero";
 import WatchSidebar from "./WatchSidebar";
 import WatchControls from "./WatchControls";
 import ReportModal from "@/features/anime/components/ReportModal";
+import { ShareModal } from "@/features/anime/components/ShareModal";
 import type { Episode } from "@/app/(main)/anime/[slug]/types";
 import { getImageUrl } from "@/shared/lib/tmdb";
 import { getWatchUrl } from "@/shared/lib/utils";
-import { toast } from "sonner";
 
 interface WatchClientProps {
     episode: Episode;
@@ -25,11 +25,13 @@ interface WatchClientProps {
         structure_type: "seasonal" | "absolute";
     };
     episodes: Episode[];
+    ogImage: string;
 }
 
-export default function WatchClient({ episode, anime, episodes }: WatchClientProps) {
+export default function WatchClient({ episode, anime, episodes, ogImage }: WatchClientProps) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+    const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const backdrop = episode.still_path || anime.backdrop_path || "";
 
     const currentIndex = episodes.findIndex(e => e.id === episode.id);
@@ -45,8 +47,7 @@ export default function WatchClient({ episode, anime, episodes }: WatchClientPro
     );
 
     const handleShare = () => {
-        navigator.clipboard.writeText(window.location.href);
-        toast.success("Link kopyalandı!");
+        setIsShareModalOpen(true);
     };
 
     const handleReport = () => {
@@ -54,9 +55,12 @@ export default function WatchClient({ episode, anime, episodes }: WatchClientPro
     };
 
     return (
-        <div className="min-h-screen bg-bg-main relative -mt-36 pt-36">
+        <main className="min-h-screen bg-bg-main relative -mt-36 pt-36" role="main">
+            <WatchHero backdrop={backdrop} animeTitle={anime.title} />
 
-            <WatchHero backdrop={backdrop} />
+            <h1 className="sr-only">
+                {anime.title} {episode.season_number > 0 ? `${episode.season_number}. Sezon ` : ""}{episode.episode_number}. Bölüm İzle
+            </h1>
 
             <Container className="relative z-20 pt-8 pb-16">
                 <div className="grid grid-cols-1 xl:grid-cols-[1fr_22rem] gap-8 items-start">
@@ -66,14 +70,14 @@ export default function WatchClient({ episode, anime, episodes }: WatchClientPro
                                 {isPlaying ? (
                                     <VideoPlayer
                                         src={episode.video_url}
-                                        poster={getImageUrl(backdrop, "original")}
+                                        poster={getImageUrl(backdrop, "w780")}
                                         animeTitle={anime.title}
                                         episodeTitle={`${episode.season_number}. Sezon ${episode.episode_number}. Bölüm`}
                                         logo={getImageUrl(anime.poster_path, "w500")}
                                     />
                                 ) : (
                                     <FakeVideoPlayer
-                                        poster={getImageUrl(backdrop, "original")}
+                                        poster={getImageUrl(backdrop, "w780")}
                                         onClick={() => setIsPlaying(true)}
                                         animeTitle={anime.title}
                                         episodeTitle={`${episode.season_number}. Sezon ${episode.episode_number}. Bölüm`}
@@ -128,6 +132,15 @@ export default function WatchClient({ episode, anime, episodes }: WatchClientPro
                 seasonNumber={episode.season_number}
                 episodeNumber={episode.episode_number}
             />
-        </div>
+
+            <ShareModal
+                isOpen={isShareModalOpen}
+                onClose={() => setIsShareModalOpen(false)}
+                animeTitle={anime.title}
+                episodeTitle={`${episode.season_number}. Sezon ${episode.episode_number}. Bölüm`}
+                ogImage={ogImage}
+                shareUrl={typeof window !== "undefined" ? window.location.href : ""}
+            />
+        </main>
     );
 }

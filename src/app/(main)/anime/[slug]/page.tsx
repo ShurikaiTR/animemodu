@@ -32,8 +32,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Anime Bulunamadı" };
   }
 
-  const title = siteInfo.seo_anime_title.replace(/{anime_title}/g, dbAnime.title);
-  const description = siteInfo.seo_anime_description.replace(/{anime_title}/g, dbAnime.title);
+  const yearLabel = dbAnime.release_date ? new Date(dbAnime.release_date).getFullYear().toString() : "";
+  const genresLabel = dbAnime.genres?.join(", ") || "";
+  const overviewLabel = dbAnime.overview || "";
+
+  const title = siteInfo.seo_anime_title
+    .replace(/{anime_title}/g, dbAnime.title)
+    .replace(/{year}/g, yearLabel)
+    .replace(/{genres}/g, genresLabel);
+
+  const description = siteInfo.seo_anime_description
+    .replace(/{anime_title}/g, dbAnime.title)
+    .replace(/{year}/g, yearLabel)
+    .replace(/{genres}/g, genresLabel)
+    .replace(/{overview}/g, overviewLabel);
 
   return {
     title,

@@ -4,6 +4,7 @@ import WatchClient from "./client";
 import type { Episode } from "@/app/(main)/anime/[slug]/types";
 import { getAnimeBySlugOrNotFound, getStructureType } from "@/shared/lib/anime/queries";
 import { mapEpisodeRowsToEpisodes, orderEpisodesBySeasonAndNumber } from "@/shared/lib/anime/episodes";
+import { getSiteInfo } from "@/features/settings/actions";
 
 interface VideoPlayerServerProps {
   slug: string;
@@ -12,6 +13,7 @@ interface VideoPlayerServerProps {
 
 export default async function VideoPlayerServer({ slug, segments }: VideoPlayerServerProps) {
   const supabase = await createClient();
+  const siteInfo = await getSiteInfo();
 
   const anime = await getAnimeBySlugOrNotFound(slug);
 
@@ -100,6 +102,7 @@ export default async function VideoPlayerServer({ slug, segments }: VideoPlayerS
         structure_type: (anime.structure_type || "seasonal") as "seasonal" | "absolute",
       }}
       episodes={episodes}
+      ogImage={siteInfo.seo_og_image}
     />
   );
 }

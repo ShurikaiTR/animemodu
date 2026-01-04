@@ -9,7 +9,7 @@ import { DEFAULT_SITE_INFO } from "@/shared/types/helpers";
 type SettingRow = { key: string | null; value: string | null };
 
 /**
- * Site bilgilerini çeken asıl önbellekli fonksiyon (Dahili kullanım)
+ * Site bilgilerini çeken önbellekli fonksiyon
  */
 const getSiteInfoCached = unstable_cache(
     async (): Promise<SiteInfo> => {
@@ -28,7 +28,7 @@ const getSiteInfoCached = unstable_cache(
             const settings: Record<string, string> = {};
             data.forEach((row) => {
                 const typedRow = row as SettingRow;
-                if (typedRow.key && typedRow.value) {
+                if (typedRow.key && typedRow.value !== null) {
                     settings[typedRow.key] = typedRow.value;
                 }
             });
@@ -81,9 +81,6 @@ const getSiteInfoCached = unstable_cache(
     }
 );
 
-/**
- * Site bilgilerini typed olarak getirir (Server Action uyumlu wrapper)
- */
 export async function getSiteInfo(): Promise<SiteInfo> {
     return getSiteInfoCached();
 }

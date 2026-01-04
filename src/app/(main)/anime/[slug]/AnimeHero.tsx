@@ -43,10 +43,10 @@ export default function AnimeHero({ anime, trailer, initialFavorite, initialWatc
     <section className="section section--head section--head-fixed section--gradient section--details-bg relative overflow-hidden pb-16 pt-32 -mt-36 bg-bg-main">
       <div className="absolute top-0 left-0 right-0 h-96 w-full z-0">
         <Image
-          src={getImageUrl(anime.backdrop_path || anime.poster_path, "original")}
-          alt={anime.title}
+          src={getImageUrl(anime.backdrop_path || anime.poster_path, "w780")}
+          alt={`${anime.title} arkaplan görseli`}
           fill
-          sizes="100vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
           className="object-cover opacity-40 select-none"
           priority
         />

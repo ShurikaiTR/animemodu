@@ -3,21 +3,21 @@ import { getImageUrl } from "@/shared/lib/tmdb";
 
 interface WatchHeroProps {
     backdrop: string;
+    animeTitle: string;
 }
 
-export default function WatchHero({ backdrop }: WatchHeroProps) {
+export default function WatchHero({ backdrop, animeTitle }: WatchHeroProps) {
     if (!backdrop) return null;
 
-    const imageUrl = getImageUrl(backdrop, "original");
+    const imageUrl = getImageUrl(backdrop, "w780");
 
     return (
         <div className="absolute top-0 left-0 right-0 h-[60vh] max-h-[37.5rem] w-full z-0 pointer-events-none">
             <Image
                 src={imageUrl}
-                alt="Background"
+                alt={`${animeTitle} arkaplan görseli`}
                 fill
                 sizes="100vw"
-                loading="eager"
                 className="object-cover opacity-20 select-none"
                 priority
             />

@@ -12,9 +12,11 @@ interface FakeVideoPlayerProps {
 
 export default function FakeVideoPlayer({ poster, onClick, animeTitle, episodeTitle, logo }: FakeVideoPlayerProps) {
     return (
-        <div
+        <button
+            type="button"
             onClick={onClick}
-            className="w-full h-full relative bg-bg-video flex items-center justify-center group cursor-pointer overflow-hidden select-none"
+            aria-label={`${animeTitle} ${episodeTitle} Bölümünü Başlat`}
+            className="w-full h-full relative bg-bg-video flex items-center justify-center group cursor-pointer overflow-hidden select-none outline-none focus-visible:ring-2 focus-visible:ring-primary z-10"
         >
             <div className="absolute inset-0 z-20 pointer-events-none">
                 <PlayerHeader
@@ -28,9 +30,9 @@ export default function FakeVideoPlayer({ poster, onClick, animeTitle, episodeTi
                 <>
                     <Image
                         src={poster}
-                        alt="Video Cover"
+                        alt={`${animeTitle} ${episodeTitle} video kapağı`}
                         fill
-                        sizes="100vw"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 800px"
                         loading="eager"
                         className="object-cover opacity-30 group-hover:opacity-40 transition-all duration-700 scale-105 group-hover:scale-100 blur-sm group-hover:blur-0"
                     />
@@ -56,7 +58,7 @@ export default function FakeVideoPlayer({ poster, onClick, animeTitle, episodeTi
                     Bölümü Başlat
                 </span>
             </div>
-        </div>
+        </button>
     );
 }
 

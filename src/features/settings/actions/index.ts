@@ -17,6 +17,5 @@ export {
 
 export {
     updateSetting,
-    updateSettings,
     updateSiteInfo
 } from "./mutate";
