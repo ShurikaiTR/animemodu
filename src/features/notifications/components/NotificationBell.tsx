@@ -2,7 +2,7 @@
 
 import { Bell, CheckCheck } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 
 import {
     getNotifications,
@@ -18,6 +18,7 @@ import {
 import { useAuth } from "@/shared/contexts/AuthContext";
 import type { Notification } from "@/shared/types/domain/notification";
 
+import { useRealtimeNotifications } from "../hooks/useRealtimeNotifications";
 import NotificationBellList from "./NotificationBellList";
 
 export default function NotificationBell() {
@@ -26,6 +27,23 @@ export default function NotificationBell() {
     const [unreadCount, setUnreadCount] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [isPending, startTransition] = useTransition();
+    const [hasNewNotification, setHasNewNotification] = useState(false);
+
+    // Yeni bildirim geldiğinde çağrılacak callback
+    const handleNewNotification = useCallback(() => {
+        setHasNewNotification(true);
+        // 2 saniye sonra animasyonu kapat
+        setTimeout(() => setHasNewNotification(false), 2000);
+    }, []);
+
+    // Supabase Realtime hook
+    const { realtimeCount, resetCount } = useRealtimeNotifications({
+        userId: user?.id,
+        onNewNotification: handleNewNotification,
+    });
+
+    // Realtime ile gelen yeni bildirimleri sayaca ekle
+    const totalUnread = unreadCount + realtimeCount;
 
     useEffect(() => {
         if (!user) {
@@ -42,7 +60,8 @@ export default function NotificationBell() {
         };
 
         fetchUnreadCount();
-        const interval = setInterval(fetchUnreadCount, 60000);
+        // Realtime aktif olduğu için polling interval'ı 5 dakikaya çıkarabiliriz
+        const interval = setInterval(fetchUnreadCount, 300000);
         return () => clearInterval(interval);
     }, [user]);
 
@@ -51,6 +70,13 @@ export default function NotificationBell() {
         const result = await getNotifications(20);
         if (result.success && "data" in result && result.data) {
             setNotifications(result.data);
+            // Dropdown açıldığında realtime sayacını sıfırla
+            resetCount();
+            // Sunucudan güncel sayıyı al
+            const countResult = await getUnreadCount();
+            if (countResult.success && "data" in countResult && countResult.data) {
+                setUnreadCount(countResult.data.count);
+            }
         }
         setIsLoading(false);
     };
@@ -81,11 +107,11 @@ export default function NotificationBell() {
         <DropdownMenu onOpenChange={(open) => open && fetchNotifications()}>
             <DropdownMenuTrigger asChild>
                 <button
-                    className="relative p-2 rounded-full transition-colors hover:bg-white/5 outline-none data-[state=open]:bg-white/5 border border-transparent hover:border-white/5 data-[state=open]:border-white/5"
+                    className={`relative p-2 rounded-full transition-colors hover:bg-white/5 outline-none data-[state=open]:bg-white/5 border border-transparent hover:border-white/5 data-[state=open]:border-white/5 ${hasNewNotification ? "animate-shake" : ""}`}
                     aria-label="Bildirimler"
                 >
                     <Bell className="w-5 h-5 text-white/80" />
-                    {unreadCount > 0 && <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-bg-main animate-pulse" />}
+                    {totalUnread > 0 && <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-bg-main animate-pulse" />}
                 </button>
             </DropdownMenuTrigger>
 
@@ -96,9 +122,9 @@ export default function NotificationBell() {
                 <div className="px-4 py-3.5 border-b border-white/10 flex justify-between items-center bg-white/5">
                     <div className="flex items-center gap-2">
                         <h3 className="text-base font-bold tracking-tight text-white">Bildirimler</h3>
-                        {unreadCount > 0 && <span className="bg-primary text-white text-[0.625rem] font-bold px-1.5 py-0.5 rounded-full">{unreadCount > 99 ? "99+" : unreadCount}</span>}
+                        {totalUnread > 0 && <span className="bg-primary text-white text-[0.625rem] font-bold px-1.5 py-0.5 rounded-full">{totalUnread > 99 ? "99+" : totalUnread}</span>}
                     </div>
-                    {unreadCount > 0 && (
+                    {totalUnread > 0 && (
                         <button
                             onClick={handleMarkAllAsRead}
                             disabled={isPending}
