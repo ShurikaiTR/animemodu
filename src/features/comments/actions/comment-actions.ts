@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
+import { NotificationMutationService } from "@/features/notifications/services/notification-mutation-service";
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireAdmin, requireUser } from "@/shared/lib/auth/guards";
 import { createClient } from "@/shared/lib/supabase/server";
@@ -61,7 +62,7 @@ export async function createCommentAction(data: CreateCommentInput) {
                     .eq("id", parentComment.anime_id)
                     .single();
 
-                await NotificationService.createNotification({
+                await NotificationMutationService.createNotification({
                     userId: parentComment.user_id,
                     type: "comment_reply",
                     title: "yorumuna yanıt verdi",
@@ -132,7 +133,7 @@ export async function toggleCommentLikeAction(commentId: string) {
                     .eq("id", comment.anime_id)
                     .single();
 
-                await NotificationService.createNotification({
+                await NotificationMutationService.createNotification({
                     userId: comment.user_id,
                     type: "comment_like",
                     title: "yorumunu beğendi",
