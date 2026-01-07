@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell,Filter, Heart, Inbox, MessageCircle } from "lucide-react";
+import { Bell, Filter, Heart, Inbox, MessageCircle } from "lucide-react";
 
 import { cn } from "@/shared/lib/utils";
 
@@ -27,7 +27,7 @@ export default function NotificationSidebar({ filterType, onFilterChange, counts
 
     return (
         <div className="w-full lg:w-72 shrink-0 lg:sticky lg:top-24 mb-10 lg:mb-0">
-            <h3 className="font-bold text-white/20 text-[11px] uppercase tracking-[0.2em] mb-6 px-4 flex items-center gap-2">
+            <h3 className="flex items-center gap-2 px-4 mb-6 text-[0.6875rem] font-semibold text-white/20 uppercase tracking-[0.2em]">
                 <Filter className="w-3 h-3" />
                 Kategori Filtrele
             </h3>
@@ -47,10 +47,10 @@ export default function NotificationSidebar({ filterType, onFilterChange, counts
                             "w-5 h-5 transition-transform group-hover:scale-110",
                             filterType === item.id ? "text-primary" : "text-white/30"
                         )} />
-                        <span className="text-[15px]">{item.label}</span>
+                        <span className="text-sm">{item.label}</span>
                         {item.count > 0 && (
                             <span className={cn(
-                                "ml-auto text-[11px] font-bold px-2 py-1 rounded-lg transition-colors",
+                                "ml-auto text-[0.625rem] font-bold px-2 py-1 rounded-lg transition-colors",
                                 filterType === item.id
                                     ? "bg-primary text-white"
                                     : "bg-white/5 text-white/30 group-hover:bg-white/10"

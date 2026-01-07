@@ -95,8 +95,8 @@ export default function NotificationBell() {
             >
                 <div className="px-4 py-3.5 border-b border-white/10 flex justify-between items-center bg-white/5">
                     <div className="flex items-center gap-2">
-                        <h3 className="font-bold text-base text-white tracking-tight">Bildirimler</h3>
-                        {unreadCount > 0 && <span className="bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">{unreadCount > 99 ? "99+" : unreadCount}</span>}
+                        <h3 className="text-base font-bold tracking-tight text-white">Bildirimler</h3>
+                        {unreadCount > 0 && <span className="bg-primary text-white text-[0.625rem] font-bold px-1.5 py-0.5 rounded-full">{unreadCount > 99 ? "99+" : unreadCount}</span>}
                     </div>
                     {unreadCount > 0 && (
                         <button

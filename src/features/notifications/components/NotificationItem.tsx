@@ -39,24 +39,24 @@ export default function NotificationItem({
             className={cn(
                 "relative group transition-all cursor-pointer",
                 variant === "default"
-                    ? "p-5 rounded-xl border border-white/5 mb-4"
+                    ? "p-5 rounded-xl border border-white/5 mb-4 shadow-sm"
                     : "p-4 border-b border-white/5",
                 notification.is_read
-                    ? "bg-transparent hover:bg-white/5 opacity-75 hover:opacity-100"
-                    : "bg-primary/[0.04] border-primary/20 hover:bg-primary/10 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.02)]"
+                    ? "bg-transparent hover:bg-white/5 opacity-70 hover:opacity-100"
+                    : "bg-primary/[0.04] border-primary/20 hover:bg-primary/10 shadow-lg shadow-primary/5"
             )}
             onClick={handleClick}
         >
             {!notification.is_read && (
                 <div className={cn(
-                    "absolute left-0 w-1 bg-primary rounded-r-full shadow-[0_0_10px_rgba(var(--color-primary-rgb),0.5)] transition-all duration-300",
+                    "absolute left-0 w-1 bg-primary rounded-r-full shadow-sm shadow-primary/50 transition-all duration-300",
                     variant === "default" ? "top-1/4 bottom-1/4 group-hover:top-2 group-hover:bottom-2" : "top-0 bottom-0"
                 )} />
             )}
 
             <div className="flex gap-4 items-start">
-                <div className="relative flex-shrink-0">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/30 shadow-[0_5px_15px_-5px_rgba(var(--color-primary-rgb),0.3)] overflow-hidden transition-transform group-hover:scale-105">
+                <div className="relative shrink-0">
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/30 shadow-md shadow-primary/20 overflow-hidden transition-transform group-hover:scale-105">
                         {notification.actor?.avatar_url ? (
                             <Image src={getAvatarUrl(notification.actor.avatar_url)} alt={notification.actor.username || "Avatar"} width={48} height={48} className="w-full h-full object-cover" />
                         ) : (
@@ -92,9 +92,9 @@ export default function NotificationItem({
                                     : notification.title}
                             </span>
                         </div>
-                        <div className={cn("flex items-center gap-1.5 flex-shrink-0 mt-0.5 px-2 py-1 rounded-lg border border-white/5", notification.is_read ? "text-white/20 bg-white/[0.02]" : "text-primary/80 bg-primary/5 border-primary/10")}>
+                        <div className={cn("flex items-center gap-1.5 shrink-0 mt-0.5 px-2 py-0.5 rounded-lg border border-white/5", notification.is_read ? "text-white/20 bg-white/[0.02]" : "text-primary/70 bg-primary/5 border-primary/10")}>
                             <Clock className="w-3 h-3" />
-                            <span className="text-[10px] font-bold uppercase tracking-widest">{formattedTime}</span>
+                            <span className="text-[10px] font-semibold uppercase tracking-wider">{formattedTime}</span>
                         </div>
                     </div>
 
@@ -106,8 +106,8 @@ export default function NotificationItem({
 
                     {!notification.is_read && (
                         <div className="flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse shadow-[0_0_8px_rgba(var(--color-primary-rgb),0.5)]" />
-                            <span className="text-[9px] font-bold text-primary uppercase tracking-[0.2em]">Yeni Mesaj</span>
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse shadow-sm shadow-primary/50" />
+                            <span className="text-[9px] font-semibold text-primary uppercase tracking-widest">Yeni</span>
                         </div>
                     )}
                 </div>

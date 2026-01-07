@@ -23,7 +23,7 @@ export default function NotificationTabs({ activeTab, onTabChange, unreadCount }
                     key={tab.id}
                     onClick={() => onTabChange(tab.id)}
                     className={cn(
-                        "relative px-8 py-5 text-sm font-bold transition-all whitespace-nowrap flex items-center gap-2 uppercase tracking-wider",
+                        "relative flex items-center gap-2 px-8 py-5 text-sm font-semibold transition-all whitespace-nowrap uppercase tracking-widest",
                         activeTab === tab.id
                             ? "text-primary border-b-2 border-primary"
                             : "text-white/30 hover:text-white border-b-2 border-transparent"
@@ -31,7 +31,7 @@ export default function NotificationTabs({ activeTab, onTabChange, unreadCount }
                 >
                     {tab.label}
                     {tab.count !== undefined && tab.count > 0 && (
-                        <span className="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                        <span className="bg-primary px-2 py-0.5 rounded-full text-[0.625rem] font-bold text-white">
                             {tab.count}
                         </span>
                     )}
