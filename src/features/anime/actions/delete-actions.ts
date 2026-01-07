@@ -1,11 +1,12 @@
 "use server";
 
-import { isAuthError,requireAdmin } from "@/shared/lib/auth/guards";
+import { isAuthError, requireAdmin } from "@/shared/lib/auth/guards";
 import { revalidateAnimeData, revalidateEpisodeData } from "@/shared/lib/cache/revalidate";
 import { getErrorMessage, logError } from "@/shared/lib/errors";
 import { animeIdSchema, episodeIdSchema } from "@/shared/lib/validations/anime";
 
 import { AnimeService } from "../services/anime-service";
+import { EpisodeService } from "../services/episode-service";
 
 type DeleteResult = { success: true } | { success: false; error: string };
 
@@ -44,7 +45,7 @@ export async function deleteEpisode(id: string, animeSlug?: string): Promise<Del
     }
 
     try {
-        await AnimeService.deleteEpisode(id);
+        await EpisodeService.deleteEpisode(id);
 
         // Cache temizleme
         revalidateEpisodeData(animeSlug);

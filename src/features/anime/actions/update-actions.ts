@@ -9,6 +9,7 @@ import { animeIdSchema, formatZodError, parseFormData, updateAnimeSchema, update
 import type { TMDBSeriesData } from "@/shared/types/helpers";
 
 import { AnimeService } from "../services/anime-service";
+import { EpisodeService } from "../services/episode-service";
 import { type EpisodeInsertData, mapTMDBEpisodesToDB } from "./episodeHelpers";
 
 export async function updateAnime(formData: FormData) {
@@ -60,7 +61,7 @@ export async function updateEpisode(formData: FormData) {
     }
 
     return await safeAction(async () => {
-        await AnimeService.updateEpisode(id, data);
+        await EpisodeService.updateEpisode(id, data);
         revalidateEpisodeData();
     }, "updateEpisode");
 }
@@ -82,7 +83,7 @@ export async function updateEpisodes(animeId: string) {
     }
 
     // Get existing episode IDs from service
-    const existingTmdbIdsArr = await AnimeService.getEpisodeTMDBIds(animeId);
+    const existingTmdbIdsArr = await EpisodeService.getEpisodeTMDBIds(animeId);
     const existingTmdbIds = new Set(existingTmdbIdsArr);
 
     const details = await getAnimeDetails(anime.tmdb_id, "tv");
@@ -97,7 +98,7 @@ export async function updateEpisodes(animeId: string) {
     const absoluteCounter = { value: 1 };
 
     if (isAbsolute) {
-        const maxEpNumber = await AnimeService.getMaxAbsoluteEpisodeNumber(animeId);
+        const maxEpNumber = await EpisodeService.getMaxAbsoluteEpisodeNumber(animeId);
         if (maxEpNumber) {
             absoluteCounter.value = maxEpNumber + 1;
         }
@@ -127,7 +128,7 @@ export async function updateEpisodes(animeId: string) {
 
     if (newEpisodesToInsert.length > 0) {
         return await safeAction(async () => {
-            await AnimeService.insertEpisodes(newEpisodesToInsert);
+            await EpisodeService.insertEpisodes(newEpisodesToInsert);
             revalidateEpisodeData();
 
             // Yeni bölümler eklendiyse izleme listesindeki kullanıcılara bildirim gönder

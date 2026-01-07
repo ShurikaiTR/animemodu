@@ -8,6 +8,7 @@ import { getAnimeDetails } from "@/shared/lib/tmdb/api";
 import { addAnimeSchema, formatZodError, parseFormData } from "@/shared/lib/validations/anime";
 
 import { AnimeService } from "../services/anime-service";
+import { EpisodeService } from "../services/episode-service";
 import { syncAnimeCharacters } from "./meta-actions";
 
 // ... imports ...
@@ -75,7 +76,7 @@ export async function addAnimeToDB(formData: FormData) {
 
             // 7. Dependent Data (Episodes & Characters)
             if (tmdbItem.media_type === "tv" && details?.number_of_seasons) {
-                await AnimeService.importEpisodesFromTMDB({
+                await EpisodeService.importEpisodesFromTMDB({
                     tmdbId: tmdbItem.id,
                     animeId,
                     numberOfSeasons: details.number_of_seasons,
