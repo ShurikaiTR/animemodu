@@ -15,9 +15,15 @@ interface NotificationItemProps {
     notification: NotificationType;
     onMarkAsRead: (id: string) => void;
     onDelete?: (id: string) => void;
+    variant?: "default" | "compact";
 }
 
-export default function NotificationItem({ notification, onMarkAsRead, onDelete }: NotificationItemProps) {
+export default function NotificationItem({
+    notification,
+    onMarkAsRead,
+    onDelete,
+    variant = "default"
+}: NotificationItemProps) {
     const config = getColorConfig(notification.type);
     const Icon = config.icon;
 
@@ -31,15 +37,21 @@ export default function NotificationItem({ notification, onMarkAsRead, onDelete 
     const itemContent = (
         <div
             className={cn(
-                "relative group p-5 transition-all cursor-pointer rounded-2xl border border-white/5",
+                "relative group transition-all cursor-pointer",
+                variant === "default"
+                    ? "p-5 rounded-xl border border-white/5 mb-4"
+                    : "p-4 border-b border-white/5",
                 notification.is_read
-                    ? "bg-bg-secondary/20 hover:bg-white/[0.05] opacity-75 hover:opacity-100"
-                    : "bg-primary/[0.03] border-primary/20 hover:bg-primary/[0.06] shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.02)]"
+                    ? "bg-transparent hover:bg-white/5 opacity-75 hover:opacity-100"
+                    : "bg-primary/[0.04] border-primary/20 hover:bg-primary/10 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.02)]"
             )}
             onClick={handleClick}
         >
             {!notification.is_read && (
-                <div className="absolute left-0 top-1/4 bottom-1/4 w-1 bg-primary rounded-r-full shadow-[0_0_10px_rgba(var(--color-primary-rgb),0.5)]" />
+                <div className={cn(
+                    "absolute left-0 w-1 bg-primary rounded-r-full shadow-[0_0_10px_rgba(var(--color-primary-rgb),0.5)] transition-all duration-300",
+                    variant === "default" ? "top-1/4 bottom-1/4 group-hover:top-2 group-hover:bottom-2" : "top-0 bottom-0"
+                )} />
             )}
 
             <div className="flex gap-4 items-start">

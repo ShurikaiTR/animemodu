@@ -45,7 +45,7 @@ export default function NotificationBellList({ notifications, isLoading, onMarkA
                         <span className="text-[10px] font-bold tracking-wider text-primary uppercase">Yeni</span>
                     </div>
                     {unreadNotifications.map(notification => (
-                        <NotificationItem key={notification.id} notification={notification} onMarkAsRead={onMarkAsRead} />
+                        <NotificationItem key={notification.id} notification={notification} onMarkAsRead={onMarkAsRead} variant="compact" />
                     ))}
                 </>
             )}
@@ -57,7 +57,7 @@ export default function NotificationBellList({ notifications, isLoading, onMarkA
                         <span className="text-[10px] font-bold tracking-wider text-white/50 uppercase">Önceki</span>
                     </div>
                     {readNotifications.map(notification => (
-                        <NotificationItem key={notification.id} notification={notification} onMarkAsRead={onMarkAsRead} />
+                        <NotificationItem key={notification.id} notification={notification} onMarkAsRead={onMarkAsRead} variant="compact" />
                     ))}
                 </>
             )}
