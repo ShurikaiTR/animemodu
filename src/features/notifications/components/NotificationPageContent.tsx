@@ -2,8 +2,8 @@
 
 import { isToday, isYesterday } from "date-fns";
 import { Bell } from "lucide-react";
-import { usePathname,useRouter, useSearchParams } from "next/navigation";
-import { useEffect,useMemo, useState, useTransition } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 import { deleteNotification, markAllNotificationsAsRead, markNotificationAsRead } from "@/features/notifications/actions";
@@ -134,7 +134,7 @@ export default function NotificationPageContent({ initialNotifications, initialT
                                 return (
                                     <div key={groupKey} className="animate-in fade-in slide-in-from-bottom-4 duration-700">
                                         <div className="flex items-center gap-4 mb-6 px-1">
-                                            <h3 className="text-xs font-black text-white/20 uppercase tracking-[0.3em] whitespace-nowrap">
+                                            <h3 className="text-xs font-bold text-white/20 uppercase tracking-[0.3em] whitespace-nowrap">
                                                 {groupKey === 'Today' ? 'Bugün' : groupKey === 'Yesterday' ? 'Dün' : 'Daha Eski'}
                                             </h3>
                                             <div className="h-px bg-white/5 w-full" />

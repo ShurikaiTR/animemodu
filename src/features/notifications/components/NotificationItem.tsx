@@ -73,12 +73,20 @@ export default function NotificationItem({
                 </div>
 
                 <div className="flex-1 min-w-0 pt-0.5">
-                    <div className="flex justify-between items-start gap-3 mb-1.5">
-                        <div className={cn("text-[15px] leading-snug flex-1", notification.is_read ? "text-white/70" : "text-white font-medium")}>
+                    <div className="flex justify-between items-start gap-3 mb-1">
+                        <div className={cn(
+                            "text-sm leading-relaxed flex-1",
+                            notification.is_read ? "text-white/60" : "text-white/90 font-medium"
+                        )}>
                             {notification.actor?.username && (
-                                <span className="font-black text-white mr-1.5 hover:text-primary transition-colors cursor-pointer capitalize">{notification.actor.username}</span>
+                                <span className="font-semibold text-white mr-1.5 hover:text-primary transition-colors cursor-pointer capitalize">
+                                    {notification.actor.username}
+                                </span>
                             )}
-                            <span className="font-normal">
+                            <span className={cn(
+                                "font-normal",
+                                variant === "compact" ? "text-xs" : "text-sm"
+                            )}>
                                 {notification.actor?.username && notification.title.startsWith(notification.actor.username)
                                     ? notification.title.replace(notification.actor.username, "").trim()
                                     : notification.title}
@@ -86,7 +94,7 @@ export default function NotificationItem({
                         </div>
                         <div className={cn("flex items-center gap-1.5 flex-shrink-0 mt-0.5 px-2 py-1 rounded-lg border border-white/5", notification.is_read ? "text-white/20 bg-white/[0.02]" : "text-primary/80 bg-primary/5 border-primary/10")}>
                             <Clock className="w-3 h-3" />
-                            <span className="text-[10px] font-black uppercase tracking-widest">{formattedTime}</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest">{formattedTime}</span>
                         </div>
                     </div>
 
@@ -99,7 +107,7 @@ export default function NotificationItem({
                     {!notification.is_read && (
                         <div className="flex items-center gap-1.5">
                             <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse shadow-[0_0_8px_rgba(var(--color-primary-rgb),0.5)]" />
-                            <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em]">Yeni Mesaj</span>
+                            <span className="text-[9px] font-bold text-primary uppercase tracking-[0.2em]">Yeni Mesaj</span>
                         </div>
                     )}
                 </div>
