@@ -52,6 +52,11 @@ export type UserFollowInsert = Database["public"]["Tables"]["user_follows"]["Ins
 export type UserActivityRow = Database["public"]["Tables"]["user_activities"]["Row"];
 export type UserActivityInsert = Database["public"]["Tables"]["user_activities"]["Insert"];
 
+// Notifications
+export type NotificationRow = Database["public"]["Tables"]["notifications"]["Row"];
+export type NotificationInsert = Database["public"]["Tables"]["notifications"]["Insert"];
+export type NotificationUpdate = Database["public"]["Tables"]["notifications"]["Update"];
+
 // Re-export Json type
 export type { Json };
 

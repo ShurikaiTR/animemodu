@@ -2,6 +2,7 @@
 
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireUser } from "@/shared/lib/auth/guards";
+import { formatZodError,notificationIdSchema } from "@/shared/lib/validations/notification";
 
 import { NotificationService } from "../services/notification-service";
 
@@ -12,8 +13,13 @@ export async function markNotificationAsRead(notificationId: string) {
     const auth = await requireUser();
     if (isAuthError(auth)) return auth;
 
+    const validation = notificationIdSchema.safeParse({ id: notificationId });
+    if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error) };
+    }
+
     return await safeAction(async () => {
-        await NotificationService.markAsRead(auth.userId, notificationId);
+        await NotificationService.markAsRead(auth.userId, validation.data.id);
     }, "markNotificationAsRead");
 }
 
@@ -36,7 +42,12 @@ export async function deleteNotification(notificationId: string) {
     const auth = await requireUser();
     if (isAuthError(auth)) return auth;
 
+    const validation = notificationIdSchema.safeParse({ id: notificationId });
+    if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error) };
+    }
+
     return await safeAction(async () => {
-        await NotificationService.deleteNotification(auth.userId, notificationId);
+        await NotificationService.deleteNotification(auth.userId, validation.data.id);
     }, "deleteNotification");
 }

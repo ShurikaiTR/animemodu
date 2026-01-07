@@ -2,18 +2,29 @@
 
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireUser } from "@/shared/lib/auth/guards";
+import { formatZodError, getNotificationsSchema } from "@/shared/lib/validations/notification";
 
 import { NotificationService } from "../services/notification-service";
 
 /**
  * Kullanıcının bildirimlerini getir
  */
-export async function getNotifications(limit = 20) {
+export async function getNotifications(limit = 50, filter = "all", tab = "all") {
     const auth = await requireUser();
     if (isAuthError(auth)) return auth;
 
+    const validation = getNotificationsSchema.safeParse({ limit, filter, tab });
+    if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error) };
+    }
+
     return await safeAction(async () => {
-        return await NotificationService.getUserNotifications(auth.userId, limit);
+        return await NotificationService.getUserNotifications(
+            auth.userId,
+            validation.data.limit,
+            validation.data.filter as "all" | "likes" | "replies" | "system",
+            validation.data.tab as "all" | "unread"
+        );
     }, "getNotifications");
 }
 

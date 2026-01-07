@@ -64,7 +64,7 @@ export async function createCommentAction(data: CreateCommentInput) {
                 await NotificationService.createNotification({
                     userId: parentComment.user_id,
                     type: "comment_reply",
-                    title: `${auth.username || "Bir kullanıcı"} yorumuna yanıt verdi`,
+                    title: "yorumuna yanıt verdi",
                     message: content.substring(0, 100) + (content.length > 100 ? "..." : ""),
                     link: anime ? `/anime/${anime.slug}#comments` : undefined,
                     animeId: parentComment.anime_id,
@@ -135,7 +135,7 @@ export async function toggleCommentLikeAction(commentId: string) {
                 await NotificationService.createNotification({
                     userId: comment.user_id,
                     type: "comment_like",
-                    title: `${auth.username || "Bir kullanıcı"} yorumunu beğendi`,
+                    title: "yorumunu beğendi",
                     message: comment.content.substring(0, 50) + (comment.content.length > 50 ? "..." : ""),
                     link: anime ? `/anime/${anime.slug}#comments` : undefined,
                     animeId: comment.anime_id,

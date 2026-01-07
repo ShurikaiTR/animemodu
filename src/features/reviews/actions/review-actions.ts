@@ -106,7 +106,7 @@ export async function toggleReviewLikeAction(reviewId: string) {
                 await NotificationService.createNotification({
                     userId: review.user_id,
                     type: "review_like",
-                    title: `${auth.username || "Bir kullanıcı"} incelemeni beğendi`,
+                    title: "incelemeni beğendi",
                     message: review.title || review.content.substring(0, 50) + "...",
                     link: anime ? `/anime/${anime.slug}#reviews` : undefined,
                     animeId: review.anime_id,

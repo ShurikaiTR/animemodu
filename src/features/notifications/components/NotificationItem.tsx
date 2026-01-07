@@ -1,85 +1,112 @@
 "use client";
 
-import { formatDistanceToNow } from "date-fns";
+import { format } from "date-fns";
 import { tr } from "date-fns/locale";
-import { Bell, Film, Heart, MessageCircle, Star, UserPlus } from "lucide-react";
+import { Clock, Trash2 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
-import { cn } from "@/shared/lib/utils";
+import { cn, getAvatarUrl } from "@/shared/lib/utils";
 import type { Notification as NotificationType } from "@/shared/types/domain/notification";
+
+import { getColorConfig } from "./NotificationConfig";
 
 interface NotificationItemProps {
     notification: NotificationType;
     onMarkAsRead: (id: string) => void;
+    onDelete?: (id: string) => void;
 }
 
-const notificationIcons: Record<string, typeof Bell> = {
-    new_episode: Film,
-    comment_reply: MessageCircle,
-    new_follower: UserPlus,
-    review_like: Star,
-    comment_like: Heart,
-};
+export default function NotificationItem({ notification, onMarkAsRead, onDelete }: NotificationItemProps) {
+    const config = getColorConfig(notification.type);
+    const Icon = config.icon;
 
-export default function NotificationItem({ notification, onMarkAsRead }: NotificationItemProps) {
-    const Icon = notificationIcons[notification.type] || Bell;
-    const timeAgo = formatDistanceToNow(new Date(notification.created_at), {
-        addSuffix: true,
-        locale: tr
-    });
+    const formattedTime = format(new Date(notification.created_at), "d MMM HH:mm", { locale: tr });
 
-    const handleClick = () => {
-        if (!notification.is_read) {
-            onMarkAsRead(notification.id);
-        }
+    const handleClick = (e: React.MouseEvent) => {
+        if ((e.target as HTMLElement).closest("button")) return;
+        if (!notification.is_read) onMarkAsRead(notification.id);
     };
 
-    const content = (
+    const itemContent = (
         <div
             className={cn(
-                "flex items-start gap-3 p-3 rounded-lg transition-colors cursor-pointer",
+                "relative group p-5 transition-all cursor-pointer rounded-2xl border border-white/5",
                 notification.is_read
-                    ? "bg-transparent hover:bg-white/5"
-                    : "bg-primary/5 hover:bg-primary/10"
+                    ? "bg-bg-secondary/20 hover:bg-white/[0.05] opacity-75 hover:opacity-100"
+                    : "bg-primary/[0.03] border-primary/20 hover:bg-primary/[0.06] shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.02)]"
             )}
             onClick={handleClick}
         >
-            <div className={cn(
-                "flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center",
-                notification.is_read ? "bg-white/5" : "bg-primary/20"
-            )}>
-                <Icon className={cn(
-                    "w-4 h-4",
-                    notification.is_read ? "text-white/60" : "text-primary"
-                )} />
-            </div>
-            <div className="flex-1 min-w-0">
-                <p className={cn(
-                    "text-sm line-clamp-2",
-                    notification.is_read ? "text-white/70" : "text-white"
-                )}>
-                    {notification.title}
-                </p>
-                {notification.message && (
-                    <p className="text-xs text-white/50 mt-0.5 line-clamp-1">
-                        {notification.message}
-                    </p>
-                )}
-                <p className="text-xs text-white/40 mt-1">{timeAgo}</p>
-            </div>
             {!notification.is_read && (
-                <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2" />
+                <div className="absolute left-0 top-1/4 bottom-1/4 w-1 bg-primary rounded-r-full shadow-[0_0_10px_rgba(var(--color-primary-rgb),0.5)]" />
             )}
+
+            <div className="flex gap-4 items-start">
+                <div className="relative flex-shrink-0">
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/30 shadow-[0_5px_15px_-5px_rgba(var(--color-primary-rgb),0.3)] overflow-hidden transition-transform group-hover:scale-105">
+                        {notification.actor?.avatar_url ? (
+                            <Image src={getAvatarUrl(notification.actor.avatar_url)} alt={notification.actor.username || "Avatar"} width={48} height={48} className="w-full h-full object-cover" />
+                        ) : (
+                            <div className="text-primary font-bold text-lg leading-none">
+                                {notification.actor?.username?.charAt(0).toUpperCase() || <Icon className={cn("w-6 h-6", config.color)} />}
+                            </div>
+                        )}
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 bg-bg-main rounded-xl p-1 shadow-lg ring-1 ring-white/10">
+                        <div className={cn("rounded-lg w-5 h-5 flex items-center justify-center", config.bgColor)}>
+                            <Icon className={cn("w-3 h-3", config.color)} />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex-1 min-w-0 pt-0.5">
+                    <div className="flex justify-between items-start gap-3 mb-1.5">
+                        <div className={cn("text-[15px] leading-snug flex-1", notification.is_read ? "text-white/70" : "text-white font-medium")}>
+                            {notification.actor?.username && (
+                                <span className="font-black text-white mr-1.5 hover:text-primary transition-colors cursor-pointer capitalize">{notification.actor.username}</span>
+                            )}
+                            <span className="font-normal">
+                                {notification.actor?.username && notification.title.startsWith(notification.actor.username)
+                                    ? notification.title.replace(notification.actor.username, "").trim()
+                                    : notification.title}
+                            </span>
+                        </div>
+                        <div className={cn("flex items-center gap-1.5 flex-shrink-0 mt-0.5 px-2 py-1 rounded-lg border border-white/5", notification.is_read ? "text-white/20 bg-white/[0.02]" : "text-primary/80 bg-primary/5 border-primary/10")}>
+                            <Clock className="w-3 h-3" />
+                            <span className="text-[10px] font-black uppercase tracking-widest">{formattedTime}</span>
+                        </div>
+                    </div>
+
+                    {notification.message && (
+                        <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-white/50 line-clamp-2 italic group-hover:bg-white/[0.04] transition-colors relative mb-2">
+                            "{notification.message}"
+                        </div>
+                    )}
+
+                    {!notification.is_read && (
+                        <div className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse shadow-[0_0_8px_rgba(var(--color-primary-rgb),0.5)]" />
+                            <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em]">Yeni Mesaj</span>
+                        </div>
+                    )}
+                </div>
+
+                {onDelete && (
+                    <button
+                        onClick={(e) => { e.stopPropagation(); onDelete(notification.id); }}
+                        className="opacity-0 group-hover:opacity-100 p-2 text-white/20 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all flex-shrink-0 mt-0.5 border border-transparent hover:border-red-500/20"
+                        title="Bildirimi Sil"
+                    >
+                        <Trash2 className="w-5 h-5" />
+                    </button>
+                )}
+            </div>
         </div>
     );
 
-    if (notification.link) {
-        return (
-            <Link href={notification.link} className="block">
-                {content}
-            </Link>
-        );
+    if (notification.link && !onDelete) {
+        return <Link href={notification.link} className="block">{itemContent}</Link>;
     }
-
-    return content;
+    return itemContent;
 }

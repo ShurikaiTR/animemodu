@@ -46,7 +46,7 @@ export async function toggleFollow(targetUserId: string) {
                 NotificationService.createNotification({
                     userId: targetUserId,
                     type: "new_follower",
-                    title: `${currentProfile?.username || "Bir kullanıcı"} seni takip etmeye başladı`,
+                    title: "seni takip etmeye başladı",
                     link: `/profil/${currentProfile?.username}`,
                     actorId: currentUserId,
                 }),

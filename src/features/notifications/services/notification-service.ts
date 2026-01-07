@@ -1,4 +1,4 @@
-import { createClient, createPublicClient } from "@/shared/lib/supabase/server";
+import { createClient } from "@/shared/lib/supabase/server";
 import type {
     CreateNotificationParams,
     Notification,
@@ -7,39 +7,50 @@ import type {
 
 /**
  * Notification Service - Bildirim işlemleri için servis sınıfı
- * 
- * NOT: `notifications` tablosu henüz Supabase types'a eklenmediğinden
- * type assertion kullanılmaktadır. Tablo oluşturulduktan sonra
- * `npx supabase gen types` komutuyla types güncellenmelidir.
  */
 export class NotificationService {
     /**
-     * Kullanıcının bildirimlerini getir (zenginleştirilmiş)
+     * Kullanıcının bildirimlerini getir (zenginleştirilmiş ve filtrelenmiş)
      */
-    static async getUserNotifications(userId: string, limit = 20): Promise<Notification[]> {
-        const supabase = createPublicClient();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { data: notifications, error } = await (supabase as any)
+    static async getUserNotifications(
+        userId: string,
+        limit = 50,
+        filter: "all" | "likes" | "replies" | "system" = "all",
+        tab: "all" | "unread" = "all"
+    ): Promise<Notification[]> {
+        const supabase = await createClient();
+
+        // Query'i oluştur
+        let query = supabase
             .from("notifications")
-            .select("*")
-            .eq("user_id", userId)
+            .select("id, user_id, type, title, message, link, is_read, anime_id, episode_id, actor_id, created_at")
+            .eq("user_id", userId);
+
+        // Tab filtresi (Okunmamış)
+        if (tab === "unread") {
+            query = query.eq("is_read", false);
+        }
+
+        // Kategori filtresi
+        if (filter === "likes") {
+            query = query.in("type", ["review_like", "comment_like"]);
+        } else if (filter === "replies") {
+            query = query.eq("type", "comment_reply");
+        } else if (filter === "system") {
+            query = query.eq("type", "new_episode");
+        }
+
+        const { data: notifications, error } = await query
             .order("created_at", { ascending: false })
             .limit(limit);
 
         if (error) throw error;
         if (!notifications || notifications.length === 0) return [];
 
-        const typedNotifications = notifications as NotificationRow[];
+        const typedNotifications = notifications as unknown as NotificationRow[];
 
-        // Anime bilgilerini zenginleştir
-        const animeIds = typedNotifications
-            .filter(n => n.anime_id)
-            .map(n => n.anime_id as string);
-
-        // Actor (aksiyonu yapan kullanıcı) bilgilerini zenginleştir
-        const actorIds = typedNotifications
-            .filter(n => n.actor_id)
-            .map(n => n.actor_id as string);
+        const animeIds = typedNotifications.filter(n => n.anime_id).map(n => n.anime_id as string);
+        const actorIds = typedNotifications.filter(n => n.actor_id).map(n => n.actor_id as string);
 
         let animesMap = new Map<string, { title: string; slug: string; poster_path: string | null }>();
         let actorsMap = new Map<string, { username: string; avatar_url: string | null }>();
@@ -77,11 +88,10 @@ export class NotificationService {
      * Okunmamış bildirim sayısını getir
      */
     static async getUnreadCount(userId: string): Promise<number> {
-        const supabase = createPublicClient();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { count, error } = await (supabase as any)
+        const supabase = await createClient();
+        const { count, error } = await supabase
             .from("notifications")
-            .select("*", { count: "exact", head: true })
+            .select("id", { count: "exact", head: true })
             .eq("user_id", userId)
             .eq("is_read", false);
 
@@ -94,8 +104,7 @@ export class NotificationService {
      */
     static async markAsRead(userId: string, notificationId: string): Promise<void> {
         const supabase = await createClient();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { error } = await (supabase as any)
+        const { error } = await supabase
             .from("notifications")
             .update({ is_read: true })
             .eq("id", notificationId)
@@ -109,8 +118,7 @@ export class NotificationService {
      */
     static async markAllAsRead(userId: string): Promise<void> {
         const supabase = await createClient();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { error } = await (supabase as any)
+        const { error } = await supabase
             .from("notifications")
             .update({ is_read: true })
             .eq("user_id", userId)
@@ -124,8 +132,7 @@ export class NotificationService {
      */
     static async deleteNotification(userId: string, notificationId: string): Promise<void> {
         const supabase = await createClient();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { error } = await (supabase as any)
+        const { error } = await supabase
             .from("notifications")
             .delete()
             .eq("id", notificationId)
@@ -139,8 +146,7 @@ export class NotificationService {
      */
     static async createNotification(params: CreateNotificationParams): Promise<void> {
         const supabase = await createClient();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { error } = await (supabase as any)
+        const { error } = await supabase
             .from("notifications")
             .insert({
                 user_id: params.userId,
@@ -151,88 +157,9 @@ export class NotificationService {
                 anime_id: params.animeId || null,
                 episode_id: params.episodeId || null,
                 actor_id: params.actorId || null,
+                is_read: false
             });
 
         if (error) throw error;
     }
-
-    /**
-     * Bir animeyi listesine eklemiş tüm kullanıcılara yeni bölüm bildirimi gönder
-     */
-    static async notifyWatchlistUsers(
-        animeId: string,
-        episodeId: string,
-        animeTitle: string,
-        episodeTitle: string,
-        animeSlug: string
-    ): Promise<void> {
-        const supabase = await createClient();
-
-        // Bu animeyi listesine eklemiş kullanıcıları bul
-        const { data: watchlistUsers, error: watchlistError } = await supabase
-            .from("user_anime_list")
-            .select("user_id")
-            .eq("anime_id", animeId);
-
-        if (watchlistError) throw watchlistError;
-        if (!watchlistUsers || watchlistUsers.length === 0) return;
-
-        // Toplu bildirim oluştur
-        const notifications = watchlistUsers.map(item => ({
-            user_id: item.user_id,
-            type: "new_episode" as const,
-            title: `${animeTitle} - Yeni Bölüm!`,
-            message: episodeTitle,
-            link: `/izle/${animeSlug}`,
-            anime_id: animeId,
-            episode_id: episodeId,
-        }));
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { error } = await (supabase as any)
-            .from("notifications")
-            .insert(notifications);
-
-        if (error) throw error;
-    }
-
-    /**
-     * Bir animeyi listesine eklemiş tüm kullanıcılara yeni bölüm bildirimi gönder
-     * (Episode ID olmadan basitleştirilmiş versiyon)
-     */
-    static async notifyWatchlistUsersSimple(
-        animeId: string,
-        animeTitle: string,
-        episodeLabel: string,
-        animeSlug: string
-    ): Promise<void> {
-        const supabase = await createClient();
-
-        // Bu animeyi listesine eklemiş kullanıcıları bul
-        const { data: watchlistUsers, error: watchlistError } = await supabase
-            .from("user_anime_list")
-            .select("user_id")
-            .eq("anime_id", animeId);
-
-        if (watchlistError) throw watchlistError;
-        if (!watchlistUsers || watchlistUsers.length === 0) return;
-
-        // Toplu bildirim oluştur
-        const notifications = watchlistUsers.map(item => ({
-            user_id: item.user_id,
-            type: "new_episode" as const,
-            title: `${animeTitle} - Yeni Bölüm!`,
-            message: episodeLabel,
-            link: `/izle/${animeSlug}`,
-            anime_id: animeId,
-        }));
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { error } = await (supabase as any)
-            .from("notifications")
-            .insert(notifications);
-
-        if (error) throw error;
-    }
 }
-
