@@ -1,6 +1,6 @@
-import { Genre,TMDBDetailResult } from "./types";
+import { Genre, TMDBDetailResult } from "./types";
 
-export function getImageUrl(path: string | null, size: "w200" | "w300" | "w500" | "w780" | "original" = "w500"): string {
+export function getImageUrl(path: string | null, size: "w200" | "w300" | "w500" | "w780" | "w1280" | "original" = "w500"): string {
     if (!path) return "/img/placeholder.jpg";
     if (path.startsWith("http") || path.startsWith("https")) return path;
     if (path.startsWith("/img/") || path.startsWith("/icons/")) return path;

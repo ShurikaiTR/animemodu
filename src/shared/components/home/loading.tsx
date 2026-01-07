@@ -3,7 +3,7 @@ import { Skeleton } from "@/shared/components/skeleton";
 
 export function HeroSkeleton() {
   return (
-    <section className="pt-32 pb-10">
+    <section className="pt-4 pb-10">
       <Container>
         <div className="w-full lg:h-[34rem]">
           <Skeleton className="w-full h-96 lg:h-full rounded-3xl" />
@@ -15,7 +15,7 @@ export function HeroSkeleton() {
 
 export function EpisodesSkeleton() {
   return (
-    <section className="pb-10 pt-4">
+    <section className="pb-8 pt-4">
       <div className="container mx-auto px-4 sm:px-8">
         <div className="flex items-center justify-between mb-8">
           <Skeleton className="h-8 w-64" />
@@ -32,7 +32,7 @@ export function EpisodesSkeleton() {
 
 export function AnimesSkeleton() {
   return (
-    <section className="pb-20 pt-16">
+    <section className="pb-12 pt-4">
       <div className="container mx-auto px-4 sm:px-8">
         <div className="flex items-center justify-between mb-12">
           <Skeleton className="h-8 w-48" />
@@ -50,7 +50,7 @@ export function AnimesSkeleton() {
 
 export function MoviesSkeleton() {
   return (
-    <section className="pb-20 pt-8">
+    <section className="pb-12 pt-4">
       <div className="container mx-auto px-4 sm:px-8">
         <div className="flex items-center justify-between mb-12">
           <Skeleton className="h-8 w-48" />

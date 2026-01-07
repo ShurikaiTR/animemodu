@@ -5,13 +5,9 @@ import { revalidatePath } from "next/cache";
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireOwnerOrAdmin } from "@/shared/lib/auth/guards";
 import { profileSchema } from "@/shared/lib/validations/profile";
-import type { SocialMediaLinks } from "@/shared/types/helpers";
+import type { Json } from "@/shared/types/helpers";
 
 import { ProfileService } from "../services/profile-service";
-
-type ProfileResult =
-    | { success: true; data: unknown }
-    | { success: false; error: string };
 
 /** Profile update için partial data tipi */
 type ProfileUpdateData = Partial<{
@@ -21,9 +17,10 @@ type ProfileUpdateData = Partial<{
     banner_url: string | null;
     bio: string | null;
     location: string | null;
-    social_media: SocialMediaLinks;
+    social_media: Json;
     age: string | null;
 }>;
+
 
 /**
  * Creates or updates a user profile
@@ -69,7 +66,7 @@ export async function createOrUpdateProfile(userId: string, data?: unknown) {
         if (validatedData.bio !== undefined) updateData.bio = validatedData.bio;
         if (validatedData.location !== undefined) updateData.location = validatedData.location;
         if (validatedData.social_media !== undefined) {
-            updateData.social_media = validatedData.social_media as SocialMediaLinks;
+            updateData.social_media = validatedData.social_media as Json;
         }
         if (validatedData.age !== undefined) updateData.age = validatedData.age;
 

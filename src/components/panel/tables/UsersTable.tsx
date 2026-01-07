@@ -30,7 +30,7 @@ export function UsersTable({ items }: UsersTableProps) {
             if (!result.success) {
                 toast.error("Kullanıcı silinirken bir hata oluştu: " + result.error);
             } else {
-                if (result.deletedSelf && user?.id === deleteId) {
+                if (result.data?.deletedSelf && user?.id === deleteId) {
                     toast.success("Hesabınız silindi. Çıkış yapılıyor...");
                     await signOut();
                     router.push("/");

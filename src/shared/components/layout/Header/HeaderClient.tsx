@@ -3,9 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 
 import AuthModal from "@/components/auth/AuthModal";
+import { NotificationBell } from "@/features/notifications/components";
 import Container from "@/shared/components/container";
 import { useAuth } from "@/shared/contexts/AuthContext";
 import { cn } from "@/shared/lib/utils";
@@ -100,6 +101,8 @@ export default function Header({ siteLogo, siteName, discordUrl }: HeaderProps) 
                                     setQuery={setSearchQuery}
                                     onSubmit={handleSearchSubmit}
                                 />
+
+                                <NotificationBell />
 
                                 <UserActions
                                     user={user}

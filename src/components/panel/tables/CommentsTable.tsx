@@ -15,7 +15,7 @@ interface CommentsTableProps {
 }
 
 export function CommentsTable({ items }: CommentsTableProps) {
-    const [isPending, startTransition] = useTransition();
+    const [_isPending, startTransition] = useTransition();
 
     const handleDelete = async (id: string, type: InteractionType) => {
         if (!confirm("Bu içeriği silmek istediğinize emin misiniz?")) return;

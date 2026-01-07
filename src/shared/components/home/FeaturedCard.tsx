@@ -1,4 +1,4 @@
-import { Film,Play } from "lucide-react";
+import { Film, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,7 +22,7 @@ interface FeaturedCardProps {
 }
 
 export default function FeaturedCard({ anime }: FeaturedCardProps) {
-    const imageUrl = getImageUrl(anime.backdrop_path || anime.poster_path, "original");
+    const imageUrl = getImageUrl(anime.backdrop_path || anime.poster_path, "w1280");
     const year = anime.release_date ? parseInt(anime.release_date.split("-")[0]) : 2024;
     const rating = anime.vote_average || 0;
     const genre = (anime.genres && anime.genres.length > 0) ? anime.genres[0] : "Anime";
@@ -37,7 +37,7 @@ export default function FeaturedCard({ anime }: FeaturedCardProps) {
                         src={imageUrl}
                         alt={anime.title}
                         fill
-                        sizes="(max-width: 1024px) 100vw, 66vw"
+                        sizes="100vw"
                         className="object-cover object-top transition-transform duration-700 group-hover:scale-105 saturate-[1.1]"
                         priority
                     />

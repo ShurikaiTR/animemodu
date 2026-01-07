@@ -1,4 +1,4 @@
-import { Film, Inbox,LayoutGrid } from "lucide-react";
+import { Film, Inbox, LayoutGrid } from "lucide-react";
 
 import EmptyState from "@/shared/components/EmptyState";
 import MovieCard from "@/shared/components/MovieCard";
@@ -42,6 +42,8 @@ interface MediaGridServerProps {
     orderBy?: "created_at" | "vote_average";
     /** Order direction */
     orderDirection?: "asc" | "desc";
+    /** Number of items to load with priority */
+    priorityCount?: number;
 }
 
 export default async function MediaGridServer({
@@ -52,6 +54,7 @@ export default async function MediaGridServer({
     emptyDescription = "Şu anda görüntülenecek içerik bulunmuyor. Daha sonra tekrar kontrol et.",
     orderBy = "created_at",
     orderDirection = "desc",
+    priorityCount = 0,
 }: MediaGridServerProps) {
     const supabase = createPublicClient();
 
@@ -88,7 +91,7 @@ export default async function MediaGridServer({
 
     return (
         <>
-            {items.map((item) => (
+            {items.map((item, index) => (
                 <MovieCard
                     key={item.id}
                     id={item.id}
@@ -98,6 +101,7 @@ export default async function MediaGridServer({
                     rating={item.vote_average || 0}
                     image={getImageUrl(item.poster_path, "w500")}
                     slug={item.slug || undefined}
+                    priority={index < priorityCount}
                 />
             ))}
         </>

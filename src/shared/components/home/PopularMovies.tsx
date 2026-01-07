@@ -6,9 +6,9 @@ import Container from "@/shared/components/container";
 
 export default async function PopularMovies() {
     return (
-        <section className="pb-20 pt-8">
+        <section className="pb-12 pt-4">
             <Container>
-                <div className="flex items-center justify-between mb-12">
+                <div className="flex items-center justify-between mb-8">
                     <h2 className="text-2xl sm:text-3xl font-bold font-rubik text-white drop-shadow-md border-l-4 border-primary pl-4">
                         Popüler Anime Filmleri
                     </h2>

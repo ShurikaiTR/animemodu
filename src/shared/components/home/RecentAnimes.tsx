@@ -6,9 +6,9 @@ import Container from "@/shared/components/container";
 
 export default async function RecentAnimes() {
     return (
-        <section className="pb-20">
+        <section className="pb-12 pt-4">
             <Container>
-                <div className="flex items-center justify-between mb-12">
+                <div className="flex items-center justify-between mb-8">
                     <h2 className="text-2xl sm:text-3xl font-bold font-rubik text-white drop-shadow-md border-l-4 border-primary pl-4">
                         AnimeModu&apos;nda Yeni
                     </h2>
@@ -27,6 +27,7 @@ export default async function RecentAnimes() {
                         limit={12}
                         emptyTitle="Henüz İçerik Eklenmemiş"
                         emptyDescription="Panel → Yeni Ekle'den içerik ekleyebilirsin."
+                        priorityCount={4}
                     />
                 </div>
             </Container>

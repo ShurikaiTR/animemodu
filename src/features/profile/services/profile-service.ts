@@ -1,11 +1,10 @@
 import { createClient } from "@/shared/lib/supabase/server";
-import { getImageUrl } from "@/shared/lib/tmdb/utils";
+import { type AnimeDataRaw,AnimeMapper } from "@/shared/mappers/anime-mapper";
 import type { WatchStatus } from "@/shared/types/domain/watchlist";
 import type { ProfileRow, ProfileUpdate } from "@/shared/types/helpers";
 
 // Internal types for mapped data
 interface FavItem { id: string; anime_id: string; created_at: string; }
-interface AnimeData { id: string; title: string; slug: string; poster_path: string | null; vote_average: number | null; release_date: string | null; genres: string[] | null; }
 interface ListItem { anime_id: string; id: string; user_id: string; status: string; score: number | null; created_at: string; updated_at: string; }
 
 export const ProfileService = {
@@ -71,7 +70,7 @@ export const ProfileService = {
 
         if (animesError) throw new Error(animesError.message);
 
-        const animesMap = new Map((animesData as AnimeData[]).map(a => [a.id, a]));
+        const animesMap = new Map((animesData as AnimeDataRaw[]).map(a => [a.id, a]));
 
         return (favData as FavItem[])
             .map((item) => {
@@ -82,15 +81,7 @@ export const ProfileService = {
                     user_id: userId,
                     anime_id: item.anime_id,
                     created_at: item.created_at,
-                    anime: {
-                        id: anime.id,
-                        title: anime.title,
-                        slug: anime.slug,
-                        poster_url: getImageUrl(anime.poster_path, "w500") || "",
-                        score: anime.vote_average,
-                        release_year: anime.release_date ? new Date(anime.release_date).getFullYear() : 0,
-                        genres: anime.genres
-                    }
+                    anime: AnimeMapper.toCard(anime)
                 };
             })
             .filter((item): item is NonNullable<typeof item> => item !== null);
@@ -165,7 +156,7 @@ export const ProfileService = {
 
         if (animesError) throw new Error(animesError.message);
 
-        const animesMap = new Map((animesData as AnimeData[]).map(a => [a.id, a]));
+        const animesMap = new Map((animesData as AnimeDataRaw[]).map(a => [a.id, a]));
 
         return (listData as ListItem[])
             .map((item) => {
@@ -179,15 +170,7 @@ export const ProfileService = {
                     score: item.score,
                     created_at: item.created_at,
                     updated_at: item.updated_at,
-                    anime: {
-                        id: anime.id,
-                        title: anime.title,
-                        slug: anime.slug,
-                        poster_url: getImageUrl(anime.poster_path, "w500") || "",
-                        score: anime.vote_average,
-                        release_year: anime.release_date ? new Date(anime.release_date).getFullYear() : 0,
-                        genres: anime.genres
-                    }
+                    anime: AnimeMapper.toCard(anime)
                 };
             })
             .filter((item): item is NonNullable<typeof item> => item !== null);

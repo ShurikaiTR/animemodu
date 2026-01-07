@@ -11,7 +11,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
     return (
         <>
             <Header />
-            <main className="grow min-h-screen pt-36">
+            <main className="grow min-h-screen pt-28">
                 {children}
             </main>
             <Suspense fallback={null}>

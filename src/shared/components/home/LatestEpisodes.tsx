@@ -35,16 +35,16 @@ export default function LatestEpisodes({ episodes }: { episodes: EpisodeItem[] }
     if (!episodes || episodes.length === 0) return null;
 
     return (
-        <section className="pb-10 pt-4 first:pt-28">
+        <section className="pb-8 pt-4 first:pt-4">
             <Container>
-                <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center justify-between mb-6">
                     <h2 className="text-2xl sm:text-3xl font-bold font-rubik text-white drop-shadow-md border-l-4 border-primary pl-4">
                         Son Eklenen Bölümler
                     </h2>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
-                    {episodes.map((ep) => {
+                    {episodes.map((ep, index) => {
                         const isSeasonal = ep.anime.structure_type === "seasonal";
                         const epNumberText = isSeasonal
                             ? `${ep.season_number}.Sezon ${ep.episode_number}.Bölüm`
@@ -64,6 +64,7 @@ export default function LatestEpisodes({ episodes }: { episodes: EpisodeItem[] }
                                 image={getImageUrl(imagePath, "w500")}
                                 timeAgo={getTimeAgo(ep.created_at)}
                                 href={getWatchUrl(ep.anime.slug, watchEpNum, watchSeasonNum, ep.anime.structure_type)}
+                                priority={index < 2}
                             />
                         );
                     })}

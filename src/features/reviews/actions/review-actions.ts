@@ -2,8 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 
+import { NotificationService } from "@/features/notifications/services/notification-service";
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireUser } from "@/shared/lib/auth/guards";
+import { createClient } from "@/shared/lib/supabase/server";
 import { formatZodError } from "@/shared/lib/validations/anime";
 
 import { type CreateReviewInput, createReviewSchema } from "../schemas/review-schemas";
@@ -82,7 +84,38 @@ export async function toggleReviewLikeAction(reviewId: string) {
         const auth = await requireUser();
         if (isAuthError(auth)) throw new Error(auth.error);
 
-        return await ReviewService.toggleLike(reviewId, auth.userId);
+        const result = await ReviewService.toggleLike(reviewId, auth.userId);
+
+        // Beğeni eklendiyse, inceleme sahibine bildirim gönder
+        if (result.liked) {
+            const supabase = await createClient();
+            const { data: review } = await supabase
+                .from("reviews")
+                .select("user_id, anime_id, title, content")
+                .eq("id", reviewId)
+                .single();
+
+            // Kendi incelemesini beğendiyse bildirim gönderme
+            if (review && review.user_id !== auth.userId) {
+                const { data: anime } = await supabase
+                    .from("animes")
+                    .select("title, slug")
+                    .eq("id", review.anime_id)
+                    .single();
+
+                await NotificationService.createNotification({
+                    userId: review.user_id,
+                    type: "review_like",
+                    title: `${auth.username || "Bir kullanıcı"} incelemeni beğendi`,
+                    message: review.title || review.content.substring(0, 50) + "...",
+                    link: anime ? `/anime/${anime.slug}#reviews` : undefined,
+                    animeId: review.anime_id,
+                    actorId: auth.userId,
+                });
+            }
+        }
+
+        return result;
     }, "toggleReviewLike");
 }
 

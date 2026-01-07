@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
+import { NotificationService } from "@/features/notifications/services/notification-service";
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireUser } from "@/shared/lib/auth/guards";
 
@@ -40,6 +41,14 @@ export async function toggleFollow(targetUserId: string) {
                     userId: targetUserId,
                     activityType: "followed_by",
                     metadata: { follower_user_id: currentUserId, follower_username: currentProfile?.username || "Kullanıcı" },
+                }),
+                // Takip edilen kullanıcıya bildirim gönder
+                NotificationService.createNotification({
+                    userId: targetUserId,
+                    type: "new_follower",
+                    title: `${currentProfile?.username || "Bir kullanıcı"} seni takip etmeye başladı`,
+                    link: `/profil/${currentProfile?.username}`,
+                    actorId: currentUserId,
                 }),
             ]);
         }

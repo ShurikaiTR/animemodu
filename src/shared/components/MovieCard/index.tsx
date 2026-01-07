@@ -23,6 +23,7 @@ interface MovieCardProps {
     hideWatchButton?: boolean;
     /** Listeden kaldırma callback'i - varsa X butonu gösterilir */
     onRemove?: () => void;
+    priority?: boolean;
 }
 
 export default function MovieCard({
@@ -36,7 +37,8 @@ export default function MovieCard({
     className,
     initialStatus,
     hideWatchButton = false,
-    onRemove
+    onRemove,
+    priority = false
 }: MovieCardProps) {
     const href = slug ? `/anime/${slug}` : `/anime/${title.toLowerCase().replace(/ /g, "-")}`;
 
@@ -73,6 +75,7 @@ export default function MovieCard({
                     fill
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority={priority}
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />

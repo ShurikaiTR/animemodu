@@ -1,5 +1,6 @@
 "use server";
 
+import { NotificationService } from "@/features/notifications/services/notification-service";
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireAdmin } from "@/shared/lib/auth/guards";
 import { revalidateAnimeData, revalidateEpisodeData, revalidateFeaturedAnime } from "@/shared/lib/cache/revalidate";
@@ -128,6 +129,20 @@ export async function updateEpisodes(animeId: string) {
         return await safeAction(async () => {
             await AnimeService.insertEpisodes(newEpisodesToInsert);
             revalidateEpisodeData();
+
+            // Yeni bölümler eklendiyse izleme listesindeki kullanıcılara bildirim gönder
+            const latestEpisode = newEpisodesToInsert[newEpisodesToInsert.length - 1];
+            const episodeLabel = latestEpisode.absolute_episode_number
+                ? `Bölüm ${latestEpisode.absolute_episode_number}`
+                : `S${latestEpisode.season_number}E${latestEpisode.episode_number}`;
+
+            await NotificationService.notifyWatchlistUsersSimple(
+                animeId,
+                anime.title,
+                episodeLabel,
+                anime.slug
+            );
+
             return { addedCount: newEpisodesToInsert.length };
         }, "updateEpisodes");
     }

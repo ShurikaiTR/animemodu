@@ -14,6 +14,7 @@ interface EpisodeCardProps {
     href?: string;
     className?: string;
     variant?: "vertical" | "horizontal";
+    priority?: boolean;
 }
 
 export default function EpisodeCard({
@@ -22,7 +23,8 @@ export default function EpisodeCard({
     image,
     timeAgo,
     href = "#",
-    className
+    className,
+    priority = false
 }: EpisodeCardProps) {
     return (
         <div className={cn("group relative w-full aspect-video rounded-2xl overflow-hidden cursor-pointer", className)}>
@@ -34,6 +36,7 @@ export default function EpisodeCard({
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    priority={priority}
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-80 transition-opacity duration-500" />

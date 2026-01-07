@@ -2,11 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 
+import { NotificationService } from "@/features/notifications/services/notification-service";
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireAdmin, requireUser } from "@/shared/lib/auth/guards";
+import { createClient } from "@/shared/lib/supabase/server";
 import { formatZodError } from "@/shared/lib/validations/anime";
 
-import { type CreateCommentInput,createCommentSchema } from "../schemas/comment-schemas";
+import { type CreateCommentInput, createCommentSchema } from "../schemas/comment-schemas";
 import { CommentService } from "../services/comment-service";
 
 /**
@@ -33,7 +35,7 @@ export async function createCommentAction(data: CreateCommentInput) {
 
         const { animeId, episodeId, parentId, content, isSpoiler } = validation.data;
 
-        await CommentService.createComment({
+        const createdComment = await CommentService.createComment({
             anime_id: animeId,
             episode_id: episodeId || null,
             parent_id: parentId || null,
@@ -42,7 +44,37 @@ export async function createCommentAction(data: CreateCommentInput) {
             user_id: auth.userId,
         });
 
-        revalidatePath(`/watch/${animeId}`); // Adjust path as needed
+        // Eğer bu bir yanıt ise, orijinal yorum sahibine bildirim gönder
+        if (parentId) {
+            const supabase = await createClient();
+            const { data: parentComment } = await supabase
+                .from("comments")
+                .select("user_id, anime_id")
+                .eq("id", parentId)
+                .single();
+
+            // Kendisine yanıt verdiyse bildirim gönderme
+            if (parentComment && parentComment.user_id !== auth.userId) {
+                const { data: anime } = await supabase
+                    .from("animes")
+                    .select("title, slug")
+                    .eq("id", parentComment.anime_id)
+                    .single();
+
+                await NotificationService.createNotification({
+                    userId: parentComment.user_id,
+                    type: "comment_reply",
+                    title: `${auth.username || "Bir kullanıcı"} yorumuna yanıt verdi`,
+                    message: content.substring(0, 100) + (content.length > 100 ? "..." : ""),
+                    link: anime ? `/anime/${anime.slug}#comments` : undefined,
+                    animeId: parentComment.anime_id,
+                    actorId: auth.userId,
+                });
+            }
+        }
+
+        revalidatePath(`/watch/${animeId}`);
+        return createdComment;
     }, "createComment");
 }
 
@@ -81,7 +113,38 @@ export async function toggleCommentLikeAction(commentId: string) {
         const auth = await requireUser();
         if (isAuthError(auth)) throw new Error(auth.error);
 
-        return await CommentService.toggleLike(commentId, auth.userId);
+        const result = await CommentService.toggleLike(commentId, auth.userId);
+
+        // Beğeni eklendiyse, yorum sahibine bildirim gönder
+        if (result.liked) {
+            const supabase = await createClient();
+            const { data: comment } = await supabase
+                .from("comments")
+                .select("user_id, anime_id, content")
+                .eq("id", commentId)
+                .single();
+
+            // Kendi yorumunu beğendiyse bildirim gönderme
+            if (comment && comment.user_id !== auth.userId) {
+                const { data: anime } = await supabase
+                    .from("animes")
+                    .select("title, slug")
+                    .eq("id", comment.anime_id)
+                    .single();
+
+                await NotificationService.createNotification({
+                    userId: comment.user_id,
+                    type: "comment_like",
+                    title: `${auth.username || "Bir kullanıcı"} yorumunu beğendi`,
+                    message: comment.content.substring(0, 50) + (comment.content.length > 50 ? "..." : ""),
+                    link: anime ? `/anime/${anime.slug}#comments` : undefined,
+                    animeId: comment.anime_id,
+                    actorId: auth.userId,
+                });
+            }
+        }
+
+        return result;
     }, "toggleLike");
 }
 

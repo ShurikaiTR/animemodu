@@ -7,8 +7,6 @@ import { type CreateReportInput, createReportSchema } from "@/shared/lib/validat
 
 import { ReportService } from "../services/report-service";
 
-type ReportReason = 'playback' | 'audio' | 'subtitle' | 'wrong';
-
 const RATE_LIMIT_WINDOW_HOURS = 1;
 const RATE_LIMIT_MAX_REPORTS = 3;
 
