@@ -162,4 +162,39 @@ export class NotificationService {
 
         if (error) throw error;
     }
+
+    /**
+     * İzleme listesindeki kullanıcılara basit bildirim gönder
+     */
+    static async notifyWatchlistUsersSimple(
+        animeId: string,
+        animeTitle: string,
+        episodeLabel: string,
+        animeSlug: string
+    ): Promise<void> {
+        const supabase = await createClient();
+
+        // 1. İzleme listesinde olan kullanıcıları bul
+        const { data: watchlistItems } = await supabase
+            .from("user_lists")
+            .select("user_id")
+            .eq("anime_id", animeId)
+            .in("status", ["watching", "plan_to_watch"]);
+
+        if (!watchlistItems || watchlistItems.length === 0) return;
+
+        // 2. Her kullanıcı için bildirim oluştur
+        const notifications = watchlistItems.map(item => ({
+            user_id: item.user_id,
+            type: "new_episode",
+            title: "Yeni Bölüm",
+            message: `${animeTitle} - ${episodeLabel} yayınlandı!`,
+            link: `/watch/${animeId}/${episodeLabel.split(' ').pop()}`, // Basit link tahmini
+            anime_id: animeId,
+            is_read: false
+        }));
+
+        const { error } = await supabase.from("notifications").insert(notifications);
+        if (error) console.error("Toplu bildirim gönderilemedi:", error);
+    }
 }

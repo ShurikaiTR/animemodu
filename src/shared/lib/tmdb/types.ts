@@ -48,25 +48,33 @@ export interface Genre {
     name: string;
 }
 
+export interface TMDBEpisode {
+    id: number;
+    name: string;
+    overview: string;
+    still_path: string | null;
+    vote_average: number;
+    vote_count: number;
+    air_date: string;
+    episode_number: number;
+    season_number: number;
+    runtime: number | null;
+    guest_stars?: {
+        id: number;
+        name: string;
+        character: string;
+        profile_path: string | null;
+    }[];
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export interface TMDBSeriesData {
+    _id?: string;
+    air_date?: string;
+    episodes?: TMDBEpisode[];
+    name?: string;
+    overview?: string;
+    id?: number;
+    poster_path?: string | null;
+    season_number?: number;
+    vote_average?: number;
+}
