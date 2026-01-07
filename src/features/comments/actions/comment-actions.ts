@@ -9,14 +9,15 @@ import { createClient } from "@/shared/lib/supabase/server";
 import { formatZodError } from "@/shared/lib/validations/anime";
 
 import { type CreateCommentInput, createCommentSchema } from "../schemas/comment-schemas";
-import { CommentService } from "../services/comment-service";
+import { CommentMutationService } from "../services/comment-mutation-service";
+import { CommentQueryService } from "../services/comment-query-service";
 
 /**
  * Fetch comments for an anime or episode
  */
 export async function getCommentsAction(animeId: string, episodeId?: string) {
     return await safeAction(async () => {
-        return await CommentService.getComments(animeId, episodeId);
+        return await CommentQueryService.getComments(animeId, episodeId);
     }, "getComments");
 }
 
@@ -35,7 +36,7 @@ export async function createCommentAction(data: CreateCommentInput) {
 
         const { animeId, episodeId, parentId, content, isSpoiler } = validation.data;
 
-        const createdComment = await CommentService.createComment({
+        const createdComment = await CommentMutationService.createComment({
             anime_id: animeId,
             episode_id: episodeId || null,
             parent_id: parentId || null,
@@ -86,7 +87,7 @@ export async function updateCommentAction(id: string, content: string, isSpoiler
         const auth = await requireUser();
         if (isAuthError(auth)) throw new Error(auth.error);
 
-        await CommentService.updateComment(id, auth.userId, content, isSpoiler);
+        await CommentMutationService.updateComment(id, auth.userId, content, isSpoiler);
     }, "updateComment");
 }
 
@@ -99,7 +100,7 @@ export async function deleteCommentAction(id: string) {
         if (isAuthError(auth)) throw new Error(auth.error);
 
         const isAdmin = auth.role === "admin";
-        await CommentService.deleteComment(id, auth.userId, isAdmin);
+        await CommentMutationService.deleteComment(id, auth.userId, isAdmin);
 
         revalidatePath("/panel/comments");
     }, "deleteComment");
@@ -113,7 +114,7 @@ export async function toggleCommentLikeAction(commentId: string) {
         const auth = await requireUser();
         if (isAuthError(auth)) throw new Error(auth.error);
 
-        const result = await CommentService.toggleLike(commentId, auth.userId);
+        const result = await CommentMutationService.toggleLike(commentId, auth.userId);
 
         // Beğeni eklendiyse, yorum sahibine bildirim gönder
         if (result.liked) {
@@ -156,7 +157,7 @@ export async function toggleCommentPinAction(commentId: string) {
         const auth = await requireAdmin();
         if (isAuthError(auth)) throw new Error(auth.error);
 
-        return await CommentService.togglePin(commentId);
+        return await CommentMutationService.togglePin(commentId);
     }, "togglePin");
 }
 
@@ -168,6 +169,6 @@ export async function checkUserLikedCommentAction(commentId: string) {
         const auth = await requireUser();
         if (isAuthError(auth)) return false;
 
-        return await CommentService.checkUserLiked(commentId, auth.userId);
+        return await CommentMutationService.checkUserLiked(commentId, auth.userId);
     }, "checkUserLiked");
 }
