@@ -37,9 +37,9 @@ export default function NotificationSidebar({ filterType, onFilterChange, counts
                         key={item.id}
                         onClick={() => onFilterChange(item.id)}
                         className={cn(
-                            "flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all group relative overflow-hidden text-left",
+                            "group relative flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all overflow-hidden text-left",
                             filterType === item.id
-                                ? "bg-primary/10 text-primary font-bold shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
+                                ? "bg-primary/10 text-primary font-bold shadow-md shadow-primary/5"
                                 : "text-white/40 hover:bg-white/5 hover:text-white"
                         )}
                     >

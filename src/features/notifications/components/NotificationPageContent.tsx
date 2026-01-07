@@ -124,7 +124,7 @@ export default function NotificationPageContent({ initialNotifications, initialT
                                 icon={Bell}
                                 title="Henüz bildirim yok"
                                 description="Bu kategori için gösterilecek bildirim bulunamadı."
-                                className="bg-white/[0.01] border border-white/5 rounded-[2rem] border-dashed"
+                                className="bg-white/[0.01] border border-white/5 rounded-3xl border-dashed"
                             />
                         ) : (
                             (['Today', 'Yesterday', 'Earlier'] as const).map(groupKey => {
