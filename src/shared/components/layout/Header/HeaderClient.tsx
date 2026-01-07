@@ -93,7 +93,7 @@ export default function Header({ siteLogo, siteName, discordUrl }: HeaderProps) 
                                 <Navigation isMobileMenuOpen={false} discordUrl={discordUrl} />
                             </div>
 
-                            <div className="flex items-center justify-end gap-4 lg:gap-8 xl:gap-11">
+                            <div className="flex items-center justify-end gap-4 lg:gap-6">
                                 <SearchForm
                                     isOpen={isSearchOpen}
                                     setIsOpen={setIsSearchOpen}
