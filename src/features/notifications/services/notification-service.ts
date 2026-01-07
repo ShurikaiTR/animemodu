@@ -176,7 +176,7 @@ export class NotificationService {
 
         // 1. İzleme listesinde olan kullanıcıları bul
         const { data: watchlistItems } = await supabase
-            .from("user_lists")
+            .from("user_anime_list")
             .select("user_id")
             .eq("anime_id", animeId)
             .in("status", ["watching", "plan_to_watch"]);
