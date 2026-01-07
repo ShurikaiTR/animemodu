@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { NotificationService } from "@/features/notifications/services/notification-service";
+import { NotificationMutationService } from "@/features/notifications/services/notification-mutation-service";
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireUser } from "@/shared/lib/auth/guards";
 import { createClient } from "@/shared/lib/supabase/server";
@@ -104,7 +104,7 @@ export async function toggleReviewLikeAction(reviewId: string) {
                     .eq("id", review.anime_id)
                     .single();
 
-                await NotificationService.createNotification({
+                await NotificationMutationService.createNotification({
                     userId: review.user_id,
                     type: "review_like",
                     title: "incelemeni beğendi",

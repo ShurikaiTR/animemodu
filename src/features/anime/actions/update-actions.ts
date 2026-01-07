@@ -1,6 +1,6 @@
 "use server";
 
-import { NotificationService } from "@/features/notifications/services/notification-service";
+import { NotificationMutationService } from "@/features/notifications/services/notification-mutation-service";
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireAdmin } from "@/shared/lib/auth/guards";
 import { revalidateAnimeData, revalidateEpisodeData, revalidateFeaturedAnime } from "@/shared/lib/cache/revalidate";
@@ -137,7 +137,7 @@ export async function updateEpisodes(animeId: string) {
                 ? `Bölüm ${latestEpisode.absolute_episode_number}`
                 : `S${latestEpisode.season_number}E${latestEpisode.episode_number}`;
 
-            await NotificationService.notifyWatchlistUsersSimple(
+            await NotificationMutationService.notifyWatchlistUsersSimple(
                 animeId,
                 anime.title,
                 episodeLabel,

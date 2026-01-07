@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 
-import { NotificationService } from "@/features/notifications/services/notification-service";
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireAdmin, requireUser } from "@/shared/lib/auth/guards";
 import { createClient } from "@/shared/lib/supabase/server";

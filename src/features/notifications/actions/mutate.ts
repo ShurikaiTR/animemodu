@@ -2,9 +2,9 @@
 
 import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireUser } from "@/shared/lib/auth/guards";
-import { formatZodError,notificationIdSchema } from "@/shared/lib/validations/notification";
+import { formatZodError, notificationIdSchema } from "@/shared/lib/validations/notification";
 
-import { NotificationService } from "../services/notification-service";
+import { NotificationMutationService } from "../services/notification-mutation-service";
 
 /**
  * Tek bir bildirimi okundu olarak işaretle
@@ -19,7 +19,7 @@ export async function markNotificationAsRead(notificationId: string) {
     }
 
     return await safeAction(async () => {
-        await NotificationService.markAsRead(auth.userId, validation.data.id);
+        await NotificationMutationService.markAsRead(auth.userId, validation.data.id);
     }, "markNotificationAsRead");
 }
 
@@ -31,7 +31,7 @@ export async function markAllNotificationsAsRead() {
     if (isAuthError(auth)) return auth;
 
     return await safeAction(async () => {
-        await NotificationService.markAllAsRead(auth.userId);
+        await NotificationMutationService.markAllAsRead(auth.userId);
     }, "markAllNotificationsAsRead");
 }
 
@@ -48,6 +48,6 @@ export async function deleteNotification(notificationId: string) {
     }
 
     return await safeAction(async () => {
-        await NotificationService.deleteNotification(auth.userId, validation.data.id);
+        await NotificationMutationService.deleteNotification(auth.userId, validation.data.id);
     }, "deleteNotification");
 }

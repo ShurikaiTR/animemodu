@@ -4,7 +4,7 @@ import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireUser } from "@/shared/lib/auth/guards";
 import { formatZodError, getNotificationsSchema } from "@/shared/lib/validations/notification";
 
-import { NotificationService } from "../services/notification-service";
+import { NotificationQueryService } from "../services/notification-query-service";
 
 /**
  * Kullanıcının bildirimlerini getir
@@ -19,7 +19,7 @@ export async function getNotifications(limit = 50, filter = "all", tab = "all") 
     }
 
     return await safeAction(async () => {
-        return await NotificationService.getUserNotifications(
+        return await NotificationQueryService.getUserNotifications(
             auth.userId,
             validation.data.limit,
             validation.data.filter as "all" | "likes" | "replies" | "system",
@@ -36,7 +36,7 @@ export async function getUnreadCount() {
     if (isAuthError(auth)) return { success: false, error: auth.error };
 
     return await safeAction(async () => {
-        const count = await NotificationService.getUnreadCount(auth.userId);
+        const count = await NotificationQueryService.getUnreadCount(auth.userId);
         return { count };
     }, "getUnreadCount");
 }
