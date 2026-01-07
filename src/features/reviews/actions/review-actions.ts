@@ -9,14 +9,15 @@ import { createClient } from "@/shared/lib/supabase/server";
 import { formatZodError } from "@/shared/lib/validations/anime";
 
 import { type CreateReviewInput, createReviewSchema } from "../schemas/review-schemas";
-import { ReviewService } from "../services/review-service";
+import { ReviewMutationService } from "../services/review-mutation-service";
+import { ReviewQueryService } from "../services/review-query-service";
 
 /**
  * Fetch reviews for an anime
  */
 export async function getReviewsAction(animeId: string) {
     return await safeAction(async () => {
-        return await ReviewService.getReviews(animeId);
+        return await ReviewQueryService.getReviews(animeId);
     }, "getReviews");
 }
 
@@ -28,7 +29,7 @@ export async function getUserReviewAction(animeId: string) {
         const auth = await requireUser();
         if (isAuthError(auth)) return null;
 
-        return await ReviewService.getUserReview(animeId, auth.userId);
+        return await ReviewQueryService.getUserReview(animeId, auth.userId);
     }, "getUserReview");
 }
 
@@ -47,7 +48,7 @@ export async function createReviewAction(data: CreateReviewInput) {
 
         const { animeId, title, content, rating, isSpoiler } = validation.data;
 
-        await ReviewService.createReview({
+        await ReviewMutationService.createReview({
             anime_id: animeId,
             user_id: auth.userId,
             title: title || null,
@@ -69,7 +70,7 @@ export async function deleteReviewAction(id: string) {
         if (isAuthError(auth)) throw new Error(auth.error);
 
         const isAdmin = auth.role === "admin";
-        await ReviewService.deleteReview(id, auth.userId, isAdmin);
+        await ReviewMutationService.deleteReview(id, auth.userId, isAdmin);
 
         revalidatePath("/panel/comments");
         revalidatePath("/"); // Home page might have lists
@@ -84,7 +85,7 @@ export async function toggleReviewLikeAction(reviewId: string) {
         const auth = await requireUser();
         if (isAuthError(auth)) throw new Error(auth.error);
 
-        const result = await ReviewService.toggleLike(reviewId, auth.userId);
+        const result = await ReviewMutationService.toggleLike(reviewId, auth.userId);
 
         // Beğeni eklendiyse, inceleme sahibine bildirim gönder
         if (result.liked) {
@@ -127,6 +128,6 @@ export async function checkUserLikedReviewAction(reviewId: string) {
         const auth = await requireUser();
         if (isAuthError(auth)) return false;
 
-        return await ReviewService.checkUserLiked(reviewId, auth.userId);
+        return await ReviewMutationService.checkUserLiked(reviewId, auth.userId);
     }, "checkUserLikedReview");
 }
