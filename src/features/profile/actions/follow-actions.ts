@@ -7,6 +7,7 @@ import { safeAction } from "@/shared/lib/actions/wrapper";
 import { isAuthError, requireUser } from "@/shared/lib/auth/guards";
 
 import { ActivityService } from "../services/activity-service";
+import { FollowService } from "../services/follow-service";
 import { ProfileService } from "../services/profile-service";
 
 /**
@@ -23,7 +24,7 @@ export async function toggleFollow(targetUserId: string) {
     }
 
     return await safeAction(async () => {
-        const result = await ProfileService.toggleFollow(currentUserId, targetUserId);
+        const result = await FollowService.toggleFollow(currentUserId, targetUserId);
 
         const [targetProfile, currentProfile] = await Promise.all([
             ProfileService.getProfileById(targetUserId),
@@ -69,7 +70,7 @@ export async function getFollowStatus(targetUserId: string) {
     if (isAuthError(auth)) return { success: true, data: { isFollowing: false } };
 
     return await safeAction(async () => {
-        const isFollowing = await ProfileService.getFollowStatus(auth.userId, targetUserId);
+        const isFollowing = await FollowService.getFollowStatus(auth.userId, targetUserId);
         return { isFollowing };
     }, "getFollowStatus");
 }
@@ -79,6 +80,6 @@ export async function getFollowStatus(targetUserId: string) {
  */
 export async function getFollowCounts(userId: string) {
     return await safeAction(async () => {
-        return await ProfileService.getFollowCounts(userId);
+        return await FollowService.getFollowCounts(userId);
     }, "getFollowCounts");
 }

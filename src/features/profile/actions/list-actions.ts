@@ -6,7 +6,8 @@ import { isAuthError, requireUser } from "@/shared/lib/auth/guards";
 import { revalidateProfileData } from "@/shared/lib/cache/revalidate";
 import type { WatchStatus } from "@/shared/types/domain/watchlist";
 
-import { ProfileService } from "../services/profile-service";
+import { FavoriteService } from "../services/favorite-service";
+import { WatchListService } from "../services/watchlist-service";
 
 /** Toggles favorite status for an anime */
 export async function toggleFavorite(animeId: string) {
@@ -14,7 +15,7 @@ export async function toggleFavorite(animeId: string) {
     if (isAuthError(auth)) return auth;
 
     return await safeAction(async () => {
-        const result = await ProfileService.toggleFavorite(auth.userId, animeId);
+        const result = await FavoriteService.toggleFavorite(auth.userId, animeId);
 
         // Track activity
         await createActivity(result.isFavorite ? "favorite_add" : "favorite_remove", animeId);
@@ -33,7 +34,7 @@ export async function checkFavorite(animeId: string) {
     if (isAuthError(auth)) return { success: false, error: auth.error };
 
     return await safeAction(async () => {
-        const isFavorite = await ProfileService.checkFavorite(auth.userId, animeId);
+        const isFavorite = await FavoriteService.checkFavorite(auth.userId, animeId);
         return { isFavorite };
     }, "checkFavorite");
 }
@@ -45,7 +46,7 @@ export async function getUserFavorites(userId: string) {
 
     return await safeAction(async () => {
         if (auth.userId !== userId) throw new Error("Bu listeye erişim yetkiniz yok");
-        return await ProfileService.getUserFavorites(userId);
+        return await FavoriteService.getUserFavorites(userId);
     }, "getUserFavorites");
 }
 
@@ -56,7 +57,7 @@ export async function getUserWatchList(userId: string) {
 
     return await safeAction(async () => {
         if (auth.userId !== userId) throw new Error("Bu listeye erişim yetkiniz yok");
-        return await ProfileService.getUserWatchList(userId);
+        return await WatchListService.getUserWatchList(userId);
     }, "getUserWatchList");
 }
 
@@ -66,7 +67,7 @@ export async function updateWatchStatus(animeId: string, status: WatchStatus | n
     if (isAuthError(auth)) return auth;
 
     return await safeAction(async () => {
-        const result = await ProfileService.updateWatchStatus(auth.userId, animeId, status);
+        const result = await WatchListService.updateWatchStatus(auth.userId, animeId, status);
 
         // Track activity
         if (result.action === 'remove') {
@@ -90,7 +91,7 @@ export async function checkWatchStatus(animeId: string) {
     if (isAuthError(auth)) return { success: false, error: auth.error };
 
     return await safeAction(async () => {
-        const status = await ProfileService.checkWatchStatus(auth.userId, animeId);
+        const status = await WatchListService.checkWatchStatus(auth.userId, animeId);
         return { status };
     }, "checkWatchStatus");
 }
