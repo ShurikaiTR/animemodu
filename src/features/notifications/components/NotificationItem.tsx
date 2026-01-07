@@ -104,12 +104,7 @@ export default function NotificationItem({
                         </div>
                     )}
 
-                    {!notification.is_read && (
-                        <div className="flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse shadow-sm shadow-primary/50" />
-                            <span className="text-[9px] font-semibold text-primary uppercase tracking-widest">Yeni</span>
-                        </div>
-                    )}
+
                 </div>
 
                 {onDelete && (

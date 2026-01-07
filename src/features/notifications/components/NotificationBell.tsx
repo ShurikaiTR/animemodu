@@ -111,7 +111,11 @@ export default function NotificationBell() {
                     aria-label="Bildirimler"
                 >
                     <Bell className="w-5 h-5 text-white/80" />
-                    {totalUnread > 0 && <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-bg-main animate-pulse" />}
+                    {totalUnread > 0 && (
+                        <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1.5 bg-primary text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-bg-main shadow-lg shadow-primary/30">
+                            {totalUnread > 99 ? "99+" : totalUnread}
+                        </span>
+                    )}
                 </button>
             </DropdownMenuTrigger>
 
