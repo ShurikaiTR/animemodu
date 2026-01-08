@@ -9,23 +9,10 @@ export const metadata: Metadata = {
     description: "Güncel aktiviteleriniz ve haberler.",
 };
 
-interface PageProps {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}
-
-export default async function NotificationsPage({ searchParams }: PageProps) {
-    const params = await searchParams;
-    const activeTab = typeof params.tab === "string" ? params.tab : "all";
-    const activeFilter = typeof params.filtre === "string" ? params.filtre : "all";
-
-    const result = await getNotifications(50, activeFilter, activeTab);
+export default async function NotificationsPage() {
+    // Tüm bildirimleri çek, filtreleme client-side yapılacak
+    const result = await getNotifications(50);
     const notifications = result.success && "data" in result ? (result.data as Notification[]) : [];
 
-    return (
-        <NotificationPageContent
-            initialNotifications={notifications}
-            initialTab={activeTab}
-            initialFilter={activeFilter}
-        />
-    );
+    return <NotificationPageContent initialNotifications={notifications} />;
 }

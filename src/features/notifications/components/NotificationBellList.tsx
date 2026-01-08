@@ -23,9 +23,9 @@ export default function NotificationBellList({ notifications, isLoading, onMarkA
 
     if (notifications.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-3">
-                    <Bell className="w-8 h-8 text-white/20" />
+            <div className="flex flex-col items-center justify-center py-10 text-center">
+                <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center mb-3 border border-white/5">
+                    <Bell className="w-7 h-7 text-white/20" />
                 </div>
                 <p className="text-sm text-white/50 font-medium">Henüz bildiriminiz yok</p>
                 <p className="text-xs text-white/30 mt-1">Yeni bildirimler burada görünecek</p>
@@ -37,29 +37,33 @@ export default function NotificationBellList({ notifications, isLoading, onMarkA
     const readNotifications = notifications.filter(n => n.is_read);
 
     return (
-        <div className="max-h-[450px] overflow-y-auto bg-bg-dropdown">
+        <div className="space-y-1">
             {/* Unread Section */}
             {unreadNotifications.length > 0 && (
-                <>
-                    <div className="sticky top-0 z-10 px-4 py-2 bg-bg-dropdown/95 backdrop-blur-sm border-b border-white/10">
+                <div>
+                    <div className="px-2 py-1.5">
                         <span className="text-[10px] font-bold tracking-wider text-primary uppercase">Yeni</span>
                     </div>
-                    {unreadNotifications.map(notification => (
-                        <NotificationItem key={notification.id} notification={notification} onMarkAsRead={onMarkAsRead} variant="compact" />
-                    ))}
-                </>
+                    <div className="space-y-0.5">
+                        {unreadNotifications.map(notification => (
+                            <NotificationItem key={notification.id} notification={notification} onMarkAsRead={onMarkAsRead} variant="compact" />
+                        ))}
+                    </div>
+                </div>
             )}
 
             {/* Read Section */}
             {readNotifications.length > 0 && (
-                <>
-                    <div className="sticky top-0 z-10 px-4 py-2 bg-bg-dropdown/95 backdrop-blur-sm border-y border-white/10">
-                        <span className="text-[10px] font-bold tracking-wider text-white/50 uppercase">Önceki</span>
+                <div>
+                    <div className="px-2 py-1.5">
+                        <span className="text-[10px] font-bold tracking-wider text-white/40 uppercase">Önceki</span>
                     </div>
-                    {readNotifications.map(notification => (
-                        <NotificationItem key={notification.id} notification={notification} onMarkAsRead={onMarkAsRead} variant="compact" />
-                    ))}
-                </>
+                    <div className="space-y-0.5">
+                        {readNotifications.map(notification => (
+                            <NotificationItem key={notification.id} notification={notification} onMarkAsRead={onMarkAsRead} variant="compact" />
+                        ))}
+                    </div>
+                </div>
             )}
         </div>
     );

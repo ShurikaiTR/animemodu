@@ -2,15 +2,16 @@
 
 import { isToday, isYesterday } from "date-fns";
 import { Bell } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState, useTransition } from "react";
+import { useCallback, useMemo, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 import { deleteNotification, markAllNotificationsAsRead, markNotificationAsRead } from "@/features/notifications/actions";
 import Container from "@/shared/components/container";
 import EmptyState from "@/shared/components/EmptyState";
-import type { Notification } from "@/shared/types/domain/notification";
+import { useAuth } from "@/shared/contexts/AuthContext";
+import type { Notification, NotificationRow } from "@/shared/types/domain/notification";
 
+import { useRealtimeNotifications } from "../hooks/useRealtimeNotifications";
 import NotificationHeader from "./NotificationHeader";
 import NotificationItem from "./NotificationItem";
 import NotificationSidebar, { type FilterType } from "./NotificationSidebar";
@@ -18,34 +19,40 @@ import NotificationTabs, { type TabType } from "./NotificationTabs";
 
 interface Props {
     initialNotifications: Notification[];
-    initialTab?: string;
-    initialFilter?: string;
 }
 
-export default function NotificationPageContent({ initialNotifications, initialTab = "all", initialFilter = "all" }: Props) {
-    const router = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
+export default function NotificationPageContent({ initialNotifications }: Props) {
+    const { user } = useAuth();
     const [isPending, startTransition] = useTransition();
 
-    // Sadece bildirim listesi için state tutuyoruz (silme/okuma işlemleri için)
+    // Client-side state - URL sync kaldırıldı, anında çalışıyor
     const [notifications, setNotifications] = useState<Notification[]>(initialNotifications);
+    const [activeTab, setActiveTab] = useState<TabType>("all");
+    const [filterType, setFilterType] = useState<FilterType>("all");
 
-    // Filter ve Tab değerlerini URL'den alıyoruz (Rule 45: URL & Server)
-    const activeTab = (searchParams.get("tab") as TabType) || (initialTab as TabType);
-    const filterType = (searchParams.get("filtre") as FilterType) || (initialFilter as FilterType);
+    // Realtime: Yeni bildirimleri dinle
+    const handleNewNotification = useCallback((newNotification: NotificationRow) => {
+        // NotificationRow'u Notification tipine dönüştür
+        const notification: Notification = {
+            ...newNotification,
+            actor: null, // Realtime'da actor bilgisi gelmiyor, sonradan fetch edilebilir
+        };
+        setNotifications(prev => [notification, ...prev]);
+        toast.info("Yeni bildirim geldi!");
+    }, []);
 
-    useEffect(() => {
-        setNotifications(initialNotifications);
-    }, [initialNotifications]);
+    useRealtimeNotifications({
+        userId: user?.id,
+        onNewNotification: handleNewNotification,
+    });
 
+    // Client-side filtreleme - anında çalışır, server'a istek yok
     const filteredNotifications = useMemo(() => {
         return notifications.filter(n => {
             const matchesType = (() => {
                 if (filterType === "all") return true;
                 if (filterType === "likes") return n.type === "review_like" || n.type === "comment_like";
                 if (filterType === "replies") return n.type === "comment_reply";
-                if (filterType === "system") return n.type === "new_episode";
                 return true;
             })();
 
@@ -64,13 +71,6 @@ export default function NotificationPageContent({ initialNotifications, initialT
         });
         return groups;
     }, [filteredNotifications]);
-
-    const updateParams = (key: string, value: string) => {
-        const params = new URLSearchParams(searchParams.toString());
-        if (value === "all") params.delete(key);
-        else params.set(key, value);
-        router.push(`${pathname}?${params.toString()}`);
-    };
 
     const handleMarkAllRead = () => {
         startTransition(async () => {
@@ -106,17 +106,16 @@ export default function NotificationPageContent({ initialNotifications, initialT
         all: notifications.length,
         likes: notifications.filter(n => n.type === "review_like" || n.type === "comment_like").length,
         replies: notifications.filter(n => n.type === "comment_reply").length,
-        system: notifications.filter(n => n.type === "new_episode").length,
     };
 
     return (
         <div className="min-h-screen bg-bg-main pb-20">
             <Container>
                 <NotificationHeader unreadCount={unreadCount} isPending={isPending} onMarkAllRead={handleMarkAllRead} />
-                <NotificationTabs activeTab={activeTab} onTabChange={(tab) => updateParams("tab", tab)} unreadCount={unreadCount} />
+                <NotificationTabs activeTab={activeTab} onTabChange={setActiveTab} unreadCount={unreadCount} />
 
                 <div className="flex flex-col lg:flex-row gap-0 lg:gap-12 items-start">
-                    <NotificationSidebar filterType={filterType} onFilterChange={(f) => updateParams("filtre", f)} counts={filterCounts} />
+                    <NotificationSidebar filterType={filterType} onFilterChange={setFilterType} counts={filterCounts} />
 
                     <div className="flex-1 w-full space-y-12">
                         {filteredNotifications.length === 0 ? (
@@ -124,7 +123,6 @@ export default function NotificationPageContent({ initialNotifications, initialT
                                 icon={Bell}
                                 title="Henüz bildirim yok"
                                 description="Bu kategori için gösterilecek bildirim bulunamadı."
-                                className="bg-white/[0.01] border border-white/5 rounded-3xl border-dashed"
                             />
                         ) : (
                             (['Today', 'Yesterday', 'Earlier'] as const).map(groupKey => {

@@ -40,7 +40,7 @@ export default function NotificationItem({
                 "relative group transition-all cursor-pointer",
                 variant === "default"
                     ? "p-5 rounded-xl border border-white/5 mb-4 shadow-sm"
-                    : "p-4 border-b border-white/5",
+                    : "p-2.5 rounded-lg",
                 notification.is_read
                     ? "bg-transparent hover:bg-white/5 opacity-70 hover:opacity-100"
                     : "bg-primary/[0.04] border-primary/20 hover:bg-primary/10 shadow-lg shadow-primary/5"
@@ -50,7 +50,7 @@ export default function NotificationItem({
             {!notification.is_read && (
                 <div className={cn(
                     "absolute left-0 w-1 bg-primary rounded-r-full shadow-sm shadow-primary/50 transition-all duration-300",
-                    variant === "default" ? "top-1/4 bottom-1/4 group-hover:top-2 group-hover:bottom-2" : "top-0 bottom-0"
+                    variant === "default" ? "top-1/4 bottom-1/4 group-hover:top-2 group-hover:bottom-2" : "top-1 bottom-1 rounded-full"
                 )} />
             )}
 

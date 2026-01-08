@@ -121,12 +121,17 @@ export default function NotificationBell() {
 
             <DropdownMenuContent
                 align="end"
-                className="w-80 sm:w-96 bg-bg-dropdown/95 backdrop-blur-xl border-white/10 text-white p-0 shadow-2xl rounded-xl mt-2 animate-in fade-in zoom-in-95 duration-200 z-50 overflow-hidden"
+                className="w-80 sm:w-96 bg-bg-dropdown/95 backdrop-blur-xl border-white/10 text-white p-2 shadow-2xl rounded-xl mt-2 animate-in fade-in zoom-in-95 duration-200 z-50"
             >
-                <div className="px-4 py-3.5 border-b border-white/10 flex justify-between items-center bg-white/5">
+                {/* Header - Profil dropdown stiliyle tutarlı */}
+                <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5 mb-2">
                     <div className="flex items-center gap-2">
-                        <h3 className="text-base font-bold tracking-tight text-white">Bildirimler</h3>
-                        {totalUnread > 0 && <span className="bg-primary text-white text-[0.625rem] font-bold px-1.5 py-0.5 rounded-full">{totalUnread > 99 ? "99+" : totalUnread}</span>}
+                        <h3 className="text-sm font-medium text-white">Bildirimler</h3>
+                        {totalUnread > 0 && (
+                            <span className="bg-primary text-white text-[0.625rem] font-bold px-1.5 py-0.5 rounded-full">
+                                {totalUnread > 99 ? "99+" : totalUnread}
+                            </span>
+                        )}
                     </div>
                     {totalUnread > 0 && (
                         <button
@@ -134,20 +139,22 @@ export default function NotificationBell() {
                             disabled={isPending}
                             className="flex items-center gap-1.5 text-xs font-medium text-white/50 hover:text-primary transition-colors disabled:opacity-50 group"
                         >
-                            <CheckCheck className="w-4 h-4 group-hover:text-primary transition-colors" />
+                            <CheckCheck className="w-3.5 h-3.5 group-hover:text-primary transition-colors" />
                             <span className="hidden sm:inline">Tümünü okundu say</span>
                         </button>
                     )}
                 </div>
 
-                <div className="max-h-[450px] overflow-y-auto">
+                {/* Notification List */}
+                <div className="max-h-[400px] overflow-y-auto rounded-lg">
                     <NotificationBellList notifications={notifications} isLoading={isLoading} onMarkAsRead={handleMarkAsRead} />
                 </div>
 
+                {/* Footer Link */}
                 {notifications.length > 0 && (
                     <Link
                         href="/profil/bildirimler"
-                        className="block py-3 text-center text-xs font-semibold text-white/40 bg-white/5 border-t border-white/10 hover:text-primary hover:bg-primary/5 transition-all"
+                        className="block py-2.5 mt-2 text-center text-xs font-semibold text-white/50 bg-white/5 rounded-lg border border-white/5 hover:text-primary hover:bg-primary/10 hover:border-primary/20 transition-all"
                     >
                         Tüm Bildirimleri Görüntüle
                     </Link>

@@ -1,13 +1,13 @@
 import { CommentsTable, InteractionItem } from "@/components/panel/tables/CommentsTable";
 import { CommentQueryService } from "@/features/comments/services/comment-query-service";
-import { ReviewService } from "@/features/reviews/services/review-service";
+import { ReviewQueryService } from "@/features/reviews/services/review-query-service";
 import { createClient } from "@/shared/lib/supabase/server";
 
 export async function CommentsContent() {
     try {
         const [comments, reviews] = await Promise.all([
             CommentQueryService.getAllComments(50),
-            ReviewService.getAllReviews(50),
+            ReviewQueryService.getAllReviews(50),
         ]);
 
         const supabase = await createClient();

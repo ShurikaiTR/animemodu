@@ -1,10 +1,10 @@
 "use client";
 
-import { Bell, Filter, Heart, Inbox, MessageCircle } from "lucide-react";
+import { Filter, Heart, Inbox, MessageCircle } from "lucide-react";
 
 import { cn } from "@/shared/lib/utils";
 
-export type FilterType = "all" | "likes" | "replies" | "system";
+export type FilterType = "all" | "likes" | "replies";
 
 interface NotificationSidebarProps {
     filterType: FilterType;
@@ -13,7 +13,6 @@ interface NotificationSidebarProps {
         all: number;
         likes: number;
         replies: number;
-        system: number;
     };
 }
 
@@ -22,7 +21,6 @@ export default function NotificationSidebar({ filterType, onFilterChange, counts
         { id: "all", label: "Tüm Bildirimler", icon: Inbox, count: counts.all },
         { id: "likes", label: "Beğeniler", icon: Heart, count: counts.likes },
         { id: "replies", label: "Yanıtlar", icon: MessageCircle, count: counts.replies },
-        { id: "system", label: "Sistem Mesajları", icon: Bell, count: counts.system },
     ] as const;
 
     return (
